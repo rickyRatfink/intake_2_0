@@ -12,7 +12,7 @@ public class Intake implements Serializable {
 	private String middleInitial = "";
 	private String suffix = "";
 	private String address = "";
-	private String city = "";
+	private String city = ""; 
 	private String state = "";
 	private String zipcode = "";
 	private String dateOfBirth = "";
