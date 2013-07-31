@@ -5,14 +5,14 @@ import java.util.ArrayList;
 
 public class Intake implements Serializable {
  
-	private Long intakeId;
+	private Long intakeId; 
 	private String farmBase = ""; 
 	private String firstName = "";
 	private String lastName = "";
 	private String middleInitial = "";
 	private String suffix = "";
-	private String address = "";
-	private String city = ""; 
+	private String address = ""; 
+	private String city = "";  
 	private String state = "";
 	private String zipcode = "";
 	private String dateOfBirth = "";
