@@ -6,7 +6,7 @@ import java.util.ArrayList;
 public class Intake implements Serializable {
  
 	private Long intakeId;
-	private String farmBase = "";
+	private String farmBase = ""; 
 	private String firstName = "";
 	private String lastName = "";
 	private String middleInitial = "";
