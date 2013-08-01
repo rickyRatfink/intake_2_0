@@ -2,12 +2,12 @@
 div { margin:0; padding:0 }
 html { height:100.1% }
 
-#wrapper { width:958px; margin:0 auto;}
+#wrapper { width:950x; margin:0 auto;}
 
 a:hover { color:#558122; text-decoration:underline }
 a { color:#3A5A35; margin:0 }
 
-#header {background: url(images/header.gif) no-repeat; width:958px; height:164px; }
+#header {background: url(images/header.gif) no-repeat; width:950px; height:164px; }
 
 #nav-bar {background: url(images/nav-bar.gif) no-repeat; width:198px; height:317px; float:left;}
 #main-image {background: url(images/main-image.jpg) no-repeat; width:760px; height:317px; float:right;}
@@ -73,10 +73,10 @@ a.mainlinks:hover{color:#491B64; text-decoration:none; }
 text-align:left;
 background-color:#ffffff;
 
-width:938px;
+width:930px;
 font-weight:300;
 float:left;
-padding:10px;
+padding:20px;
 
 }
 
