@@ -37,15 +37,14 @@ h5 {
 	border-radius:3px;
 	height: 16px;
 	background-color:#e4e4e4;
-	font: 10px Arial;
+	font: 12px Arial;
 	color: #444446;
 }
 .textboxErr {
-	border:1px solid #456879;
-	border-radius:3px;
+	border:1px solid #d2071a;
 	height: 16px;
-	background-color:#898989;
-	font: 10px Arial;
+	background-color:#f9c131;
+	font: 12px Arial;
 	color: #444446;
 	padding-left: 2px;
 }
@@ -65,7 +64,7 @@ h5 {
 	width: 142px;
 	font: 9px Arial;
 	color: #acacac;
-	background-image:url('../images/login_txtbx.png');
+	background-image:url('../img/login_txtbx.png');
 	background-repeat:no-repeat;
 	padding-left: 5px;
 	outline: none;
@@ -84,7 +83,7 @@ h5 {
 	border:1px solid #d2071a;
 	border-radius:0px;
 	height: 20px;
-	background-color:#eab117;
+	background-color:#f9c131;
 	font-size:12px; 
 	color: #3F1910;
 }
@@ -98,7 +97,7 @@ h5 {
 	color: #444446;
 }
 .imageButtonSave{
-    background: url('../images/btn_save.png');
+    background: url('../img/btn_save.png');
  	width : 122px;
 	height :19px;
 	border : none;
@@ -107,7 +106,7 @@ h5 {
 	vertical-align:top;
 }
 .imageButtonSaveOnly{
-    background: url('../images/btn_save_only.png');
+    background: url('../img/btn_save_only.png');
 	background-repeat:no-repeat;
  	width : 122px;
 	height :19px;
@@ -117,7 +116,7 @@ h5 {
 	vertical-align:top;
 }
 .imageButtonPrint{
-    background: url('../images/btn_print.png');
+    background: url('../img/btn_print.png');
  	width : 115px;
 	height :18px;
 	border : none;
@@ -126,7 +125,7 @@ h5 {
 	vertical-align:top;
 }
 .imageButtonDonorSearch{
-    background: url('../images/lookup-icon.png');
+    background: url('../img/lookup-icon.png');
  	width : 20px;
 	height :18px;
 	border : none;
@@ -135,7 +134,7 @@ h5 {
 	vertical-align:top;
 }
 .imageButtonLogin{
-    background: url('../images/btn_login.png');
+    background: url('../img/btn_login.png');
  	width : 187px;
 	height :29px;
 	border : none;
@@ -144,7 +143,7 @@ h5 {
 	
 }
 .imageButtonError{
-    background: url('../images/btn_error_back.png');
+    background: url('../img/btn_error_back.png');
  	width : 120px;
 	height :120px;
 	border : none;
@@ -153,7 +152,7 @@ h5 {
 	
 }
 .imageButtonSearch{
-    background: url('../images/search2.png');
+    background: url('../img/search2.png');
 	width: 17px;
 	height: 17px;
 	border : none;
@@ -162,7 +161,7 @@ h5 {
 }
 
 .imageButtonSearchExport{
-    background: url('../images/btn_searchExport.png');
+    background: url('../img/btn_searchExport.png');
 	background-repeat:no-repeat;
  	width : 62px;
 	height :21px;
@@ -177,8 +176,8 @@ h5 {
 	margin: 0;
 	padding: 0;
 	text-align: center;
-	/*background: url(../images/navigation-bg.jpg) no-repeat left top;*/
-	background: url(../images/black_menu_bg.png);
+	/*background: url(../img/navigation-bg.jpg) no-repeat left top;*/
+	background: url(../img/black_menu_bg.png);
 } 
 #navigation ul {
 	list-style: none;
@@ -192,17 +191,17 @@ h5 {
 	font: bold 12px Arial;
 	color: #FFF;
 	text-decoration: none;
-	/*background: url(../images/navigation-separator2.png) no-repeat right center;*/
+	/*background: url(../img/navigation-separator2.png) no-repeat right center;*/
 } 
 
 #navigation ul li a:hover {
 	color:#d5f3ff;
-	/*background: url(../images/navigation-hover.png) repeat-x left top;*/
+	/*background: url(../img/navigation-hover.png) repeat-x left top;*/
 }
 
 #navigation ul li#active a {
 	color:#d5f3ff;
-	/*background: url(../images/navigation-hover.png) repeat-x left top;*/
+	/*background: url(../img/navigation-hover.png) repeat-x left top;*/
 }
 
 #footer {
@@ -243,7 +242,7 @@ background-color:#ffffff;
 	text-align:left; 
 }
 .fieldError {
-	font: bold italic 9px Arial;
+	font: bold italic 11px Arial;
 	color: #b71524;
 	text-align:left; 
 }

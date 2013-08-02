@@ -1,11 +1,96 @@
 <%@ page import="org.faithfarm.intake.IntakeServlet" %>
+<%@ page import="org.faithfarm.util.Validator" %>
 <%@ page import="java.util.ArrayList" %>
 
 <jsp:include page="student_header.jsp" flush="true"/>
 
-<% String f1Err=(String)request.getAttribute("field1error");
-   if (f1Err==null) f1Err="";
+<% 
+ 
+   Validator valid8r = new Validator();
+	
+   String message=(String)request.getAttribute("MESSAGE");
+
+   String lastNameErr=(String)request.getAttribute("lastNameErr");
+   if (lastNameErr==null) lastNameErr="";
    
+    String firstNameErr = (String)request.getAttribute("firstNameErr");
+   if (firstNameErr==null) firstNameErr="";
+	
+	String middleInitialErr = (String)request.getAttribute("middleInitialErr");
+   if (middleInitialErr==null) middleInitialErr="";
+
+   String ssnErr = (String)request.getAttribute("ssnErr");
+   if (ssnErr==null) ssnErr="";
+   
+   String addressErr = (String)request.getAttribute("addressErr");
+   if (addressErr==null) addressErr="";
+   
+   String cityErr = (String)request.getAttribute("cityErr");
+   if (cityErr==null) cityErr="";
+   
+   String stateErr = (String)request.getAttribute("stateErr");
+   if (stateErr==null) stateErr="";
+   
+   String zipcodeErr = (String)request.getAttribute("zipcodeErr");
+   if (zipcodeErr==null) zipcodeErr="";
+
+   String referralPhoneErr = (String)request.getAttribute("referralPhoneErr");
+   if (referralPhoneErr==null) referralPhoneErr="";
+
+   String dobErr = (String)request.getAttribute("dobErr");
+   if (dobErr==null) dobErr="";
+
+   String ageErr = (String)request.getAttribute("ageErr");
+   if (ageErr==null) ageErr="";
+
+  String emergencyContactErr = (String)request.getAttribute("emergencyContactErr");
+   if (emergencyContactErr==null) emergencyContactErr="";
+
+  String emergencyRelationshipErr = (String)request.getAttribute("emergencyRelationshipErr");
+   if (emergencyRelationshipErr==null) emergencyRelationshipErr="";
+
+  String emergencyPhoneErr = (String)request.getAttribute("emergencyPhoneErr");
+   if (emergencyPhoneErr==null) emergencyPhoneErr="";
+
+
+ String maritalStatusErr = (String)request.getAttribute("maritalStatusErr");
+   if (maritalStatusErr==null) maritalStatusErr="";
+
+ String ethnicityErr = (String)request.getAttribute("ethnicityErr");
+   if (ethnicityErr==null) ethnicityErr="";
+
+String heightErr = (String)request.getAttribute("heightErr");
+   if (heightErr==null) heightErr="";
+
+String weightErr = (String)request.getAttribute("weightErr");
+   if (weightErr==null) weightErr="";
+
+String eyecolorErr = (String)request.getAttribute("eyecolorErr");
+   if (eyecolorErr==null) eyecolorErr="";
+
+String haircolorErr = (String)request.getAttribute("haircolorErr");
+   if (haircolorErr==null) haircolorErr="";
+
+String homeLocationErr = (String)request.getAttribute("homeLocationErr");
+   if (homeLocationErr==null) homeLocationErr=""; 
+
+String educationLevelErr = (String)request.getAttribute("educationLevelErr");
+   if (educationLevelErr==null) educationLevelErr="";
+
+String graduateFlagErr = (String)request.getAttribute("graduateFlagErr");
+   if (graduateFlagErr==null) graduateFlagErr="";
+
+String englishReadErr = (String)request.getAttribute("englishReadErr");
+   if (englishReadErr==null) englishReadErr="";
+
+String englishSpeakErr = (String)request.getAttribute("englishSpeakErr");
+   if (englishSpeakErr==null) englishSpeakErr="";
+
+
+String Err = (String)request.getAttribute("Err");
+   if (Err==null) Err="";
+
+	
    String required = "<img src='images/required.png'/>";
 %>
 
@@ -28,164 +113,341 @@ font-family:Tahoma, Geneva, Helvetica;
 <div class="interior-mid">
   <div class="interior-text-mid">
  
+<script language="javascript" type="text/javascript">
+function ucase(obj) {
+  obj.value=obj.value.toUpperCase();
+}
 
-<form method=post action="/intake">
-	
+function isNumberKey(evt)
+      {
+         var charCode = (evt.which) ? evt.which : event.keyCode
+         if (charCode > 31 && (charCode < 48 || charCode > 57))
+            return false;
+
+         return true;
+      }
+	  
+	  
+function moveOnMax(field,nextFieldID){
+	  if(field.value.length >= field.maxLength){
+	    document.getElementById(nextFieldID).focus();
+	  }
+	}
+
+</script>
+
+<form method="POST" action="<%=request.getContextPath()%>/intake">
+<% if (message!=null) { %>
+<h5><img src="images/success.png"/><%=message %></h5>	
+<% } %>
     <table>
 	<tr>
-		<td colspan="11"><h1><b>Online Student Application for Faith Farm Programs</b></h1></td>
+		<td colspan="8"><h1><b>Online Student Application for Faith Farm Programs</b></h1></td>
 	</tr>
 	<tr>
-		<td colspan="11"><b>Campus: Boynton Beach </b></td>
-	</tr>
-	<tr>
-		<td colspan="11">&nbsp;</td>
-	</tr>
-	<tr>
-		<td colspan="11">&nbsp;</td>
-	</tr>
-	<tr>
-		<td colspan="11"><b>General Information: </b></td>
-	</tr>
-	<tr>
-		<td colspan="11">&nbsp;</td>
-	</tr>
-	<tr>
-		<td>Last Name</td>
-		<td><input type="text" name="Last_Name" size="17"></td>
-		<td>&nbsp;&nbsp;</td>
-		<td>First Name</td>
-		<td><input type="text" name="First_Name" size="20"></td>
-		<td>&nbsp;&nbsp;</td>
-		<td>MI</td>
-		<td><input type="text" name="MI" size="4"></td>
-	</tr>
-	<tr>
-		<td colspan="11">&nbsp;</td>
-	</tr>
-	<tr>	
-    	<td >SSN</td>
-		<td><input type="text" name="ssn1" size="3">-<input type="text" name="ssn2" size="2">-<input type="text" name="ssn3" size="4"></td>
-		<td>&nbsp;&nbsp;</td>
-		<td >Referred to Faith Farm By</td>
-		<td><input type="text" name="Referred_to_Faith_Farm_By" size="28"></td>
-	</tr>
-	<tr>
-		<td colspan="11">&nbsp;</td>
-	</tr>
-	<tr>
-		<td colspan="11">
-        Address of Contact&nbsp;<input type="text" name="Address_of_Contact" size="28">&nbsp;&nbsp;
-		City&nbsp;<input type="text" name="City" size="20">&nbsp;&nbsp;
-		State&nbsp;<input type="text" name="State" size="4">&nbsp;&nbsp;
-		Zip&nbsp;&nbsp;<input type="text" name="Zip" size="11">&nbsp;&nbsp;
-		</td>
-	</tr>
-    <tr>
-		<td colspan="11">&nbsp;</td>
-	</tr>
-	<tr>
-		<td>Phone Number</td>
-		<td><input type="text" name="Phone_Number" size="20"></td>
-		<td>&nbsp;&nbsp;</td>
-		<td>Date of Birth</td>
-		<td><input type="text" name="Date_of_Birth" size="12"></td>
-		<td>&nbsp;&nbsp;</td>
-		<td>Age</td>
-		<td><input type="text" name="Age" size="4"></td>
-		<td>&nbsp;&nbsp;</td>
-    </tr>
-    <tr>
-		<td colspan="11">&nbsp;</td>
-	</tr>
-    <tr>
-		<td>Emergency Contact Person</td>
-		<td><input type="text" name="emergencyContact" size="28"> </td>
-		<td></td>
-		<td>Relationship</td>
-		<td><input type="text" name="emergencyRelationship" size="20"></td>
-        <td></td>
-		<td>Phone</td>
-		<td><input type="text" name="emergencyPhone" size="20"></td>
-	</tr>
-	<tr>
-		<td colspan="11">&nbsp;</td>
-	</tr>
-    <tr>
-		<td colspan="2"><b>Marial Status&nbsp;</b>
-        	<%
-				ArrayList ddl = (ArrayList)session.getAttribute("dll_marital_status");
-				%>
-				<select name="health"   <% if (f1Err.length()>0){%> class="ddlErr"<% } else { %> class="ddl"<%}%>>
-				<option value="">
-				<%
-				if (ddl!=null) {
-				  for (int j=0;j<ddl.size();j++) {
-					%>
-					<option 
-						value="<%=ddl.get(j)%>"
-						<%
-						if
-						(ddl.get(j).equals(IntakeServlet.getIntake().getMaritalStatus()))
-						{%>selected<%}%>>
-					  <%=ddl.get(j)%>
-					</option>
-					<%
-				  }
-				  %>
-				  <%
-				}
-			%>
-        </td>
-        <td>&nbsp;&nbsp;</td>
-        <td colspan="2">Ethnicity
-        	<%
-				ddl = (ArrayList)session.getAttribute("dll_ethnicity");
-				%>
-				<select name="health"   <% if (f1Err.length()>0){%> class="ddlErr"<% } else { %> class="ddl"<%}%>>
-				<option value="">
-				<%
-				if (ddl!=null) {
-				  for (int j=0;j<ddl.size();j++) {
-					%>
-					<option 
-						value="<%=ddl.get(j)%>"
-						<%
-						if
-						(ddl.get(j).equals(IntakeServlet.getIntake().getEthnicity()))
-						{%>selected<%}%>>
-					  <%=ddl.get(j)%>
-					</option>
-					<%
-				  }
-				  %>
-				  <%
-				}
-			%>
-        </td>
-	</tr>
-    <tr>
-		<td colspan="11">&nbsp;</td>
-	</tr>
-	
-	<tr>
-		<td colspan="11">Height&nbsp;<input type="text" name="Height" size="5">
-		&nbsp;&nbsp;&nbsp;Weight&nbsp;
-		<input type="text" name="Weight" size="6">
-		&nbsp;&nbsp;&nbsp;Eyes&nbsp;<input type="text" name="Eyes" size="11">
-		&nbsp;&nbsp;Hair&nbsp;
-		<input type="text" name="Hair" size="12"></td>
-		<td></td>
+		<td colspan="8"><b>Campus: Boynton Beach </b></td>
 	</tr>
 	<tr>
 		<td colspan="8">&nbsp;</td>
 	</tr>
 	<tr>
-		<td><b>Where do you live?</b></td>
-		<td>	<%
+		<td colspan="8">&nbsp;</td>
+	</tr>
+	<tr>
+		<td colspan="8"><b>General Information: </b></td>
+	</tr>
+	<tr>
+		<td colspan="8">&nbsp;</td>
+	</tr>
+    <tr>
+		<td colspan="8" valign="bottom" align="center" height="45"><input type="submit" name="action" value="Save Application" class="imageButtonSave" title="Save Application" /></td>
+	</tr>
+	<tr>
+    	<td colspan="8">
+                <table width="100%" border="0">
+                <tr>
+                <td>Last Name</td>
+                <td><input type="text" name="lastname" value="<%=IntakeServlet.getIntake().getLastName()%>" size="30" maxlength="30" <% if (lastNameErr.length()>0) { %>class="textboxErr"<% } %> onkeyup="ucase(this)"></td>
+                <td>&nbsp;&nbsp;</td>
+                <td>First Name</td>
+                <td><input type="text" name="firstname" value="<%=IntakeServlet.getIntake().getFirstName()%>" size="30" maxlength="30" <% if (firstNameErr.length()>0) { %>class="textboxErr"<% } %> onkeyup="ucase(this)"></td>
+                <td>&nbsp;&nbsp;</td>
+                <td>MI</td>
+                <td colspan="2" align="left"><input type="text" name="mi" value="<%=IntakeServlet.getIntake().getMiddleInitial()%>"  size="1" maxlength="1"  <% if (middleInitialErr.length()>0) { %>class="textboxErr"<% } %> onkeyup="ucase(this)"></td>
+            </tr>
+            <tr>
+                <td colspan="3" class="fieldError"><%=lastNameErr%></td>
+                <td colspan="3" class="fieldError"><%=firstNameErr%></td>
+                <td colspan="2" class="fieldError"><%=middleInitialErr%></td>
+            </tr>
+            </table>
+        </td>
+    </tr>
+	<tr>
+		<td colspan="8">&nbsp;</td>
+	</tr>
+	<tr>
+    	<td colspan="8">
+                <table width="100%" border="0">
+                <tr>	
+                <td >SSN</td>
+                <td>
+                <%
+                String ssn1=valid8r.cleanData(request.getParameter("ssn1"));
+                String ssn2=valid8r.cleanData(request.getParameter("ssn2"));
+                String ssn3=valid8r.cleanData(request.getParameter("ssn3"));
+                %>
+                <input id="ssn1"  type="text" name="ssn1" size="3" value="<%=ssn1%>" maxlength="3" <% if (ssnErr.length()>0) { %>class="textboxErr"<% } %> onkeypress="return isNumberKey(event)" onkeyup="moveOnMax(this,'ssn2')" >-
+                <input id="ssn2"  type="text" name="ssn2" size="2" value="<%=ssn2%>" maxlength="2" <% if (ssnErr.length()>0) { %>class="textboxErr"<% } %> onkeypress="return isNumberKey(event)" onkeyup="moveOnMax(this,'ssn3')" >-
+                <input id="ssn3"  type="text" name="ssn3" size="4" value="<%=ssn3%>" maxlength="4" <% if (ssnErr.length()>0) { %>class="textboxErr"<% } %> onkeypress="return isNumberKey(event)" onkeyup="moveOnMax(this,'referred')" ></td>
+                <td>&nbsp;&nbsp;</td>
+                <td >Referred to Faith Farm By</td>
+                <td><input id="referred" type="text" name="referredBy" value="<%=IntakeServlet.getIntake().getReferredBy()%>" size="28"></td>
+           		 </tr>
+            
+           		 <tr>
+                <td colspan="3" class="fieldError"><%=ssnErr%></td>
+                <td colspan="3" class="fieldError"></td>
+                <td colspan="2"></td>
+           		 </tr>
+                 </table>
+         </td>
+   </tr>
+	<tr>
+		<td colspan="8">&nbsp;</td>
+	</tr>
+	<tr>
+    	<td colspan="8">
+                <table width="100%" border="0">
+                <tr>
+                <td>Address of Contact&nbsp;<input type="text" name="address" value="<%=IntakeServlet.getIntake().getAddress()%>" size="30" maxlength="45" <% if (addressErr.length()>0) { %>class="textboxErr"<% } %> onkeyup="ucase(this)">&nbsp;&nbsp;</td>
+                <td>City&nbsp;<input type="text" name="city" value="<%=IntakeServlet.getIntake().getCity()%>" size="20" maxlength="25" <% if (cityErr.length()>0) { %>class="textboxErr"<% } %> onkeyup="ucase(this)">&nbsp;&nbsp;</td>
+               <td>State&nbsp;
+                 <%
+                        ArrayList ddl = (ArrayList)session.getAttribute("dll_states");
+                        %>
+                        <select name="state" <% if (stateErr.length()>0) { %>class="ddlErr"<% } %>>
+                        <option value="">
+                        <%
+                        if (ddl!=null) {
+                          for (int j=0;j<ddl.size();j++) {
+                            %>
+                            <option 
+                                value="<%=ddl.get(j)%>"
+                                <%
+                                if 
+                                (ddl.get(j).equals(IntakeServlet.getIntake().getState()))
+                                {%>selected<%}%>>
+                              <%=ddl.get(j)%>
+                            </option>
+                            <%
+                          }
+                          %>
+                          <%
+                        }
+                    %></select>
+                &nbsp;&nbsp;</td>
+               <td >Zipcode&nbsp;&nbsp;<input type="text" name="zipcode" value="<%=IntakeServlet.getIntake().getZipcode()%>" size="5" maxlength="5" onkeypress="return isNumberKey(event)" <% if (zipcodeErr.length()>0) { %>class="textboxErr"<% } %>>&nbsp;&nbsp;
+                </td>
+                </tr>
+                <tr>
+                <td class="fieldError"><%=addressErr%></td>
+                <td class="fieldError"><%=cityErr%></td>
+                <td class="fieldError"><%=stateErr%></td>
+                <td class="fieldError"><%=zipcodeErr%></td>
+            </tr>
+            </table>
+        </td>
+    </tr>
+    
+    <tr>
+		<td colspan="8">&nbsp;</td>
+	</tr>
+	<tr>
+    	<td colspan="8"> 
+                <table width="100%" border="0">
+                <tr>
+                <td width="200">Phone Number&nbsp;<i>(xxx)xxx-xxxx</i>&nbsp;
+                <input type="text" name="referral_phone"  value="<%=IntakeServlet.getIntake().getReferralPhone()%>" size="20" maxlength="13" <% if (referralPhoneErr.length()>0) { %>class="textboxErr"<% } %>></td>
+                <td width="200">Date of Birth&nbsp;<i>(mm/dd/yyyy)</i>&nbsp;<input type="text" name="dob" value="<%=IntakeServlet.getIntake().getDateOfBirth()%>" size="10" maxlength="10"  <% if (dobErr.length()>0) { %>class="textboxErr"<% } %>></td>
+                <td>Age&nbsp;<input type="text" name="age" size="2" value="<%=IntakeServlet.getIntake().getAge()%>" size="5" maxlength="2" onkeypress="return isNumberKey(event)" <% if (ageErr.length()>0) { %>class="textboxErr"<% } %>></td>
+                </tr>
+                 <tr>
+                <td class="fieldError"><%=referralPhoneErr%></td>
+                <td class="fieldError"><%=dobErr%></td>
+                <td class="fieldError"><%=ageErr%></td>               
+            	</tr>
+                </table>
+          </td>
+     </tr>
+     
+     <tr>
+          <td colspan="8">
+                <table width="100%" border="0">
+                <tr>
+                <td colspan="8">&nbsp;</td>
+                </tr>
+                <tr>
+                <td>Emergency Contact&nbsp;<input type="text" name="emergencyContact" value="<%=IntakeServlet.getIntake().getEmergencyContact()%>" size="28" maxlength="28" <% if (emergencyContactErr.length()>0) { %>class="textboxErr"<% } %> onkeyup="ucase(this)"> </td>
+                <td>Relationship&nbsp;<input type="text" name="emergencyRelationship" value="<%=IntakeServlet.getIntake().getEmergencyRelationship()%>" size="20" maxlength="20" <% if (emergencyRelationshipErr.length()>0) { %>class="textboxErr"<% } %> onkeyup="ucase(this)"></td>
+                <td>Phone&nbsp;<i>(xxx)xxx-xxxx</i>&nbsp;<input type="text" name="emergencyPhone" size="20" value="<%=IntakeServlet.getIntake().getEmergencyPhone()%>" maxlength="13" <% if (emergencyPhoneErr.length()>0) { %>class="textboxErr"<% } %> onkeypress="return isNumberKey(event)"></td>
+                </tr>
+                <tr>
+                <td class="fieldError"><%=emergencyContactErr%></td>
+                <td class="fieldError"><%=emergencyRelationshipErr%></td>
+                <td class="fieldError"><%=emergencyPhoneErr%></td>               
+            	</tr>
+                </table>
+          </td>
+	</tr>
+    <tr>
+		<td colspan="8">&nbsp;</td>
+	</tr>
+	<tr>
+		<td colspan="8">
+	        <table width="100%" border="0">
+                <tr>
+                    <td width="250">Marial Status&nbsp;
+                            <%
+                            ddl = (ArrayList)session.getAttribute("dll_marital_status");
+                            %>
+                            <select name="maritalStatus" <% if (maritalStatusErr.length()>0) { %>class="ddlErr"<% } %>>
+                            <option value="">
+                            <%
+                            if (ddl!=null) {
+                              for (int j=0;j<ddl.size();j++) {
+                                %>
+                                <option 
+                                    value="<%=ddl.get(j)%>"
+                                    <%
+                                    if
+                                    (ddl.get(j).equals(IntakeServlet.getIntake().getMaritalStatus()))
+                                    {%>selected<%}%>>
+                                  <%=ddl.get(j)%>
+                                </option>
+                                <%
+                              }
+                              %>
+                              <%
+                            }
+                        %></select>
+                    </td>
+                    <td >Ethnicity
+                        <%
+                            ddl = (ArrayList)session.getAttribute("dll_ethnicity");
+                            %>
+                            <select name="ethnicity" <% if (ethnicityErr.length()>0) { %>class="ddlErr"<% } %>>
+                            <option value="">
+                            <%
+                            if (ddl!=null) {
+                              for (int j=0;j<ddl.size();j++) {
+                                %>
+                                <option 
+                                    value="<%=ddl.get(j)%>"
+                                    <%
+                                    if
+                                    (ddl.get(j).equals(IntakeServlet.getIntake().getEthnicity()))
+                                    {%>selected<%}%>>
+                                  <%=ddl.get(j)%>
+                                </option>
+                                <%
+                              }
+                              %>
+                              <%
+                            }
+                        %></select>
+                    </td>
+                </tr>
+                <tr>
+                <td class="fieldError"><%=maritalStatusErr%></td>
+                <td class="fieldError"><%=ethnicityErr%></td>
+               </tr>
+             </table>
+           </td>
+     </tr>  
+    <tr>
+		<td colspan="8">&nbsp;</td>
+	</tr>
+	
+	<tr>
+		<td colspan="8">
+        <table width="100%">
+        <tr>
+        <td>Height&nbsp;<input type="text" name="height" value="<%=IntakeServlet.getIntake().getHeight()%>"size="5" <% if (heightErr.length()>0) { %>class="textboxErr"<% } %>></td>
+		<td>Weight&nbsp;<input type="text" name="weight"  value="<%=IntakeServlet.getIntake().getWeight()%>"size="6" <% if (weightErr.length()>0) { %>class="textboxErr"<% } %>></td>
+		<td>Eyes Color&nbsp;
+        					<%
+                            ddl = (ArrayList)session.getAttribute("dll_eyecolor");
+                            %>
+                            <select name="eyecolor" <% if (eyecolorErr.length()>0) { %>class="ddlErr"<% } %>>
+                            <option value="">
+                            <%
+                            if (ddl!=null) {
+                              for (int j=0;j<ddl.size();j++) {
+                                %>
+                                <option 
+                                    value="<%=ddl.get(j)%>"
+                                    <%
+                                    if
+                                    (ddl.get(j).equals(IntakeServlet.getIntake().getEyeColor()))
+                                    {%>selected<%}%>>
+                                  <%=ddl.get(j)%>
+                                </option>
+                                <%
+                              }
+                              %>
+                              <%
+                            }
+                        %></select>
+        </td>
+		<td>Hair Color&nbsp;
+        					<%
+                            ddl = (ArrayList)session.getAttribute("dll_haircolor");
+                            %>
+                            <select name="haircolor" <% if (haircolorErr.length()>0) { %>class="ddlErr"<% } %>>
+                            <option value="">
+                            <%
+                            if (ddl!=null) {
+                              for (int j=0;j<ddl.size();j++) {
+                                %>
+                                <option 
+                                    value="<%=ddl.get(j)%>"
+                                    <%
+                                    if
+                                    (ddl.get(j).equals(IntakeServlet.getIntake().getHairColor()))
+                                    {%>selected<%}%>>
+                                  <%=ddl.get(j)%>
+                                </option>
+                                <%
+                              }
+                              %>
+                              <%
+                            }
+                        %></select>        
+        </td>
+        </tr>
+        <tr>
+        	<td class="fieldError"><%=heightErr%></td>
+            <td class="fieldError"><%=weightErr%></td>
+            <td class="fieldError"><%=eyecolorErr%></td>
+            <td class="fieldError"><%=haircolorErr%></td>
+        </tr>
+        </table>
+       </td>
+	</tr>
+	<tr>
+		<td colspan="8">&nbsp;</td>
+	</tr>
+	<tr>
+    <td colspan="8">
+        <table width="100%">
+        <tr>
+        <td>Where do you live?
+				&nbsp;&nbsp;
+				<%
 				ddl = (ArrayList)session.getAttribute("dll_living");
 				%>
-				<select name="health"   <% if (f1Err.length()>0){%> class="ddlErr"<% } else { %> class="ddl"<%}%>>
+				<select name="homeLocation" <% if (homeLocationErr.length()>0) { %>class="ddlErr"<% } %>>
 				<option value="">
 				<%
 				if (ddl!=null) {
@@ -205,13 +467,12 @@ font-family:Tahoma, Geneva, Helvetica;
 				  <%
 				}
 			%></td>
-		<td></td>
-		<td><b>Schooling Completed?</b> </td>
-		<td>
+		<td>Schooling Completed?
+        		&nbsp;
 				<%
 				ddl = (ArrayList)session.getAttribute("dll_education");
 				%>
-				<select name="health"   <% if (f1Err.length()>0){%> class="ddlErr"<% } else { %> class="ddl"<%}%>>
+				<select name="educationLevel" <% if (educationLevelErr.length()>0) { %>class="ddlErr"<% } %>>
 				<option value="">
 				<%
 				if (ddl!=null) {
@@ -231,19 +492,26 @@ font-family:Tahoma, Geneva, Helvetica;
 				  <%
 				}
 			%>
-		</td>
-		<td></td>
+		</td>		
         </tr>
-        
+        <tr>
+        	<td class="fieldError"><%=homeLocationErr%></td>
+            <td class="fieldError"><%=educationLevelErr%></td>
+         </tr>
+         </table>
+        </td>
      <tr>
 		<td colspan="8">&nbsp;</td>
 	</tr>
 	<tr>
-		<td>Did you graduate?</td>
-		<td>	<%
+    	<td colspan="8">
+        <table width="100%">
+        <tr>
+        <td>Did you graduate?&nbsp;
+        		<%
 				ddl = (ArrayList)session.getAttribute("dll_yesno");
 				%>
-				<select name="health"   <% if (f1Err.length()>0){%> class="ddlErr"<% } else { %> class="ddl"<%}%>>
+				<select name="graduateFlag" <% if (graduateFlagErr.length()>0) { %>class="ddlErr"<% } %>>
 				<option value="">
 				<%
 				if (ddl!=null) {
@@ -263,40 +531,11 @@ font-family:Tahoma, Geneva, Helvetica;
 				  <%
 				}
 			%></td>
-		<td></td>
-		<td>Read English? </td>
-		<td>
+		<td>Read English? &nbsp;
 				<%
 				ddl = (ArrayList)session.getAttribute("dll_yesno");
 				%>
-				<select name="health"   <% if (f1Err.length()>0){%> class="ddlErr"<% } else { %> class="ddl"<%}%>>
-				<option value="">
-				<%
-				if (ddl!=null) {
-				  for (int j=0;j<ddl.size();j++) {
-					%>
-					<option 
-						value="<%=ddl.get(j)%>"
-						<%
-						if
-						(ddl.get(j).equals(IntakeServlet.getIntake().getEnglishSpeakFlag()))
-						{%>selected<%}%>>
-					  <%=ddl.get(j)%>
-					</option>
-					<%
-				  }
-				  %>
-				  <%
-				}
-			%>
-		</td>
-		<td></td>
-        <td>Speak English? </td>
-		<td>
-				<%
-				ddl = (ArrayList)session.getAttribute("dll_yesno");
-				%>
-				<select name="health"   <% if (f1Err.length()>0){%> class="ddlErr"<% } else { %> class="ddl"<%}%>>
+				<select name="englishReadFlag" <% if (englishReadErr.length()>0) { %>class="ddlErr"<% } %>>
 				<option value="">
 				<%
 				if (ddl!=null) {
@@ -317,7 +556,39 @@ font-family:Tahoma, Geneva, Helvetica;
 				}
 			%>
 		</td>
+		<td>Speak English?&nbsp;
+		
+				<%
+				ddl = (ArrayList)session.getAttribute("dll_yesno");
+				%>
+				<select name="englishSpeakFlag" <% if (englishSpeakErr.length()>0) { %>class="ddlErr"<% } %>>
+				<option value="">
+				<%
+				if (ddl!=null) {
+				  for (int j=0;j<ddl.size();j++) {
+					%>
+					<option 
+						value="<%=ddl.get(j)%>"
+						<%
+						if
+						(ddl.get(j).equals(IntakeServlet.getIntake().getEnglishSpeakFlag()))
+						{%>selected<%}%>>
+					  <%=ddl.get(j)%>
+					</option>
+					<%
+				  }
+				  %>
+				  <%
+				}
+			%>
+		</td>
         </tr>
+        <tr>
+        	<td class="fieldError"><%=graduateFlagErr%></td>
+            <td class="fieldError"><%=englishReadErr%></td>
+            <td class="fieldError"><%=englishSpeakErr%></td>
+         </tr>
+        </table>
     <tr>
 		<td colspan="8">&nbsp;</td>
 	</tr>
@@ -366,7 +637,7 @@ font-family:Tahoma, Geneva, Helvetica;
 				<%
 				ddl = (ArrayList)session.getAttribute("dll_yesno");
 				%>
-				<select name="health"   <% if (f1Err.length()>0){%> class="ddlErr"<% } else { %> class="ddl"<%}%>>
+				<select name="health" class="dll">
 				<option value="">
 				<%
 				if (ddl!=null) {
@@ -391,7 +662,7 @@ font-family:Tahoma, Geneva, Helvetica;
 				<%
 				ddl = (ArrayList)session.getAttribute("dll_military");
 				%>
-				<select name="health"   <% if (f1Err.length()>0){%> class="ddlErr"<% } else { %> class="ddl"<%}%>>
+				<select name="health" class="dll">
 				<option value="">
 				<%
 				if (ddl!=null) {
@@ -433,7 +704,7 @@ font-family:Tahoma, Geneva, Helvetica;
         <%
 				ddl = (ArrayList)session.getAttribute("dll_yesno");
 				%>
-				<select name="health"   <% if (f1Err.length()>0){%> class="ddlErr"<% } else { %> class="ddl"<%}%>>
+				<select name="health" class="dll">
 				<option value="">
 				<%
 				if (ddl!=null) {
@@ -459,7 +730,7 @@ font-family:Tahoma, Geneva, Helvetica;
 			<%
 				ddl = (ArrayList)session.getAttribute("dll_states");
 				%>
-				<select name="health"   <% if (f1Err.length()>0){%> class="ddlErr"<% } else { %> class="ddl"<%}%>>
+				<select name="health" class="dll">
 				<option value="">
 				<%
 				if (ddl!=null) {
@@ -494,7 +765,7 @@ font-family:Tahoma, Geneva, Helvetica;
         <%
 				ddl = (ArrayList)session.getAttribute("dll_yesno");
 				%>
-				<select name="health"   <% if (f1Err.length()>0){%> class="ddlErr"<% } else { %> class="ddl"<%}%>>
+				<select name="health" class="dll">
 				<option value="">
 				<%
 				if (ddl!=null) {
@@ -519,7 +790,7 @@ font-family:Tahoma, Geneva, Helvetica;
         <%
 				ddl = (ArrayList)session.getAttribute("dll_yesno");
 				%>
-				<select name="health"   <% if (f1Err.length()>0){%> class="ddlErr"<% } else { %> class="ddl"<%}%>>
+				<select name="health" class="dll">
 				<option value="">
 				<%
 				if (ddl!=null) {
@@ -571,7 +842,7 @@ font-family:Tahoma, Geneva, Helvetica;
 		<td colspan="11">Religious Background
        <% ddl = (ArrayList)session.getAttribute("dll_religion");
 				%>
-				<select name="health"   <% if (f1Err.length()>0){%> class="ddlErr"<% } else { %> class="ddl"<%}%>>
+				<select name="health" class="dll">
 				<option value="">
 				<%
 				if (ddl!=null) {
@@ -854,7 +1125,7 @@ font-family:Tahoma, Geneva, Helvetica;
         <%
         	ddl = (ArrayList)session.getAttribute("dll_yesno");
 				%>
-				<select name="question<%=i+1%>"   <% if (f1Err.length()>0){%> class="ddlErr"<% } else { %> class="ddl"<%}%>>
+				<select name="question<%=i+1%>" class="dll">
 				<option value="">
 				<%
 				if (ddl!=null) {
@@ -895,7 +1166,7 @@ font-family:Tahoma, Geneva, Helvetica;
         <%
         	ddl = (ArrayList)session.getAttribute("dll_yesno");
 				%>
-				<select name="question<%=i+1%>"   <% if (f1Err.length()>0){%> class="ddlErr"<% } else { %> class="ddl"<%}%>>
+				<select name="question<%=i+1%>" class="dll">
 				<option value="">
 				<%
 				if (ddl!=null) {
@@ -933,7 +1204,7 @@ font-family:Tahoma, Geneva, Helvetica;
 		<%
                                     ddl = (ArrayList)session.getAttribute("dll_health");
                                     %>
-                                	<select name="health"   <% if (f1Err.length()>0){%> class="ddlErr"<% } else { %> class="ddl"<%}%>>
+                                	<select name="health" class="dll">
                                     <option value="">
                                     <%
                                     if (ddl!=null) {
@@ -957,7 +1228,7 @@ font-family:Tahoma, Geneva, Helvetica;
 									<%
                                     ddl = (ArrayList)session.getAttribute("dll_yesno");
                                     %>
-                                	<select name="currentMedicationFlag"   <% if (f1Err.length()>0){%> class="ddlErr"<% } else { %> class="ddl"<%}%>>
+                                	<select name="currentMedicationFlag" class="dll">
                                     <option value="">
                                     <%
                                     if (ddl!=null) {
@@ -981,7 +1252,7 @@ font-family:Tahoma, Geneva, Helvetica;
 									<%
 									 ddl = (ArrayList)session.getAttribute("dll_yesno");
                                     %>
-                                	<select name="needMedicationFlag"   <% if (f1Err.length()>0){%> class="ddlErr"<% } else { %> class="ddl"<%}%>>
+                                	<select name="needMedicationFlag" class="dll">
                                     <option value="">
                                     <%
                                     if (ddl!=null) {
@@ -1005,7 +1276,7 @@ font-family:Tahoma, Geneva, Helvetica;
 									<% 
 									ddl = (ArrayList)session.getAttribute("dll_yesno");
                                     %>
-                                	<select name="medicationSupplyFlag"   <% if (f1Err.length()>0){%> class="ddlErr"<% } else { %> class="ddl"<%}%>>
+                                	<select name="medicationSupplyFlag" class="dll">
                                     <option value="">
                                     <%
                                     if (ddl!=null) {
@@ -1029,7 +1300,7 @@ font-family:Tahoma, Geneva, Helvetica;
 		 							<%
                                     ddl = (ArrayList)session.getAttribute("dll_yesno");
                                     %>
-                                	<select name="doctorsAppointment"   <% if (f1Err.length()>0){%> class="ddlErr"<% } else { %> class="ddl"<%}%>>
+                                	<select name="doctorsAppointment" class="dll">
                                     <option value="">
                                     <%
                                     if (ddl!=null) {
@@ -1060,7 +1331,7 @@ font-family:Tahoma, Geneva, Helvetica;
          <%
                                     ddl = (ArrayList)session.getAttribute("dll_yesno");
                                     %>
-                                	<select name="question<%=i%>"   <% if (f1Err.length()>0){%> class="ddlErr"<% } else { %> class="ddl"<%}%>>
+                                	<select name="question<%=i%>" class="dll">
                                     <option value="">
                                     <%
                                     if (ddl!=null) {
@@ -1087,7 +1358,7 @@ font-family:Tahoma, Geneva, Helvetica;
 		 <%
                                     ddl = (ArrayList)session.getAttribute("dll_yesno");
                                     %>
-                                	<select name="eyewearFlag"   <% if (f1Err.length()>0){%> class="ddlErr"<% } else { %> class="ddl"<%}%>>
+                                	<select name="eyewearFlag" class="dll">
                                     <option value="">
                                     <%
                                     if (ddl!=null) {
@@ -1112,7 +1383,7 @@ font-family:Tahoma, Geneva, Helvetica;
 		 <%
                                     ddl = (ArrayList)session.getAttribute("dll_eyewear");
                                     %>
-                                	<select name="eyewearUsage"   <% if (f1Err.length()>0){%> class="ddlErr"<% } else { %> class="ddl"<%}%>>
+                                	<select name="eyewearUsage" class="dll">
                                     <option value="">
                                     <%
                                     if (ddl!=null) {
@@ -1149,7 +1420,7 @@ font-family:Tahoma, Geneva, Helvetica;
          <%
                                     ddl = (ArrayList)session.getAttribute("dll_yesno");
                                     %>
-                                	<select name="question<%=i%>"   <% if (f1Err.length()>0){%> class="ddlErr"<% } else { %> class="ddl"<%}%>>
+                                	<select name="question<%=i%>" class="dll">
                                     <option value="">
                                     <%
                                     if (ddl!=null) {
@@ -1192,7 +1463,7 @@ font-family:Tahoma, Geneva, Helvetica;
          <%
                                     ddl = (ArrayList)session.getAttribute("dll_yesno");
                                     %>
-                                	<select name="industrialInjuryFlag"   <% if (f1Err.length()>0){%> class="ddlErr"<% } else { %> class="ddl"<%}%>>
+                                	<select name="industrialInjuryFlag" class="dll">
                                     <option value="">
                                     <%
                                     if (ddl!=null) {
@@ -1235,7 +1506,7 @@ font-family:Tahoma, Geneva, Helvetica;
          <%
                                     ddl = (ArrayList)session.getAttribute("dll_yesno");
                                     %>
-                                	<select name="disabilityFlag"   <% if (f1Err.length()>0){%> class="ddlErr"<% } else { %> class="ddl"<%}%>>
+                                	<select name="disabilityFlag" class="dll">
                                     <option value="">
                                     <%
                                     if (ddl!=null) {
@@ -1285,7 +1556,7 @@ font-family:Tahoma, Geneva, Helvetica;
 			%>
 				<tr>
 					<td>
-						<select name="medicalConditionFlag<%=i%>"   <% if (f1Err.length()>0){%> class="ddlErr"<% } else { %> class="ddl"<%}%>>
+						<select name="medicalConditionFlag<%=i%>" class="dll">
                                     <option value="">
                                     <%
                                     if (ddl!=null) {
@@ -1311,7 +1582,7 @@ font-family:Tahoma, Geneva, Helvetica;
 					<td><%=medicalCondition%></td>								
 					<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
 					<td>			
-						<select name="medicalConditionFlag<%=i+1%>"   <% if (f1Err.length()>0){%> class="ddlErr"<% } else { %> class="ddl"<%}%>>
+						<select name="medicalConditionFlag<%=i+1%>" class="dll">
                                     <option value="">
                                     <%
                                     if (ddl!=null) {
@@ -1356,7 +1627,7 @@ font-family:Tahoma, Geneva, Helvetica;
 				</tr>
 				<tr>
 					<td>			
-						<select name="herniaOperationFlag"   <% if (f1Err.length()>0){%> class="ddlErr"<% } else { %> class="ddl"<%}%>>
+						<select name="herniaOperationFlag" class="dll">
                                     <option value="">
                                     <%
                                     if (ddl!=null) {
@@ -1403,7 +1674,7 @@ font-family:Tahoma, Geneva, Helvetica;
 	</tr>
 		<tr>
 		<td colspan="8">Have you ever been sued?&nbsp;
-			<select name="lawsuitFlag"   <% if (f1Err.length()>0){%> class="ddlErr"<% } else { %> class="ddl"<%}%>>
+			<select name="lawsuitFlag" class="dll">
                                     <option value="">
                                     <%
                                     if (ddl!=null) {
@@ -1431,7 +1702,7 @@ font-family:Tahoma, Geneva, Helvetica;
 	</tr>
 	<tr>
 		<td colspan="11">Are you involved in a lawsuit?&nbsp;
-			<select name="currentLawsuitFlag"   <% if (f1Err.length()>0){%> class="ddlErr"<% } else { %> class="ddl"<%}%>>
+			<select name="currentLawsuitFlag" class="dll">
                                     <option value="">
                                     <%
                                     if (ddl!=null) {
@@ -1462,7 +1733,7 @@ font-family:Tahoma, Geneva, Helvetica;
 	</tr>
 	<tr>
 		<td colspan="8">Ever convicted of a felony?&nbsp;
-        <select name="felonyFlag"   <% if (f1Err.length()>0){%> class="ddlErr"<% } else { %> class="ddl"<%}%>>
+        <select name="felonyFlag"  class="ddl">
                                     <option value="">
                                     <%
                                     if (ddl!=null) {
@@ -1490,7 +1761,7 @@ font-family:Tahoma, Geneva, Helvetica;
 	</tr>
     <tr>
 		<td colspan="8">Ever convicted of a sexual offense?&nbsp;
-        <select name="sexualOffenseFlag"   <% if (f1Err.length()>0){%> class="ddlErr"<% } else { %> class="ddl"<%}%>>
+        <select name="sexualOffenseFlag"   class="ddl">
                                     <option value="">
                                     <%
                                     if (ddl!=null) {

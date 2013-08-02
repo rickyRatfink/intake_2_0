@@ -13,6 +13,11 @@ public class Validator {
 	     if ((value == null) || (value.length() == 0) || (value.trim().length() == 0)) {
 	       return key + " is required.";
 	     }
+	     if ("ssn".equals(key)) {
+	    	 if ((value != null) && (value.length() < 9) || (value.trim().length() == 0)) 
+	  	       return key + " is invalid.";
+	     }
+	    	 
 	     return "";
 	   }
 	 
@@ -29,24 +34,104 @@ public class Validator {
 	     boolean b = m.matches();
 	      
 	     if (!b) {
-	      return "email address entered is not valid.";
+	      return "email address entered is not valid";
 	     }
 	     return "";
 	     }
 	   
-	   public static String validatePhone(String phone)
+	   public static String validateOnlyLetters(String key, String value)
 	   {
 	    
-	     if ((phone == null) || (phone.length() != 13)) {
+	     if (value == null||value.length()==0) return "";
+	     
+	     Pattern p = Pattern.compile("[A-Za-z]+");
+	     Matcher m = p.matcher(value);
+	     boolean b = m.matches();
+	     
+	     if (!b) {
+	      return key + " must contain only letters";
+	     }
+	     return "";
+	     }
+	   
+	   public static String validateOnlyNumbers(String key, String value)
+	   {
+	    
+	     if (value == null||value.length()==0) return "";
+	     
+	     Pattern p = Pattern.compile("[0-9]+");
+	     Matcher m = p.matcher(value);
+	     boolean b = m.matches();
+	     
+	     if (!b) {
+	      return key + " must contain only numbers";
+	     }
+	     return "";
+	     }
+	   
+	   public String validateDate(String key, String date){
+		   
+		   Pattern pattern;
+		   Matcher matcher;
+		  
+		   String DATE_PATTERN = "(0?[1-9]|[12][0-9]|3[01])/(0?[1-9]|1[012])/((19|20)\\d\\d)";
+		  
+		  	 pattern = Pattern.compile(DATE_PATTERN);
+		     matcher = pattern.matcher(date);
+		 
+		     if(matcher.matches()){
+		 
+			 matcher.reset();
+		 
+			 if(matcher.find()){
+		 
+		             String day = matcher.group(1);
+			     String month = matcher.group(2);
+			     int year = Integer.parseInt(matcher.group(3));
+		 
+			     if (day.equals("31") && 
+				  (month.equals("4") || month .equals("6") || month.equals("9") ||
+		                  month.equals("11") || month.equals("04") || month .equals("06") ||
+		                  month.equals("09"))) {
+					return key + " is invalid"; // only 1,3,5,7,8,10,12 has 31 days
+			     } else if (month.equals("2") || month.equals("02")) {
+		                  //leap year
+				  if(year % 4==0){
+					  if(day.equals("30") || day.equals("31")){
+						  return key + " is invalid";
+					  }else{
+						  return "";
+					  }
+				  }else{
+				         if(day.equals("29")||day.equals("30")||day.equals("31")){
+						  return key + " is invalid";
+				         }else{
+						  return "";
+					  }
+				  }
+			      }else{				 
+				return "";				 
+			      }
+			   }else{
+		    	      return key + " is invalid";
+			   }		  
+		     }else{
+			  return key + " is invalid";
+		     }		
+	   }
+
+	   public static String validatePhone(String key, String phone)
+	   {
+	    
+	     if (phone == null || phone.length() ==0 ) {
 	       return "Contact Phone is required";
 	     }
 	     Pattern p = Pattern.compile("^[\\(]{0,1}([0-9]){3}[\\)]{0,1}[ ]?([^0-1]){1}([0-9]){2}[ ]?[-]?[ ]?([0-9]){4}[ ]*((x){0,1}([0-9]){1,5}){0,1}$");
 	     Matcher m = p.matcher(phone);
 	     boolean b = m.matches();
 	     
-	     
 	     if (!b) {
-	      return "Contact Phone entered is not valid.";
+	      return key+" must be in form (xxx)xxx-xxxx.";
 	     }
 	     return "";
 	     }

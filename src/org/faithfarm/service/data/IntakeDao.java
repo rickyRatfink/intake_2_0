@@ -10,7 +10,7 @@ import java.util.ArrayList;
 
 import javax.servlet.http.HttpSession;
 
-import org.faithfarm.domain.Address;
+import org.faithfarm.domain.Address; 
 import org.faithfarm.domain.Intake;
 import org.faithfarm.domain.SystemUser;
 import org.faithfarm.util.Validator;
@@ -96,6 +96,109 @@ public class IntakeDao {
 			Stmt.close();
 			Conn.close();
 			session.setAttribute("RESULTS1_" + session.getId(), results1);
+			
+		} catch (SQLException E) {
+			retCode = 0;
+			session.setAttribute("SYSTEM_ERROR", E.getMessage());
+		} catch (ClassNotFoundException e) {
+			retCode = 0;
+			session.setAttribute("SYSTEM_ERROR", e.getMessage());
+			e.printStackTrace();
+		}
+
+		return retCode;
+	}
+
+	public int getQuestions(HttpSession session) {
+		int retCode = 1;
+		ArrayList list = new ArrayList();
+		
+		try {
+
+			Connection Conn = this.getConnection();
+
+			// Do something with the Connection
+			Statement Stmt = Conn.createStatement();
+			StringBuffer s = new StringBuffer("SELECT * FROM FFARM_DEV.QUESTION ORDER BY QUESTION_ID ");
+			
+			ResultSet RS = Stmt.executeQuery(s.toString());
+			while (RS.next()) {
+				String question = RS.getString(2);
+				list.add(question);
+			}
+			RS.close();
+			Stmt.close();
+			Conn.close();
+			session.setAttribute("questions", list);
+			
+		} catch (SQLException E) {
+			retCode = 0;
+			session.setAttribute("SYSTEM_ERROR", E.getMessage());
+		} catch (ClassNotFoundException e) {
+			retCode = 0;
+			session.setAttribute("SYSTEM_ERROR", e.getMessage());
+			e.printStackTrace();
+		}
+
+		return retCode;
+	}
+
+	
+	public int getMedicalConditions(HttpSession session) {
+		int retCode = 1;
+		ArrayList list = new ArrayList();
+		
+		try {
+
+			Connection Conn = this.getConnection();
+
+			// Do something with the Connection
+			Statement Stmt = Conn.createStatement();
+			StringBuffer s = new StringBuffer("SELECT * FROM FFARM_DEV.MEDICAL_CONDITION  ");
+			
+			ResultSet RS = Stmt.executeQuery(s.toString());
+			while (RS.next()) {
+				String mc = RS.getString(2);
+				list.add(mc);
+			}
+			RS.close();
+			Stmt.close();
+			Conn.close();
+			session.setAttribute("medicalCondition", list);
+			
+		} catch (SQLException E) {
+			retCode = 0;
+			session.setAttribute("SYSTEM_ERROR", E.getMessage());
+		} catch (ClassNotFoundException e) {
+			retCode = 0;
+			session.setAttribute("SYSTEM_ERROR", e.getMessage());
+			e.printStackTrace();
+		}
+
+		return retCode;
+	}
+	
+	public int getJobSkills(HttpSession session) {
+		int retCode = 1;
+		ArrayList list = new ArrayList();
+		
+		try {
+
+			Connection Conn = this.getConnection();
+
+			// Do something with the Connection
+			Statement Stmt = Conn.createStatement();
+			StringBuffer s = new StringBuffer("SELECT * FROM FFARM_DEV.JOB_SKILL  ");
+			
+			ResultSet RS = Stmt.executeQuery(s.toString());
+			while (RS.next()) {
+				String js = RS.getString(2);
+				list.add(js);
+			}
+			RS.close();
+			Stmt.close();
+			Conn.close();
+			session.setAttribute("jobSkill", list);
 			
 		} catch (SQLException E) {
 			retCode = 0;
