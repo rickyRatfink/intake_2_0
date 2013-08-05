@@ -86,6 +86,18 @@ String englishReadErr = (String)request.getAttribute("englishReadErr");
 String englishSpeakErr = (String)request.getAttribute("englishSpeakErr");
    if (englishSpeakErr==null) englishSpeakErr="";
 
+String veteranFlagErr = (String)request.getAttribute("veteranFlagErr");
+   if (veteranFlagErr==null) veteranFlagErr="";
+
+String branchOfServiceErr = (String)request.getAttribute("branchOfServiceErr");
+   if (branchOfServiceErr==null) branchOfServiceErr="";
+
+String rankErr = (String)request.getAttribute("rankErr");
+   if (rankErr==null) rankErr="";
+
+String lengthOfServiceErr = (String)request.getAttribute("lengthOfServiceErr");
+   if (lengthOfServiceErr==null) lengthOfServiceErr="";
+
 
 String Err = (String)request.getAttribute("Err");
    if (Err==null) Err="";
@@ -593,19 +605,19 @@ function moveOnMax(field,nextFieldID){
 		<td colspan="8">&nbsp;</td>
 	</tr>
      <tr>
-		<td colspan="8"><b>Current Income?</b><input type="text" name="incomeAmount" size="10"/>&nbsp;&nbsp;<b>Check One:</b>&nbsp;
-			<input type="checkbox" name="incomeWeeklyFlag" value="YES" />Weekly&nbsp;&nbsp;
-            <input type="checkbox" name="incomeMonthlyFlag" value="YES" />Bi-Weekly&nbsp;&nbsp;
-            <input type="checkbox" name="incomeMonthlyFlag" value="YES" />Monthly&nbsp;&nbsp;
-            <input type="checkbox" name="incomeYearlyFlag" value="YES" />Yearly
+		<td colspan="8"><b>Current Income?</b><input type="text" name="incomeAmount" value="<%=IntakeServlet.getIntake().getIncomeAmount() %>" size="10" maxlength="10"/>&nbsp;&nbsp;<b>Check One:</b>&nbsp;
+			<input type="checkbox" name="incomeWeeklyFlag" value="YES" <% if ("YES".equals(IntakeServlet.getIntake().getIncomeWeeklyFlag())) { %>checked<% } %>/>Weekly&nbsp;&nbsp;
+            <input type="checkbox" name="incomeBiWeeklyFlag" value="YES" <% if ("YES".equals(IntakeServlet.getIntake().getIncomeBiWeeklyFlag())) { %>checked<% } %> />Bi-Weekly&nbsp;&nbsp;
+            <input type="checkbox" name="incomeMonthlyFlag" value="YES" <% if ("YES".equals(IntakeServlet.getIntake().getIncomeMonthlyFlag())) { %>checked<% } %>/>Monthly&nbsp;&nbsp;
+            <input type="checkbox" name="incomeYearlyFlag" value="YES" <% if ("YES".equals(IntakeServlet.getIntake().getIncomeYearlyFlag())) { %>checked<% } %> />Yearly
          </td>
      </tr>
      <tr>
 		<td colspan="8">&nbsp;</td>
 	</tr>
-	<tr>
+	<tr> 
 		<td colspan="8">Source(s)?&nbsp;&nbsp;
-			<input type="text" name="incomeSource" size="40" />
+			<input type="text" name="incomeSource" value="<%=IntakeServlet.getIntake().getIncomeSource() %>" size="40" maxlength="15" onkeyup="ucase(this)" />
         </td>	
     </tr>
 	<tr>
@@ -613,9 +625,9 @@ function moveOnMax(field,nextFieldID){
 	</tr>
     <tr>
 		<td colspan="8"><b>Do you receive government benefits?</b>&nbsp;&nbsp;
-			<input type="checkbox" name="government_benefits" value="Social Security" />Social Security&nbsp;&nbsp;
-            <input type="checkbox" name="government_benefits" value="VA" />VA&nbsp;&nbsp;
-            <input type="checkbox" name="government_benefits" value="Workman's Comp" />Workman's Comp
+			<input type="checkbox" name="ssFlag" value="YES"  <% if ("YES".equals(IntakeServlet.getIntake().getSSFlag())) { %>checked<% } %> />Social Security&nbsp;&nbsp;
+            <input type="checkbox" name="vaFlag" value="YES"  <% if ("YES".equals(IntakeServlet.getIntake().getVAFlag())) { %>checked<% } %>/>VA&nbsp;&nbsp;
+            <input type="checkbox" name="wcFlag" value="YES"  <% if ("YES".equals(IntakeServlet.getIntake().getWCFlag())) { %>checked<% } %> />Workman's Comp
          </td>
      </tr>
      <tr>
@@ -623,7 +635,7 @@ function moveOnMax(field,nextFieldID){
 	</tr>
 	<tr>
 		<td colspan="8">Other benefits?&nbsp;&nbsp;
-			<input type="text" name="other_benefits" size="20" />
+			<input type="text" name="other_benefits" size="20" maxlength="20"  value="<%=IntakeServlet.getIntake().getOtherBenefits()%>" />
         </td>	
     </tr>
     
@@ -633,11 +645,15 @@ function moveOnMax(field,nextFieldID){
 	<tr>
 		<td colspan="8">&nbsp;</td>
 	</tr>
-     <td colspan="4"><b>Are you a US Veteran?</b> &nbsp;
+     <td colspan="8">
+     	<table width="100%">
+        <tr>
+        <td width="220">
+        <b>Are you a US Veteran?</b> &nbsp;
 				<%
 				ddl = (ArrayList)session.getAttribute("dll_yesno");
 				%>
-				<select name="health" class="dll">
+				<select name="veteranFlag" <% if (veteranFlagErr.length()>0) { %>class="ddlErr"<% } %> >
 				<option value="">
 				<%
 				if (ddl!=null) {
@@ -647,7 +663,7 @@ function moveOnMax(field,nextFieldID){
 						value="<%=ddl.get(j)%>"
 						<%
 						if
-						(ddl.get(j).equals(IntakeServlet.getIntake().getVeteranStatus()))
+						(ddl.get(j).equals(IntakeServlet.getIntake().getVeteranFlag()))
 						{%>selected<%}%>>
 					  <%=ddl.get(j)%>
 					</option>
@@ -658,11 +674,11 @@ function moveOnMax(field,nextFieldID){
 				}
 			%>
 		</td>
-        <td colspan="4">Branch of Service? &nbsp;
+        <td>Branch of Service? &nbsp;
 				<%
 				ddl = (ArrayList)session.getAttribute("dll_military");
 				%>
-				<select name="health" class="dll">
+				<select name="branchOfService" <% if (branchOfServiceErr.length()>0) { %>class="ddlErr"<% } %>>
 				<option value="">
 				<%
 				if (ddl!=null) {
@@ -683,19 +699,33 @@ function moveOnMax(field,nextFieldID){
 				}
 			%>
 		</td>
+         </tr>
+         <tr>
+            <td class="fieldError"><%=veteranFlagErr%></td>
+            <td class="fieldError"><%=branchOfServiceErr%></td>
+         </tr>
+        </table>
+       </td>
+     </tr>
+  
     <tr>
-		<td colspan="8">&nbsp;</td>
-	</tr>
-    <tr>
-    	<td colspan="4">Highest Rank&nbsp;&nbsp;
-			<input type="text" name="rank" size="20" value="<%=IntakeServlet.getIntake().getRank()%>" />
-        </td>	
-        <td colspan="4">Length Of Service&nbsp;&nbsp;
-			<input type="text" name="lengthOfService" size="20" value="<%=IntakeServlet.getIntake().getLengthOfService()%>" />
-        </td>	
-    
-    </tr>
-    
+    	<td colspan="8">
+            <table width="100%">
+            <tr>
+            <td width="220">Highest Rank&nbsp;&nbsp;
+                <input type="text" name="rank" size="20" maxlength="20" value="<%=IntakeServlet.getIntake().getRank()%>" <% if (rankErr.length()>0) { %>class="textboxErr"<% } %> />
+            </td>	
+            <td >Length Of Service&nbsp;&nbsp;
+                <input type="text" name="lengthOfService" size="20" maxlength="20" value="<%=IntakeServlet.getIntake().getLengthOfService()%>" <% if (lengthOfServiceErr.length()>0) { %>class="textboxErr"<% } %> />
+            </td>	
+        </tr>
+         <tr>
+            <td class="fieldError"><%=rankErr%></td>
+            <td class="fieldError"><%=lengthOfServiceErr%></td>
+         </tr>
+         </table>
+     </td>
+     </tr>
      <tr>
 		<td colspan="8">&nbsp;</td>
 	</tr>
