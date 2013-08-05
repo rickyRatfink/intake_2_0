@@ -121,6 +121,28 @@ public class IntakeServlet extends HttpServlet {
 		this.getIntake().setEnglishSpeakFlag(valid8r.cleanData(req.getParameter("englishSpeakFlag")));
 		this.getIntake().setEnglishReadFlag(valid8r.cleanData(req.getParameter("englishReadFlag")));
 		
+		this.getIntake().setIncomeAmount(valid8r.cleanData(req.getParameter("incomeAmount")));
+		this.getIntake().setIncomeWeeklyFlag(valid8r.cleanData(req.getParameter("incomeWeeklyFlag")));
+		this.getIntake().setIncomeBiWeeklyFlag(valid8r.cleanData(req.getParameter("incomeBiWeeklyFlag")));
+		this.getIntake().setIncomeMonthlyFlag(valid8r.cleanData(req.getParameter("incomeMonthlyFlag")));
+		this.getIntake().setIncomeYearlyFlag(valid8r.cleanData(req.getParameter("incomeYearlyFlag")));
+		this.getIntake().setIncomeSource(valid8r.cleanData(req.getParameter("incomeSource")));
+		
+		this.getIntake().setSSFlag(valid8r.cleanData(req.getParameter("ssFlag")));
+		this.getIntake().setVAFlag(valid8r.cleanData(req.getParameter("vaFlag")));
+		this.getIntake().setWCFlag(valid8r.cleanData(req.getParameter("wcFlag")));
+		this.getIntake().setOtherBenefits(valid8r.cleanData(req.getParameter("other_benefits")));
+		
+		this.getIntake().setVeteranFlag(valid8r.cleanData(req.getParameter("veteranFlag")));
+		this.getIntake().setBranchOfService(valid8r.cleanData(req.getParameter("branchOfService")));
+		this.getIntake().setRank(valid8r.cleanData(req.getParameter("rank")));
+		this.getIntake().setLengthOfService(valid8r.cleanData(req.getParameter("lengthOfService")));
+		//this.getIntake().set(valid8r.cleanData(req.getParameter("")));
+		//this.getIntake().set(valid8r.cleanData(req.getParameter("")));
+		
+		//this.getIntake().set(valid8r.cleanData(req.getParameter("")));
+		
+		
 	} 
 	
 	private void loadDropDownLists(HttpSession session) {

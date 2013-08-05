@@ -25,7 +25,7 @@ public class IntakeDao {
 			ClassNotFoundException {
 
 		Class.forName("com.mysql.jdbc.Driver");
-
+ 
 		Connection Conn = DriverManager.getConnection(
 				"jdbc:mysql://localhost:3306/ffarm_dev", "root", "admin");
 

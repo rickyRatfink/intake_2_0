@@ -44,7 +44,7 @@ public class Intake implements Serializable {
 	private static String brothers="";
 	private static String sisters="";
 	private static String children="";
-	private static String veteranStatus = "";
+	private static String veteranFlag = "NO";
 	private static String branchOfService = "";
 	private static String rank = "";
 	private static String lengthOfService = "";
@@ -169,6 +169,10 @@ public class Intake implements Serializable {
 	private static String sexualOffenseDetails= "";
 	private static String felonyQty="";
 	
+	private static String SSFlag="";
+	private static String VAFlag="";
+	private static String WCFlag="";
+	private static String otherBenefits="";
 	
 	private static String probationFlag = "NO";
 	private static String probationCountyState = "";
@@ -192,6 +196,7 @@ public class Intake implements Serializable {
 	private static String incomeAmount = "";
 	private static String incomeSource = "";
 	private static String incomeWeeklyFlag = "NO";
+	private static String incomeBiWeeklyFlag = "NO";
 	private static String incomeMonthlyFlag = "NO";
 	private static String incomeYearlyFlag = "NO";
 	private static ArrayList answer = new ArrayList();
@@ -459,11 +464,12 @@ public class Intake implements Serializable {
 	public static void setChildren(String children) {
 		Intake.children = children;
 	}
-	public static String getVeteranStatus() {
-		return veteranStatus;
+	
+	public static String getVeteranFlag() {
+		return veteranFlag;
 	}
-	public static void setVeteranStatus(String veteranStatus) {
-		Intake.veteranStatus = veteranStatus;
+	public static void setVeteranFlag(String veteranFlag) {
+		Intake.veteranFlag = veteranFlag;
 	}
 	public static String getBranchOfService() {
 		return branchOfService;
@@ -1501,6 +1507,42 @@ public class Intake implements Serializable {
 	}
 	public static void setConsent(String consent) {
 		Consent = consent;
+	}
+	public static String getPrivateHealthCoverage() {
+		return privateHealthCoverage;
+	}
+	public static void setPrivateHealthCoverage(String privateHealthCoverage) {
+		Intake.privateHealthCoverage = privateHealthCoverage;
+	}
+	public static String getIncomeBiWeeklyFlag() {
+		return incomeBiWeeklyFlag;
+	}
+	public static void setIncomeBiWeeklyFlag(String incomeBiWeeklyFlag) {
+		Intake.incomeBiWeeklyFlag = incomeBiWeeklyFlag;
+	}
+	public static String getSSFlag() {
+		return SSFlag;
+	}
+	public static void setSSFlag(String sSFlag) {
+		SSFlag = sSFlag;
+	}
+	public static String getVAFlag() {
+		return VAFlag;
+	}
+	public static void setVAFlag(String vAFlag) {
+		VAFlag = vAFlag;
+	}
+	public static String getWCFlag() {
+		return WCFlag;
+	}
+	public static void setWCFlag(String wCFlag) {
+		WCFlag = wCFlag;
+	}
+	public static String getOtherBenefits() {
+		return otherBenefits;
+	}
+	public static void setOtherBenefits(String otherBenefits) {
+		Intake.otherBenefits = otherBenefits;
 	}
 	
 	
