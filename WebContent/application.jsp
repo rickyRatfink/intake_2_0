@@ -98,8 +98,47 @@ String rankErr = (String)request.getAttribute("rankErr");
 String lengthOfServiceErr = (String)request.getAttribute("lengthOfServiceErr");
    if (lengthOfServiceErr==null) lengthOfServiceErr="";
 
+String driversLicenseFlagErr = (String)request.getAttribute("driversLicenseFlagErr");
+   if (driversLicenseFlagErr==null) driversLicenseFlagErr="";
+   
+   String driversLicenseStateErr = (String)request.getAttribute("driversLicenseStateErr");
+   if (driversLicenseStateErr==null) driversLicenseStateErr="";
+   
+   String driversLicenseNumberErr = (String)request.getAttribute("driversLicenseNumberErr");
+   if (driversLicenseNumberErr==null) driversLicenseNumberErr="";
+   
+      String motherLivingFlagErr = (String)request.getAttribute("motherLivingFlagErr");
+   if (motherLivingFlagErr==null) motherLivingFlagErr="";
+   
+      String fatherLivingFlagErr = (String)request.getAttribute("fatherLivingFlagErr");
+   if (fatherLivingFlagErr==null) fatherLivingFlagErr="";
+ 
+ 
+   String religiousExperienceErr = (String)request.getAttribute("religiousExperienceErr");
+   if (religiousExperienceErr==null) religiousExperienceErr="";
 
-String Err = (String)request.getAttribute("Err");
+    String religionErr = (String)request.getAttribute("religionErr");
+   if (religionErr==null) religionErr="";
+
+String sober1YearsErr = (String)request.getAttribute("sober1YearsErr");
+   if (sober1YearsErr==null) sober1YearsErr="";
+
+String sober3YearsErr = (String)request.getAttribute("sober3YearsErr");
+   if (sober3YearsErr==null) sober3YearsErr="";
+
+String yearsAttendedErr = (String)request.getAttribute("yearsAttendedErr");
+   if (yearsAttendedErr==null) yearsAttendedErr="";
+
+String previousFaithFarmFlagErr = (String)request.getAttribute("previousFaithFarmFlagErr");
+   if (previousFaithFarmFlagErr==null) previousFaithFarmFlagErr="";
+   
+   String previousFaithFarmErr = (String)request.getAttribute("previousFaithFarmErr");
+   if (previousFaithFarmErr==null) previousFaithFarmErr="";
+   
+   String ffYearsAttendedErr = (String)request.getAttribute("ffYearsAttendedErr");
+   if (ffYearsAttendedErr==null) ffYearsAttendedErr="";
+   
+   String Err = (String)request.getAttribute("Err");
    if (Err==null) Err="";
 
 	
@@ -645,6 +684,7 @@ function moveOnMax(field,nextFieldID){
 	<tr>
 		<td colspan="8">&nbsp;</td>
 	</tr>
+    <tr>
      <td colspan="8">
      	<table width="100%">
         <tr>
@@ -672,7 +712,7 @@ function moveOnMax(field,nextFieldID){
 				  %>
 				  <%
 				}
-			%>
+			%></select>
 		</td>
         <td>Branch of Service? &nbsp;
 				<%
@@ -697,7 +737,7 @@ function moveOnMax(field,nextFieldID){
 				  %>
 				  <%
 				}
-			%>
+			%></select>
 		</td>
          </tr>
          <tr>
@@ -707,7 +747,9 @@ function moveOnMax(field,nextFieldID){
         </table>
        </td>
      </tr>
-  
+  	<tr>
+		<td colspan="8">&nbsp;</td>
+	</tr>
     <tr>
     	<td colspan="8">
             <table width="100%">
@@ -730,11 +772,14 @@ function moveOnMax(field,nextFieldID){
 		<td colspan="8">&nbsp;</td>
 	</tr>
     <tr>
-    	<td colspan="4"><b>Have a Valid Driver's License</b>&nbsp;&nbsp;
-        <%
+     <td colspan="8">
+     	<table width="100%">
+        <tr>
+        <td width="260">Have a Valid Driver's License?&nbsp;&nbsp;
+        		<%
 				ddl = (ArrayList)session.getAttribute("dll_yesno");
 				%>
-				<select name="health" class="dll">
+				<select name="driversLicenseFlag" <% if (driversLicenseFlagErr.length()>0) { %>class="ddlErr"<% } %>>
 				<option value="">
 				<%
 				if (ddl!=null) {
@@ -753,14 +798,14 @@ function moveOnMax(field,nextFieldID){
 				  %>
 				  <%
 				}
-			%>
+			%></select>
         </td>
         <td>
         	DL State
 			<%
 				ddl = (ArrayList)session.getAttribute("dll_states");
 				%>
-				<select name="health" class="dll">
+				<select name="driversLicenseState" <% if (driversLicenseStateErr.length()>0) { %>class="ddlErr"<% } %>>
 				<option value="">
 				<%
 				if (ddl!=null) {
@@ -779,23 +824,35 @@ function moveOnMax(field,nextFieldID){
 				  %>
 				  <%
 				}
-			%>
+			%></select>
         </td>	
         <td>DL#:&nbsp;&nbsp;
-			<input type="text" name="driversLicenseNumber" size="20" value="<%=IntakeServlet.getIntake().getLengthOfService()%>" />
+			<input type="text" name="driversLicenseNumber" size="22" maxlength="22" value="<%=IntakeServlet.getIntake().getLengthOfService()%>" <% if (driversLicenseNumberErr.length()>0) { %>class="textboxErr"<% } %>/>
         </td>	
        
     </tr>
+    	 <tr>
+            <td class="fieldError"><%=driversLicenseFlagErr%></td>
+            <td class="fieldError"><%=driversLicenseStateErr%></td>
+            <td class="fieldError"><%=driversLicenseNumberErr%></td>
+         </tr>
+    </table>
+    </td></tr>
     
     <tr>
 		<td colspan="8">&nbsp;</td>
 	</tr>
     <tr>
-    	<td colspan="4"><b>Your Family:</b>&nbsp;&nbsp;Is your Mother living?
+     <td colspan="8">
+     	<table width="100%">
+        <tr>
+        <td width="90">
+        	<b>Your Family:</b>&nbsp;&nbsp;</td>
+            <td width="200">Is your Mother living?
         <%
 				ddl = (ArrayList)session.getAttribute("dll_yesno");
 				%>
-				<select name="health" class="dll">
+				<select name="motherLivingFlag" <% if (motherLivingFlagErr.length()>0) { %>class="ddlErr"<% } %>>
 				<option value="">
 				<%
 				if (ddl!=null) {
@@ -805,7 +862,7 @@ function moveOnMax(field,nextFieldID){
 						value="<%=ddl.get(j)%>"
 						<%
 						if
-						(ddl.get(j).equals(IntakeServlet.getIntake().getMotherLiving()))
+						(ddl.get(j).equals(IntakeServlet.getIntake().getMotherLivingFlag()))
 						{%>selected<%}%>>
 					  <%=ddl.get(j)%>
 					</option>
@@ -814,13 +871,13 @@ function moveOnMax(field,nextFieldID){
 				  %>
 				  <%
 				}
-			%>
+			%></select>
         </td>
-           	<td colspan="4">Is your Father living?
+           	<td>Is your Father living?
         <%
 				ddl = (ArrayList)session.getAttribute("dll_yesno");
 				%>
-				<select name="health" class="dll">
+				<select name="fatherLivingFlag" <% if (fatherLivingFlagErr.length()>0) { %>class="ddlErr"<% } %>>
 				<option value="">
 				<%
 				if (ddl!=null) {
@@ -830,7 +887,7 @@ function moveOnMax(field,nextFieldID){
 						value="<%=ddl.get(j)%>"
 						<%
 						if
-						(ddl.get(j).equals(IntakeServlet.getIntake().getFatherLiving()))
+						(ddl.get(j).equals(IntakeServlet.getIntake().getFatherLivingFlag()))
 						{%>selected<%}%>>
 					  <%=ddl.get(j)%>
 					</option>
@@ -839,31 +896,50 @@ function moveOnMax(field,nextFieldID){
 				  %>
 				  <%
 				}
-			%>
-        </td>
+			%></select>
+        	</td>
+         </tr>
+         <tr>
+            <td class="fieldError"></td>
+            <td class="fieldError"><%=motherLivingFlagErr%></td>
+            <td class="fieldError"><%=fatherLivingFlagErr%></td>
+         </tr>
+         </table>
+     </td>
      </tr>
+     
      <tr>
 		<td colspan="8">&nbsp;</td>
 	</tr>
     <tr>
-    	<td colspan="8">Relationship with Mother?&nbsp;&nbsp;<input type="text" name="motherRelationship" size="20" value="<%=IntakeServlet.getIntake().getMotherRelationship()%>" />&nbsp;&nbsp;&nbsp;&nbsp;
-    					Relationship with Father?&nbsp;&nbsp;<input type="text" name="fatherRelationship" size="20" value="<%=IntakeServlet.getIntake().getFatherRelationship()%>" />
-    <tr>
+     <td colspan="8">
+     	<table width="100%">
+        <tr>
+        <td width="220">Relationship with Mother?&nbsp;&nbsp;<input type="text" name="motherRelationship" size="20" maxlength="20" value="<%=IntakeServlet.getIntake().getMotherRelationship()%>" onkeyup="ucase(this)"  />&nbsp;&nbsp;&nbsp;&nbsp;</td>
+    	<td>Relationship with Father?&nbsp;&nbsp;<input type="text" name="fatherRelationship" size="20" maxlength="20" value="<%=IntakeServlet.getIntake().getFatherRelationship()%>" onkeyup="ucase(this)"  />
+        <tr>
+        
+        </table>
+    </td></tr>
+    
     <tr>
 		<td colspan="8">&nbsp;</td>
 	</tr>
     <tr>
-    	<td colspan="8">Number of Brothers&nbsp;&nbsp;<input type="text" name="brothers" size="2" value="<%=IntakeServlet.getIntake().getBrothers()%>" />&nbsp;&nbsp;&nbsp;&nbsp;
-        				Number of Sisters&nbsp;&nbsp;<input type="text" name="sisters" size="2" value="<%=IntakeServlet.getIntake().getSisters()%>" />&nbsp;&nbsp;&nbsp;&nbsp;
-        				Number of Children&nbsp;&nbsp;<input type="text" name="children" size="2" value="<%=IntakeServlet.getIntake().getChildren()%>" />
+    	<td colspan="8">Number of Brothers&nbsp;&nbsp;<input type="text" name="brothers" size="2" value="<%=IntakeServlet.getIntake().getBrothers()%>" onkeypress="return isNumberKey(event)" />&nbsp;&nbsp;&nbsp;&nbsp;
+        				Number of Sisters&nbsp;&nbsp;<input type="text" name="sisters" size="2" value="<%=IntakeServlet.getIntake().getSisters()%>" onkeypress="return isNumberKey(event)" />&nbsp;&nbsp;&nbsp;&nbsp;
+        				Number of Children&nbsp;&nbsp;<input type="text" name="children" size="2" value="<%=IntakeServlet.getIntake().getChildren()%>" onkeypress="return isNumberKey(event)" />
     <tr>
 		<td colspan="8">&nbsp;</td>
 	</tr>
 	<tr>
-		<td colspan="11"><b>Describe your religious/spiritual experiences:</b></td>
+		<td colspan="8"><b>Describe your religious/spiritual experiences:</b></td>
 	</tr>
+    <tr>
+    	<td class="fieldError"><%=religiousExperienceErr%></td>
+    </tr>
 	<tr>
-		<td colspan="11"><textarea rows="5" name="Describe_your_religious_experiences" cols="93"></textarea></td>
+		<td colspan="8"><textarea rows="5" name="Describe_your_religious_experiences" cols="93" <% if (religiousExperienceErr.length()>0) { %>class="areaErr"<% } %>><%=IntakeServlet.getIntake().getReligiousExperience()%></textarea></td>
 	</tr>
     <tr>
 		<td colspan="8">&nbsp;</td>
@@ -872,7 +948,7 @@ function moveOnMax(field,nextFieldID){
 		<td colspan="11">Religious Background
        <% ddl = (ArrayList)session.getAttribute("dll_religion");
 				%>
-				<select name="health" class="dll">
+				<select name="religion" <% if (religionErr.length()>0) { %>class="ddlErr"<% } %>>
 				<option value="">
 				<%
 				if (ddl!=null) {
@@ -891,9 +967,12 @@ function moveOnMax(field,nextFieldID){
 				  %>
 				  <%
 				}
-			%>
+			%></select>
         </td>
 	</tr>
+    <tr>
+    	<td class="fieldError"><%=religionErr%></td>
+    </tr>
     
     
     
@@ -911,11 +990,11 @@ function moveOnMax(field,nextFieldID){
       </tr>
       <tr>
       	<td colspan="8">
-			<input type="checkbox" name="homelessTime" value="YES" />&nbsp;Less than 2 weeks&nbsp;&nbsp;
-            <input type="checkbox" name="homelessTime" value="YES" />&nbsp;2 weeks to 1 month&nbsp;&nbsp;
-            <input type="checkbox" name="homelessTime" value="YES" />&nbsp;1 to 3 months&nbsp;&nbsp;
-            <input type="checkbox" name="homelessTime" value="YES" />&nbsp;3 months to 1 year&nbsp;&nbsp;
-            <input type="checkbox" name="homelessTime" value="YES" />&nbsp;more than 1 year
+			<input type="radio" name="homelessLenghtOfTime" value="Less than 2 weeks" />&nbsp;Less than 2 weeks&nbsp;&nbsp;
+            <input type="radio" name="homelessLenghtOfTime" value="2 weeks to 1 month" />&nbsp;2 weeks to 1 month&nbsp;&nbsp;
+            <input type="radio" name="homelessLenghtOfTime" value="1 to 3 months" />&nbsp;1 to 3 months&nbsp;&nbsp;
+            <input type="radio" name="homelessLenghtOfTime" value="3 months to 1 year" />&nbsp;3 months to 1 year&nbsp;&nbsp;
+            <input type="radio" name="homelessLenghtOfTime" value="more than 1 year" />&nbsp;more than 1 year
          </td>
      </tr>
      <tr>
@@ -926,10 +1005,10 @@ function moveOnMax(field,nextFieldID){
       </tr>
       <tr>
       	<td colspan="8">
-			<input type="checkbox" name="homelessTime" value="YES" />&nbsp;Never&nbsp;&nbsp;
-            <input type="checkbox" name="homelessTime" value="YES" />&nbsp;1 to 2 times&nbsp;&nbsp;
-            <input type="checkbox" name="homelessTime" value="YES" />&nbsp;more than 2 times in 2 years&nbsp;&nbsp;
-            <input type="checkbox" name="homelessTime" value="YES" />&nbsp;Long term
+			<input type="radio" name="homelessHowOften" value="Never" />&nbsp;Never&nbsp;&nbsp;
+            <input type="radio" name="homelessHowOften" value="1 to 2 times" />&nbsp;1 to 2 times&nbsp;&nbsp;
+            <input type="radio" name="homelessHowOften" value="more than 2 times in 2 years" />&nbsp;more than 2 times in 2 years&nbsp;&nbsp;
+            <input type="radio" name="homelessHowOften" value="Long term" />&nbsp;Long term
         </td>
      </tr>
      <tr>
@@ -937,23 +1016,16 @@ function moveOnMax(field,nextFieldID){
       </tr>
       <tr>
       	<td colspan="8">
-			<input type="checkbox" name="homelessTime" value="YES" />&nbsp;Lack of a fixed, regular and adequate night time residence.<br />
-            <input type="checkbox" name="homelessTime" value="YES" />&nbsp;Primary night time residence is a shelter designed to provide temporary living accomodations (including welfar hotels, congregate shelters, and transitional housing for the mentally ill).<br />
-            <input type="checkbox" name="homelessTime" value="YES" />&nbsp;Primary night time residence is an institution that provides a temporary residence for individuals intended to be institutionalized.<br />
-            <input type="checkbox" name="homelessTime" value="YES" />&nbsp;Primary night time residence is a public or private place not designated for, or ordinarily used as a regular sleeping accomodation for human beings.
+			<input type="radio" name="homelessReason" value="Lack of a fixed, regular and adequate night time residence." />&nbsp;Lack of a fixed, regular and adequate night time residence.<br />
+            <input type="radio" name="homelessReason" value="Primary night time residence is a shelter designed to provide temporary living accomodations (including welfar hotels, congregate shelters, and transitional housing for the mentally ill)." />&nbsp;Primary night time residence is a shelter designed to provide temporary living accomodations (including welfar hotels, congregate shelters, and transitional housing for the mentally ill).<br />
+            <input type="radio" name="homelessReason" value="Primary night time residence is an institution that provides a temporary residence for individuals intended to be institutionalized." />&nbsp;Primary night time residence is an institution that provides a temporary residence for individuals intended to be institutionalized.<br />
+            <input type="radio" name="homelessReason" value="Primary night time residence is a public or private place not designated for, or ordinarily used as a regular sleeping accomodation for human beings." />&nbsp;Primary night time residence is a public or private place not designated for, or ordinarily used as a regular sleeping accomodation for human beings.
         </td>
      </tr>
      <tr>
 		<td colspan="8">&nbsp;</td>
 	</tr>
-	<tr>
-		<td colspan="8">Source(s)?&nbsp;&nbsp;
-			<input type="text" name="incomeSource" size="40" />
-        </td>	
-    </tr>
-	<tr>
-		<td colspan="8">&nbsp;</td>
-	</tr>
+	
     
     
     
@@ -968,7 +1040,7 @@ function moveOnMax(field,nextFieldID){
 		<td colspan="8">&nbsp;</td>
 	</tr>
 	<tr>
-		<td colspan="11"><b>Chemical Dependency (Check and Answer all that apply):</b></td>
+		<td colspan="11"><b>Chemical Dependency (Answer all that apply):</b></td>
 	</tr>
 	<tr>
 		<td  valign="top" colspan="4">
@@ -1082,36 +1154,79 @@ function moveOnMax(field,nextFieldID){
 	    </tr>
     
         <tr>
-			<td colspan="8" valign="top">Longest time sober in past 3 years?&nbsp;<input type="text" name="sober3Years" value="<%=IntakeServlet.getIntake().getSober3Years()%>" size="8">
-			&nbsp;&nbsp;in the last year? <input type="text" name="sober1Years" <%=IntakeServlet.getIntake().getSober1Years()%> size="9">
+			<td valign="top">Longest time sober in past 3 years?&nbsp;<input type="text" name="sober3Years" value="<%=IntakeServlet.getIntake().getSober3Years()%>" size="9" maxlength="15" <% if (sober3YearsErr.length()>0) { %>class="textboxErr"<% } %>></td>
+			<td valign="top">in the last year? <input type="text" name="sober1Years" value="<%=IntakeServlet.getIntake().getSober1Years()%>" size="9" maxlength="15" <% if (sober1YearsErr.length()>0) { %>class="textboxErr"<% } %>>
         	</td>
+        </tr>
+        <tr>
+        	<td class="fieldError"><%=sober3YearsErr%></td>
+            <td class="fieldError"><%=sober1YearsErr%></td>
         </tr>
         <tr>
 			<td colspan="8">&nbsp;</td>
 		</tr>
         <tr>
     	<td colspan="8">
-        Physical effects of abuse<br><input type="text" name="abusePhysicalEffects" <%=IntakeServlet.getIntake().getAbusePhysicalEffects()%> size="45"><br><br>
+        Physical effects of abuse<br><input type="text" name="abusePhysicalEffects" value="<%=IntakeServlet.getIntake().getAbusePhysicalEffects()%>" size="45"><br><br>
 		<b>Any Previous Rehabs?</b>&nbsp;
-			<input type="checkbox" name="attendAA" value="YES" />AA or NA&nbsp;&nbsp;
-            Number of Years<input type="text" name="yearsAttended" value="<%=IntakeServlet.getIntake().getYearsAttended()%>" />
-         <br /><br />  
-		Ever been to a Faith Farm Before?&nbsp;
-			<select size="1" name="Ever_been_to_a_Faith_Farm_Before">
-				<option value="Yes">YES</option>
-				<option value="No">NO</option>
-				<option value="" selected>Select</option>
-			</select><br><br>
-		Year:&nbsp;<input type="text" name="ffYearsAttended" size="6">&nbsp;
-		Where:&nbsp;
-			<select size="1" name="previousFaithFarm">
-				<option value="Boynton Beach">Boynton Beach</option>
-				<option value="Ft. Lauderdale">Ft. Lauderdale</option>
-				<option value="Okeechobee">Okeechobee</option>
-				<option selected value="">Select One</option>
-			</select><br>
-            <br />
-            Other Rehabs<input type="text" name="otherRehabs" value="<%=IntakeServlet.getIntake().getOtherRehabs()%>" size="45" maxlength="45"/>
+			<input type="checkbox" name="attendAA" value="YES" <% if ("YES".equals(IntakeServlet.getIntake().getAttendAA())) { %>checked <%}%>/>AA or NA&nbsp;&nbsp;
+            Number of Years&nbsp;<input type="text" name="yearsAttended" value="<%=IntakeServlet.getIntake().getYearsAttended()%>" size="10" maxlength="10" <% if (yearsAttendedErr.length()>0) { %>class="textboxErr"<%}%>/>&nbsp;<div style="font:11px Arial;color: #b71524;"><b><i><%=yearsAttendedErr%></i></b></div>
+         </td>
+         
+         <tr>
+         <td colspan="8">
+         	<table width="100%">
+            <tr>
+            	<td>
+                    Ever been to a Faith Farm Before?&nbsp;
+                    <% ddl = (ArrayList)session.getAttribute("dll_yesno");
+                        %>
+                        <select name="previousFaithFarmFlag" <% if (previousFaithFarmFlagErr.length()>0) { %>class="ddlErr"<% } %>>
+                        <option value="">
+                        <%
+                        if (ddl!=null) {
+                          for (int j=0;j<ddl.size();j++) {
+                            %>
+                            <option 
+                                value="<%=ddl.get(j)%>"
+                                <%
+                                if
+                                (ddl.get(j).equals(IntakeServlet.getIntake().getPreviousFaithFarmFlag()))
+                                {%>selected<%}%>>
+                              <%=ddl.get(j)%>
+                            </option>
+                            <%
+                          }
+                          %>
+                          <%
+                        }
+                    %></select>
+                </td>
+                <td>
+					Year:&nbsp;<input type="text" name="ffYearsAttended" size="12" maxlength="12" value="<%=IntakeServlet.getIntake().getFfYearsAttended()%>" size="10" maxlength="10" <% if (ffYearsAttendedErr.length()>0) { %>class="textboxErr"<%}%>/>
+                </td>
+                <td>
+					Where:&nbsp;
+                    <select name="previousFaithFarm" <% if (previousFaithFarmErr.length()>0) { %>class="ddlErr"<%}%>>
+                        <option value="BOYNTON BEACH" <% if("BOYNTON BEACH".equals(IntakeServlet.getIntake().getPreviousFaithFarm())) { %>selected<% } %>>BOYNTON BEACH</option>
+                        <option value="FT. LAUDERDALE"  <% if("FT. LAUDERDALE".equals(IntakeServlet.getIntake().getPreviousFaithFarm())) { %>selected<% } %>>FT. LAUDERDALE</option>
+                        <option value="OKEECHOBEE"  <% if("OKEECHOBEE".equals(IntakeServlet.getIntake().getPreviousFaithFarm())) { %>selected<% } %>>OKEECHOBEE</option>
+                        <option value=""></option>
+                    </select>
+            	</td>
+             </tr>
+              <tr>
+             	<td class="fieldError"><%=previousFaithFarmFlagErr%></td>
+                <td class="fieldError"><%=ffYearsAttendedErr%></td>
+                <td class="fieldError"><%=previousFaithFarmErr%></td>
+             </tr>
+             <tr>
+             	<td colspan="3">
+           		 Other Rehabs<input type="text" name="otherRehabs" value="<%=IntakeServlet.getIntake().getOtherRehabs()%>" size="45" maxlength="45"/>
+                </td>
+             </tr>
+            
+             </table>
 		</td>
 	</tr>
      <tr>
@@ -1120,23 +1235,23 @@ function moveOnMax(field,nextFieldID){
         <tr>
         	<td colspan="8" valign="top">
 		<b>Pattern of usage:</b><br>
-        	<input type="checkbox" name="usagePattern1" value="YES" />Constantly&nbsp;&nbsp;
-            <input type="checkbox" name="usagePattern2" value="YES" />Weekends&nbsp;&nbsp;
-            <input type="checkbox" name="usagePattern3" value="YES" />Special Occasions&nbsp;&nbsp;
-            <input type="checkbox" name="usagePattern4" value="YES" />Whenever available&nbsp;&nbsp;
-            <input type="checkbox" name="usagePattern5" value="YES" />When Things Get Tough&nbsp;&nbsp;
-            <input type="checkbox" name="usagePattern6" value="YES" />On A Week/Off A Week
+        	<input type="checkbox" name="usagePattern1" value="YES" <% if ("YES".equals (IntakeServlet.getIntake().getUsagePattern1())) { %>checked<%}%>  />Constantly&nbsp;&nbsp;
+            <input type="checkbox" name="usagePattern2" value="YES" <% if ("YES".equals (IntakeServlet.getIntake().getUsagePattern2())) { %>checked<%}%>/>Weekends&nbsp;&nbsp;
+            <input type="checkbox" name="usagePattern3" value="YES" <% if ("YES".equals (IntakeServlet.getIntake().getUsagePattern3())) { %>checked<%}%>/>Special Occasions&nbsp;&nbsp;
+            <input type="checkbox" name="usagePattern4" value="YES" <% if ("YES".equals (IntakeServlet.getIntake().getUsagePattern4())) { %>checked<%}%>/>Whenever available&nbsp;&nbsp;
+            <input type="checkbox" name="usagePattern5" value="YES" <% if ("YES".equals (IntakeServlet.getIntake().getUsagePattern5())) { %>checked<%}%>/>When Things Get Tough&nbsp;&nbsp;
+            <input type="checkbox" name="usagePattern6" value="YES" <% if ("YES".equals (IntakeServlet.getIntake().getUsagePattern6())) { %>checked<%}%>/>On A Week/Off A Week
         </br></br> 
 		<b>Losses due to usage:</b><br>
-        	<input type="checkbox" name="usageLosses1" value="YES" />Job&nbsp;&nbsp;
-            <input type="checkbox" name="usageLosses2" value="YES" />Marriage&nbsp;&nbsp;>
-            <input type="checkbox" name="usageLosses3" value="YES" />Friends&nbsp;&nbsp;
-            <input type="checkbox" name="usageLosses4" value="YES" />Possessions&nbsp;&nbsp;
-            <input type="checkbox" name="usageLosses5" value="YES" />Arrests&nbsp;&nbsp;
-            <input type="checkbox" name="usageLosses6" value="YES" />DUI's&nbsp;&nbsp;
-            <input type="checkbox" name="usageLosses7" value="YES" />Heavy Debt&nbsp;&nbsp;
-            <input type="checkbox" name="usageLosses8" value="YES" />Health&nbsp;&nbsp;
-            <input type="checkbox" name="usageLosses9" value="YES" />Incarceration
+        	<input type="checkbox" name="usageLosses1" value="YES" <% if ("YES".equals (IntakeServlet.getIntake().getUsageLosses1())) { %>checked<%}%> />Job&nbsp;&nbsp;
+            <input type="checkbox" name="usageLosses2" value="YES" <% if ("YES".equals (IntakeServlet.getIntake().getUsageLosses2())) { %>checked<%}%>/>Marriage&nbsp;&nbsp;
+            <input type="checkbox" name="usageLosses3" value="YES" <% if ("YES".equals (IntakeServlet.getIntake().getUsageLosses3())) { %>checked<%}%>/>Friends&nbsp;&nbsp;
+            <input type="checkbox" name="usageLosses4" value="YES" <% if ("YES".equals (IntakeServlet.getIntake().getUsageLosses4())) { %>checked<%}%>/>Possessions&nbsp;&nbsp;
+            <input type="checkbox" name="usageLosses5" value="YES" <% if ("YES".equals (IntakeServlet.getIntake().getUsageLosses5())) { %>checked<%}%>/>Arrests&nbsp;&nbsp;
+            <input type="checkbox" name="usageLosses6" value="YES" <% if ("YES".equals (IntakeServlet.getIntake().getUsageLosses6())) { %>checked<%}%>/>DUI's&nbsp;&nbsp;
+            <input type="checkbox" name="usageLosses7" value="YES" <% if ("YES".equals (IntakeServlet.getIntake().getUsageLosses7())) { %>checked<%}%> />Heavy Debt&nbsp;&nbsp;
+            <input type="checkbox" name="usageLosses8" value="YES" <% if ("YES".equals (IntakeServlet.getIntake().getUsageLosses8())) { %>checked<%}%>/>Health&nbsp;&nbsp;
+            <input type="checkbox" name="usageLosses9" value="YES" <% if ("YES".equals (IntakeServlet.getIntake().getUsageLosses9())) { %>checked<%}%>/>Incarceration
         	</td>
          </tr>
      <tr>
@@ -1144,7 +1259,8 @@ function moveOnMax(field,nextFieldID){
 	</tr>
     
         <% ArrayList questions = (ArrayList)session.getAttribute("questions");
-		   for (int i=0;i<questions.size();i++) { 
+		   String answer[] = IntakeServlet.getIntake().getQuestion();
+		   for (int i=0;i<15;i++) { 
 		   	String question = (String)questions.get(i);
 		%>
         <tr>
@@ -1154,8 +1270,9 @@ function moveOnMax(field,nextFieldID){
         <td>
         <%
         	ddl = (ArrayList)session.getAttribute("dll_yesno");
+			
 				%>
-				<select name="question<%=i+1%>" class="dll">
+				<select name="question<%=i%>">
 				<option value="">
 				<%
 				if (ddl!=null) {
@@ -1165,7 +1282,7 @@ function moveOnMax(field,nextFieldID){
 						value="<%=ddl.get(j)%>"
 						<%
 						if
-						(ddl.get(j).equals(IntakeServlet.getIntake().getQuestion1()))
+						(ddl.get(j).equals(answer[i]))
 						{%>selected<%}%>>
 					  <%=ddl.get(j)%>
 					</option>
@@ -1187,6 +1304,7 @@ function moveOnMax(field,nextFieldID){
          <%
 		   for (int i=15;i<21;i++) { 
 		   	String question = (String)questions.get(i);
+			
 		 %>
         <tr>
     	<td colspan="5">
@@ -1196,7 +1314,7 @@ function moveOnMax(field,nextFieldID){
         <%
         	ddl = (ArrayList)session.getAttribute("dll_yesno");
 				%>
-				<select name="question<%=i+1%>" class="dll">
+				<select name="question<%=i%>">
 				<option value="">
 				<%
 				if (ddl!=null) {
@@ -1206,7 +1324,7 @@ function moveOnMax(field,nextFieldID){
 						value="<%=ddl.get(j)%>"
 						<%
 						if
-						(ddl.get(j).equals(IntakeServlet.getIntake().getQuestion1()))
+						(ddl.get(j).equals(answer[i]))
 						{%>selected<%}%>>
 					  <%=ddl.get(j)%>
 					</option>
@@ -1371,7 +1489,7 @@ function moveOnMax(field,nextFieldID){
                                             value="<%=ddl.get(j)%>"
                                             <%
                                             if
-                                            (ddl.get(j).equals(IntakeServlet.getIntake().getDoctorsAppointment()))
+                                            (ddl.get(j).equals(answer[i]))
                                             {%>selected<%}%>>
                                           <%=ddl.get(j)%>
                                         </option>
@@ -1450,7 +1568,7 @@ function moveOnMax(field,nextFieldID){
          <%
                                     ddl = (ArrayList)session.getAttribute("dll_yesno");
                                     %>
-                                	<select name="question<%=i%>" class="dll">
+                                	<select name="question" class="dll">
                                     <option value="">
                                     <%
                                     if (ddl!=null) {
@@ -1460,7 +1578,7 @@ function moveOnMax(field,nextFieldID){
                                             value="<%=ddl.get(j)%>"
                                             <%
                                             if
-                                            (ddl.get(j).equals(IntakeServlet.getIntake().getDoctorsAppointment()))
+                                            (ddl.get(j).equals(answer[i]))
                                             {%>selected<%}%>>
                                           <%=ddl.get(j)%>
                                         </option>

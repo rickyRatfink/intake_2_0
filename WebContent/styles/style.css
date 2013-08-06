@@ -96,6 +96,13 @@ h5 {
 	font: 10px Arial;
 	color: #444446;
 }
+.areaErr {
+	border:1px solid #d2071a;
+	border-radius:0px;
+	background-color:#f9c131;
+	font-size:12px; 
+	color: #3F1910;
+}
 .imageButtonSave{
     background: url('../img/btn_save.png');
  	width : 122px;
