@@ -188,6 +188,65 @@ public class IntakeServlet extends HttpServlet {
 		}
 		this.getIntake().setQuestion(question);
 		
+		String questionAnswer[] = new String[]{ 
+				"","","","","","",
+				"","","","","","",
+				"","","","","","",
+				"","","","","","",
+				"","","","","","","","","","" };
+		String questionAnswerDates[] = new String[]{ 
+				"","","","","","",
+				"","","","","","",
+				"","","","","","",
+				"","","","","","",
+				"","","","","","","","","","" };
+		for (int i=0;i<32;i++) {
+			questionAnswer[i]=valid8r.cleanData(req.getParameter("question"+i+"Details"));
+			questionAnswerDates[i]=valid8r.cleanData(req.getParameter("question"+i+"Dates"));
+		}
+		this.getIntake().setQuestionAnswerDetails(questionAnswer);
+		this.getIntake().setQuestionAnswerDates(questionAnswerDates);
+		
+		this.getIntake().setCurrentHealth(valid8r.cleanData(req.getParameter("currentHealth")));
+		this.getIntake().setCurrentMedicationsFlag(valid8r.cleanData(req.getParameter("currentMedicationsFlag")));
+		this.getIntake().setNeedMedicationFlag(valid8r.cleanData(req.getParameter("needMedicationFlag")));
+		this.getIntake().setMedicationSuppyFlag(valid8r.cleanData(req.getParameter("medicationSupplyFlag")));
+		this.getIntake().setCurrentMedicationsDetails(valid8r.cleanData(req.getParameter("currentMedicationsDetails")));
+		
+		this.getIntake().setDoctorsAppointment(valid8r.cleanData(req.getParameter("doctorsAppointment")));
+		this.getIntake().setDoctorsAppointmentDate(valid8r.cleanData(req.getParameter("doctorsAppointmentDate")));
+		
+		
+		this.getIntake().setEyewearFlag(valid8r.cleanData(req.getParameter("eyewearFlag")));
+		this.getIntake().setEyewearUsage(valid8r.cleanData(req.getParameter("eyewearUsage")));
+		
+		this.getIntake().setIndustrialInjuryFlag(valid8r.cleanData(req.getParameter("industrialInjuryFlag")));
+		this.getIntake().setIndustrialInjuryDate(valid8r.cleanData(req.getParameter("industrialInjuryDate")));
+		this.getIntake().setIndustrialInjuryReason(valid8r.cleanData(req.getParameter("industrialInjuryReason")));
+		this.getIntake().setIndustrialInjuryLocation(valid8r.cleanData(req.getParameter("industrialInjuryLocation")));
+		this.getIntake().setIndustrialInjuryEmployer(valid8r.cleanData(req.getParameter("industrialInjuryEmployer")));
+		
+		
+		this.getIntake().setDisabilityFlag(valid8r.cleanData(req.getParameter("disabilityFlag")));
+		this.getIntake().setPhysician(valid8r.cleanData(req.getParameter("physician")));
+		this.getIntake().setPhysicianAddress(valid8r.cleanData(req.getParameter("physicianAddress")));
+		this.getIntake().setExaminationDate(valid8r.cleanData(req.getParameter("examinationDate")));
+		
+		String medicalCondition[] = new String[]{ 
+				"NO","NO","NO","NO","NO","NO",
+				"NO","NO","NO","NO","NO","NO",
+				"NO","NO","NO","NO","NO","NO",
+				"NO","NO","NO","NO","NO","NO",
+				"NO","NO","NO","NO","NO","NO","NO","NO","NO","NO" };
+		for (int i=0;i<25;i++) {
+			medicalCondition[i]=valid8r.cleanData(req.getParameter("medicalConditionFlag"+i));
+		}
+		this.getIntake().setMedicalCondition(medicalCondition);
+		this.getIntake().setHerniaOperationFlag(valid8r.cleanData(req.getParameter("herniaOperationFlag")));
+		
+		//this.getIntake().set(valid8r.cleanData(req.getParameter("")));
+		
+		
 		
 	} 
 	
@@ -248,8 +307,8 @@ public class IntakeServlet extends HttpServlet {
 		        session.setAttribute("dll_states", states);
 		        
 		        ArrayList list = new ArrayList();
-		        list.add("YES");
 		        list.add("NO");
+		        list.add("YES");
 		        session.setAttribute("dll_yesno", list);
 		        
 		        list = new ArrayList();

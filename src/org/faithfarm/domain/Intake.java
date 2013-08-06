@@ -121,6 +121,7 @@ public class Intake implements Serializable {
 	private static String medicationSuppyFlag = "NO";
 	private static String refillDetails = "";
 	private static String doctorsAppointment = "";
+	private static String doctorsAppointmentDate = "";
 	private static String eyewearFlag = "NO";
 	private static String eyewearUsage = "";
 	private static String industrialInjuryFlag = "NO";
@@ -136,7 +137,8 @@ public class Intake implements Serializable {
 	private static String physicianAddress = "";
 	private static String herniaSide = "";
 	private static String herniaOperationFlag = "NO";
-	private static String herniaDetails="";
+	private static String herniaDate="";
+	private static String herniaPhysician="";
 	
 	private static String question[] = new String[]{ 
 						"NO","NO","NO","NO","NO","NO",
@@ -145,6 +147,26 @@ public class Intake implements Serializable {
 						"NO","NO","NO","NO","NO","NO",
 						"NO","NO","NO","NO","NO","NO","NO","NO","NO","NO" };
 	
+	private static String questionAnswerDetails[] = new String[]{ 
+			"","","","","","",
+			"","","","","","",
+			"","","","","","",
+			"","","","","","",
+			"","","","","","","","","","" };
+	
+	private static String questionAnswerDates[] = new String[]{ 
+		"","","","","","",
+		"","","","","","",
+		"","","","","","",
+		"","","","","","",
+		"","","","","","","","","","" };
+	
+	private static String medicalCondition[] = new String[]{ 
+		"NO","NO","NO","NO","NO","NO",
+		"NO","NO","NO","NO","NO","NO",
+		"NO","NO","NO","NO","NO","NO",
+		"NO","NO","NO","NO","NO","NO",
+		"NO","NO","NO","NO","NO","NO","NO","NO","NO","NO" };
 	
 	private static String lawsuitFlag="NO";
 	private static String currentLawsuitFlag="NO";
@@ -1007,13 +1029,20 @@ public class Intake implements Serializable {
 	public static void setHerniaOperationFlag(String herniaOperationFlag) {
 		Intake.herniaOperationFlag = herniaOperationFlag;
 	}
-	public static String getHerniaDetails() {
-		return herniaDetails;
-	}
-	public static void setHerniaDetails(String herniaDetails) {
-		Intake.herniaDetails = herniaDetails;
-	}
 	
+	
+	public static String getHerniaDate() {
+		return herniaDate;
+	}
+	public static void setHerniaDate(String herniaDate) {
+		Intake.herniaDate = herniaDate;
+	}
+	public static String getHerniaPhysician() {
+		return herniaPhysician;
+	}
+	public static void setHerniaPhysician(String herniaPhysician) {
+		Intake.herniaPhysician = herniaPhysician;
+	}
 	public static String getLawsuitFlag() {
 		return lawsuitFlag;
 	}
@@ -1442,6 +1471,31 @@ public class Intake implements Serializable {
 	public static void setQuestion(String[] question) {
 		Intake.question = question;
 	}
+	public static String getDoctorsAppointmentDate() {
+		return doctorsAppointmentDate;
+	}
+	public static void setDoctorsAppointmentDate(String doctorsAppointmentDate) {
+		Intake.doctorsAppointmentDate = doctorsAppointmentDate;
+	}
+	public static String[] getQuestionAnswerDetails() {
+		return questionAnswerDetails;
+	}
+	public static void setQuestionAnswerDetails(String[] questionAnswerDetails) {
+		Intake.questionAnswerDetails = questionAnswerDetails;
+	}
+	public static String[] getQuestionAnswerDates() {
+		return questionAnswerDates;
+	}
+	public static void setQuestionAnswerDates(String[] questionAnswerDates) {
+		Intake.questionAnswerDates = questionAnswerDates;
+	}
+	public static String[] getMedicalCondition() {
+		return medicalCondition;
+	}
+	public static void setMedicalCondition(String[] medicalCondition) {
+		Intake.medicalCondition = medicalCondition;
+	}
+	
 	
 	
 	
