@@ -138,6 +138,55 @@ String previousFaithFarmFlagErr = (String)request.getAttribute("previousFaithFar
    String ffYearsAttendedErr = (String)request.getAttribute("ffYearsAttendedErr");
    if (ffYearsAttendedErr==null) ffYearsAttendedErr="";
    
+   String currentHealthErr = (String)request.getAttribute("currentHealthErr");
+   if (currentHealthErr==null) currentHealthErr="";
+   String currentMedicationsFlagErr = (String)request.getAttribute("currentMedicationsFlagErr");
+   if (currentMedicationsFlagErr==null) currentMedicationsFlagErr="";
+   String needMedicationFlagErr = (String)request.getAttribute("needMedicationFlagErr");
+   if (needMedicationFlagErr==null) needMedicationFlagErr="";
+   String medicationSupplyFlagErr = (String)request.getAttribute("medicationSupplyFlagErr");
+   if (medicationSupplyFlagErr==null) medicationSupplyFlagErr="";
+   String doctorsAppointmentErr = (String)request.getAttribute("doctorsAppointmentErr");
+   if (doctorsAppointmentErr==null) doctorsAppointmentErr="";
+   String doctorsAppointmentDateErr = (String)request.getAttribute("doctorsAppointmentDateErr");
+   if (doctorsAppointmentDateErr==null) doctorsAppointmentDateErr="";
+ 
+   String eyewearFlagErr = (String)request.getAttribute("eyewearFlagErr");
+   if (eyewearFlagErr==null) eyewearFlagErr="";
+  String eyewearUsageErr = (String)request.getAttribute("eyewearUsageErr");
+   if (eyewearUsageErr==null) eyewearUsageErr="";
+  
+  
+    String industrialInjuryDateErr = (String)request.getAttribute("industrialInjuryDateErr");
+   if (industrialInjuryDateErr==null) industrialInjuryDateErr="";
+  
+  String industrialInjuryLocationErr = (String)request.getAttribute("industrialInjuryLocationErr");
+   if (industrialInjuryLocationErr==null) industrialInjuryLocationErr="";
+  
+  String industrialInjuryReasonErr = (String)request.getAttribute("industrialInjuryReasonErr");
+   if (industrialInjuryReasonErr==null) industrialInjuryReasonErr="";
+  
+  String industrialInjuryEmployerErr = (String)request.getAttribute("industrialInjuryEmployerErr");
+   if (industrialInjuryEmployerErr==null) industrialInjuryEmployerErr="";
+
+   String examinationErr = (String)request.getAttribute("examinationErr");
+   if (examinationErr==null) examinationErr="";
+
+   String physicianErr = (String)request.getAttribute("physicianErr");
+   if (physicianErr==null) physicianErr="";
+
+   String physicianAddressErr = (String)request.getAttribute("physicianAddressErr");
+   if (physicianAddressErr==null) physicianAddressErr="";
+
+   String herniaSideErr = (String)request.getAttribute("herniaSideErr");
+   if (herniaSideErr==null) herniaSideErr="";
+
+   String herniaOperationDateErr = (String)request.getAttribute("herniaOperationDateErr");
+   if (herniaOperationDateErr==null) herniaOperationDateErr="";
+
+   String herniaPhysicianErr = (String)request.getAttribute("herniaPhysicianErr");
+   if (herniaPhysicianErr==null) herniaPhysicianErr="";
+
    String Err = (String)request.getAttribute("Err");
    if (Err==null) Err="";
 
@@ -563,7 +612,6 @@ function moveOnMax(field,nextFieldID){
 				ddl = (ArrayList)session.getAttribute("dll_yesno");
 				%>
 				<select name="graduateFlag" <% if (graduateFlagErr.length()>0) { %>class="ddlErr"<% } %>>
-				<option value="">
 				<%
 				if (ddl!=null) {
 				  for (int j=0;j<ddl.size();j++) {
@@ -587,7 +635,6 @@ function moveOnMax(field,nextFieldID){
 				ddl = (ArrayList)session.getAttribute("dll_yesno");
 				%>
 				<select name="englishReadFlag" <% if (englishReadErr.length()>0) { %>class="ddlErr"<% } %>>
-				<option value="">
 				<%
 				if (ddl!=null) {
 				  for (int j=0;j<ddl.size();j++) {
@@ -613,7 +660,6 @@ function moveOnMax(field,nextFieldID){
 				ddl = (ArrayList)session.getAttribute("dll_yesno");
 				%>
 				<select name="englishSpeakFlag" <% if (englishSpeakErr.length()>0) { %>class="ddlErr"<% } %>>
-				<option value="">
 				<%
 				if (ddl!=null) {
 				  for (int j=0;j<ddl.size();j++) {
@@ -694,7 +740,6 @@ function moveOnMax(field,nextFieldID){
 				ddl = (ArrayList)session.getAttribute("dll_yesno");
 				%>
 				<select name="veteranFlag" <% if (veteranFlagErr.length()>0) { %>class="ddlErr"<% } %> >
-				<option value="">
 				<%
 				if (ddl!=null) {
 				  for (int j=0;j<ddl.size();j++) {
@@ -780,7 +825,6 @@ function moveOnMax(field,nextFieldID){
 				ddl = (ArrayList)session.getAttribute("dll_yesno");
 				%>
 				<select name="driversLicenseFlag" <% if (driversLicenseFlagErr.length()>0) { %>class="ddlErr"<% } %>>
-				<option value="">
 				<%
 				if (ddl!=null) {
 				  for (int j=0;j<ddl.size();j++) {
@@ -853,7 +897,6 @@ function moveOnMax(field,nextFieldID){
 				ddl = (ArrayList)session.getAttribute("dll_yesno");
 				%>
 				<select name="motherLivingFlag" <% if (motherLivingFlagErr.length()>0) { %>class="ddlErr"<% } %>>
-				<option value="">
 				<%
 				if (ddl!=null) {
 				  for (int j=0;j<ddl.size();j++) {
@@ -878,7 +921,6 @@ function moveOnMax(field,nextFieldID){
 				ddl = (ArrayList)session.getAttribute("dll_yesno");
 				%>
 				<select name="fatherLivingFlag" <% if (fatherLivingFlagErr.length()>0) { %>class="ddlErr"<% } %>>
-				<option value="">
 				<%
 				if (ddl!=null) {
 				  for (int j=0;j<ddl.size();j++) {
@@ -1182,7 +1224,6 @@ function moveOnMax(field,nextFieldID){
                     <% ddl = (ArrayList)session.getAttribute("dll_yesno");
                         %>
                         <select name="previousFaithFarmFlag" <% if (previousFaithFarmFlagErr.length()>0) { %>class="ddlErr"<% } %>>
-                        <option value="">
                         <%
                         if (ddl!=null) {
                           for (int j=0;j<ddl.size();j++) {
@@ -1260,6 +1301,9 @@ function moveOnMax(field,nextFieldID){
     
         <% ArrayList questions = (ArrayList)session.getAttribute("questions");
 		   String answer[] = IntakeServlet.getIntake().getQuestion();
+		   String answerDetails[] = IntakeServlet.getIntake().getQuestionAnswerDetails();
+		   String answerDates[] = IntakeServlet.getIntake().getQuestionAnswerDates();
+		   
 		   for (int i=0;i<15;i++) { 
 		   	String question = (String)questions.get(i);
 		%>
@@ -1273,7 +1317,6 @@ function moveOnMax(field,nextFieldID){
 			
 				%>
 				<select name="question<%=i%>">
-				<option value="">
 				<%
 				if (ddl!=null) {
 				  for (int j=0;j<ddl.size();j++) {
@@ -1315,7 +1358,6 @@ function moveOnMax(field,nextFieldID){
         	ddl = (ArrayList)session.getAttribute("dll_yesno");
 				%>
 				<select name="question<%=i%>">
-				<option value="">
 				<%
 				if (ddl!=null) {
 				  for (int j=0;j<ddl.size();j++) {
@@ -1334,25 +1376,29 @@ function moveOnMax(field,nextFieldID){
 				  
 				<%}%>
                 </select>
-		&nbsp;&nbsp;How Long Ago?<input type="text" name="<%=question%><%=i%>Dates" size="10" maxlength="10" /></td>
+		&nbsp;&nbsp;How Long Ago?<input type="text" name="question<%=i%>Dates" value="<%=answerDates[i]%>"  size="10" maxlength="10" /></td>
         </tr>
         <tr>
-        	<td colspan="8">Please describe:&nbsp;<input type="text" name="<%=question%><%=i%>Details" size="40" maxlength="45"/></td>
+        	<td colspan="8">Please describe:&nbsp;<input type="text" name="question<%=i%>Details" value="<%=answerDetails[i]%>" size="40" maxlength="45"/></td>
         </tr>
         <%}%>
 	<tr>
 		<td colspan="8">&nbsp;</td>
 	</tr>
 	<tr>
-		<td colspan="11"><b>Physical Health:</b></td>
+		<td colspan="8"><b>Physical Health:</b></td>
 	</tr>
 	<tr>
-		<td colspan="11">
+		<td colspan="8">
+        
+        <table width="100%">
+        <tr>
+        <td>
 		Describe your current health?&nbsp;
 		<%
                                     ddl = (ArrayList)session.getAttribute("dll_health");
                                     %>
-                                	<select name="health" class="dll">
+                                	<select name="currentHealth" <% if (currentHealthErr.length()>0) { %>class="ddlErr"<%}%>>
                                     <option value="">
                                     <%
                                     if (ddl!=null) {
@@ -1371,13 +1417,17 @@ function moveOnMax(field,nextFieldID){
                                       %>
                                       <%
                                     }
-                                    %><br><br> 
-		Are you currently taking medications?&nbsp;
+                                    %></select>
+         </td>
+         </tr>
+         <tr><td class="fieldError"><%=currentHealthErr%></td></tr>
+         <tr>
+         <td>
+		 Are you currently taking medications?&nbsp;
 									<%
                                     ddl = (ArrayList)session.getAttribute("dll_yesno");
                                     %>
-                                	<select name="currentMedicationFlag" class="dll">
-                                    <option value="">
+                                	<select name="currentMedicationsFlag" <% if (currentMedicationsFlagErr.length()>0) { %>class="ddlErr"<%}%>>
                                     <%
                                     if (ddl!=null) {
                                       for (int j=0;j<ddl.size();j++) {
@@ -1395,13 +1445,17 @@ function moveOnMax(field,nextFieldID){
                                       %>
                                       <%
                                     }
-                                    %><br><br> 
+                                    %></select>
+        </td>
+        </tr>
+        <tr><td class="fieldError"><%=currentMedicationsFlagErr%></td></tr>
+         <tr>
+         <td>
 		Are you in need of medication?&nbsp;
 									<%
 									 ddl = (ArrayList)session.getAttribute("dll_yesno");
                                     %>
-                                	<select name="needMedicationFlag" class="dll">
-                                    <option value="">
+                                	<select name="needMedicationFlag" <% if (needMedicationFlagErr.length()>0) { %>class="ddlErr"<%}%>>
                                     <%
                                     if (ddl!=null) {
                                       for (int j=0;j<ddl.size();j++) {
@@ -1419,13 +1473,17 @@ function moveOnMax(field,nextFieldID){
                                       %>
                                       <%
                                     }
-                                    %><br><br> 
+                                    %></select>
+        </td>
+        </tr>
+        <tr><td class="fieldError"><%=needMedicationFlagErr%></td></tr>
+         <tr>
+         <td>
         Do you have enough for 30 days?&nbsp;
 									<% 
 									ddl = (ArrayList)session.getAttribute("dll_yesno");
                                     %>
-                                	<select name="medicationSupplyFlag" class="dll">
-                                    <option value="">
+                                	<select name="medicationSupplyFlag" <% if (medicationSupplyFlagErr.length()>0) { %>class="ddlErr"<%}%>>
                                     <%
                                     if (ddl!=null) {
                                       for (int j=0;j<ddl.size();j++) {
@@ -1443,13 +1501,17 @@ function moveOnMax(field,nextFieldID){
                                       %>
                                       <%
                                     }
-                                    %><br><br> 
-		Do you have any doctor appointments in the next 30 days?&nbsp;
+                                    %></select>
+        </td>
+        </tr>
+        <tr><td class="fieldError"><%=medicationSupplyFlagErr%></td></tr>
+         <tr>
+         <td> 
+			Do you have any doctor appointments in the next 30 days?&nbsp;
 		 							<%
                                     ddl = (ArrayList)session.getAttribute("dll_yesno");
                                     %>
-                                	<select name="doctorsAppointment" class="dll">
-                                    <option value="">
+                                	<select name="doctorsAppointment" <% if (doctorsAppointmentErr.length()>0) { %>class="ddlErr"<%}%>>
                                     <%
                                     if (ddl!=null) {
                                       for (int j=0;j<ddl.size();j++) {
@@ -1468,19 +1530,32 @@ function moveOnMax(field,nextFieldID){
                                       <%
                                     }
                                     %>
-                                    </select><br />If yes, when?&nbsp;<input type="text" name="doctorsAppointmentDetails" size="25" maxlength="25"/><br /><br />
-		
-        
+                                    </select>
+             </td>
+             </tr>
+             <tr><td class="fieldError"><%=doctorsAppointmentErr%></td></tr>
+         <tr>
+         	<td>If yes, when?&nbsp;<input type="text" name="doctorsAppointmentDate" value="<%=IntakeServlet.getIntake().getDoctorsAppointmentDate()%>" size="25" maxlength="25" <% if (doctorsAppointmentDateErr.length()>0) { %>class="textboxErr"<%}%>/></td>
+         </tr>
+         <tr><td class="fieldError"><%=doctorsAppointmentDateErr%></td></tr>
+         </table>
+         </td>
+         </tr>
+         
+         <tr>
+         <td colspan="8">
          <%
 		   for (int i=21;i<26;i++) { 
 		   	String question = (String)questions.get(i);
 		 %>
+         <table width="100%">
+         <tr>
+         <td>
          <%=question%>&nbsp;&nbsp;
          <%
                                     ddl = (ArrayList)session.getAttribute("dll_yesno");
                                     %>
                                 	<select name="question<%=i%>" class="dll">
-                                    <option value="">
                                     <%
                                     if (ddl!=null) {
                                       for (int j=0;j<ddl.size();j++) {
@@ -1498,16 +1573,28 @@ function moveOnMax(field,nextFieldID){
                                       %>
                                       <%
                                     }
-                                    %></select><br />
-                                    If yes, give diagnosis&nbsp;<input type="text" name="question<%=i%>Details" size="45" maxlength="45"/>
-		<br><br>
-        <% } %>
-		Do you wear glasses or contact lens?&nbsp;
-		 <%
+                                    %></select>
+         </td>
+         </tr>
+         <tr>
+         <td>
+                                    If yes, give diagnosis&nbsp;<input type="text" name="question<%=i%>Details" value="<%=answerDetails[i]%>" size="45" maxlength="45"/>
+         </td>
+         </tr>
+         </table>
+		<% } %>
+        </td>
+        </tr>
+         <tr>
+         <td colspan="8">
+         	<table width="100%">
+            <tr>
+            <td width="300">
+                Do you wear glasses or contact lens?&nbsp;
+                 <%
                                     ddl = (ArrayList)session.getAttribute("dll_yesno");
                                     %>
                                 	<select name="eyewearFlag" class="dll">
-                                    <option value="">
                                     <%
                                     if (ddl!=null) {
                                       for (int j=0;j<ddl.size();j++) {
@@ -1526,12 +1613,13 @@ function moveOnMax(field,nextFieldID){
                                       <%
                                     }
                                     %></select>&nbsp;&nbsp;&nbsp;
-		
+        </td>
+        <td>
 		How Often?&nbsp;
 		 <%
                                     ddl = (ArrayList)session.getAttribute("dll_eyewear");
                                     %>
-                                	<select name="eyewearUsage" class="dll">
+                                	<select name="eyewearUsage" <% if (eyewearUsageErr.length()>0) { %>class="ddlErr"<%}%>>
                                     <option value="">
                                     <%
                                     if (ddl!=null) {
@@ -1550,7 +1638,15 @@ function moveOnMax(field,nextFieldID){
                                       %>
                                       <%
                                     }
-                                    %></select><br /><br /><br />
+                                    %></select>
+       </td>
+       </tr>
+       <tr>
+       	<td class="fieldError"><%=eyewearFlagErr%></td>
+        <td class="fieldError"><%=eyewearUsageErr%></td>
+        </tr>
+       </table>
+       </td>
 		
 	</td>
 	</tr>
@@ -1569,7 +1665,6 @@ function moveOnMax(field,nextFieldID){
                                     ddl = (ArrayList)session.getAttribute("dll_yesno");
                                     %>
                                 	<select name="question" class="dll">
-                                    <option value="">
                                     <%
                                     if (ddl!=null) {
                                       for (int j=0;j<ddl.size();j++) {
@@ -1588,8 +1683,8 @@ function moveOnMax(field,nextFieldID){
                                       <%
                                     }
                                     %></select><br />
-                                    If yes, when&nbsp;<input type="text" name="question<%=i%>Date" size="15" maxlength="15"/>
-                                    &nbsp;&nbsp;Details:&nbsp;<input type="text" name="question<%=i%>Details" size="40" maxlength="45"/>
+                                    If yes, when&nbsp;<input type="text" name="question<%=i%>Date" value="<%=answerDates[i]%>" size="15" maxlength="15"/>
+                                    &nbsp;&nbsp;Details:&nbsp;<input type="text" name="question<%=i%>Details" value="<%=answerDetails[i]%>" size="40" maxlength="45"/>
         <br /><br />
 		<% } %>
         
@@ -1612,7 +1707,6 @@ function moveOnMax(field,nextFieldID){
                                     ddl = (ArrayList)session.getAttribute("dll_yesno");
                                     %>
                                 	<select name="industrialInjuryFlag" class="dll">
-                                    <option value="">
                                     <%
                                     if (ddl!=null) {
                                       for (int j=0;j<ddl.size();j++) {
@@ -1633,16 +1727,22 @@ function moveOnMax(field,nextFieldID){
                                     %></select>
             </td>
        </tr>
-       <td colspan="8">
-                                    If yes, when&nbsp;<input type="text" name="industrialInjuryDate" size="15" maxlength="15"/>
-                                    &nbsp;&nbsp;Reason:&nbsp;<input type="text" name="industrialInjuryReason" size="25" maxlength="45"/>
-       </td>
+       <tr>
+       	<td colspan="8">If yes, when&nbsp;<input type="text" name="industrialInjuryDate" value="<%=IntakeServlet.getIntake().getIndustrialInjuryDate()%>" size="15" maxlength="15" <% if (industrialInjuryDateErr.length()>0) {%> class="textboxErr"<%}%>/></td>
        </tr>
-       <td colspan="8">
-                                    Location&nbsp;<input type="text" name="industrialInjuryLocation" size="30" maxlength="30"/>
-                                    &nbsp;&nbsp;Employer:&nbsp;<input type="text" name="industrialInjuryEmployter" size="30" maxlength="30"/>
-        </td>
-	</tr>
+       <tr><td class="fieldError"><%=industrialInjuryDateErr %></td></tr>
+       <tr>
+       <td colspan="8">Reason:&nbsp;<input type="text" name="industrialInjuryReason" value="<%=IntakeServlet.getIntake().getIndustrialInjuryReason()%>" size="25" maxlength="45" <% if (industrialInjuryReasonErr.length()>0) {%> class="textboxErr"<%}%>/></td>
+       </tr>
+       <tr><td class="fieldError"><%=industrialInjuryReasonErr %></td></tr>
+       <tr>
+       <td colspan="8">Location&nbsp;<input type="text" name="industrialInjuryLocation" value="<%=IntakeServlet.getIntake().getIndustrialInjuryLocation()%>" size="30" maxlength="30" <% if (industrialInjuryLocationErr.length()>0) {%> class="textboxErr"<%}%>/></td>
+       </tr>
+       <tr><td class="fieldError"><%=industrialInjuryLocationErr %></td></tr>
+       <tr>
+       <td colspan="8">Employer:&nbsp;<input type="text" name="industrialInjuryEmployer" value="<%=IntakeServlet.getIntake().getIndustrialInjuryEmployer()%>" size="30" maxlength="30" <% if (industrialInjuryEmployerErr.length()>0) {%> class="textboxErr"<%}%>/> </td>
+	   </tr>
+       <tr><td class="fieldError"><%=industrialInjuryEmployerErr %></td></tr>
     
     <tr>
 		<td colspan="8">&nbsp;</td>
@@ -1650,12 +1750,15 @@ function moveOnMax(field,nextFieldID){
     
     <tr>
 		<td colspan="8">
+        
+        <table width="100%">
+        <tr>
+        <td>
         Do you have any current physical disability?&nbsp;&nbsp;
          <%
                                     ddl = (ArrayList)session.getAttribute("dll_yesno");
                                     %>
                                 	<select name="disabilityFlag" class="dll">
-                                    <option value="">
                                     <%
                                     if (ddl!=null) {
                                       for (int j=0;j<ddl.size();j++) {
@@ -1677,20 +1780,31 @@ function moveOnMax(field,nextFieldID){
             </td>
        </tr>
        <tr>
-       <td colspan="8">
-                                    If yes, date of last examination&nbsp;<input type="text" name="examinationDate" value="<%=IntakeServlet.getIntake().getExaminationDate()%>" size="15" maxlength="15"/>
-                                    &nbsp;&nbsp;Physician's Name&nbsp;<input type="text" name="physician" value="<%=IntakeServlet.getIntake().getPhysician()%>" size="25" maxlength="45"/>
+       <td>
+           If yes, date of last examination&nbsp;<input type="text" name="examinationDate" value="<%=IntakeServlet.getIntake().getExaminationDate()%>" size="15" maxlength="15" <% if (examinationErr.length()>0) {%> class="textboxErr"<%}%>/>
        </td>
        </tr>
-       <td colspan="8">
-                                   Address&nbsp;<input type="text" name="physicianAddress" value="<%=IntakeServlet.getIntake().getPhysicianAddress()%>" size="45" maxlength="45"/>
+       <tr><td class="fieldError"><%=examinationErr%></td></tr>
+       <tr>
+       <td>
+           Physician's Name&nbsp;<input type="text" name="physician" value="<%=IntakeServlet.getIntake().getPhysician()%>" size="25" maxlength="45" <% if (physicianErr.length()>0) {%> class="textboxErr"<%}%>/>
+       </td>
+       </tr>
+       <tr><td class="fieldError"><%=physicianErr%></td></tr>
+       <tr>
+       <td>
+           Address&nbsp;<input type="text" name="physicianAddress" value="<%=IntakeServlet.getIntake().getPhysicianAddress()%>" size="45" maxlength="45" <% if (physicianAddressErr.length()>0) {%> class="textboxErr"<%}%>/>
         </td>
-	</tr>
+		</tr>
+        <tr><td class="fieldError"><%=physicianAddressErr%></td></tr>
+        </table>
+        </td>
+        </tr>
     <tr>
 		<td colspan="8">&nbsp;</td>
 	</tr>
 	<tr>
-		<td colspan="11"><b>Have you ever had any of the following:</b></td>
+		<td colspan="8"><b>Have you ever had any of the following:</b></td>
 	</tr>
 	<tr>
 		<td colspan="8">&nbsp;</td>
@@ -1699,6 +1813,7 @@ function moveOnMax(field,nextFieldID){
 		<td colspan="8">
 			<table>
             <% ArrayList medicalConditions = (ArrayList)session.getAttribute("medicalCondition");
+			  String medicalConditionFlag[] = IntakeServlet.getIntake().getMedicalCondition();
 				for (int i=0;i<medicalConditions.size()-1;i+=2) {
 					String medicalCondition = (String)medicalConditions.get(i);
 			%>
@@ -1714,7 +1829,7 @@ function moveOnMax(field,nextFieldID){
                                             value="<%=ddl.get(j)%>"
                                             <%
                                             if
-                                            (ddl.get(j).equals(IntakeServlet.getIntake().getDisabilityFlag()))
+                                            (ddl.get(j).equals(medicalConditionFlag[i]))
                                             {%>selected<%}%>>
                                           <%=ddl.get(j)%>
                                         </option>
@@ -1731,7 +1846,6 @@ function moveOnMax(field,nextFieldID){
 					<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
 					<td>			
 						<select name="medicalConditionFlag<%=i+1%>" class="dll">
-                                    <option value="">
                                     <%
                                     if (ddl!=null) {
                                       for (int j=0;j<ddl.size();j++) {
@@ -1740,7 +1854,7 @@ function moveOnMax(field,nextFieldID){
                                             value="<%=ddl.get(j)%>"
                                             <%
                                             if
-                                            (ddl.get(j).equals(IntakeServlet.getIntake().getDisabilityFlag()))
+                                            (ddl.get(j).equals(medicalConditionFlag[i+1]))
                                             {%>selected<%}%>>
                                           <%=ddl.get(j)%>
                                         </option>
@@ -1759,10 +1873,10 @@ function moveOnMax(field,nextFieldID){
 				<% } %>
 				<tr>
 					<td>			
-						<select size="1" name="herniaSide">
-							<option value="Left">LEFT</option>
-							<option value="Right">RIGHT</option>
-							<option value="" selected>Select</option>
+						<select name="herniaSide" <% if (herniaSideErr.length()>0) { %>class="ddlErr"<%}%>>
+							<option value="LEFT" <% if ("LEFT".equals(IntakeServlet.getIntake().getHerniaSide())) { %>selected<%}%>>LEFT</option>
+							<option value="RIGHT" <% if ("RIGHT".equals(IntakeServlet.getIntake().getHerniaSide())) { %>selected<%}%>>RIGHT</option>
+							<option value="" selected></option>
 						</select>
 					</td>
 					<td>&nbsp;&nbsp;</td>
@@ -1773,9 +1887,10 @@ function moveOnMax(field,nextFieldID){
 					<td>&nbsp;&nbsp;</td>
 					<td></td>
 				</tr>
+                <tr><td colspan="8" class="fieldError"><%=herniaSideErr%></td></tr>
 				<tr>
 					<td>			
-						<select name="herniaOperationFlag" class="dll">
+						<select name="herniaOperationFlag" >
                                     <option value="">
                                     <%
                                     if (ddl!=null) {
@@ -1805,9 +1920,15 @@ function moveOnMax(field,nextFieldID){
 					<td>&nbsp;&nbsp;</td>
 					<td></td>
 				</tr>
+                
 				<tr>
-					<td colspan="5">Date: <input type="text" name="Date" size="8">&nbsp;&nbsp;Physician: <input type="text" name="herniaDetails" value="<%=IntakeServlet.getIntake().getHerniaDetails()%>" size="30" maxlength="30"></td>
+					<td colspan="8">Date: <input type="text" name="Date" size="8" <% if (herniaOperationDateErr.length()>0) { %>class="textboxErr"<%}%>></td>
+                </tr>
+                 <tr><td colspan="8" class="fieldError"><%=herniaOperationDateErr%></td></tr>
+                <tr>
+                    <td colspan="8">Physician: <input type="text" name="herniaPhysician" value="<%=IntakeServlet.getIntake().getHerniaPhysician()%>" <% if (herniaPhysicianErr.length()>0) { %>class="textboxErr"<%}%> size="30" maxlength="30"></td>
 				</tr>
+                 <tr><td colspan="8" class="fieldError"><%=herniaPhysicianErr%></td></tr>
 
 			</table> 			 					
 		</td>
