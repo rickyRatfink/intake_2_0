@@ -244,6 +244,43 @@ public class IntakeServlet extends HttpServlet {
 		this.getIntake().setMedicalCondition(medicalCondition);
 		this.getIntake().setHerniaOperationFlag(valid8r.cleanData(req.getParameter("herniaOperationFlag")));
 		
+		
+		this.getIntake().setLawsuitFlag(valid8r.cleanData(req.getParameter("lawsuitFlag")));
+		this.getIntake().setLawsuitDetails(valid8r.cleanData(req.getParameter("lawsuitDetails")));
+		this.getIntake().setLawsuitDate(valid8r.cleanData(req.getParameter("lawsuitDate")));
+		this.getIntake().setCurrentLawsuitFlag(valid8r.cleanData(req.getParameter("currentLawsuitFlag")));
+		this.getIntake().setCurrentLawsuitDetails(valid8r.cleanData(req.getParameter("currentLawsuitDetails")));
+		this.getIntake().setCurrentLawsuitDate(valid8r.cleanData(req.getParameter("currentLawsuitDate")));
+		this.getIntake().setFelonyFlag(valid8r.cleanData(req.getParameter("felonyFlag")));
+		this.getIntake().setFelonyQty(valid8r.cleanData(req.getParameter("felonyQty")));
+		this.getIntake().setFelonyDetails(valid8r.cleanData(req.getParameter("felonyDetails")));
+		this.getIntake().setSexualOffenseFlag(valid8r.cleanData(req.getParameter("sexualOffenseFlag")));
+		this.getIntake().setSexualOffenseQty(valid8r.cleanData(req.getParameter("sexualOffenseQty")));
+		this.getIntake().setSexualOffenseDetails(valid8r.cleanData(req.getParameter("sexualOffenseDetails")));
+		
+		this.getIntake().setProbationFlag(valid8r.cleanData(req.getParameter("probationFlag")));
+		this.getIntake().setProbationCounty(valid8r.cleanData(req.getParameter("probationCounty")));
+		this.getIntake().setProbationState(valid8r.cleanData(req.getParameter("probationState")));
+		this.getIntake().setProbationOfficer(valid8r.cleanData(req.getParameter("probationOfficer")));
+		this.getIntake().setProbationOfficerPhone(valid8r.cleanData(req.getParameter("probationOfficerPhone")));
+		
+		this.getIntake().setProbationAppt(valid8r.cleanData(req.getParameter("probationAppt")));
+		this.getIntake().setProbationApptDetails(valid8r.cleanData(req.getParameter("probationApptDetails")));
+		
+		
+		String workExperience[] = new String[]{ 
+				"","","","","","","",
+				"","","","","","","",
+				"","","","","","","",
+				"","","","","","","",
+				"","","","","","",""};
+		for (int i=0;i<26;i++) {
+			workExperience[i]=valid8r.cleanData(req.getParameter("jobskill"+i));
+		}
+		this.getIntake().setWorkExperience(workExperience);
+		
+		this.getIntake().setWorkExperienceOther(valid8r.cleanData(req.getParameter("jobskillOther")));
+		this.getIntake().setWorkExperienceOtherDesc(valid8r.cleanData(req.getParameter("jobskillOtherDesc")));
 		//this.getIntake().set(valid8r.cleanData(req.getParameter("")));
 		
 		

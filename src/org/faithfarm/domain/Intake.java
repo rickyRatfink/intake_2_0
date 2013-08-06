@@ -168,12 +168,22 @@ public class Intake implements Serializable {
 		"NO","NO","NO","NO","NO","NO",
 		"NO","NO","NO","NO","NO","NO","NO","NO","NO","NO" };
 	
+	private static String workExperience[] = new String[]{ 
+		"","","","","","","",
+		"","","","","","","",
+		"","","","","","","",
+		"","","","","","","",
+		"","","","","","",""};
+	
+	private static String workExperienceOther="";
+	private static String workExperienceOtherDesc="";
+	
 	private static String lawsuitFlag="NO";
 	private static String currentLawsuitFlag="NO";
 	private static String lawsuitDetails="";
-	private static String currentlawsuitDetails="";
+	private static String currentLawsuitDetails="";
 	private static String lawsuitDate="";
-	private static String currentlawsuitDate="";
+	private static String currentLawsuitDate="";
 	private static String felonyFlag= "NO";
 	private static String sexualOffenseFlag= "NO";
 	private static String felonyDetails= "";
@@ -187,7 +197,8 @@ public class Intake implements Serializable {
 	private static String otherBenefits="";
 	
 	private static String probationFlag = "NO";
-	private static String probationCountyState = "";
+	private static String probationCounty = "";
+	private static String probationState = "";
 	private static String probationOfficer = "";
 	private static String probationOfficerPhone = "";	
 	private static String probationAppt="NO";
@@ -1061,23 +1072,25 @@ public class Intake implements Serializable {
 	public static void setLawsuitDetails(String lawsuitDetails) {
 		Intake.lawsuitDetails = lawsuitDetails;
 	}
-	public static String getCurrentlawsuitDetails() {
-		return currentlawsuitDetails;
-	}
-	public static void setCurrentlawsuitDetails(String currentlawsuitDetails) {
-		Intake.currentlawsuitDetails = currentlawsuitDetails;
-	}
+	
 	public static String getLawsuitDate() {
 		return lawsuitDate;
 	}
 	public static void setLawsuitDate(String lawsuitDate) {
 		Intake.lawsuitDate = lawsuitDate;
 	}
-	public static String getCurrentlawsuitDate() {
-		return currentlawsuitDate;
+	
+	public static String getCurrentLawsuitDetails() {
+		return currentLawsuitDetails;
 	}
-	public static void setCurrentlawsuitDate(String currentlawsuitDate) {
-		Intake.currentlawsuitDate = currentlawsuitDate;
+	public static void setCurrentLawsuitDetails(String currentLawsuitDetails) {
+		Intake.currentLawsuitDetails = currentLawsuitDetails;
+	}
+	public static String getCurrentLawsuitDate() {
+		return currentLawsuitDate;
+	}
+	public static void setCurrentLawsuitDate(String currentLawsuitDate) {
+		Intake.currentLawsuitDate = currentLawsuitDate;
 	}
 	public static String getFelonyFlag() {
 		return felonyFlag;
@@ -1121,11 +1134,18 @@ public class Intake implements Serializable {
 	public static void setProbationFlag(String probationFlag) {
 		Intake.probationFlag = probationFlag;
 	}
-	public static String getProbationCountyState() {
-		return probationCountyState;
+	
+	public static String getProbationCounty() {
+		return probationCounty;
 	}
-	public static void setProbationCountyState(String probationCountyState) {
-		Intake.probationCountyState = probationCountyState;
+	public static void setProbationCounty(String probationCounty) {
+		Intake.probationCounty = probationCounty;
+	}
+	public static String getProbationState() {
+		return probationState;
+	}
+	public static void setProbationState(String probationState) {
+		Intake.probationState = probationState;
 	}
 	public static String getProbationOfficer() {
 		return probationOfficer;
@@ -1494,6 +1514,24 @@ public class Intake implements Serializable {
 	}
 	public static void setMedicalCondition(String[] medicalCondition) {
 		Intake.medicalCondition = medicalCondition;
+	}
+	public static String[] getWorkExperience() {
+		return workExperience;
+	}
+	public static void setWorkExperience(String[] workExperience) {
+		Intake.workExperience = workExperience;
+	}
+	public static String getWorkExperienceOther() {
+		return workExperienceOther;
+	}
+	public static void setWorkExperienceOther(String workExperienceOther) {
+		Intake.workExperienceOther = workExperienceOther;
+	}
+	public static String getWorkExperienceOtherDesc() {
+		return workExperienceOtherDesc;
+	}
+	public static void setWorkExperienceOtherDesc(String workExperienceOtherDesc) {
+		Intake.workExperienceOtherDesc = workExperienceOtherDesc;
 	}
 	
 	
