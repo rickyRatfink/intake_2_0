@@ -186,6 +186,48 @@ String previousFaithFarmFlagErr = (String)request.getAttribute("previousFaithFar
 
    String herniaPhysicianErr = (String)request.getAttribute("herniaPhysicianErr");
    if (herniaPhysicianErr==null) herniaPhysicianErr="";
+   
+  String lawsuitDateErr = (String)request.getAttribute("lawsuitDateErr");
+   if (lawsuitDateErr==null) lawsuitDateErr="";
+
+  String lawsuitDetailsErr = (String)request.getAttribute("lawsuitDetailsErr");
+   if (lawsuitDetailsErr==null) lawsuitDetailsErr="";
+
+  String currentLawsuitDateErr = (String)request.getAttribute("currentLawsuitDateErr");
+   if (currentLawsuitDateErr==null) currentLawsuitDateErr="";
+
+  String currentLawsuitDetailsErr = (String)request.getAttribute("currentLawsuitDetailsErr");
+   if (currentLawsuitDetailsErr==null) currentLawsuitDetailsErr="";
+
+  String felonyQtyErr = (String)request.getAttribute("felonyQtyErr");
+   if (felonyQtyErr==null) felonyQtyErr="";
+
+  String felonyDetailsErr = (String)request.getAttribute("felonyDetailsErr");
+   if (felonyDetailsErr==null) felonyDetailsErr="";
+
+  String sexualOffenseQtyErr = (String)request.getAttribute("sexualOffenseQtyErr");
+   if (sexualOffenseQtyErr==null) sexualOffenseQtyErr="";
+
+  String sexualOffenseDetailsErr = (String)request.getAttribute("sexualOffenseDetailsErr");
+   if (sexualOffenseDetailsErr==null) sexualOffenseDetailsErr="";
+
+  String probationCountyErr = (String)request.getAttribute("probationCountyErr");
+   if (probationCountyErr==null) probationCountyErr="";
+   
+     String probationStateErr = (String)request.getAttribute("probationStateErr");
+   if (probationStateErr==null) probationStateErr="";
+   
+     String probationOfficerErr = (String)request.getAttribute("probationOfficerErr");
+   if (probationOfficerErr==null) probationOfficerErr="";
+   
+     String probationOfficerPhoneErr = (String)request.getAttribute("probationOfficerPhoneErr");
+   if (probationOfficerPhoneErr==null) probationOfficerPhoneErr="";
+
+  String probationApptDetailsErr = (String)request.getAttribute("probationApptDetailsErr");
+   if (probationApptDetailsErr==null) probationApptDetailsErr="";
+
+ String workExperienceOtherDescErr = (String)request.getAttribute("workExperienceOtherDescErr");
+   if (workExperienceOtherDescErr==null) workExperienceOtherDescErr="";
 
    String Err = (String)request.getAttribute("Err");
    if (Err==null) Err="";
@@ -1939,12 +1981,11 @@ function moveOnMax(field,nextFieldID){
 		<td colspan="8">&nbsp;</td>
 	</tr>
 	<tr>
-		<td colspan="11"><b>Legal Information:</b></td>
+		<td colspan="8"><b>Legal Information:</b></td>
 	</tr>
 		<tr>
 		<td colspan="8">Have you ever been sued?&nbsp;
-			<select name="lawsuitFlag" class="dll">
-                                    <option value="">
+			<select name="lawsuitFlag">
                                     <%
                                     if (ddl!=null) {
                                       for (int j=0;j<ddl.size();j++) {
@@ -1963,14 +2004,19 @@ function moveOnMax(field,nextFieldID){
                                       <%
                                     }
                                     %>
-                            </select>&nbsp;&nbsp;&nbsp;If yes, when&nbsp;<input type="text" name="lawsuitDate" size="10">
+                            </select>&nbsp;&nbsp;&nbsp;If yes, when&nbsp;<input type="text" name="lawsuitDate" size="10" maxlength="10" value="<%=IntakeServlet.getIntake().getLawsuitDate()%>" <% if (lawsuitDateErr.length()>0) { %>class="textboxErr"<%}%>>
 		</td>
 	</tr>
+    <tr><td colspan="8" class="fieldError"><%=lawsuitDateErr%></td></tr>
     <tr>
-		<td colspan="11">Details:<br><textarea rows="5" name="lawsuitDetails" cols="93"></textarea></td>
-	</tr>
+		<td colspan="8">Details:&nbsp;</td>
+    </tr>
+    <tr><td colspan="8" class="fieldError"><%=lawsuitDetailsErr%></td></tr>
 	<tr>
-		<td colspan="11">Are you involved in a lawsuit?&nbsp;
+    	<td colspan="8"><textarea rows="5" name="lawsuitDetails" cols="93" <% if (lawsuitDetailsErr.length()>0) { %>class="areaErr"<%}%>><%=IntakeServlet.getIntake().getLawsuitDetails()%></textarea></td>
+	</tr>
+    <tr>
+		<td colspan="8">Are you involved in a lawsuit?&nbsp;
 			<select name="currentLawsuitFlag" class="dll">
                                     <option value="">
                                     <%
@@ -1991,14 +2037,19 @@ function moveOnMax(field,nextFieldID){
                                       <%
                                     }
                                     %>
-                            </select>&nbsp;&nbsp;&nbsp;If yes, when:<input type="text" name="currentLawsuitDate" size="10">
+                            </select>&nbsp;&nbsp;&nbsp;If yes, when:<input type="text" name="currentLawsuitDate" size="10" maxlength="10" value="<%=IntakeServlet.getIntake().getCurrentLawsuitDate()%>" <% if (currentLawsuitDateErr.length()>0) { %>class="textboxErr"<%}%> />
 		</td>
 	</tr>
+    <tr><td colspan="8" class="fieldError"><%=currentLawsuitDateErr%></td></tr>
 	<tr>
 		<td colspan="8"></td>
 	</tr>
 	<tr>
-		<td colspan="11">Details:<br><textarea rows="5" name="currentLawsuitDetails" cols="93"></textarea></td>
+		<td colspan="8">Details:</td>
+     </tr>
+     	<tr><td colspan="8" class="fieldError"><%=currentLawsuitDetailsErr%></td></tr>
+     <tr>
+     	<td colspan="8"><textarea rows="5" name="currentLawsuitDetails" cols="93" <% if (currentLawsuitDetailsErr.length()>0) { %>class="areaErr"<%}%>><%=IntakeServlet.getIntake().getCurrentLawsuitDetails()%></textarea></td>
 	</tr>
 	<tr>
 		<td colspan="8">Ever convicted of a felony?&nbsp;
@@ -2022,11 +2073,16 @@ function moveOnMax(field,nextFieldID){
                                       <%
                                     }
                                     %>
-                            </select>&nbsp;&nbsp;&nbsp;If yes, how many:<input type="text" name="felonyQty" size="3" maxlength="3">
+                            </select>&nbsp;&nbsp;&nbsp;If yes, how many:<input type="text" name="felonyQty" size="3" maxlength="3" value="<%=IntakeServlet.getIntake().getFelonyQty()%>" <% if (felonyQtyErr.length()>0) { %>class="textboxErr"<%}%>>
         </td>
 	</tr>
+    <tr><td colspan="8" class="fieldError"><%=felonyQtyErr%></td></tr>
 	<tr>
-		<td colspan="11">Details:<br><textarea rows="5" name="felonyDetails" cols="93"></textarea></td>
+		<td colspan="8">Details:</td>
+     </tr>
+     <tr><td colspan="8" class="fieldError"><%=felonyDetailsErr%></td></tr>
+     <tr>
+     	<td colspan="8"><textarea rows="5" name="felonyDetails" cols="93" <% if (felonyDetailsErr.length()>0) { %>class="areaErr"<%}%>><%=IntakeServlet.getIntake().getFelonyDetails()%></textarea></td>
 	</tr>
     <tr>
 		<td colspan="8">Ever convicted of a sexual offense?&nbsp;
@@ -2050,41 +2106,129 @@ function moveOnMax(field,nextFieldID){
                                       <%
                                     }
                                     %>
-                            </select>&nbsp;&nbsp;&nbsp;If yes, how many:<input type="text" name="sexualOffenseQty" size="3" maxlength="3">
+                            </select>&nbsp;&nbsp;&nbsp;If yes, how many:<input type="text" name="sexualOffenseQty" size="3" maxlength="3" value="<%=IntakeServlet.getIntake().getSexualOffenseQty()%>" <% if (sexualOffenseQtyErr.length()>0) { %>class="textboxErr"<%}%> />
         </td>
 	</tr>
+    <tr><td colspan="8" class="fieldError"><%=sexualOffenseQtyErr%></td></tr>
 	<tr>
-		<td colspan="11">Details:<br><textarea rows="5" name="sexualOffenseDetails" cols="93"></textarea></td>
+		<td colspan="8">Details:</td>
+    </tr>
+    <tr><td colspan="8" class="fieldError"><%=sexualOffenseDetailsErr%></td></tr>
+    <tr>
+    	<td colspan="8"><textarea rows="5" name="sexualOffenseDetails" cols="93" <% if (sexualOffenseDetailsErr.length()>0) { %>class="areaErr"<%}%>><%=IntakeServlet.getIntake().getSexualOffenseDetails()%></textarea></td>
+	</tr>
+    <tr>
+		<td colspan="8" ></td>
 	</tr>
 	<tr>
 		<td colspan="8">Are you on probation? &nbsp;
-			<select size="1" name="probation">
-							<option value="Yes">YES</option>
-							<option value="No">NO</option>
-							<option value="" selected>Select</option>
-			</select>		
+			<select name="probationFlag">
+                                    <%
+                                    if (ddl!=null) {
+                                      for (int j=0;j<ddl.size();j++) {
+                                        %>
+                                        <option 
+                                            value="<%=ddl.get(j)%>"
+                                            <%
+                                            if
+                                            (ddl.get(j).equals(IntakeServlet.getIntake().getProbationFlag()))
+                                            {%>selected<%}%>>
+                                          <%=ddl.get(j)%>
+                                        </option>
+                                        <%
+                                      }
+                                      %>
+                                      <%
+                                    }
+                                    %>
+                            </select>		
 		</td>
 	</tr>
 	<tr>
-		<td colspan="8">What County?&nbsp;<input type="text" name="County" size="20"></td>
+		<td colspan="8">What County?&nbsp;<input type="text" name="procationCounty" value="<%=IntakeServlet.getIntake().getProbationCounty()%>" size="20" maxlength="20" <% if (probationCountyErr.length()>0) { %>class="textboxErr"<%}%>></td>
+	</tr>
+    <tr>
+		<td colspan="8" class="fieldError"><%=probationCountyErr%></td>
+	</tr>
+    <tr>
+		<td colspan="8">What State?&nbsp;
+        		<%
+					ddl=(ArrayList)session.getAttribute("dll_states");
+				%>
+        		<select name="probationState" <% if (probationStateErr.length()>0) { %>class="ddlErr"<%}%>>
+                                    <option value=""></option>
+									<%
+                                    if (ddl!=null) {
+                                      for (int j=0;j<ddl.size();j++) {
+                                        %>
+                                        <option 
+                                            value="<%=ddl.get(j)%>"
+                                            <%
+                                            if
+                                            (ddl.get(j).equals(IntakeServlet.getIntake().getProbationState()))
+                                            {%>selected<%}%>>
+                                          <%=ddl.get(j)%>
+                                        </option>
+                                        <%
+                                      }
+                                      %>
+                                      <%
+                                    }
+                                    %>
+                            </select>		
+        
+        
+        </td>
+	</tr>
+    <tr>
+		<td colspan="8" class="fieldError"><%=probationStateErr%></td>
 	</tr>
 	<tr>
-		<td colspan="8">Probation Officers Name:&nbsp;<input type="text" name="Probation_Officer" size="20"></td>
+		<td colspan="8">Probation Officers Name:&nbsp;<input type="text" name="probationOfficer" value="<%=IntakeServlet.getIntake().getProbationOfficer()%>" size="20" maxlength="20" <% if (probationOfficerErr.length()>0) { %>class="textboxErr"<%}%>></td>
+	</tr>
+    <tr>
+		<td colspan="8" class="fieldError"><%=probationOfficerErr%></td>
 	</tr>
 	<tr>
-		<td colspan="8">Probation Officers Phone #:&nbsp;<input type="text" name="Phone" size="20"></td>
+		<td colspan="8">Probation Officers Phone #:&nbsp;<input type="text" name="probationOfficerPhone" value="<%=IntakeServlet.getIntake().getProbationOfficerPhone()%>" size="20" maxlength="20" <% if (probationOfficerPhoneErr.length()>0) { %>class="textboxErr"<%}%>></td>
+	</tr>
+    <tr>
+		<td colspan="8" class="fieldError"><%=probationOfficerPhoneErr%></td>
 	</tr>
 	<tr>
 		<td colspan="8">Any Court or Probation appointments in the next 30 days?&nbsp;
-			<select size="1" name="Probation_appointments">
-							<option value="Yes">YES</option>
-							<option value="No">NO</option>
-							<option value="" selected>Select</option>
-			</select>
+			<%
+					ddl=(ArrayList)session.getAttribute("dll_yesno");
+			%>
+            <select name="probationAppt"  class="ddl">
+                                    <option value="">
+                                    <%
+                                    if (ddl!=null) {
+                                      for (int j=0;j<ddl.size();j++) {
+                                        %>
+                                        <option 
+                                            value="<%=ddl.get(j)%>"
+                                            <%
+                                            if
+                                            (ddl.get(j).equals(IntakeServlet.getIntake().getProbationAppt()))
+                                            {%>selected<%}%>>
+                                          <%=ddl.get(j)%>
+                                        </option>
+                                        <%
+                                      }
+                                      %>
+                                      <%
+                                    }
+                                    %>
+                            </select>
+      </td>
+      </tr>
+      <tr>
+      <td colspan="8">If yes, Dates & Times:<input type="text" name="probationApptDetails" size="45" maxlength="45" value="<%=IntakeServlet.getIntake().getProbationApptDetails()%>" <% if (probationApptDetailsErr.length()>0) { %>class="textboxErr"<%}%>>
 		</td>
-	</tr>
-	<tr>
-		<td colspan="8">Dates &amp; Times&nbsp;<input type="text" name="Dates_Times" size="67"></td>
+	</tr>	
+     <tr>
+		<td colspan="8" class="fieldError"><%=probationApptDetailsErr%></td>
 	</tr>
 	<tr>
 		<td colspan="8">&nbsp;</td>
@@ -2105,6 +2249,9 @@ function moveOnMax(field,nextFieldID){
     		<table width="100%">
 			<%
 			 String jobSkill="";
+			 
+			 String workExperience[] = IntakeServlet.getIntake().getWorkExperience();
+		   
 			 ArrayList jobSkills = (ArrayList)session.getAttribute("jobSkill");
 				for (int i=0;i<jobSkills.size()-3;i+=4) {
 			%>
@@ -2112,25 +2259,28 @@ function moveOnMax(field,nextFieldID){
             <tr>
             	<td>
                 	<% jobSkill = (String)jobSkills.get(i); %>
-                     <input type="checkbox" name="jobskill<%=i%>"/>&nbsp;<%=jobSkill%>
+                     <input type="checkbox" name="jobskill<%=i%>" value="YES" <% if ("YES".equals(workExperience[i])) {%>checked<%}%>/>&nbsp;<%=jobSkill%>
                 </td>
                 <td>
                 	<% jobSkill = (String)jobSkills.get(i+1); %>
-                     <input type="checkbox" name="jobskill<%=i+1%>"/>&nbsp;<%=jobSkill%>
+                     <input type="checkbox" name="jobskill<%=i+1%>" value="YES" <% if ("YES".equals(workExperience[i+1])) {%>checked<%}%>/>&nbsp;<%=jobSkill%>
                 </td>
                 <td>
                 	<% jobSkill = (String)jobSkills.get(i+2); %>
-                     <input type="checkbox" name="jobskill<%=i+2%>"/>&nbsp;<%=jobSkill%>
+                     <input type="checkbox" name="jobskill<%=i+2%>" value="YES" <% if ("YES".equals(workExperience[i+2])) {%>checked<%}%>/>&nbsp;<%=jobSkill%>
                 </td>
                 <td>
                 	<% jobSkill = (String)jobSkills.get(i+3); %>
-                     <input type="checkbox" name="jobskill<%=i+3%>"/>&nbsp;<%=jobSkill%>
+                     <input type="checkbox" name="jobskill<%=i+3%>" value="YES" <% if ("YES".equals(workExperience[i+3])) {%>checked<%}%>/>&nbsp;<%=jobSkill%>
                 </td>
                 
              </tr>
              <% } %>
              <tr>
-             	<td colspan="4" align="right"><input type="checkbox" name="jobskillOther"/>&nbsp;Other&nbsp;<input type="text" name="jobskillOtherDesc" size="20" maxlength="30"/>
+             	<td colspan="4" align="left"><input type="checkbox" name="jobskillOther" value="YES" <% if ("YES".equals(IntakeServlet.getIntake().getWorkExperienceOtherDesc())) {%>checked<%}%>/>&nbsp;Other&nbsp;<input type="text" name="jobskillOtherDesc" size="20" maxlength="30" <% if (workExperienceOtherDescErr.length()>0) {%>class="textboxErr"<%}%>/>
+             </tr>
+             <tr>
+             	<td colspan="4" class="fieldError"><%=workExperienceOtherDescErr%></td>
              </tr>
              </table>
          </td>
