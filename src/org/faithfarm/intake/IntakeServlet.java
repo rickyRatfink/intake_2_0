@@ -137,10 +137,56 @@ public class IntakeServlet extends HttpServlet {
 		this.getIntake().setBranchOfService(valid8r.cleanData(req.getParameter("branchOfService")));
 		this.getIntake().setRank(valid8r.cleanData(req.getParameter("rank")));
 		this.getIntake().setLengthOfService(valid8r.cleanData(req.getParameter("lengthOfService")));
-		//this.getIntake().set(valid8r.cleanData(req.getParameter("")));
-		//this.getIntake().set(valid8r.cleanData(req.getParameter("")));
 		
-		//this.getIntake().set(valid8r.cleanData(req.getParameter("")));
+		this.getIntake().setDriversLicenseFlag(valid8r.cleanData(req.getParameter("driversLicenseFlag")));
+		this.getIntake().setDriversLicenseState(valid8r.cleanData(req.getParameter("driversLicenseState")));
+		this.getIntake().setDriversLicenseNumber(valid8r.cleanData(req.getParameter("driversLicenseNumber")));
+		this.getIntake().setMotherLivingFlag(valid8r.cleanData(req.getParameter("motherLivingFlag")));
+		this.getIntake().setFatherLivingFlag(valid8r.cleanData(req.getParameter("fatherLivingFlag")));
+				
+		this.getIntake().setReligiousExperience(valid8r.cleanData(req.getParameter("religiousExperience")));
+		this.getIntake().setReligion(valid8r.cleanData(req.getParameter("religion")));
+		
+		this.getIntake().setSober3Years(valid8r.cleanData(req.getParameter("sober3Years")));
+		this.getIntake().setSober1Years(valid8r.cleanData(req.getParameter("sober1Years")));
+		
+		this.getIntake().setAttendAA(valid8r.cleanData(req.getParameter("attendAA")));
+		this.getIntake().setYearsAttended(valid8r.cleanData(req.getParameter("yearsAttended")));
+		
+		this.getIntake().setAbusePhysicalEffects(valid8r.cleanData(req.getParameter("abusePhysicalEffects")));
+		
+		this.getIntake().setPreviousFaithFarmFlag(valid8r.cleanData(req.getParameter("previousFaithFarmFlag")));
+		this.getIntake().setPreviousFaithFarm(valid8r.cleanData(req.getParameter("previousFaithFarm")));
+		this.getIntake().setFfYearsAttended(valid8r.cleanData(req.getParameter("ffYearsAttended")));
+		this.getIntake().setOtherRehabs(valid8r.cleanData(req.getParameter("otherRehabs")));
+		
+		this.getIntake().setUsagePattern1(valid8r.cleanData(req.getParameter("usagePattern1")));
+		this.getIntake().setUsagePattern2(valid8r.cleanData(req.getParameter("usagePattern2")));
+		this.getIntake().setUsagePattern3(valid8r.cleanData(req.getParameter("usagePattern3")));
+		this.getIntake().setUsagePattern4(valid8r.cleanData(req.getParameter("usagePattern4")));
+		this.getIntake().setUsagePattern5(valid8r.cleanData(req.getParameter("usagePattern5")));
+		this.getIntake().setUsagePattern6(valid8r.cleanData(req.getParameter("usagePattern6")));
+		
+		this.getIntake().setUsageLosses1(valid8r.cleanData(req.getParameter("usageLosses1")));
+		this.getIntake().setUsageLosses2(valid8r.cleanData(req.getParameter("usageLosses2")));
+		this.getIntake().setUsageLosses3(valid8r.cleanData(req.getParameter("usageLosses3")));
+		this.getIntake().setUsageLosses4(valid8r.cleanData(req.getParameter("usageLosses4")));
+		this.getIntake().setUsageLosses5(valid8r.cleanData(req.getParameter("usageLosses5")));
+		this.getIntake().setUsageLosses6(valid8r.cleanData(req.getParameter("usageLosses6")));
+		this.getIntake().setUsageLosses7(valid8r.cleanData(req.getParameter("usageLosses7")));
+		this.getIntake().setUsageLosses8(valid8r.cleanData(req.getParameter("usageLosses8")));
+		this.getIntake().setUsageLosses9(valid8r.cleanData(req.getParameter("usageLosses9")));
+		
+		String question[] = new String[]{ 
+				"NO","NO","NO","NO","NO","NO",
+				"NO","NO","NO","NO","NO","NO",
+				"NO","NO","NO","NO","NO","NO",
+				"NO","NO","NO","NO","NO","NO",
+				"NO","NO","NO","NO","NO","NO","NO","NO","NO","NO" };
+		for (int i=0;i<32;i++) {
+			question[i]=valid8r.cleanData(req.getParameter("question"+i));
+		}
+		this.getIntake().setQuestion(question);
 		
 		
 	} 

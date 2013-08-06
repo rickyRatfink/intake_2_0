@@ -37,8 +37,8 @@ public class Intake implements Serializable {
 	private static String emergencyContact = "";
 	private static String emergencyPhone = "";
 	private static String emergencyRelationship = "";
-	private static String motherLiving="";
-	private static String fatherLiving="";
+	private static String motherLivingFlag="";
+	private static String fatherLivingFlag="";
 	private static String motherRelationship="";
 	private static String fatherRelationship="";
 	private static String brothers="";
@@ -86,10 +86,23 @@ public class Intake implements Serializable {
 	private static String otherDrug = "";
 	private static String sober3Years = "";
 	private static String sober1Years = "";
-	private static String usagePattern = "";
+	private static String usagePattern1 = "";
+	private static String usagePattern2 = "";
+	private static String usagePattern3 = "";
+	private static String usagePattern4 = "";
+	private static String usagePattern5 = "";
+	private static String usagePattern6 = "";
+	private static String usageLosses1 = "";
+	private static String usageLosses2 = "";
+	private static String usageLosses3 = "";
+	private static String usageLosses4 = "";
+	private static String usageLosses5 = "";
+	private static String usageLosses6 = "";
+	private static String usageLosses7 = "";
+	private static String usageLosses8 = "";
+	private static String usageLosses9 = "";
 	private static String quantityPerWeek = "";
-	private static String quantity2Years = "";
-	private static String usageLosses = "";
+	private static String quantity2Years = "";	
 	private static String abusePhysicalEffects = "";
 	private static String spouseAddicted = "";
 	private static String familyAddicted = "";
@@ -98,6 +111,7 @@ public class Intake implements Serializable {
 	private static String yearsAttended = "";
 	private static String ffYearsAttended = "";
 	private static String otherRehabs="";
+	private static String previousFaithFarmFlag = "";
 	private static String previousFaithFarm = "";
 	private static String faithFarmYear = "";
 	private static String currentHealth = "";
@@ -124,37 +138,13 @@ public class Intake implements Serializable {
 	private static String herniaOperationFlag = "NO";
 	private static String herniaDetails="";
 	
-	private static String question1="NO";
-	private static String question2="NO";
-	private static String question3="NO";
-	private static String question4="NO";
-	private static String question5="NO";
-	private static String question6="NO";
-	private static String question7="NO";
-	private static String question8="NO";
-	private static String question9="NO";
-	private static String question10="NO";
-	private static String question11="NO";
-	private static String question12="NO";
-	private static String question13="NO";
-	private static String question14="NO";
-	private static String question15="NO";
-	private static String question16="NO";
-	private static String question17="NO";
-	private static String question18="NO";
-	private static String question19="NO";
-	private static String question20="NO";
-	private static String question21="NO";
-	private static String question22="NO";
-	private static String question23="NO";
-	private static String question24="NO";
-	private static String question25="NO";
-	private static String question26="NO";
-	private static String question27="NO";
-	private static String question28="NO";
-	private static String question29="NO";
-	private static String question30="NO";
-	private static String question31="NO";
+	private static String question[] = new String[]{ 
+						"NO","NO","NO","NO","NO","NO",
+						"NO","NO","NO","NO","NO","NO",
+						"NO","NO","NO","NO","NO","NO",
+						"NO","NO","NO","NO","NO","NO",
+						"NO","NO","NO","NO","NO","NO","NO","NO","NO","NO" };
+	
 	
 	private static String lawsuitFlag="NO";
 	private static String currentLawsuitFlag="NO";
@@ -422,17 +412,18 @@ public class Intake implements Serializable {
 	public static void setEmergencyRelationship(String emergencyRelationship) {
 		Intake.emergencyRelationship = emergencyRelationship;
 	}
-	public static String getMotherLiving() {
-		return motherLiving;
+	
+	public static String getMotherLivingFlag() {
+		return motherLivingFlag;
 	}
-	public static void setMotherLiving(String motherLiving) {
-		Intake.motherLiving = motherLiving;
+	public static void setMotherLivingFlag(String motherLivingFlag) {
+		Intake.motherLivingFlag = motherLivingFlag;
 	}
-	public static String getFatherLiving() {
-		return fatherLiving;
+	public static String getFatherLivingFlag() {
+		return fatherLivingFlag;
 	}
-	public static void setFatherLiving(String fatherLiving) {
-		Intake.fatherLiving = fatherLiving;
+	public static void setFatherLivingFlag(String fatherLivingFlag) {
+		Intake.fatherLivingFlag = fatherLivingFlag;
 	}
 	public static String getMotherRelationship() {
 		return motherRelationship;
@@ -719,11 +710,96 @@ public class Intake implements Serializable {
 	public static void setSober1Years(String sober1Years) {
 		Intake.sober1Years = sober1Years;
 	}
-	public static String getUsagePattern() {
-		return usagePattern;
+	
+	public static String getUsagePattern1() {
+		return usagePattern1;
 	}
-	public static void setUsagePattern(String usagePattern) {
-		Intake.usagePattern = usagePattern;
+	public static void setUsagePattern1(String usagePattern1) {
+		Intake.usagePattern1 = usagePattern1;
+	}
+	public static String getUsagePattern2() {
+		return usagePattern2;
+	}
+	public static void setUsagePattern2(String usagePattern2) {
+		Intake.usagePattern2 = usagePattern2;
+	}
+	public static String getUsagePattern3() {
+		return usagePattern3;
+	}
+	public static void setUsagePattern3(String usagePattern3) {
+		Intake.usagePattern3 = usagePattern3;
+	}
+	public static String getUsagePattern4() {
+		return usagePattern4;
+	}
+	public static void setUsagePattern4(String usagePattern4) {
+		Intake.usagePattern4 = usagePattern4;
+	}
+	public static String getUsagePattern5() {
+		return usagePattern5;
+	}
+	public static void setUsagePattern5(String usagePattern5) {
+		Intake.usagePattern5 = usagePattern5;
+	}
+	public static String getUsagePattern6() {
+		return usagePattern6;
+	}
+	public static void setUsagePattern6(String usagePattern6) {
+		Intake.usagePattern6 = usagePattern6;
+	}
+	public static String getUsageLosses1() {
+		return usageLosses1;
+	}
+	public static void setUsageLosses1(String usageLosses1) {
+		Intake.usageLosses1 = usageLosses1;
+	}
+	public static String getUsageLosses2() {
+		return usageLosses2;
+	}
+	public static void setUsageLosses2(String usageLosses2) {
+		Intake.usageLosses2 = usageLosses2;
+	}
+	public static String getUsageLosses3() {
+		return usageLosses3;
+	}
+	public static void setUsageLosses3(String usageLosses3) {
+		Intake.usageLosses3 = usageLosses3;
+	}
+	public static String getUsageLosses4() {
+		return usageLosses4;
+	}
+	public static void setUsageLosses4(String usageLosses4) {
+		Intake.usageLosses4 = usageLosses4;
+	}
+	public static String getUsageLosses5() {
+		return usageLosses5;
+	}
+	public static void setUsageLosses5(String usageLosses5) {
+		Intake.usageLosses5 = usageLosses5;
+	}
+	public static String getUsageLosses6() {
+		return usageLosses6;
+	}
+	public static void setUsageLosses6(String usageLosses6) {
+		Intake.usageLosses6 = usageLosses6;
+	}
+	public static String getUsageLosses7() {
+		return usageLosses7;
+	}
+	public static void setUsageLosses7(String usageLosses7) {
+		Intake.usageLosses7 = usageLosses7;
+	}
+	public static String getUsageLosses8() {
+		return usageLosses8;
+	}
+	public static void setUsageLosses8(String usageLosses8) {
+		Intake.usageLosses8 = usageLosses8;
+	}
+	public static String getUsageLosses9() {
+		return usageLosses9;
+	}
+	public static void setUsageLosses9(String usageLosses9) {
+		Intake.usageLosses9 = usageLosses9;
 	}
 	public static String getQuantityPerWeek() {
 		return quantityPerWeek;
@@ -737,12 +813,7 @@ public class Intake implements Serializable {
 	public static void setQuantity2Years(String quantity2Years) {
 		Intake.quantity2Years = quantity2Years;
 	}
-	public static String getUsageLosses() {
-		return usageLosses;
-	}
-	public static void setUsageLosses(String usageLosses) {
-		Intake.usageLosses = usageLosses;
-	}
+	
 	public static String getAbusePhysicalEffects() {
 		return abusePhysicalEffects;
 	}
@@ -942,192 +1013,7 @@ public class Intake implements Serializable {
 	public static void setHerniaDetails(String herniaDetails) {
 		Intake.herniaDetails = herniaDetails;
 	}
-	public static String getQuestion1() {
-		return question1;
-	}
-	public static void setQuestion1(String question1) {
-		Intake.question1 = question1;
-	}
-	public static String getQuestion2() {
-		return question2;
-	}
-	public static void setQuestion2(String question2) {
-		Intake.question2 = question2;
-	}
-	public static String getQuestion3() {
-		return question3;
-	}
-	public static void setQuestion3(String question3) {
-		Intake.question3 = question3;
-	}
-	public static String getQuestion4() {
-		return question4;
-	}
-	public static void setQuestion4(String question4) {
-		Intake.question4 = question4;
-	}
-	public static String getQuestion5() {
-		return question5;
-	}
-	public static void setQuestion5(String question5) {
-		Intake.question5 = question5;
-	}
-	public static String getQuestion6() {
-		return question6;
-	}
-	public static void setQuestion6(String question6) {
-		Intake.question6 = question6;
-	}
-	public static String getQuestion7() {
-		return question7;
-	}
-	public static void setQuestion7(String question7) {
-		Intake.question7 = question7;
-	}
-	public static String getQuestion8() {
-		return question8;
-	}
-	public static void setQuestion8(String question8) {
-		Intake.question8 = question8;
-	}
-	public static String getQuestion9() {
-		return question9;
-	}
-	public static void setQuestion9(String question9) {
-		Intake.question9 = question9;
-	}
-	public static String getQuestion10() {
-		return question10;
-	}
-	public static void setQuestion10(String question10) {
-		Intake.question10 = question10;
-	}
-	public static String getQuestion11() {
-		return question11;
-	}
-	public static void setQuestion11(String question11) {
-		Intake.question11 = question11;
-	}
-	public static String getQuestion12() {
-		return question12;
-	}
-	public static void setQuestion12(String question12) {
-		Intake.question12 = question12;
-	}
-	public static String getQuestion13() {
-		return question13;
-	}
-	public static void setQuestion13(String question13) {
-		Intake.question13 = question13;
-	}
-	public static String getQuestion14() {
-		return question14;
-	}
-	public static void setQuestion14(String question14) {
-		Intake.question14 = question14;
-	}
-	public static String getQuestion15() {
-		return question15;
-	}
-	public static void setQuestion15(String question15) {
-		Intake.question15 = question15;
-	}
-	public static String getQuestion16() {
-		return question16;
-	}
-	public static void setQuestion16(String question16) {
-		Intake.question16 = question16;
-	}
-	public static String getQuestion17() {
-		return question17;
-	}
-	public static void setQuestion17(String question17) {
-		Intake.question17 = question17;
-	}
-	public static String getQuestion18() {
-		return question18;
-	}
-	public static void setQuestion18(String question18) {
-		Intake.question18 = question18;
-	}
-	public static String getQuestion19() {
-		return question19;
-	}
-	public static void setQuestion19(String question19) {
-		Intake.question19 = question19;
-	}
-	public static String getQuestion20() {
-		return question20;
-	}
-	public static void setQuestion20(String question20) {
-		Intake.question20 = question20;
-	}
-	public static String getQuestion21() {
-		return question21;
-	}
-	public static void setQuestion21(String question21) {
-		Intake.question21 = question21;
-	}
-	public static String getQuestion22() {
-		return question22;
-	}
-	public static void setQuestion22(String question22) {
-		Intake.question22 = question22;
-	}
-	public static String getQuestion23() {
-		return question23;
-	}
-	public static void setQuestion23(String question23) {
-		Intake.question23 = question23;
-	}
-	public static String getQuestion24() {
-		return question24;
-	}
-	public static void setQuestion24(String question24) {
-		Intake.question24 = question24;
-	}
-	public static String getQuestion25() {
-		return question25;
-	}
-	public static void setQuestion25(String question25) {
-		Intake.question25 = question25;
-	}
-	public static String getQuestion26() {
-		return question26;
-	}
-	public static void setQuestion26(String question26) {
-		Intake.question26 = question26;
-	}
-	public static String getQuestion27() {
-		return question27;
-	}
-	public static void setQuestion27(String question27) {
-		Intake.question27 = question27;
-	}
-	public static String getQuestion28() {
-		return question28;
-	}
-	public static void setQuestion28(String question28) {
-		Intake.question28 = question28;
-	}
-	public static String getQuestion29() {
-		return question29;
-	}
-	public static void setQuestion29(String question29) {
-		Intake.question29 = question29;
-	}
-	public static String getQuestion30() {
-		return question30;
-	}
-	public static void setQuestion30(String question30) {
-		Intake.question30 = question30;
-	}
-	public static String getQuestion31() {
-		return question31;
-	}
-	public static void setQuestion31(String question31) {
-		Intake.question31 = question31;
-	}
+	
 	public static String getLawsuitFlag() {
 		return lawsuitFlag;
 	}
@@ -1543,6 +1429,18 @@ public class Intake implements Serializable {
 	}
 	public static void setOtherBenefits(String otherBenefits) {
 		Intake.otherBenefits = otherBenefits;
+	}
+	public static String getPreviousFaithFarmFlag() {
+		return previousFaithFarmFlag;
+	}
+	public static void setPreviousFaithFarmFlag(String previousFaithFarmFlag) {
+		Intake.previousFaithFarmFlag = previousFaithFarmFlag;
+	}
+	public static String[] getQuestion() {
+		return question;
+	}
+	public static void setQuestion(String[] question) {
+		Intake.question = question;
 	}
 	
 	
