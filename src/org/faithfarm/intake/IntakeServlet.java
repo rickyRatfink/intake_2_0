@@ -47,6 +47,9 @@ public class IntakeServlet extends HttpServlet {
 			if (!success) 
 				url="application.jsp";
 			else {
+				System.out.println("inserting app");
+				dao.insertIntakeApplication(intake, "application", session);
+				System.out.println("inserted app");
 				req.setAttribute("MESSAGE", "Application successfully saved!");
 				url="application.jsp";
 			}
@@ -99,6 +102,8 @@ public class IntakeServlet extends HttpServlet {
 		this.getIntake().setCity(valid8r.cleanData(req.getParameter("city")));
 		this.getIntake().setState(valid8r.cleanData(req.getParameter("state")));
 		this.getIntake().setZipcode(valid8r.cleanData(req.getParameter("zipcode")));
+		this.getIntake().setReferredBy(valid8r.cleanData(req.getParameter("referredBy")));
+		
 		this.getIntake().setReferralPhone(valid8r.cleanData(req.getParameter("referral_phone")));
 		this.getIntake().setDateOfBirth(valid8r.cleanData(req.getParameter("dob")));
 		this.getIntake().setAge(valid8r.cleanData(req.getParameter("age")));
@@ -132,7 +137,7 @@ public class IntakeServlet extends HttpServlet {
 		this.getIntake().setVAFlag(valid8r.cleanData(req.getParameter("vaFlag")));
 		this.getIntake().setWCFlag(valid8r.cleanData(req.getParameter("wcFlag")));
 		this.getIntake().setOtherBenefits(valid8r.cleanData(req.getParameter("other_benefits")));
-		
+		this.getIntake().setGovernmentBenefits(valid8r.cleanData(req.getParameter("ssFlag"))+" "+valid8r.cleanData(req.getParameter("vaFlag"))+" "+valid8r.cleanData(req.getParameter("wcFlag"))+" "+valid8r.cleanData(req.getParameter("other_benefits")) );
 		this.getIntake().setVeteranFlag(valid8r.cleanData(req.getParameter("veteranFlag")));
 		this.getIntake().setBranchOfService(valid8r.cleanData(req.getParameter("branchOfService")));
 		this.getIntake().setRank(valid8r.cleanData(req.getParameter("rank")));
@@ -166,6 +171,12 @@ public class IntakeServlet extends HttpServlet {
 		this.getIntake().setUsagePattern4(valid8r.cleanData(req.getParameter("usagePattern4")));
 		this.getIntake().setUsagePattern5(valid8r.cleanData(req.getParameter("usagePattern5")));
 		this.getIntake().setUsagePattern6(valid8r.cleanData(req.getParameter("usagePattern6")));
+		this.getIntake().setUsagePattern(this.getIntake().getUsagePattern1()+","+
+				this.getIntake().getUsagePattern2()+","+
+				this.getIntake().getUsagePattern3()+","+
+				this.getIntake().getUsagePattern4()+","+
+				this.getIntake().getUsagePattern5()+","+
+				this.getIntake().getUsagePattern6());
 		
 		this.getIntake().setUsageLosses1(valid8r.cleanData(req.getParameter("usageLosses1")));
 		this.getIntake().setUsageLosses2(valid8r.cleanData(req.getParameter("usageLosses2")));
@@ -176,6 +187,15 @@ public class IntakeServlet extends HttpServlet {
 		this.getIntake().setUsageLosses7(valid8r.cleanData(req.getParameter("usageLosses7")));
 		this.getIntake().setUsageLosses8(valid8r.cleanData(req.getParameter("usageLosses8")));
 		this.getIntake().setUsageLosses9(valid8r.cleanData(req.getParameter("usageLosses9")));
+		this.getIntake().setUsageLosses( this.getIntake().getUsageLosses1()+","+ 
+				this.getIntake().getUsageLosses2()+","+ 
+				this.getIntake().getUsageLosses3()+","+ 
+				this.getIntake().getUsageLosses4()+","+ 
+				this.getIntake().getUsageLosses5()+","+ 
+				this.getIntake().getUsageLosses6()+","+ 
+				this.getIntake().getUsageLosses7()+","+ 
+				this.getIntake().getUsageLosses8()+","+ 
+				this.getIntake().getUsageLosses9());
 		
 		String question[] = new String[]{ 
 				"NO","NO","NO","NO","NO","NO",
@@ -319,11 +339,11 @@ public class IntakeServlet extends HttpServlet {
 		
 		this.getIntake().setHomelessLengthOfTime(valid8r.cleanData(req.getParameter("homelessLengthOfTime")));
 		this.getIntake().setHomelessReason(valid8r.cleanData(req.getParameter("homelessReason")));
-		this.getIntake().setHomelessHowOften(valid8r.cleanData(req.getParameter("homelesshowOften")));
+		this.getIntake().setHomelessHowOften(valid8r.cleanData(req.getParameter("homelessHowOften")));
 		
 		this.getIntake().setAlcoholYearsUsed(valid8r.cleanData(req.getParameter("alcoholYearsUsed")));
 		this.getIntake().setAlcoholLastUsed(valid8r.cleanData(req.getParameter("alcoholLastUsed")));
-		this.getIntake().setCocaineYearsUsed(valid8r.cleanData(req.getParameter("cocainYearsUsed")));
+		this.getIntake().setCocaineYearsUsed(valid8r.cleanData(req.getParameter("cocaineYearsUsed")));
 		this.getIntake().setCocaineLastUsed(valid8r.cleanData(req.getParameter("cocaineLastUsed")));
 		this.getIntake().setMarijuanaYearsUsed(valid8r.cleanData(req.getParameter("marijuanaYearsUsed")));
 		this.getIntake().setMarijuanaLastUsed(valid8r.cleanData(req.getParameter("marijuanaLastUsed")));

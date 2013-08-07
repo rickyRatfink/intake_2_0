@@ -88,6 +88,8 @@ public class Intake implements Serializable {
 	private static String otherDrug = "";
 	private static String sober3Years = "";
 	private static String sober1Years = "";
+	private static String usagePattern = "";
+	private static String usageLosses="";
 	private static String usagePattern1 = "";
 	private static String usagePattern2 = "";
 	private static String usagePattern3 = "";
@@ -280,6 +282,12 @@ public class Intake implements Serializable {
 	private static String rulesVisitationConsent = "NO";
 	private static String releaseInformationConsent = "NO";
 	private static String Consent = "NO";
+	
+	private static String entryDate ="";
+	private static String intakeStatus = "";
+	
+	
+	
 	public static Long getIntakeId() {
 		return intakeId;
 	}
@@ -1698,6 +1706,30 @@ public class Intake implements Serializable {
 	}
 	public static void setHallucinogensLastUsed(String hallucinogensLastUsed) {
 		Intake.hallucinogensLastUsed = hallucinogensLastUsed;
+	}
+	public static String getUsagePattern() {
+		return usagePattern;
+	}
+	public static void setUsagePattern(String usagePattern) {
+		Intake.usagePattern = usagePattern;
+	}
+	public static String getUsageLosses() {
+		return usageLosses;
+	}
+	public static void setUsageLosses(String usageLosses) {
+		Intake.usageLosses = usageLosses;
+	}
+	public static String getEntryDate() {
+		return entryDate;
+	}
+	public static void setEntryDate(String entryDate) {
+		Intake.entryDate = entryDate;
+	}
+	public static String getIntakeStatus() {
+		return intakeStatus;
+	}
+	public static void setIntakeStatus(String intakeStatus) {
+		Intake.intakeStatus = intakeStatus;
 	}
 	
 	

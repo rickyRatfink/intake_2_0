@@ -109,7 +109,7 @@ public class IntakeDao {
 		return retCode;
 	}
 
-	public Long insertIntake(Intake intake, HttpSession session) {
+	public Long insertIntakeApplication(Intake intake, String user, HttpSession session) {
 		Long key = new Long("0");
 
 		try {
@@ -120,7 +120,7 @@ public class IntakeDao {
 			StringBuffer query = new StringBuffer();
 			
 			query.append("INSERT INTO `ffarm_dev`.`intake`");
-					query.append("(`INTAKE_ID`,");
+					query.append("(");
 					query.append("`LASTNAME`,");
 					query.append("`FIRSTNAME`,");
 					query.append("`MI`,");
@@ -152,6 +152,8 @@ public class IntakeDao {
 					query.append("`EMERGENCRY_RELATIONSHIP`,");
 					query.append("`MOTHER_LIVING_FLAG`,");
 					query.append("`FATHER_LIVING_FLAG`,");
+					query.append("`RELATIONSHIP_WITH_MOTHER`,");
+					query.append("`RELATIONSHIP_WITH_FATHER`,");
 					query.append("`BROTHERS`,");
 					query.append("`SISTERS`,");
 					query.append("`CHILDREN`,");
@@ -159,7 +161,7 @@ public class IntakeDao {
 					query.append("`BRANCH_OF_SERVICE`,");
 					query.append("`RANK`,");
 					query.append("`LENGTH_OF_SERVICE`,");
-					query.append("`DL_STATUS`,");
+					query.append("`DL_FLAG`,");
 					query.append("`DL_NUMBER`,");
 					query.append("`DL_STATE`,");
 					query.append("`DL_EXP_DATE`,");
@@ -169,14 +171,14 @@ public class IntakeDao {
 					query.append("`GOVERNMENT_BENEFITS_FLAG`,");
 					query.append("`RELIGION`,");
 					query.append("`RELIGIOUS_EXPERIENCE`,");
-					query.append("`ALCOHOL_FLAG`,");
-					query.append("`COCAINE_FLAG`,");
-					query.append("`MARIJUANA_FLAG`,");
-					query.append("`OXYCODONE_FLAG`,");
-					query.append("`SPEED_FLAG`,");
-					query.append("`HEROIN_FLAG`,");
-					query.append("`XANAX_FLAG`,");
-					query.append("`OTHER_FLAG`,");
+					query.append("`ALCOHOL_LAST_USED`,");
+					query.append("`COCAINE_LAST_USED`,");
+					query.append("`MARIJUANA_LAST_USED`,");
+					query.append("`OXYCODONE_LAST_USED`,");
+					query.append("`SPEED_LAST_USED`,");
+					query.append("`HEROIN_LAST_USED`,");
+					query.append("`XANAX_LAST_USED`,");
+					query.append("`OTHER_LAST_USED`,");
 					query.append("`ALCOHOL_YEARS_USED`,");
 					query.append("`COCAINE_YEARS_USED`,");
 					query.append("`MARIJUANA_YEARS_USED`,");
@@ -234,7 +236,8 @@ public class IntakeDao {
 					query.append("`SEXUAL_OFFENSE_QTY`,");
 					query.append("`SEXUAL_OFFENSE_DETAILS`,");
 					query.append("`PROBATION_FLAG`,");
-					query.append("`PROBATION_COUNTY_STATE`,");
+					query.append("`PROBATION_COUNTY`,");
+					query.append("`PROBATION_STATE`,");
 					query.append("`PROBATION_OFFICER`,");
 					query.append("`PROBATION_OFFICER_PHONE`,");
 					query.append("`PROBATION_APPT_FLAG`,");
@@ -265,29 +268,161 @@ public class IntakeDao {
 					query.append("`INTAKE_STATUS`,");
 					query.append("`IMAGE_HEADSHOT`,");
 					query.append("`IMAGE_STATE_ID`,");
-					query.append("`IMAGE_SSN`");
+					query.append("`IMAGE_SSN`) ");
 					query.append("VALUES");
-					query.append("(");
+					query.append(" (");
 			
+			query.append("'" + intake.getLastName().replace("'", "''") + "',");
+			query.append("'" + intake.getFirstName().replace("'", "''") + "',");
+			query.append("'" + intake.getMiddleInitial() + "',");
+			query.append("'" + intake.getSuffix() + "',");
+			query.append("'" + intake.getAddress() + "',");
+			query.append("'" + intake.getCity() + "',");
+			query.append("'" + intake.getState() + "',");
+			query.append("'" + intake.getZipcode() + "',");
+			query.append("'" + intake.getDateOfBirth() + "',");
+			query.append("'" + intake.getSsn() + "',");
+			query.append("'',");
+			query.append("'" + intake.getAge() + "',");
+			query.append("'" + intake.getHeight().replace("'", "''") + "',");
+			query.append("'" + intake.getWeight() + "',");
+			query.append("'" + intake.getEthnicity() + "',");
+			query.append("'" + intake.getHairColor() + "',");
+			query.append("'" + intake.getEyeColor() + "',");
+			query.append("'" + intake.getMaritalStatus() + "',");
+			query.append("'" + intake.getEducationLevel().replace("'", "''") + "',");
+			query.append("'" + intake.getGraduateFlag() + "',");
+			query.append("'" + intake.getTranscriptsFlag() + "',");
+			query.append("'" + intake.getEnglishSpeakFlag() + "',");
+			query.append("'" + intake.getEnglishReadFlag() + "',");
+			query.append("'" + intake.getHomeLocation() + "',");
+			query.append("'" + intake.getReferredBy() + "',");
+			query.append("'" + intake.getReferralPhone() + "',");
+			query.append("'" + intake.getEmergencyContact() + "',");
+			query.append("'" + intake.getEmergencyPhone() + "',");
+			query.append("'" + intake.getEmergencyRelationship() + "',");
+			query.append("'" + intake.getMotherLivingFlag() + "',");
+			query.append("'" + intake.getFatherLivingFlag() + "',");
+			query.append("'" + intake.getMotherRelationship() + "',");
+			query.append("'" + intake.getFatherRelationship() + "',");
+			query.append("'" + intake.getBrothers() + "',");
+			query.append("'" + intake.getSisters() + "',");
+			query.append("'" + intake.getChildren() + "',");
+			query.append("'" + intake.getVeteranFlag() + "',");
+			query.append("'" + intake.getBranchOfService() + "',");
+			query.append("'" + intake.getRank() + "',");
+			query.append("'" + intake.getLengthOfService() + "',");
+			query.append("'" + intake.getDriversLicenseFlag() + "',");
+			query.append("'" + intake.getDriversLicenseNumber() + "',");
+			query.append("'" + intake.getDriversLicenseState() + "',");
+			query.append("'',");//Dl exp date
+			query.append("'',");//id state flag
+			query.append("'',");//state id state
+			query.append("'',");//state id exp date
+			query.append("'" + intake.getGovernmentBenefits() + "',");
+			query.append("'" + intake.getReligion() + "',");
+			query.append("'" + intake.getReligiousExperience() + "',");
+			query.append("'" + intake.getAlcoholLastUsed() + "',");
+			query.append("'" + intake.getCocaineLastUsed() + "',");
+			query.append("'" + intake.getMarijuanaLastUsed() + "',");
+			query.append("'" + intake.getOxycodoneLastUsed() + "',");
+			query.append("'" + intake.getSpeedLastUsed() + "',");
+			query.append("'" + intake.getHeroinLastUsed() + "',");
+			query.append("'" + intake.getXanaxLastUsed() + "',");
+			query.append("'" + intake.getOtherLastUsed() + "',");
+			query.append("'" + intake.getAlcoholYearsUsed() + "',");
+			query.append("'" + intake.getCocaineYearsUsed() + "',");
+			query.append("'" + intake.getMarijuanaYearsUsed() + "',");
+			query.append("'" + intake.getOxycodoneYearsUsed() + "',");
+			query.append("'" + intake.getSpeedYearsUsed() + "',");
+			query.append("'" + intake.getHeroinYearsUsed() + "',");
+			query.append("'" + intake.getXanaxYearsUsed() + "',");
+			query.append("'" + intake.getOtherYearsUsed() + "',");
+			query.append("'" + intake.getSober1Years() + "',");
+			query.append("'" + intake.getSober3Years() + "',");
+			query.append("'" + intake.getUsagePattern() + "',");
+			query.append("'" + intake.getQtyConsumed1() + "',");
+			query.append("'" + intake.getQtyConsumed2() + "',");
+			query.append("'" + intake.getUsageLosses() + "',");
+			query.append("'" + intake.getAbusePhysicalEffects() + "',");
+			query.append("'" + intake.getAttendAA() + "',");
+			query.append("'" + intake.getAttendNA() + "',");
+			query.append("'" + intake.getPreviousFaithFarmFlag() + "',");
+			query.append("'" + intake.getFfYearsAttended() + "',");
+			query.append("'" + intake.getPreviousFaithFarm() + "',");
+			query.append("'" + intake.getCurrentHealth() + "',");
+			query.append("'" + intake.getCurrentMedicationsFlag() + "',");
+			query.append("'" + intake.getMedicationSuppyFlag() + "',");
+			query.append("'" + intake.getNeedMedicationFlag() + "',");
+			query.append("'" + intake.getCurrentMedications() + "',");
+			query.append("'" + intake.getRefillDetails() + "',");
+			query.append("'" + intake.getDoctorsAppointment() + "',");
+			query.append("'" + intake.getDoctorsAppointmentDate() + "',");
+			query.append("'" + intake.getEyewearFlag() + "',");
+			query.append("'" + intake.getEyewearUsage() + "',");
+			query.append("'" + intake.getHomelessLengthOfTime() + "',");
+			query.append("'" + intake.getHomelessHowOften() + "',");
+			query.append("'" + intake.getHomelessReason() + "',");
+			query.append("'" + intake.getIndustrialInjuryFlag() + "',");
+			query.append("'" + intake.getIndustrialInjuryDate() + "',");
+			query.append("'" + intake.getIndustrialInjuryReason() + "',");
+			query.append("'" + intake.getIndustrialInjuryLocation() + "',");
+			query.append("'" + intake.getIndustrialInjuryEmployer() + "',");
+			query.append("'" + intake.getIndustrialInjuryClaimStatus() + "',");
+			query.append("'" + intake.getDisabilityFlag() + "',");
+			query.append("'" + intake.getDisabilityDetails() + "',");
+			query.append("'" + intake.getExaminationDate() + "',");
+			query.append("'" + intake.getPhysician() + "',");
+			query.append("'" + intake.getPhysicianAddress() + "',");
+			query.append("'" + intake.getHerniaSide() + "',");
+			query.append("'" + intake.getHerniaOperationFlag() + "',");
+			query.append("'" + intake.getHerniaPhysician() + "',");
+			query.append("'" + intake.getLawsuitFlag() + "',");
+			query.append("'" + intake.getCurrentLawsuitFlag() + "',");
+			query.append("'" + intake.getLawsuitDetails() + "',");
+			query.append("'" + intake.getCurrentLawsuitDetails() + "',");
+			query.append("'" + intake.getFelonyFlag() + "',");
+			query.append("'" + intake.getSexualOffenseFlag() + "',");
+			query.append("'" + intake.getFelonyDetails() + "',");
+			query.append("'" + intake.getSexualOffenseQty() + "',");
+			query.append("'" + intake.getSexualOffenseDetails() + "',");
+			query.append("'" + intake.getProbationFlag() + "',");
+			query.append("'" + intake.getProbationCounty()+ "',");
+			query.append("'" + intake.getProbationState() + "',");
+			query.append("'" + intake.getProbationOfficer() + "',");
+			query.append("'" + intake.getProbationOfficerPhone() + "',");
+			query.append("'" + intake.getProbationAppt() + "',");
+			query.append("'" + intake.getProbationApptDetails() + "',");
+			query.append("'" + intake.getIncomeAmount() + "',");
+			query.append("'" + intake.getIncomeSource() + "',");
+			query.append("'" + intake.getIncomeWeeklyFlag() + "',");
+			query.append("'" + intake.getIncomeMonthlyFlag() + "',");
+			query.append("'" + intake.getApplicationStatus() + "',");
+			query.append("'" + intake.getApplicationSignature() + "',");
+			query.append("'" + intake.getIntakeCounselorSignature() + "',");
+			query.append("'" + intake.getDirectorSignature() + "',");
+			query.append("'" + intake.getApplicationSignatureDate() + "',");
+			query.append("'',");
+			query.append("'',");
+			query.append("'"+intake.getCellDisclosureConsent()+"',");
+			query.append("'"+intake.getReleaseWaiverConsent()+"',");
+			query.append("'"+intake.getBiblicalBasedCounselingConsent()+"',");
+			query.append("'"+intake.getEntryAgreementConsent()+"',");
+			query.append("'"+intake.getRulesVisitationConsent()+"',");
+			query.append("'"+intake.getReleaseInformationConsent()+"',");
+			query.append("'"+valid8r.getEpoch()+"',");
+			query.append("'"+user+"',");
+			query.append("'',");
+			query.append("'',");
+			query.append("'"+valid8r.getEpoch()+"',");
+			query.append("'"+intake.getEntryDate()+"',");
+			query.append("'"+intake.getIntakeStatus()+"',");
+			query.append("'',");
+			query.append("'',");
+			query.append("'' ) ");
 			
-			/*query.append(d.getDonorId() + ",");
-			query.append("'" + d.getLine1() + "',");
-			query.append("'" + d.getLine2() + "',");
-			query.append("'" + d.getCity() + "',");
-			query.append("'" + d.getState() + "',");
-			query.append("'" + d.getZipcode() + "',");
-			query.append("'" + d.getMajorIntersection() + "',");
-			query.append("'" + d.getSubdivision() + "',");
-			query.append("'" + d.getStreetSuffix() + "',");
-			query.append("'" + d.getStructureType() + "',");
-			query.append("'" + d.getUnit() + "',");
-			query.append("'" + d.getBuilding() + "',");
-			query.append("'" + d.getFloor() + "',");
-			query.append("'" + d.getElevatorFlag() + "',");
-			query.append("'" + d.getGateFlag() + "',");
-			query.append("'" + d.getGateInstructions() + "',");
-			query.append("'" + d.getCreatedBy() + "');");
-			*/
+			System.out.println (query);
+			
 			PreparedStatement Stmt = null;
 			Stmt = Conn.prepareStatement(query.toString(),
 					Stmt.RETURN_GENERATED_KEYS);
@@ -297,11 +432,12 @@ public class IntakeDao {
 
 			if (generatedKeys.next())
 				key = generatedKeys.getLong(1);
-
+			System.out.println("key="+key);
 			// Clean up after ourselves
 			Stmt.close();
 			Conn.close();
 		} catch (SQLException E) {
+			System.out.println (E.getMessage());
 			session.setAttribute("SYSTEM_ERROR", E.getMessage());
 		} catch (ClassNotFoundException e) {
 			session.setAttribute("SYSTEM_ERROR", e.getMessage());
