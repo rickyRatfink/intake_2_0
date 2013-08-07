@@ -281,8 +281,62 @@ public class IntakeServlet extends HttpServlet {
 		
 		this.getIntake().setWorkExperienceOther(valid8r.cleanData(req.getParameter("jobskillOther")));
 		this.getIntake().setWorkExperienceOtherDesc(valid8r.cleanData(req.getParameter("jobskillOtherDesc")));
+		
+		this.getIntake().setEmployer1(valid8r.cleanData(req.getParameter("employer1")));
+		this.getIntake().setEmployerContact1(valid8r.cleanData(req.getParameter("employerContact1")));
+		this.getIntake().setEmployerPhone1(valid8r.cleanData(req.getParameter("employerPhone1")));
+		this.getIntake().setEmployerDates1(valid8r.cleanData(req.getParameter("employerDates1")));
+
+		this.getIntake().setEmployer2(valid8r.cleanData(req.getParameter("employer2")));
+		this.getIntake().setEmployerContact2(valid8r.cleanData(req.getParameter("employerContact2")));
+		this.getIntake().setEmployerPhone2(valid8r.cleanData(req.getParameter("employerPhone2")));
+		this.getIntake().setEmployerDates2(valid8r.cleanData(req.getParameter("employerDates2")));
+
+		this.getIntake().setEmployer3(valid8r.cleanData(req.getParameter("employer3")));
+		this.getIntake().setEmployerContact3(valid8r.cleanData(req.getParameter("employerContact3")));
+		this.getIntake().setEmployerPhone3(valid8r.cleanData(req.getParameter("employerPhone3")));
+		this.getIntake().setEmployerDates3(valid8r.cleanData(req.getParameter("employerDates3")));
+
+		this.getIntake().setEmployer4(valid8r.cleanData(req.getParameter("employer4")));
+		this.getIntake().setEmployerContact4(valid8r.cleanData(req.getParameter("employerContact4")));
+		this.getIntake().setEmployerPhone4(valid8r.cleanData(req.getParameter("employerPhone4")));
+		this.getIntake().setEmployerDates4(valid8r.cleanData(req.getParameter("employerDates4")));
+
 		//this.getIntake().set(valid8r.cleanData(req.getParameter("")));
 		
+		this.getIntake().setQtyConsumed1(valid8r.cleanData(req.getParameter("qtyConsumed1")));
+		this.getIntake().setQtyConsumed2(valid8r.cleanData(req.getParameter("qtyConsumed2")));
+		this.getIntake().setCurrentMedications(valid8r.cleanData(req.getParameter("currentMedications")));
+		this.getIntake().setRefillDirections(valid8r.cleanData(req.getParameter("refillDirections")));
+		
+		this.getIntake().setMedicalConditionDetails(valid8r.cleanData(req.getParameter("medicalConditionDetails")));
+		
+		this.getIntake().setMotherRelationship(valid8r.cleanData(req.getParameter("motherRelationship")));
+		this.getIntake().setFatherRelationship(valid8r.cleanData(req.getParameter("fatherRelationship")));
+		this.getIntake().setBrothers(valid8r.cleanData(req.getParameter("brothers")));
+		this.getIntake().setSisters(valid8r.cleanData(req.getParameter("sisters")));
+		this.getIntake().setChildren(valid8r.cleanData(req.getParameter("children")));
+		
+		this.getIntake().setHomelessLengthOfTime(valid8r.cleanData(req.getParameter("homelessLengthOfTime")));
+		this.getIntake().setHomelessReason(valid8r.cleanData(req.getParameter("homelessReason")));
+		this.getIntake().setHomelessHowOften(valid8r.cleanData(req.getParameter("homelesshowOften")));
+		
+		this.getIntake().setAlcoholYearsUsed(valid8r.cleanData(req.getParameter("alcoholYearsUsed")));
+		this.getIntake().setAlcoholLastUsed(valid8r.cleanData(req.getParameter("alcoholLastUsed")));
+		this.getIntake().setCocaineYearsUsed(valid8r.cleanData(req.getParameter("cocainYearsUsed")));
+		this.getIntake().setCocaineLastUsed(valid8r.cleanData(req.getParameter("cocaineLastUsed")));
+		this.getIntake().setMarijuanaYearsUsed(valid8r.cleanData(req.getParameter("marijuanaYearsUsed")));
+		this.getIntake().setMarijuanaLastUsed(valid8r.cleanData(req.getParameter("marijuanaLastUsed")));
+		this.getIntake().setOxycodoneYearsUsed(valid8r.cleanData(req.getParameter("oxycodoneYearsUsed")));
+		this.getIntake().setOxycodoneLastUsed(valid8r.cleanData(req.getParameter("oxycodoneLastUsed")));
+		this.getIntake().setSpeedYearsUsed(valid8r.cleanData(req.getParameter("speedYearsUsed")));
+		this.getIntake().setSpeedLastUsed(valid8r.cleanData(req.getParameter("speedLastUsed")));
+		this.getIntake().setHeroinYearsUsed(valid8r.cleanData(req.getParameter("heroinYearsUsed")));
+		this.getIntake().setHeroinLastUsed(valid8r.cleanData(req.getParameter("heroinLastUsed")));
+		this.getIntake().setXanaxYearsUsed(valid8r.cleanData(req.getParameter("xanaxYearsUsed")));
+		this.getIntake().setXanaxLastUsed(valid8r.cleanData(req.getParameter("xanaxLastUsed")));
+		this.getIntake().setOtherYearsUsed(valid8r.cleanData(req.getParameter("otherYearsUsed")));
+		this.getIntake().setOtherLastUsed(valid8r.cleanData(req.getParameter("otherLastUsed")));
 		
 		
 	} 
@@ -296,7 +350,7 @@ public class IntakeServlet extends HttpServlet {
 		        states.add("Arkansas");
 		        states.add("California");
 		        states.add("Colorado");
-		        states.add("Connecticut");
+		        states.add("Connecticut"); 
 		        states.add("Delaware");
 		        states.add("Dist of Columbia");
 		        states.add("Florida");

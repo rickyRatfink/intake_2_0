@@ -67,6 +67,8 @@ public class Intake implements Serializable {
 	private static String heroin = "";
 	private static String xanax = "";
 	private static String other = "";
+	private static String hallucinogensYearsUsed="";
+	private static String hallucinogensLastUsed="";
 	private static String alcoholYearsUsed = "";
 	private static String cocaineYearsUsed = "";
 	private static String marijuanaYearsUsed = "";
@@ -139,6 +141,11 @@ public class Intake implements Serializable {
 	private static String herniaOperationFlag = "NO";
 	private static String herniaDate="";
 	private static String herniaPhysician="";
+	private static String qtyConsumed1="";
+	private static String qtyConsumed2="";
+	private static String currentMedications="";
+	private static String refillDirections="";
+	private static String medicalConditionDetails="";
 	
 	private static String question[] = new String[]{ 
 						"NO","NO","NO","NO","NO","NO",
@@ -178,6 +185,26 @@ public class Intake implements Serializable {
 	private static String workExperienceOther="";
 	private static String workExperienceOtherDesc="";
 	
+	private static String employer1="";
+	private static String employerContact1="";
+	private static String employerPhone1="";
+	private static String employerDates1="";
+	
+	private static String employer2="";
+	private static String employerContact2="";
+	private static String employerPhone2="";
+	private static String employerDates2="";
+	
+	private static String employer3="";
+	private static String employerContact3="";
+	private static String employerPhone3="";
+	private static String employerDates3="";
+	
+	private static String employer4="";
+	private static String employerContact4="";
+	private static String employerPhone4="";
+	private static String employerDates4="";
+	
 	private static String lawsuitFlag="NO";
 	private static String currentLawsuitFlag="NO";
 	private static String lawsuitDetails="";
@@ -213,7 +240,7 @@ public class Intake implements Serializable {
 	private static String pendingCourtDates = "";
 	private static String childSupport = "";
 	private static String restitution = "";
-	private static String homelessLenghtOfTime = "";
+	private static String homelessLengthOfTime = "";
 	private static String homelessHowOften="";
 	private static String homelessReason = "";
 	private static String incomeAmount = "";
@@ -1225,11 +1252,12 @@ public class Intake implements Serializable {
 	public static void setRestitution(String restitution) {
 		Intake.restitution = restitution;
 	}
-	public static String getHomelessLenghtOfTime() {
-		return homelessLenghtOfTime;
+	
+	public static String getHomelessLengthOfTime() {
+		return homelessLengthOfTime;
 	}
-	public static void setHomelessLenghtOfTime(String homelessLenghtOfTime) {
-		Intake.homelessLenghtOfTime = homelessLenghtOfTime;
+	public static void setHomelessLengthOfTime(String homelessLengthOfTime) {
+		Intake.homelessLengthOfTime = homelessLengthOfTime;
 	}
 	public static String getHomelessHowOften() {
 		return homelessHowOften;
@@ -1532,6 +1560,144 @@ public class Intake implements Serializable {
 	}
 	public static void setWorkExperienceOtherDesc(String workExperienceOtherDesc) {
 		Intake.workExperienceOtherDesc = workExperienceOtherDesc;
+	}
+	public static String getEmployer1() {
+		return employer1;
+	}
+	public static void setEmployer1(String employer1) {
+		Intake.employer1 = employer1;
+	}
+	public static String getEmployerContact1() {
+		return employerContact1;
+	}
+	public static void setEmployerContact1(String employerContact1) {
+		Intake.employerContact1 = employerContact1;
+	}
+	public static String getEmployerPhone1() {
+		return employerPhone1;
+	}
+	public static void setEmployerPhone1(String employerPhone1) {
+		Intake.employerPhone1 = employerPhone1;
+	}
+	public static String getEmployerDates1() {
+		return employerDates1;
+	}
+	public static void setEmployerDates1(String employerDates1) {
+		Intake.employerDates1 = employerDates1;
+	}
+	public static String getEmployer2() {
+		return employer2;
+	}
+	public static void setEmployer2(String employer2) {
+		Intake.employer2 = employer2;
+	}
+	public static String getEmployerContact2() {
+		return employerContact2;
+	}
+	public static void setEmployerContact2(String employerContact2) {
+		Intake.employerContact2 = employerContact2;
+	}
+	public static String getEmployerPhone2() {
+		return employerPhone2;
+	}
+	public static void setEmployerPhone2(String employerPhone2) {
+		Intake.employerPhone2 = employerPhone2;
+	}
+	public static String getEmployerDates2() {
+		return employerDates2;
+	}
+	public static void setEmployerDates2(String employerDates2) {
+		Intake.employerDates2 = employerDates2;
+	}
+	public static String getEmployer3() {
+		return employer3;
+	}
+	public static void setEmployer3(String employer3) {
+		Intake.employer3 = employer3;
+	}
+	public static String getEmployerContact3() {
+		return employerContact3;
+	}
+	public static void setEmployerContact3(String employerContact3) {
+		Intake.employerContact3 = employerContact3;
+	}
+	public static String getEmployerPhone3() {
+		return employerPhone3;
+	}
+	public static void setEmployerPhone3(String employerPhone3) {
+		Intake.employerPhone3 = employerPhone3;
+	}
+	public static String getEmployerDates3() {
+		return employerDates3;
+	}
+	public static void setEmployerDates3(String employerDates3) {
+		Intake.employerDates3 = employerDates3;
+	}
+	public static String getEmployer4() {
+		return employer4;
+	}
+	public static void setEmployer4(String employer4) {
+		Intake.employer4 = employer4;
+	}
+	public static String getEmployerContact4() {
+		return employerContact4;
+	}
+	public static void setEmployerContact4(String employerContact4) {
+		Intake.employerContact4 = employerContact4;
+	}
+	public static String getEmployerPhone4() {
+		return employerPhone4;
+	}
+	public static void setEmployerPhone4(String employerPhone4) {
+		Intake.employerPhone4 = employerPhone4;
+	}
+	public static String getEmployerDates4() {
+		return employerDates4;
+	}
+	public static void setEmployerDates4(String employerDates4) {
+		Intake.employerDates4 = employerDates4;
+	}
+	public static String getQtyConsumed1() {
+		return qtyConsumed1;
+	}
+	public static void setQtyConsumed1(String qtyConsumed1) {
+		Intake.qtyConsumed1 = qtyConsumed1;
+	}
+	public static String getQtyConsumed2() {
+		return qtyConsumed2;
+	}
+	public static void setQtyConsumed2(String qtyConsumed2) {
+		Intake.qtyConsumed2 = qtyConsumed2;
+	}
+	public static String getCurrentMedications() {
+		return currentMedications;
+	}
+	public static void setCurrentMedications(String currentMedications) {
+		Intake.currentMedications = currentMedications;
+	}
+	public static String getRefillDirections() {
+		return refillDirections;
+	}
+	public static void setRefillDirections(String refillDirections) {
+		Intake.refillDirections = refillDirections;
+	}
+	public static String getMedicalConditionDetails() {
+		return medicalConditionDetails;
+	}
+	public static void setMedicalConditionDetails(String medicalConditionDetails) {
+		Intake.medicalConditionDetails = medicalConditionDetails;
+	}
+	public static String getHallucinogensYearsUsed() {
+		return hallucinogensYearsUsed;
+	}
+	public static void setHallucinogensYearsUsed(String hallucinogensYearsUsed) {
+		Intake.hallucinogensYearsUsed = hallucinogensYearsUsed;
+	}
+	public static String getHallucinogensLastUsed() {
+		return hallucinogensLastUsed;
+	}
+	public static void setHallucinogensLastUsed(String hallucinogensLastUsed) {
+		Intake.hallucinogensLastUsed = hallucinogensLastUsed;
 	}
 	
 	

@@ -126,13 +126,13 @@ public class Validator {
 	     if (phone == null || phone.length() ==0 ) {
 	       return "Contact Phone is required";
 	     }
-	     Pattern p = Pattern.compile("^[\\(]{0,1}([0-9]){3}[\\)]{0,1}[ ]?([^0-1]){1}([0-9]){2}[ ]?[-]?[ ]?([0-9]){4}[ ]*((x){0,1}([0-9]){1,5}){0,1}$");
+	     /*Pattern p = Pattern.compile("^[\\(]{0,1}([0-9]){3}[\\)]{0,1}[ ]?([^0-1]){1}([0-9]){2}[ ]?[-]?[ ]?([0-9]){4}[ ]*((x){0,1}([0-9]){1,5}){0,1}$");
 	     Matcher m = p.matcher(phone);
 	     boolean b = m.matches();
 	     
 	     if (!b) {
 	      return key+" must be in form (xxx)xxx-xxxx.";
-	     }
+	     }*/
 	     return "";
 	     }
 	   

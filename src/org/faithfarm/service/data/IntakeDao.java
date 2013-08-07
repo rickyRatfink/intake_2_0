@@ -109,6 +109,207 @@ public class IntakeDao {
 		return retCode;
 	}
 
+	public Long insertIntake(Intake intake, HttpSession session) {
+		Long key = new Long("0");
+
+		try {
+			
+			Connection Conn = this.getConnection();
+			// Do something with the Connection
+
+			StringBuffer query = new StringBuffer();
+			
+			query.append("INSERT INTO `ffarm_dev`.`intake`");
+					query.append("(`INTAKE_ID`,");
+					query.append("`LASTNAME`,");
+					query.append("`FIRSTNAME`,");
+					query.append("`MI`,");
+					query.append("`SUFFIX`,");
+					query.append("`ADDRESS`,");
+					query.append("`CITY`,");
+					query.append("`STATE`,");
+					query.append("`ZIPCODE`,");
+					query.append("`DOB`,");
+					query.append("`SSN`,");
+					query.append("`SSN_CARD_FLAG`,");
+					query.append("`AGE`,");
+					query.append("`HEIGHT`,");
+					query.append("`WEIGHT`,");
+					query.append("`ETHNICITY`,");
+					query.append("`HAIR_COLOR`,");
+					query.append("`EYE_COLOR`,");
+					query.append("`MARITAL_STATUS`,");
+					query.append("`EDUCATION_LEVEL`,");
+					query.append("`GRADUATE_FLAG`,");
+					query.append("`TRANSCRIPTS_FLAG`,");
+					query.append("`ENGLISH_SPEAKING_FLAG`,");
+					query.append("`ENGLISH_READING_FLAG`,");
+					query.append("`HOME_LOCATION`,");
+					query.append("`REFERRED_BY`,");
+					query.append("`REFERRED_BY_PHONE`,");
+					query.append("`EMERGENCY_CONTACT`,");
+					query.append("`EMERGENCY_PHONE`,");
+					query.append("`EMERGENCRY_RELATIONSHIP`,");
+					query.append("`MOTHER_LIVING_FLAG`,");
+					query.append("`FATHER_LIVING_FLAG`,");
+					query.append("`BROTHERS`,");
+					query.append("`SISTERS`,");
+					query.append("`CHILDREN`,");
+					query.append("`VETERAN_STATUS`,");
+					query.append("`BRANCH_OF_SERVICE`,");
+					query.append("`RANK`,");
+					query.append("`LENGTH_OF_SERVICE`,");
+					query.append("`DL_STATUS`,");
+					query.append("`DL_NUMBER`,");
+					query.append("`DL_STATE`,");
+					query.append("`DL_EXP_DATE`,");
+					query.append("`STATE_ID_FLAG`,");
+					query.append("`STATE_ID_STATE`,");
+					query.append("`STATE_ID_EXP_DATE`,");
+					query.append("`GOVERNMENT_BENEFITS_FLAG`,");
+					query.append("`RELIGION`,");
+					query.append("`RELIGIOUS_EXPERIENCE`,");
+					query.append("`ALCOHOL_FLAG`,");
+					query.append("`COCAINE_FLAG`,");
+					query.append("`MARIJUANA_FLAG`,");
+					query.append("`OXYCODONE_FLAG`,");
+					query.append("`SPEED_FLAG`,");
+					query.append("`HEROIN_FLAG`,");
+					query.append("`XANAX_FLAG`,");
+					query.append("`OTHER_FLAG`,");
+					query.append("`ALCOHOL_YEARS_USED`,");
+					query.append("`COCAINE_YEARS_USED`,");
+					query.append("`MARIJUANA_YEARS_USED`,");
+					query.append("`OXYCODONE_YEARS_USED`,");
+					query.append("`SPEED_YEARS_USED`,");
+					query.append("`HEROIN_YEARS_USED`,");
+					query.append("`XANAX_YEARS_USED`,");
+					query.append("`OTHER_YEARS_USED`,");
+					query.append("`SOBER_1_YEAR`,");
+					query.append("`SOBER_3_YEARS`,");
+					query.append("`USAGE_PATTERN`,");
+					query.append("`QUANTITY_PER_WEEK`,");
+					query.append("`QUANTITY_2_YEARS`,");
+					query.append("`USAGE_LOSSES`,");
+					query.append("`PHYSICAL_EFFECTS`,");
+					query.append("`AA_FLAG`,");
+					query.append("`NA_FLAG`,");
+					query.append("`PREV_FF_FLAG`,");
+					query.append("`PREV_FF_YEAR`,");
+					query.append("`PREV_FF_OTHER`,");
+					query.append("`CURRENT_HEALTH`,");
+					query.append("`MEDICATION_FLAG`,");
+					query.append("`MEDICATION_SUPPLY_FLAG`,");
+					query.append("`MEDICATION_NEED_FLAG`,");
+					query.append("`MEDICATION_DETAILS`,");
+					query.append("`MEDICATION_REFILL_DETAILS`,");
+					query.append("`DOCTOR_APPT_FLAG`,");
+					query.append("`DOCTOR_APPT_DETAILS`,");
+					query.append("`EYEWEAR_FLAG`,");
+					query.append("`EYEWEAR_USAGE`,");
+					query.append("`HOMELESS_TIME`,");
+					query.append("`HOMELESS_REASON`,");
+					query.append("`HOMELESS_HOW_OFTEN`,");
+					query.append("`INDUSTRIAL_INJURY_FLAG`,");
+					query.append("`INDUSTRIAL_INJURY_DATE`,");
+					query.append("`INDUSTRIAL_INJURY_REASON`,");
+					query.append("`INDUSTRIAL_INJURY_LOCATION`,");
+					query.append("`INDUSTRIAL_INJURY_EMPLOYER`,");
+					query.append("`INDUSTRIAL_INJURY_CLAIM_STATUS`,");
+					query.append("`DISABILITY_FLAG`,");
+					query.append("`DISABILITY_DETAILS`,");
+					query.append("`DISABILITY_EXAMINATION_DATE`,");
+					query.append("`DISABILITY_PHYSICIAN`,");
+					query.append("`DISABILITY_PHYSICIAN_ADDRESS`,");
+					query.append("`HERNIA_SIDE`,");
+					query.append("`HERNIA_OPERATION_FLAG`,");
+					query.append("`HERNIA_DETAILS`,");
+					query.append("`LAWSUIT_FLAG`,");
+					query.append("`CURRENT_LAWSUIT_FLAG`,");
+					query.append("`LAWSUIT_DETAILS`,");
+					query.append("`CURRENT_LAWSUIT_DETAILS`,");
+					query.append("`FELONY_FLAG`,");
+					query.append("`SEXUAL_OFFENSE_FLAG`,");
+					query.append("`FELONY_DETAILS`,");
+					query.append("`SEXUAL_OFFENSE_QTY`,");
+					query.append("`SEXUAL_OFFENSE_DETAILS`,");
+					query.append("`PROBATION_FLAG`,");
+					query.append("`PROBATION_COUNTY_STATE`,");
+					query.append("`PROBATION_OFFICER`,");
+					query.append("`PROBATION_OFFICER_PHONE`,");
+					query.append("`PROBATION_APPT_FLAG`,");
+					query.append("`PROBATION_APPT_DETAILS`,");
+					query.append("`INCOME_AMOUNT`,");
+					query.append("`INCOME_SOURCE`,");
+					query.append("`INCOME_WEEKLY_FLAG`,");
+					query.append("`INCOME_MONTHLY_FLAG`,");
+					query.append("`APPLICATION_STATUS`,");
+					query.append("`APPLICATION_SIGNATURE`,");
+					query.append("`INTAKE_COUNSELOR_SIGNATURE`,");
+					query.append("`DIRECTOR_SIGNATURE`,");
+					query.append("`APPLICATION_SIGN_DATE`,");
+					query.append("`INTAKE_COUNSELOR_SIGN_DATE`,");
+					query.append("`DIRECTOR_SIGN_DATE`,");
+					query.append("`CELL_DISCLOSURE_CONSENT`,");
+					query.append("`RELEASE_WAIVER_CONSENT`,");
+					query.append("`BIBLICAL_COUNSELING_CONSENT`,");
+					query.append("`ENTRY_AGREEMENT_CONSENT`,");
+					query.append("`RULES_VISITATION_CONSENT`,");
+					query.append("`RELEASE_INFORMATION_CONSENT`,");
+					query.append("`CREATION_DATE`,");
+					query.append("`CREATED_BY`,");
+					query.append("`LAST_UPDATED_DATE`,");
+					query.append("`LAST_UPDATED_BY`,");
+					query.append("`SUBMISSION_DATE`,");
+					query.append("`ENTRY_DATE`,");
+					query.append("`INTAKE_STATUS`,");
+					query.append("`IMAGE_HEADSHOT`,");
+					query.append("`IMAGE_STATE_ID`,");
+					query.append("`IMAGE_SSN`");
+					query.append("VALUES");
+					query.append("(");
+			
+			
+			/*query.append(d.getDonorId() + ",");
+			query.append("'" + d.getLine1() + "',");
+			query.append("'" + d.getLine2() + "',");
+			query.append("'" + d.getCity() + "',");
+			query.append("'" + d.getState() + "',");
+			query.append("'" + d.getZipcode() + "',");
+			query.append("'" + d.getMajorIntersection() + "',");
+			query.append("'" + d.getSubdivision() + "',");
+			query.append("'" + d.getStreetSuffix() + "',");
+			query.append("'" + d.getStructureType() + "',");
+			query.append("'" + d.getUnit() + "',");
+			query.append("'" + d.getBuilding() + "',");
+			query.append("'" + d.getFloor() + "',");
+			query.append("'" + d.getElevatorFlag() + "',");
+			query.append("'" + d.getGateFlag() + "',");
+			query.append("'" + d.getGateInstructions() + "',");
+			query.append("'" + d.getCreatedBy() + "');");
+			*/
+			PreparedStatement Stmt = null;
+			Stmt = Conn.prepareStatement(query.toString(),
+					Stmt.RETURN_GENERATED_KEYS);
+			Stmt.executeUpdate(query.toString());
+
+			ResultSet generatedKeys = Stmt.getGeneratedKeys();
+
+			if (generatedKeys.next())
+				key = generatedKeys.getLong(1);
+
+			// Clean up after ourselves
+			Stmt.close();
+			Conn.close();
+		} catch (SQLException E) {
+			session.setAttribute("SYSTEM_ERROR", E.getMessage());
+		} catch (ClassNotFoundException e) {
+			session.setAttribute("SYSTEM_ERROR", e.getMessage());
+			e.printStackTrace();
+		}
+		return key;
+}
+	
 	public int getQuestions(HttpSession session) {
 		int retCode = 1;
 		ArrayList list = new ArrayList();
