@@ -345,7 +345,7 @@ function moveOnMax(field,nextFieldID){
                 <input id="ssn3"  type="text" name="ssn3" size="4" value="<%=ssn3%>" maxlength="4" <% if (ssnErr.length()>0) { %>class="textboxErr"<% } %> onkeypress="return isNumberKey(event)" onkeyup="moveOnMax(this,'referred')" ></td>
                 <td>&nbsp;&nbsp;</td>
                 <td >Referred to Faith Farm By</td>
-                <td><input id="referred" type="text" name="referredBy" value="<%=IntakeServlet.getIntake().getReferredBy()%>" size="28"></td>
+                <td><input id="referred" type="text" name="referredBy" value="<%=IntakeServlet.getIntake().getReferredBy()%>" size="28" maxlength="28" onkeyup="ucase(this)"></td>
            		 </tr>
             
            		 <tr>
@@ -411,7 +411,7 @@ function moveOnMax(field,nextFieldID){
                 <table width="100%" border="0">
                 <tr>
                 <td width="200">Phone Number&nbsp;<i>(xxx)xxx-xxxx</i>&nbsp;
-                <input type="text" name="referral_phone"  value="<%=IntakeServlet.getIntake().getReferralPhone()%>" size="20" maxlength="13" <% if (referralPhoneErr.length()>0) { %>class="textboxErr"<% } %>></td>
+                <input type="text" name="referral_phone"  value="<%=IntakeServlet.getIntake().getReferralPhone()%>" size="20" maxlength="13" <% if (referralPhoneErr.length()>0) { %>class="textboxErr"<% } %> onkeypress="return isNumberKey(event)"></td>
                 <td width="200">Date of Birth&nbsp;<i>(mm/dd/yyyy)</i>&nbsp;<input type="text" name="dob" value="<%=IntakeServlet.getIntake().getDateOfBirth()%>" size="10" maxlength="10"  <% if (dobErr.length()>0) { %>class="textboxErr"<% } %>></td>
                 <td>Age&nbsp;<input type="text" name="age" size="2" value="<%=IntakeServlet.getIntake().getAge()%>" size="5" maxlength="2" onkeypress="return isNumberKey(event)" <% if (ageErr.length()>0) { %>class="textboxErr"<% } %>></td>
                 </tr>
@@ -745,7 +745,7 @@ function moveOnMax(field,nextFieldID){
 	</tr>
 	<tr> 
 		<td colspan="8">Source(s)?&nbsp;&nbsp;
-			<input type="text" name="incomeSource" value="<%=IntakeServlet.getIntake().getIncomeSource() %>" size="40" maxlength="15" onkeyup="ucase(this)" />
+			<input type="text" name="incomeSource" value="<%=IntakeServlet.getIntake().getIncomeSource() %>" size="40" maxlength="45" onkeyup="ucase(this)" />
         </td>	
     </tr>
 	<tr>
@@ -763,7 +763,7 @@ function moveOnMax(field,nextFieldID){
 	</tr>
 	<tr>
 		<td colspan="8">Other benefits?&nbsp;&nbsp;
-			<input type="text" name="other_benefits" size="20" maxlength="20"  value="<%=IntakeServlet.getIntake().getOtherBenefits()%>" />
+			<input type="text" name="other_benefits" size="20" maxlength="20"  value="<%=IntakeServlet.getIntake().getOtherBenefits()%>" onkeyup="ucase(this)"/>
         </td>	
     </tr>
     
@@ -843,10 +843,10 @@ function moveOnMax(field,nextFieldID){
             <table width="100%">
             <tr>
             <td width="220">Highest Rank&nbsp;&nbsp;
-                <input type="text" name="rank" size="20" maxlength="20" value="<%=IntakeServlet.getIntake().getRank()%>" <% if (rankErr.length()>0) { %>class="textboxErr"<% } %> />
+                <input type="text" name="rank" size="20" maxlength="20" value="<%=IntakeServlet.getIntake().getRank()%>" <% if (rankErr.length()>0) { %>class="textboxErr"<% } %> onkeyup="ucase(this)"/>
             </td>	
             <td >Length Of Service&nbsp;&nbsp;
-                <input type="text" name="lengthOfService" size="20" maxlength="20" value="<%=IntakeServlet.getIntake().getLengthOfService()%>" <% if (lengthOfServiceErr.length()>0) { %>class="textboxErr"<% } %> />
+                <input type="text" name="lengthOfService" size="20" maxlength="20" value="<%=IntakeServlet.getIntake().getLengthOfService()%>" <% if (lengthOfServiceErr.length()>0) { %>class="textboxErr"<% } %> onkeyup="ucase(this)"/>
             </td>	
         </tr>
          <tr>
@@ -914,7 +914,7 @@ function moveOnMax(field,nextFieldID){
 			%></select>
         </td>	
         <td>DL#:&nbsp;&nbsp;
-			<input type="text" name="driversLicenseNumber" size="22" maxlength="22" value="<%=IntakeServlet.getIntake().getLengthOfService()%>" <% if (driversLicenseNumberErr.length()>0) { %>class="textboxErr"<% } %>/>
+			<input type="text" name="driversLicenseNumber" size="22" maxlength="22" value="<%=IntakeServlet.getIntake().getLengthOfService()%>" <% if (driversLicenseNumberErr.length()>0) { %>class="textboxErr"<% } %> onkeyup="ucase(this)"/>
         </td>	
        
     </tr>
@@ -1024,7 +1024,7 @@ function moveOnMax(field,nextFieldID){
     	<td class="fieldError"><%=religiousExperienceErr%></td>
     </tr>
 	<tr>
-		<td colspan="8"><textarea rows="5" name="Describe_your_religious_experiences" cols="93" <% if (religiousExperienceErr.length()>0) { %>class="areaErr"<% } %>><%=IntakeServlet.getIntake().getReligiousExperience()%></textarea></td>
+		<td colspan="8"><textarea rows="5" name="religiousExperience" cols="93" <% if (religiousExperienceErr.length()>0) { %>class="areaErr"<% } %> onkeyup="ucase(this)"><%=IntakeServlet.getIntake().getReligiousExperience()%></textarea></td>
 	</tr>
     <tr>
 		<td colspan="8">&nbsp;</td>
@@ -1075,11 +1075,11 @@ function moveOnMax(field,nextFieldID){
       </tr>
       <tr>
       	<td colspan="8">
-			<input type="radio" name="homelessLenghtOfTime" value="Less than 2 weeks" />&nbsp;Less than 2 weeks&nbsp;&nbsp;
-            <input type="radio" name="homelessLenghtOfTime" value="2 weeks to 1 month" />&nbsp;2 weeks to 1 month&nbsp;&nbsp;
-            <input type="radio" name="homelessLenghtOfTime" value="1 to 3 months" />&nbsp;1 to 3 months&nbsp;&nbsp;
-            <input type="radio" name="homelessLenghtOfTime" value="3 months to 1 year" />&nbsp;3 months to 1 year&nbsp;&nbsp;
-            <input type="radio" name="homelessLenghtOfTime" value="more than 1 year" />&nbsp;more than 1 year
+			<input type="radio" name="homelessLenghtOfTime" value="Less than 2 weeks" <% if ("Less than 2 week".equals(IntakeServlet.getIntake().getHomelessLengthOfTime())) { %>ON<% } %> />&nbsp;Less than 2 weeks&nbsp;&nbsp;
+            <input type="radio" name="homelessLenghtOfTime" value="2 weeks to 1 month" <% if ("2 weeks to 1 month".equals(IntakeServlet.getIntake().getHomelessLengthOfTime())) { %>ON<% } %>/>&nbsp;2 weeks to 1 month&nbsp;&nbsp;
+            <input type="radio" name="homelessLenghtOfTime" value="1 to 3 months" <% if ("1 to 3 months".equals(IntakeServlet.getIntake().getHomelessLengthOfTime())) { %>ON<% } %>/>&nbsp;1 to 3 months&nbsp;&nbsp;
+            <input type="radio" name="homelessLenghtOfTime" value="3 months to 1 year" <% if ("3 months to 1 year".equals(IntakeServlet.getIntake().getHomelessLengthOfTime())) { %>ON<% } %>/>&nbsp;3 months to 1 year&nbsp;&nbsp;
+            <input type="radio" name="homelessLenghtOfTime" value="more than 1 year" <% if ("more than 1 year".equals(IntakeServlet.getIntake().getHomelessLengthOfTime())) { %>ON<% } %>/>&nbsp;more than 1 year
          </td>
      </tr>
      <tr>
@@ -1090,10 +1090,10 @@ function moveOnMax(field,nextFieldID){
       </tr>
       <tr>
       	<td colspan="8">
-			<input type="radio" name="homelessHowOften" value="Never" />&nbsp;Never&nbsp;&nbsp;
-            <input type="radio" name="homelessHowOften" value="1 to 2 times" />&nbsp;1 to 2 times&nbsp;&nbsp;
-            <input type="radio" name="homelessHowOften" value="more than 2 times in 2 years" />&nbsp;more than 2 times in 2 years&nbsp;&nbsp;
-            <input type="radio" name="homelessHowOften" value="Long term" />&nbsp;Long term
+			<input type="radio" name="homelessHowOften" value="Never" <% if ("Never".equals(IntakeServlet.getIntake().getHomelessHowOften())) { %>ON<% } %>/>&nbsp;Never&nbsp;&nbsp;
+            <input type="radio" name="homelessHowOften" value="1 to 2 times" <% if ("1 to 2 times".equals(IntakeServlet.getIntake().getHomelessHowOften())) { %>ON<% } %>/>&nbsp;1 to 2 times&nbsp;&nbsp;
+            <input type="radio" name="homelessHowOften" value="more than 2 times in 2 years" <% if ("more than 2 times in 2 years".equals(IntakeServlet.getIntake().getHomelessHowOften())) { %>ON<% } %>/>&nbsp;more than 2 times in 2 years&nbsp;&nbsp;
+            <input type="radio" name="homelessHowOften" value="Long term" <% if ("Long term".equals(IntakeServlet.getIntake().getHomelessHowOften())) { %>ON<% } %>/>&nbsp;Long term
         </td>
      </tr>
      <tr>
@@ -1101,10 +1101,10 @@ function moveOnMax(field,nextFieldID){
       </tr>
       <tr>
       	<td colspan="8">
-			<input type="radio" name="homelessReason" value="Lack of a fixed, regular and adequate night time residence." />&nbsp;Lack of a fixed, regular and adequate night time residence.<br />
-            <input type="radio" name="homelessReason" value="Primary night time residence is a shelter designed to provide temporary living accomodations (including welfar hotels, congregate shelters, and transitional housing for the mentally ill)." />&nbsp;Primary night time residence is a shelter designed to provide temporary living accomodations (including welfar hotels, congregate shelters, and transitional housing for the mentally ill).<br />
-            <input type="radio" name="homelessReason" value="Primary night time residence is an institution that provides a temporary residence for individuals intended to be institutionalized." />&nbsp;Primary night time residence is an institution that provides a temporary residence for individuals intended to be institutionalized.<br />
-            <input type="radio" name="homelessReason" value="Primary night time residence is a public or private place not designated for, or ordinarily used as a regular sleeping accomodation for human beings." />&nbsp;Primary night time residence is a public or private place not designated for, or ordinarily used as a regular sleeping accomodation for human beings.
+			<input type="radio" name="homelessReason" value="Lack of a fixed, regular and adequate night time residence." <% if ("Lack of a fixed, regular and adequate night time residence.".equals(IntakeServlet.getIntake().getHomelessReason())) { %>ON<% } %>/>&nbsp;Lack of a fixed, regular and adequate night time residence.<br />
+            <input type="radio" name="homelessReason" value="Primary night time residence is a shelter designed to provide temporary living accomodations (including welfar hotels, congregate shelters, and transitional housing for the mentally ill)." <% if ("Primary night time residence is a shelter designed to provide temporary living accomodations (including welfar hotels, congregate shelters, and transitional housing for the mentally ill).".equals(IntakeServlet.getIntake().getHomelessReason())) { %>ON<% } %>/>&nbsp;Primary night time residence is a shelter designed to provide temporary living accomodations (including welfar hotels, congregate shelters, and transitional housing for the mentally ill).<br />
+            <input type="radio" name="homelessReason" value="Primary night time residence is an institution that provides a temporary residence for individuals intended to be institutionalized." <% if ("Primary night time residence is an institution that provides a temporary residence for individuals intended to be institutionalized.".equals(IntakeServlet.getIntake().getHomelessReason())) { %>ON<% } %>/>&nbsp;Primary night time residence is an institution that provides a temporary residence for individuals intended to be institutionalized.<br />
+            <input type="radio" name="homelessReason" value="Primary night time residence is a public or private place not designated for, or ordinarily used as a regular sleeping accomodation for human beings."<% if ("Primary night time residence is a public or private place not designated for, or ordinarily used as a regular sleeping accomodation for human beings.".equals(IntakeServlet.getIntake().getHomelessReason())) { %>ON<% } %> />&nbsp;Primary night time residence is a public or private place not designated for, or ordinarily used as a regular sleeping accomodation for human beings.
         </td>
      </tr>
      <tr>
@@ -1177,7 +1177,7 @@ function moveOnMax(field,nextFieldID){
 				<tr>
 					<td width="124">
 
-					Hallucinogens</td>
+					Oxycodone</td>
 					<td width="102">
 
 					<input type="text" name="oxycodoneYearsUsed" value="<%=IntakeServlet.getIntake().getOxycodoneYearsUsed()%>" size="13" maxlength="2" ></td>
@@ -1239,8 +1239,8 @@ function moveOnMax(field,nextFieldID){
 	    </tr>
     
         <tr>
-			<td valign="top">Longest time sober in past 3 years?&nbsp;<input type="text" name="sober3Years" value="<%=IntakeServlet.getIntake().getSober3Years()%>" size="9" maxlength="15" <% if (sober3YearsErr.length()>0) { %>class="textboxErr"<% } %>></td>
-			<td valign="top">in the last year? <input type="text" name="sober1Years" value="<%=IntakeServlet.getIntake().getSober1Years()%>" size="9" maxlength="15" <% if (sober1YearsErr.length()>0) { %>class="textboxErr"<% } %>>
+			<td valign="top">Longest time sober in past 3 years?&nbsp;<input type="text" name="sober3Years" value="<%=IntakeServlet.getIntake().getSober3Years()%>" size="9" maxlength="15" <% if (sober3YearsErr.length()>0) { %>class="textboxErr"<% } %> onkeyup="ucase(this)"></td>
+			<td valign="top">in the last year? <input type="text" name="sober1Years" value="<%=IntakeServlet.getIntake().getSober1Years()%>" size="9" maxlength="15" <% if (sober1YearsErr.length()>0) { %>class="textboxErr"<% } %> onkeyup="ucase(this)">
         	</td>
         </tr>
         <tr>
@@ -1252,10 +1252,10 @@ function moveOnMax(field,nextFieldID){
 		</tr>
         <tr>
     	<td colspan="8">
-        Physical effects of abuse<br><input type="text" name="abusePhysicalEffects" value="<%=IntakeServlet.getIntake().getAbusePhysicalEffects()%>" size="45"><br><br>
+        Physical effects of abuse<br><input type="text" name="abusePhysicalEffects" value="<%=IntakeServlet.getIntake().getAbusePhysicalEffects()%>" size="45" onkeyup="ucase(this)"><br><br>
 		<b>Any Previous Rehabs?</b>&nbsp;
 			<input type="checkbox" name="attendAA" value="YES" <% if ("YES".equals(IntakeServlet.getIntake().getAttendAA())) { %>checked <%}%>/>AA or NA&nbsp;&nbsp;
-            Number of Years&nbsp;<input type="text" name="yearsAttended" value="<%=IntakeServlet.getIntake().getYearsAttended()%>" size="10" maxlength="10" <% if (yearsAttendedErr.length()>0) { %>class="textboxErr"<%}%>/>&nbsp;<div style="font:11px Arial;color: #b71524;"><b><i><%=yearsAttendedErr%></i></b></div>
+            Number of Years&nbsp;<input type="text" name="yearsAttended" value="<%=IntakeServlet.getIntake().getYearsAttended()%>" size="10" maxlength="10" <% if (yearsAttendedErr.length()>0) { %>class="textboxErr"<%}%> onkeyup="ucase(this)"/>&nbsp;<div style="font:11px Arial;color: #b71524;"><b><i><%=yearsAttendedErr%></i></b></div>
          </td>
          
          <tr>
@@ -1287,7 +1287,7 @@ function moveOnMax(field,nextFieldID){
                     %></select>
                 </td>
                 <td>
-					Year:&nbsp;<input type="text" name="ffYearsAttended" size="12" maxlength="12" value="<%=IntakeServlet.getIntake().getFfYearsAttended()%>" size="10" maxlength="10" <% if (ffYearsAttendedErr.length()>0) { %>class="textboxErr"<%}%>/>
+					Year:&nbsp;<input type="text" name="ffYearsAttended" size="12" maxlength="12" value="<%=IntakeServlet.getIntake().getFfYearsAttended()%>" size="10" maxlength="10" <% if (ffYearsAttendedErr.length()>0) { %>class="textboxErr"<%}%> onkeyup="ucase(this)"/>
                 </td>
                 <td>
 					Where:&nbsp;
@@ -1306,7 +1306,7 @@ function moveOnMax(field,nextFieldID){
              </tr>
              <tr>
              	<td colspan="3">
-           		 Other Rehabs<input type="text" name="otherRehabs" value="<%=IntakeServlet.getIntake().getOtherRehabs()%>" size="45" maxlength="45"/>
+           		 Other Rehabs<input type="text" name="otherRehabs" value="<%=IntakeServlet.getIntake().getOtherRehabs()%>" size="45" maxlength="45" onkeyup="ucase(this)"/>
                 </td>
              </tr>
             
@@ -1345,8 +1345,8 @@ function moveOnMax(field,nextFieldID){
           <tr>
         	<td colspan="8" valign="top">
 			<b>Quantity Consumed:</b><br>
-        		Per week:&nbsp;&nbsp;<input type="checkbox" name="consumedQty1" value="<%=IntakeServlet.getIntake().getUsagePattern1() %>" size="25" maxlength="25" />
-            	Per week 2 years ago:&nbsp;&nbsp;<input type="checkbox" name="consumedQty2" value="<%=IntakeServlet.getIntake().getUsagePattern1() %>" size="25" maxlength="25" />
+        		Per week:&nbsp;&nbsp;<input type="textbox" name="consumedQty1" value="<%=IntakeServlet.getIntake().getUsagePattern1() %>" size="25" maxlength="25" />
+            	Per week 2 years ago:&nbsp;&nbsp;<input type="textbox" name="consumedQty2" value="<%=IntakeServlet.getIntake().getUsagePattern1() %>" size="25" maxlength="25" />
  			</td>
          </tr>
     
@@ -2045,7 +2045,6 @@ function moveOnMax(field,nextFieldID){
     <tr>
 		<td colspan="8">Are you involved in a lawsuit?&nbsp;
 			<select name="currentLawsuitFlag" class="dll">
-                                    <option value="">
                                     <%
                                     if (ddl!=null) {
                                       for (int j=0;j<ddl.size();j++) {
@@ -2081,7 +2080,6 @@ function moveOnMax(field,nextFieldID){
 	<tr>
 		<td colspan="8">Ever convicted of a felony?&nbsp;
         <select name="felonyFlag"  class="ddl">
-                                    <option value="">
                                     <%
                                     if (ddl!=null) {
                                       for (int j=0;j<ddl.size();j++) {
@@ -2114,7 +2112,6 @@ function moveOnMax(field,nextFieldID){
     <tr>
 		<td colspan="8">Ever convicted of a sexual offense?&nbsp;
         <select name="sexualOffenseFlag"   class="ddl">
-                                    <option value="">
                                     <%
                                     if (ddl!=null) {
                                       for (int j=0;j<ddl.size();j++) {
