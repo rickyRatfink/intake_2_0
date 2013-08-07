@@ -229,8 +229,11 @@ String previousFaithFarmFlagErr = (String)request.getAttribute("previousFaithFar
  String workExperienceOtherDescErr = (String)request.getAttribute("workExperienceOtherDescErr");
    if (workExperienceOtherDescErr==null) workExperienceOtherDescErr="";
 
-   String Err = (String)request.getAttribute("Err");
-   if (Err==null) Err="";
+   String currentMedicationsErr = (String)request.getAttribute("currentMedicationsErr");
+   if (currentMedicationsErr==null) currentMedicationsErr="";
+
+ String refillDirectionsErr = (String)request.getAttribute("refillDirectionsErr");
+   if (refillDirectionsErr==null) refillDirectionsErr="";
 
 	
    String required = "<img src='images/required.png'/>";
@@ -301,9 +304,7 @@ function moveOnMax(field,nextFieldID){
 	<tr>
 		<td colspan="8">&nbsp;</td>
 	</tr>
-    <tr>
-		<td colspan="8" valign="bottom" align="center" height="45"><input type="submit" name="action" value="Save Application" class="imageButtonSave" title="Save Application" /></td>
-	</tr>
+    
 	<tr>
     	<td colspan="8">
                 <table width="100%" border="0">
@@ -1341,6 +1342,17 @@ function moveOnMax(field,nextFieldID){
 		<td colspan="8">&nbsp;</td>
 	</tr>
     
+          <tr>
+        	<td colspan="8" valign="top">
+			<b>Quantity Consumed:</b><br>
+        		Per week:&nbsp;&nbsp;<input type="checkbox" name="consumedQty1" value="<%=IntakeServlet.getIntake().getUsagePattern1() %>" size="25" maxlength="25" />
+            	Per week 2 years ago:&nbsp;&nbsp;<input type="checkbox" name="consumedQty2" value="<%=IntakeServlet.getIntake().getUsagePattern1() %>" size="25" maxlength="25" />
+ 			</td>
+         </tr>
+    
+       <tr>
+		<td colspan="8">&nbsp;</td>
+	</tr>
         <% ArrayList questions = (ArrayList)session.getAttribute("questions");
 		   String answer[] = IntakeServlet.getIntake().getQuestion();
 		   String answerDetails[] = IntakeServlet.getIntake().getQuestionAnswerDetails();
@@ -1491,7 +1503,13 @@ function moveOnMax(field,nextFieldID){
         </td>
         </tr>
         <tr><td class="fieldError"><%=currentMedicationsFlagErr%></td></tr>
-         <tr>
+        <tr>
+        <td>
+          <i>If yes, which meds:</i>&nbsp;&nbsp;<input type="text" name="currentMedications" value="<%=IntakeServlet.getIntake().getCurrentMedications()%>" <% if (currentMedicationsErr.length()>0) { %>class="textboxErr"<%}%> size="40" maxlength="40"/>
+         </td>
+         </tr>
+         <tr><td class="fieldError"><%=currentMedicationsErr%></td></tr>
+        <tr>
          <td>
 		Are you in need of medication?&nbsp;
 									<%
@@ -1547,6 +1565,11 @@ function moveOnMax(field,nextFieldID){
         </td>
         </tr>
         <tr><td class="fieldError"><%=medicationSupplyFlagErr%></td></tr>
+        <tr>
+        <td>
+          If yes, How do you get refill?&nbsp;&nbsp;<input type="text" name="refillDirections" value="<%=IntakeServlet.getIntake().getRefillDirections()%>" <% if (refillDirectionsErr.length()>0) { %>class="textboxErr"<%}%> size="40" maxlength="40"/>		</td>
+         </tr>
+         <tr><td class="fieldError"><%=refillDirectionsErr%></td></tr>
          <tr>
          <td> 
 			Do you have any doctor appointments in the next 30 days?&nbsp;
@@ -1692,12 +1715,14 @@ function moveOnMax(field,nextFieldID){
 		
 	</td>
 	</tr>
-    
     <tr>
-		<td colspan="11"><b>Mental Health:</b></td>
+         <td colspan="8"></td>
+    </tr>
+    <tr>
+		<td colspan="8"></br><b>Mental Health:</b></td>
 	</tr>
 	<tr>
-		<td colspan="11">
+		<td colspan="8">
         <%
 		   for (int i=26;i<32;i++) { 
 		   	String question = (String)questions.get(i);
@@ -1971,7 +1996,9 @@ function moveOnMax(field,nextFieldID){
                     <td colspan="8">Physician: <input type="text" name="herniaPhysician" value="<%=IntakeServlet.getIntake().getHerniaPhysician()%>" <% if (herniaPhysicianErr.length()>0) { %>class="textboxErr"<%}%> size="30" maxlength="30"></td>
 				</tr>
                  <tr><td colspan="8" class="fieldError"><%=herniaPhysicianErr%></td></tr>
-
+                <tr>
+                     <td colspan="8"><i>For any "yes" above, explain details: <input type="text" name="medicalConditionDetails" value="<%=IntakeServlet.getIntake().getMedicalConditionDetails()%>" size="60" maxlength="30"></td>
+				</tr>
 			</table> 			 					
 		</td>
 		<td></td>
@@ -2297,14 +2324,34 @@ function moveOnMax(field,nextFieldID){
                     <td>Phone</td>
                     <td>Dates of Employment</td>
                 </tr>
-                <% for (int i=0;i<4;i++) { %>
                 <tr>
-                	<td><input type="text" name="employer1" value="" size="30" maxlength="30"/></td>
-                    <td><input type="text" name="employerContact1" value="" size="25" maxlength="30"/></td>
-                    <td><input type="text" name="employerPhone1" value="" size="15" maxlength="15"/></td>
-                    <td><input type="text" name="employerDates1" value="" size="20" maxlength="35"/></td>
+                	<td><input type="text" name="employer1" value="<%=IntakeServlet.getIntake().getEmployer1()%>" size="30" maxlength="30"/></td>
+                    <td><input type="text" name="employerContact1" value="<%=IntakeServlet.getIntake().getEmployer1()%>" size="25" maxlength="30"/></td>
+                    <td><input type="text" name="employerPhone1" value="<%=IntakeServlet.getIntake().getEmployer1()%>" size="15" maxlength="15"/></td>
+                    <td><input type="text" name="employerDates1" value="<%=IntakeServlet.getIntake().getEmployer1()%>" size="20" maxlength="35"/></td>
                 </tr>
-                <% } %>
+                
+                 <tr>
+                	<td><input type="text" name="employer2" value="<%=IntakeServlet.getIntake().getEmployer2()%>" size="30" maxlength="30"/></td>
+                    <td><input type="text" name="employerContact2" value="<%=IntakeServlet.getIntake().getEmployer2()%>" size="25" maxlength="30"/></td>
+                    <td><input type="text" name="employerPhone2" value="<%=IntakeServlet.getIntake().getEmployer2()%>" size="15" maxlength="15"/></td>
+                    <td><input type="text" name="employerDates2" value="<%=IntakeServlet.getIntake().getEmployer2()%>" size="20" maxlength="35"/></td>
+                </tr>
+                
+                 <tr>
+                	<td><input type="text" name="employer3" value="<%=IntakeServlet.getIntake().getEmployer3()%>" size="30" maxlength="30"/></td>
+                    <td><input type="text" name="employerContact3" value="<%=IntakeServlet.getIntake().getEmployer3()%>" size="25" maxlength="30"/></td>
+                    <td><input type="text" name="employerPhone3" value="<%=IntakeServlet.getIntake().getEmployer3()%>" size="15" maxlength="15"/></td>
+                    <td><input type="text" name="employerDates3" value="<%=IntakeServlet.getIntake().getEmployer3()%>" size="20" maxlength="35"/></td>
+                </tr>
+                
+                 <tr>
+                	<td><input type="text" name="employer4" value="<%=IntakeServlet.getIntake().getEmployer4()%>" size="30" maxlength="30"/></td>
+                    <td><input type="text" name="employerContact4" value="<%=IntakeServlet.getIntake().getEmployer4()%>" size="25" maxlength="30"/></td>
+                    <td><input type="text" name="employerPhone4" value="<%=IntakeServlet.getIntake().getEmployer4()%>" size="15" maxlength="15"/></td>
+                    <td><input type="text" name="employerDates4" value="<%=IntakeServlet.getIntake().getEmployer4()%>" size="20" maxlength="35"/></td>
+                </tr>
+               
              </tr>
             
              </table>
