@@ -148,6 +148,7 @@ public class Intake implements Serializable {
 	private static String currentMedications="";
 	private static String refillDirections="";
 	private static String medicalConditionDetails="";
+	private static String otherJobSkill="";
 	
 	private static String question[] = new String[]{ 
 						"NO","NO","NO","NO","NO","NO",
@@ -1730,6 +1731,12 @@ public class Intake implements Serializable {
 	}
 	public static void setIntakeStatus(String intakeStatus) {
 		Intake.intakeStatus = intakeStatus;
+	}
+	public static String getOtherJobSkill() {
+		return otherJobSkill;
+	}
+	public static void setOtherJobSkill(String otherJobSkill) {
+		Intake.otherJobSkill = otherJobSkill;
 	}
 	
 	
