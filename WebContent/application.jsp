@@ -1430,10 +1430,10 @@ function moveOnMax(field,nextFieldID){
 				  
 				<%}%>
                 </select>
-		&nbsp;&nbsp;How Long Ago?<input type="text" name="question<%=i%>Dates" value="<%=answerDates[i]%>"  size="10" maxlength="10" /></td>
+		&nbsp;&nbsp;How Long Ago?<input type="text" name="question<%=i%>Dates" value="<%=answerDates[i]%>"  size="10" maxlength="10" onkeyup="javascript:ucase(this)"/></td>
         </tr>
         <tr>
-        	<td colspan="8">Please describe:&nbsp;<input type="text" name="question<%=i%>Details" value="<%=answerDetails[i]%>" size="40" maxlength="45"/></td>
+        	<td colspan="8">Please describe:&nbsp;<input type="text" name="question<%=i%>Details" value="<%=answerDetails[i]%>" size="40" maxlength="45" onkeyup="javascript:ucase(this)"/></td>
         </tr>
         <%}%>
 	<tr>
@@ -1643,7 +1643,7 @@ function moveOnMax(field,nextFieldID){
          </tr>
          <tr>
          <td>
-                                    If yes, give diagnosis&nbsp;<input type="text" name="question<%=i%>Details" value="<%=answerDetails[i]%>" size="45" maxlength="45"/>
+                                    If yes, give diagnosis&nbsp;<input type="text" name="question<%=i%>Details" value="<%=answerDetails[i]%>" size="45" maxlength="45" onkeyup="javascript:ucase(this)"/>
          </td>
          </tr>
          </table>
@@ -1731,7 +1731,7 @@ function moveOnMax(field,nextFieldID){
          <%
                                     ddl = (ArrayList)session.getAttribute("dll_yesno");
                                     %>
-                                	<select name="question" class="dll">
+                                	<select name="question<%=i%>" class="dll">
                                     <%
                                     if (ddl!=null) {
                                       for (int j=0;j<ddl.size();j++) {
@@ -1750,8 +1750,8 @@ function moveOnMax(field,nextFieldID){
                                       <%
                                     }
                                     %></select><br />
-                                    If yes, when&nbsp;<input type="text" name="question<%=i%>Date" value="<%=answerDates[i]%>" size="15" maxlength="15"/>
-                                    &nbsp;&nbsp;Details:&nbsp;<input type="text" name="question<%=i%>Details" value="<%=answerDetails[i]%>" size="40" maxlength="45"/>
+                                    If yes, when&nbsp;<input type="text" name="question<%=i%>Dates" value="<%=answerDates[i]%>" size="15" maxlength="15" onkeyup="javascript:ucase(this)"/>
+                                    &nbsp;&nbsp;Details:&nbsp;<input type="text" name="question<%=i%>Details" value="<%=answerDetails[i]%>" size="40" maxlength="45" onkeyup="javascript:ucase(this)"/>
         <br /><br />
 		<% } %>
         
@@ -1887,7 +1887,6 @@ function moveOnMax(field,nextFieldID){
 				<tr>
 					<td>
 						<select name="medicalConditionFlag<%=i%>" class="dll">
-                                    <option value="">
                                     <%
                                     if (ddl!=null) {
                                       for (int j=0;j<ddl.size();j++) {
@@ -1989,7 +1988,7 @@ function moveOnMax(field,nextFieldID){
 				</tr>
                 
 				<tr>
-					<td colspan="8">Date: <input type="text" name="Date" size="8" <% if (herniaOperationDateErr.length()>0) { %>class="textboxErr"<%}%>></td>
+					<td colspan="8">Date: <input type="text" name="Date" value="<%=IntakeServlet.getIntake().getHerniaDate()%>" size="8" <% if (herniaOperationDateErr.length()>0) { %>class="textboxErr"<%}%>></td>
                 </tr>
                  <tr><td colspan="8" class="fieldError"><%=herniaOperationDateErr%></td></tr>
                 <tr>
