@@ -3,7 +3,7 @@
 <%@ page import="java.util.ArrayList" %>
 
 <jsp:include page="student_header.jsp" flush="true"/>
-
+ 
 <% 
  
    Validator valid8r = new Validator();
