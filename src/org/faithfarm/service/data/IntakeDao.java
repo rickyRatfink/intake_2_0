@@ -20,6 +20,13 @@ import org.faithfarm.util.Validator;
 public class IntakeDao {
 
 	private Validator valid8r = new Validator();
+	private String uid="root";
+	
+	private String SERVER = "ffarm_dev";
+	private String pwd="admin";
+	
+	//private String SERVER = "ffarm_staging";
+	//private String pwd="j35u59538";
 
 	private Connection getConnection() throws SQLException,
 			ClassNotFoundException {
@@ -27,7 +34,7 @@ public class IntakeDao {
 		Class.forName("com.mysql.jdbc.Driver");
 
 		Connection Conn = DriverManager.getConnection(
-				"jdbc:mysql://localhost:3306/ffarm_dev", "root", "admin");
+				"jdbc:mysql://localhost:3306/"+SERVER, uid,pwd);
 
 		return Conn;
 	}
@@ -43,7 +50,7 @@ public class IntakeDao {
 
 			// Do something with the Connection
 			Statement Stmt = Conn.createStatement();
-			StringBuffer s = new StringBuffer("SELECT * FROM FFARM_DEV.DONOR ");
+			StringBuffer s = new StringBuffer("SELECT * FROM "+SERVER+".DONOR ");
 			s.append("WHERE DONOR_ID=" + id);
 
 			ResultSet RS = Stmt.executeQuery(s.toString());
@@ -77,7 +84,7 @@ public class IntakeDao {
 			// Do something with the Connection
 			Statement Stmt = Conn.createStatement();
 			StringBuffer s = new StringBuffer(
-					"SELECT * FROM FFARM_DEV.DONOR INNER JOIN FFARM_DEV.ADDRESS ON DONOR.DONOR_ID=ADDRESS.DONOR_ID ");
+					"SELECT * FROM "+SERVER+".DONOR INNER JOIN "+SERVER+".ADDRESS ON DONOR.DONOR_ID=ADDRESS.DONOR_ID ");
 			// s.append("WHERE FIRSTNAME LIKE '%" + firstname +
 			// "%' and lastname like '%"+lastname+"%' ");
 
@@ -115,7 +122,7 @@ public class IntakeDao {
 
 			StringBuffer query = new StringBuffer();
 
-			query.append("INSERT INTO `ffarm_dev`.`intake`");
+			query.append("INSERT INTO `"+SERVER+"`.`intake`");
 			query.append("(");
 			query.append("`LASTNAME`,");
 			query.append("`FIRSTNAME`,");
@@ -450,7 +457,7 @@ public class IntakeDao {
 			StringBuffer query1 = new StringBuffer("");
 			
 			if ("YES".equals(answer[i])) {
-				query1.append("INSERT INTO `ffarm_dev`.`intake_question_answer` (");
+				query1.append("INSERT INTO `"+SERVER+"`.`intake_question_answer` (");
 				query1.append("`QUESTION_ID`,");
 				query1.append("`INTAKE_ID`,");
 				query1.append("`ANSWER`,");
@@ -478,7 +485,7 @@ public class IntakeDao {
 			StringBuffer query1 = new StringBuffer("");
 			
 			if ("YES".equals(condition[i])) {
-				query1.append("INSERT INTO `ffarm_dev`.`intake_medical_condition` (");
+				query1.append("INSERT INTO `"+SERVER+"`.`intake_medical_condition` (");
 				query1.append("`MEDICAL_CONDITION_ID`,");
 				query1.append("`INTAKE_ID`,");
 				query1.append("`ANSWER`)");
@@ -503,7 +510,7 @@ public class IntakeDao {
 			StringBuffer query1 = new StringBuffer("");
 			
 			if ("YES".equals(work[i])) {
-				query1.append("INSERT INTO `ffarm_dev`.`intake_job_skill` (");
+				query1.append("INSERT INTO `"+SERVER+"`.`intake_job_skill` (");
 				query1.append("`JOB_SKILL_ID`,");
 				query1.append("`INTAKE_ID` ) ");
 				query1.append("VALUES");
@@ -539,7 +546,7 @@ public class IntakeDao {
 			// Do something with the Connection
 			Statement Stmt = Conn.createStatement();
 			StringBuffer s = new StringBuffer(
-					"SELECT * FROM FFARM_DEV.QUESTION ORDER BY QUESTION_ID ");
+					"SELECT * FROM "+SERVER+".QUESTION ORDER BY QUESTION_ID ");
 
 			ResultSet RS = Stmt.executeQuery(s.toString());
 			while (RS.next()) {
@@ -574,7 +581,7 @@ public class IntakeDao {
 			// Do something with the Connection
 			Statement Stmt = Conn.createStatement();
 			StringBuffer s = new StringBuffer(
-					"SELECT * FROM FFARM_DEV.MEDICAL_CONDITION  ");
+					"SELECT * FROM "+SERVER+".MEDICAL_CONDITION  ");
 
 			ResultSet RS = Stmt.executeQuery(s.toString());
 			while (RS.next()) {
@@ -609,7 +616,7 @@ public class IntakeDao {
 			// Do something with the Connection
 			Statement Stmt = Conn.createStatement();
 			StringBuffer s = new StringBuffer(
-					"SELECT * FROM FFARM_DEV.JOB_SKILL  ");
+					"SELECT * FROM "+SERVER+".JOB_SKILL  ");
 
 			ResultSet RS = Stmt.executeQuery(s.toString());
 			while (RS.next()) {
@@ -642,7 +649,7 @@ public class IntakeDao {
 			Statement Stmt = Conn.createStatement();
 
 			StringBuffer query = new StringBuffer();
-			query.append("UPDATE FFARM_DEV.DONOR SET ");
+			query.append("UPDATE "+SERVER+".DONOR SET ");
 			retCode = Stmt.executeUpdate(query.toString());
 			Stmt.close();
 			Conn.close();
@@ -667,9 +674,9 @@ public class IntakeDao {
 			// Do something with the Connection
 			Statement Stmt = Conn.createStatement();
 			StringBuffer s = new StringBuffer(
-					"SELECT * FROM FFARM_DEV.DONATION ");
-			s.append("INNER JOIN FFARM_DEV.DONOR ON DONOR.DONOR_ID=DONATION.DONOR_ID  ");
-			s.append("INNER JOIN FFARM_DEV.ADDRESS ON DONOR.DONOR_ID=ADDRESS.DONOR_ID WHERE ");
+					"SELECT * FROM "+SERVER+".DONATION ");
+			s.append("INNER JOIN "+SERVER+".DONOR ON DONOR.DONOR_ID=DONATION.DONOR_ID  ");
+			s.append("INNER JOIN "+SERVER+".ADDRESS ON DONOR.DONOR_ID=ADDRESS.DONOR_ID WHERE ");
 			if (lastname.length() > 0)
 				s.append("DONOR.LASTNAME='" + lastname + "' AND ");
 			if (firstname.length() > 0)
@@ -736,7 +743,7 @@ public class IntakeDao {
 			// Do something with the Connection
 			Statement Stmt = Conn.createStatement();
 			StringBuffer s = new StringBuffer(
-					"SELECT USER_ID, USERNAME, USER_ROLE, LOGIN_COUNT, FARM_BASE FROM FFARM_DEV.SYSTEM_USER ");
+					"SELECT USER_ID, USERNAME, USER_ROLE, LOGIN_COUNT, FARM_BASE FROM "+SERVER+".SYSTEM_USER ");
 			s.append("WHERE FARM_BASE='" + farm + "'  ");
 			ResultSet RS = Stmt.executeQuery(s.toString());
 			while (RS.next()) {
@@ -846,7 +853,7 @@ public class IntakeDao {
 			Statement Stmt = Conn.createStatement();
 
 			StringBuffer query = new StringBuffer();
-			query.append("UPDATE FFARM_DEV.SYSTEM_USER SET LOGIN_COUNT=LOGIN_COUNT+1 WHERE USER_ID="
+			query.append("UPDATE "+SERVER+".SYSTEM_USER SET LOGIN_COUNT=LOGIN_COUNT+1 WHERE USER_ID="
 					+ id + ";");
 			retCode = Stmt.executeUpdate(query.toString());
 
@@ -872,7 +879,7 @@ public class IntakeDao {
 			Statement Stmt = Conn.createStatement();
 
 			StringBuffer query = new StringBuffer();
-			query.append("UPDATE FFARM_DEV.SYSTEM_USER SET PASSWORD='"
+			query.append("UPDATE "+SERVER+".SYSTEM_USER SET PASSWORD='"
 					+ password + "', QUESTION='" + question.replace("'", "''")
 					+ "', ANSWER='" + answer + "' WHERE USER_ID=" + id + ";");
 			retCode = Stmt.executeUpdate(query.toString());
@@ -897,12 +904,12 @@ public class IntakeDao {
 			Class.forName("com.mysql.jdbc.Driver");
 
 			Connection Conn = DriverManager.getConnection(
-					"jdbc:mysql://localhost:3306/ffarm_dev", "root", "admin");
+					"jdbc:mysql://localhost:3306/"+SERVER+"", "root", "admin");
 
 			// Do something with the Connection
 			/*
 			 * StringBuffer query = new StringBuffer();
-			 * query.append("INSERT INTO FFARM_DEV.DONOR ("); query.append(
+			 * query.append("INSERT INTO "+SERVER+".DONOR ("); query.append(
 			 * " LASTNAME, FIRSTNAME, SUFFIX, CONTACT_PHONE, EMAIL_ADDRESS, CREATION_DATE, CREATED_BY ) VALUES ("
 			 * ); query.append("'" + d.getLastname() + "',"); query.append("'" +
 			 * d.getFirstname() + "',"); query.append("'" + d.getSuffix() +
@@ -940,7 +947,7 @@ public class IntakeDao {
 			// Do something with the Connection
 
 			StringBuffer query = new StringBuffer();
-			query.append("INSERT INTO FFARM_DEV.ADDRESS (");
+			query.append("INSERT INTO "+SERVER+".ADDRESS (");
 			query.append(" DONOR_ID,LINE1, LINE2, CITY, STATE, ZIPCODE, MAJOR_INTERSECTION, SUBDIVISION, STREET_SUFFIX, STRUCTURE_TYPE, ");
 			query.append("UNIT, BUILDING, FLOOR, ELEVATOR_FLAG, GATED_FLAG, GATE_INSTRUCTIONS, CREATED_BY  ) VALUES (");
 			query.append(d.getDonorId() + ",");
@@ -994,7 +1001,7 @@ public class IntakeDao {
 			// Do something with the Connection
 
 			StringBuffer query = new StringBuffer();
-			query.append("INSERT INTO FFARM_DEV.SYSTEM_USER (");
+			query.append("INSERT INTO "+SERVER+".SYSTEM_USER (");
 			query.append(" USERNAME, PASSWORD, CREATION_DATE, CREATED_BY, USER_ROLE, FARM_BASE ) VALUES (");
 			query.append("'" + d.getUsername() + "',");
 			query.append("'" + d.getPassword() + "',");
