@@ -8,6 +8,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.faithfarm.domain.Address;
@@ -24,6 +25,7 @@ public class IntakeDao {
 	
 	private String SERVER = "ffarm_dev";
 	private String pwd="admin";
+	
 	
 	//private String SERVER = "ffarm_staging";
 	//private String pwd="j35u59538";
@@ -772,76 +774,92 @@ public class IntakeDao {
 	}
 
 	public boolean secureLogin(String username, String password,
-			HttpSession session) {
+			HttpServletRequest req) {
 
+		boolean success=true;
+		ArrayList errors = new ArrayList();
+		
 		try {
-
-			Connection Conn = this.getConnection();
-
-			// Do something with the Connection
-			Statement Stmt = Conn.createStatement();
-
-			ResultSet RS = Stmt.executeQuery("SELECT * from SYSTEM_USER");
-
-			SystemUser user = new SystemUser();
-
-			while (RS.next()) {
-				String uid = RS.getString(2);
-				String pwd = RS.getString(3);
-
-				user.setUserId(Integer.valueOf(RS.getString(1)));
-				user.setUsername(RS.getString(2));
-				user.setPassword(RS.getString(3));
-				user.setCreationDate(RS.getString(4));
-				user.setLastUpdatedDate(RS.getString(5));
-				user.setUserRole(RS.getString(6));
-				user.setFarmBase(RS.getString(7));
-				user.setLoginCount(RS.getInt(8));
-
-				if (username.trim().length() == 0
-						|| username.equals("username")) {
-					session.setAttribute("ERROR_" + session.getId(),
-							"You must enter a username.");
-					return false;
-				}
-				if (password.trim().length() == 0
-						|| password.equals("password")) {
-					session.setAttribute("ERROR_" + session.getId(),
-							"You must enter a password.");
-					return false;
-				}
-
-				if (username.equals(uid)) {
-
-					if (password.equals(pwd)) {
-						session.setAttribute("USER_" + session.getId(), user);
-						this.updateLoginCount(user.getUserId(), session);
-
-						return true;
-					} else {
-						session.setAttribute("ERROR_" + session.getId(),
-								"The password entered is incorrect.");
-						return false;
+			
+			
+			if (username.trim().length() == 0
+					|| username.equals("username")) {
+				errors.add("Username is required.");
+				success=false;
+			}
+			if (password.trim().length() == 0
+					|| password.equals("password")) {
+				errors.add("Password is required.");
+				success=false;
+			}
+			
+			
+			if (success) {
+				
+				success=false;
+				
+				Connection Conn = this.getConnection();
+	
+				// Do something with the Connection
+				Statement Stmt = Conn.createStatement();
+	
+				ResultSet RS = Stmt.executeQuery("SELECT * from SYSTEM_USER WHERE USERNAME='"+username+"' AND PASSWORD='"+password+"'");
+	
+				SystemUser user = new SystemUser();
+				
+				while (RS.next()) {
+					String uid = RS.getString(2);
+					String pwd = RS.getString(3);
+	
+					user.setUserId(Integer.valueOf(RS.getString(1)));
+					user.setUsername(RS.getString(2));
+					user.setPassword(RS.getString(3));
+					user.setCreationDate(RS.getString(4));
+					user.setLastUpdatedDate(RS.getString(5));
+					user.setUserRole(RS.getString(6));
+					user.setFarmBase(RS.getString(7));
+					user.setLoginCount(RS.getInt(8));
+	
+					
+	
+					if (username.equals(uid)) {
+						
+						if (password.equals(pwd)) {
+							req.getSession().setAttribute("USER_" + req.getSession().getId(), user);
+							this.updateLoginCount(user.getUserId(), req.getSession());
+							success=true;	
+						}
+	
 					}
-
+				
+				
 				}
+
+				// Clean up after ourselves
+				RS.close();
+				Stmt.close();
+				Conn.close();
 			}
 
-			// Clean up after ourselves
-			RS.close();
-			Stmt.close();
-			Conn.close();
+			if (!success&&errors.size()==0) {
+				errors.add("Your login attempt was not successful. Please try again.");
+				success=false;
+			}
+			
+			
+			req.setAttribute("ERRORS_" + req.getSession().getId(),errors);
+					
+			
+	
 		} catch (SQLException E) {
-			session.setAttribute("SYSTEM_ERROR", E.getMessage());
+			req.setAttribute("SYSTEM_ERROR", E.getMessage());
 		} catch (ClassNotFoundException e) {
-			session.setAttribute("SYSTEM_ERROR", e.getMessage());
+			req.setAttribute("SYSTEM_ERROR", e.getMessage());
 			e.printStackTrace();
 		}
 
-		session.setAttribute("ERROR",
-				"The username or password entered is not valid.");
-
-		return false;
+		
+		return success;
 	}
 
 	public int updateLoginCount(Integer id, HttpSession session) {

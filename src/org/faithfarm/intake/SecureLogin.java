@@ -26,13 +26,14 @@ public class SecureLogin extends HttpServlet {
 			      
 			      String action=req.getParameter("action");
 			      
-			      if ("login".equals(action)) 
+			      if ("Log In".equals(action)) 
 			    	  this.secureLogin(req, resp, session);			      
-			      else if ("logout".equals(action)) {
-			    	  session.invalidate();
-			    	  req.getRequestDispatcher("/logout.jsp").forward(req, resp);
+			      else if ("Log Out".equals(action)) {
+			    	  session.invalidate(); 
+			    	  req.getRequestDispatcher("pages/index.jsp").forward(req, resp);
 			      }
-			    	  
+			      else
+			    	  req.getRequestDispatcher("pages/index.jsp").forward(req, resp);    	  
 	 } 
 	 
 	 protected void doPost(HttpServletRequest req, HttpServletResponse resp)
@@ -46,19 +47,21 @@ public class SecureLogin extends HttpServlet {
 	      String password=req.getParameter("password");
 	      String next="";
 	      
-	      boolean success=dao.secureLogin(username, password, session);
+	      boolean success=dao.secureLogin(username, password, req);
 	      
 	      if (success) {
 	    	  buildStateList(session);
-	    	  
 	    	  SystemUser user = (SystemUser)session.getAttribute("USER_" + session.getId());
-	    	  if (user.getLoginCount().intValue()==0)
+	    	   
+	    	  if (user!=null&&user.getLoginCount().intValue()==0)
 	    		  next="setpassword.jsp";	    	  
 	    	  else
-	    		  next="intake?action=Home"; 
+	    		  next="pages/main.jsp"; 
 	      }
 	      else
-	    	  next="login_error.jsp";
+	    	  next="pages/index.jsp";
+	      
+	     
 	      req.getRequestDispatcher("/"+next).forward(req, resp);
 	    }
 	 

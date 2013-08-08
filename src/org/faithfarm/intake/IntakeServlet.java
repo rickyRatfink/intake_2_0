@@ -47,7 +47,6 @@ public class IntakeServlet extends HttpServlet {
 			if (!success) 
 				url="application.jsp";
 			else {
-				System.out.println("inserting app");
 				dao.insertIntakeApplication(intake, "application", session);
 				System.out.println("inserted app");
 				req.setAttribute("MESSAGE", "Application successfully saved!");
