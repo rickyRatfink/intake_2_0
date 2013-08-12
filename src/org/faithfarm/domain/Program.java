@@ -4,49 +4,50 @@ import java.io.Serializable;
 
 public class Program implements Serializable {
 
-	private static long programId;
-	private static String programName="";
-	private static String description="";
-	private static String status="";
-	private static String creationDate="";
-	private static String createdBy="";
+	private long programId;
+	private String programName="";
+	private String description="";
+	private String status="";
+	private String creationDate="";
+	private String createdBy="";
 	
-	public static long getProgramId() {
+	public long getProgramId() {
 		return programId;
 	}
-	public static void setProgramId(long programId) {
-		Program.programId = programId;
+	public void setProgramId(long programId) {
+		this.programId = programId;
 	}
-	public static String getProgramName() {
+	public String getProgramName() {
 		return programName;
 	}
-	public static void setProgramName(String programName) {
-		Program.programName = programName;
+	public void setProgramName(String programName) {
+		this.programName = programName;
 	}
-	public static String getDescription() {
+	public String getDescription() {
 		return description;
 	}
-	public static void setDescription(String description) {
-		Program.description = description;
+	public void setDescription(String description) {
+		this.description = description;
 	}
-	public static String getStatus() {
+	public String getStatus() {
 		return status;
 	}
-	public static void setStatus(String status) {
-		Program.status = status;
+	public void setStatus(String status) {
+		this.status = status;
 	}
-	public static String getCreationDate() {
+	public String getCreationDate() {
 		return creationDate;
 	}
-	public static void setCreationDate(String creationDate) {
-		Program.creationDate = creationDate;
+	public void setCreationDate(String creationDate) {
+		this.creationDate = creationDate;
 	}
-	public static String getCreatedBy() {
+	public String getCreatedBy() {
 		return createdBy;
 	}
-	public static void setCreatedBy(String createdBy) {
-		Program.createdBy = createdBy;
+	public void setCreatedBy(String createdBy) {
+		this.createdBy = createdBy;
 	}
+	
 	
 	
 }

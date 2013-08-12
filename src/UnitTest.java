@@ -1,7 +1,7 @@
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
-import org.faithfarm.domain.Intake;
 import org.faithfarm.service.data.IntakeDao;
 import org.faithfarm.util.Validator;
 
@@ -12,7 +12,7 @@ public class UnitTest {
 		
 		Validator v = new Validator();
 		IntakeDao dao = new IntakeDao();
-		dao.insertIntakeApplication(new Intake(), "",null);
+		//dao.insertIntakeApplication(new Intake(), "",null);
 		/*Donor d1 = new Donor();
 		Donation d2 = new Donation();
 		d2.setCreationDate(v.getEpoch());
@@ -49,11 +49,11 @@ public class UnitTest {
 		//System.out.println("tomorrow="+tomorrow);
 		//System.out.println(v.validateDate("date", "02/02/1900"));
 
-	     String sPhoneNumber = "6055-888-9999";
+	     //String sPhoneNumber = "6055-888-9999";
 	      //String sPhoneNumber = "605-88899991";
 	      //String sPhoneNumber = "605-888999A";
 	 
-	      Pattern pattern = Pattern.compile("\\d{3}-\\d{3}-\\d{4}");
+	     /* Pattern pattern = Pattern.compile("\\d{3}-\\d{3}-\\d{4}");
 	      Matcher matcher = pattern.matcher(sPhoneNumber);
 	 
 	      if (matcher.matches()) {
@@ -63,7 +63,24 @@ public class UnitTest {
 	      {
 	    	  System.out.println("Phone Number must be in the form XXX-XXX-XXXX");
 	      }
-	
+		*/
+	      
+	      Map<String, String> m = new HashMap<String, String>();
+	      
+	       m.put("1", "Kitchen");
+	       m.put("2","nf");
+	        
+	        
+	        for (String key:m.keySet()) {
+	        	System.out.println(key+" "+m.get(key));
+	        }
+	        /* Initialize frequency table from command line
+	        for (String a : args) {
+	            Integer freq = m.get(a);
+	            m.put(a, (freq == null) ? 1 : freq + 1);
+	        }*/
+
+	     
 	}
 
 }

@@ -21,6 +21,15 @@ public class Validator {
 	     return "";
 	   }
 	 
+	   public static String validateRequired(String key, Long value)
+	   {
+	     if (value==null||value==0) {
+	       return key + " is required.";
+	     }
+	     	 
+	     return "";
+	   }
+	 
 	   public static String validateEmail(String email)
 	   {
 	     if (("NA".equals(email)) || ("na".equals(email))) {
@@ -140,8 +149,10 @@ public class Validator {
 		   if (value == null||value.equals("null")) {
 		      return "";
 		   }
-		   return value;
+		   return value.replace("'", "''");
 	   }
+	   
+	  
 	   
 	   public static long getEpoch() {
 		    long epoch;
