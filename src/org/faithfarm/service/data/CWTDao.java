@@ -99,11 +99,8 @@ public class CWTDao {
 
 		
 		try {
-			Class.forName("com.mysql.jdbc.Driver");
-
-			Connection Conn = DriverManager.getConnection(
-					"jdbc:mysql://localhost:3306/" + SERVER + "", "root",
-					"admin");
+		
+			Connection Conn = this.getConnection();
 
 			StringBuffer query = new StringBuffer();
 
@@ -144,11 +141,8 @@ public class CWTDao {
 
 		
 		try {
-			Class.forName("com.mysql.jdbc.Driver");
-
-			Connection Conn = DriverManager.getConnection(
-					"jdbc:mysql://localhost:3306/" + SERVER + "", "root",
-					"admin");
+			
+			Connection Conn = this.getConnection();
 
 			StringBuffer query = new StringBuffer();
 
@@ -235,6 +229,49 @@ public class CWTDao {
 		
 	}
 
+	
+	public void getModuleList(HttpSession session) {
+
+		
+		try {
+		
+			Connection Conn = this.getConnection();
+
+			StringBuffer query = new StringBuffer();
+
+			query.append("SELECT MODULE_ID, MODULE_NAME, DESCRIPTION, STATUS, CREATION_DATE, CREATED_BY FROM `"+SERVER+"`.`CWT_MODULES` ");
+			
+			Statement Stmt = null;
+			Stmt = Conn.prepareStatement(query.toString());
+			ResultSet RS = Stmt.executeQuery(query.toString());
+			
+			ArrayList list = new ArrayList();
+			
+			while (RS.next()) {
+				Module p = new Module();
+				p.setModuleId(RS.getLong(1));
+				p.setModuleName(RS.getString(2));
+				p.setDescription(RS.getString(3));
+				p.setStatus(RS.getString(4));
+				p.setCreationDate(RS.getString(5));
+				p.setCreatedBy(RS.getString(6));
+				list.add(p);			
+			}
+			session.setAttribute("module_results", list);
+			Stmt.close();
+			Conn.close();
+		
+		} catch (SQLException E) {
+			System.out.println (E.getMessage());
+			session.setAttribute("SYSTEM_ERROR", E.getMessage());
+		} catch (ClassNotFoundException e) {
+			session.setAttribute("SYSTEM_ERROR", e.getMessage());
+			e.printStackTrace();
+		}
+		
+	}
+
+	
 	public Program getProgram(Long id, HttpSession session) {
 
 		Program p = new Program();

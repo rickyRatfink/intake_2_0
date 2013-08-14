@@ -222,6 +222,18 @@ public class SecureLogin extends HttpServlet {
 	        tvsize.add("40-inch");
 	        tvsize.add("48-inch");
 	        
+	        ArrayList cwtStatus = new ArrayList();
+	        cwtStatus.add("ACTIVE");
+	        cwtStatus.add("INACTIVE");
+	        cwtStatus.add("SUSPENDED");
+	        cwtStatus.add("CANCELLED");
+	        
+	        ArrayList farm = new ArrayList();
+	        farm.add("BOYNTON BEACH");
+	        farm.add("FORT LAUDERDALE");
+	        farm.add("OKEECHOBEE");
+	        farm.add("WOMEN'S HOME");
+	        farm.add("ALL");
 	        
 	        session.setAttribute("dllSuffix",convertToUpperCase(suffix));
 	        session.setAttribute("dllSecurityQuestion",convertToUpperCase(securityQuestion));
@@ -238,6 +250,8 @@ public class SecureLogin extends HttpServlet {
 	        session.setAttribute("dllQtyType",convertToUpperCase(qtyType));
 	        session.setAttribute("dllMattress",convertToUpperCase(mattress));
 	        session.setAttribute("dllTvSize",convertToUpperCase(tvsize));
+	        session.setAttribute("dllCWTStatus",convertToUpperCase(cwtStatus));
+	        session.setAttribute("dllFarm",convertToUpperCase(farm));
 	        
 	   }
 	   

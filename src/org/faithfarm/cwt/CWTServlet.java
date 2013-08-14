@@ -50,6 +50,7 @@ public class CWTServlet extends HttpServlet {
 							dao.getMetricList(session);
 							url="pages/cwt/metrics/results.jsp";
 					} else if ("modules".equals(action)) {
+						dao.getModuleList(session);
 						url="pages/cwt/modules/results.jsp";
 					}	else if ("Create Program".equals(action)) {
 						this.setProgram(new Program());
@@ -65,7 +66,7 @@ public class CWTServlet extends HttpServlet {
 							else
 								url="error.jsp";
 						}
-						else
+						else 
 							url="pages/cwt/programs/create.jsp";
 					} else if ("Create Metric".equals(action)) {
 						this.setMetric(new Metric());
@@ -139,6 +140,12 @@ public class CWTServlet extends HttpServlet {
 				success = false;
 		 }
 		 
+		 fieldErr = valid8r.validateRequired("status", program.getStatus());
+		 if (fieldErr.length() > 0) {
+			 	req.setAttribute("statusErr", fieldErr);
+				success = false;
+		 }
+		 
 		 return success;
 	 }
 	 
@@ -161,6 +168,12 @@ public class CWTServlet extends HttpServlet {
 		 fieldErr = valid8r.validateRequired("program", metric.getProgramId());
 		 if (fieldErr.length() > 0) {
 			 	req.setAttribute("programErr", fieldErr);
+				success = false;
+		 }
+		 
+		 fieldErr = valid8r.validateRequired("status", metric.getStatus());
+		 if (fieldErr.length() > 0) {
+			 	req.setAttribute("statusErr", fieldErr);
 				success = false;
 		 }
 		
@@ -196,6 +209,12 @@ public class CWTServlet extends HttpServlet {
  			 	req.setAttribute("moduleNameErr", fieldErr);
  				success = false;
  		 }
+ 		 
+ 		 fieldErr = valid8r.validateRequired("status", module.getStatus());
+		 if (fieldErr.length() > 0) {
+			 	req.setAttribute("statusErr", fieldErr);
+				success = false;
+		 }
  		
  		 if (count == 0) {
  			 	req.setAttribute("metricErr", "you must assign metrics to this module");

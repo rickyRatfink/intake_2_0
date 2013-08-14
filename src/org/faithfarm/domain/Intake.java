@@ -5,1741 +5,1723 @@ import java.util.ArrayList;
 
 public class Intake implements Serializable {
  
-	private static Long intakeId; 
-	private static String farmBase = ""; 
-	private static String firstName = "";
-	private static String lastName = "";
-	private static String middleInitial = "";
-	private static String suffix = "";
-	private static String address = ""; 
-	private static String city = "";  
-	private static String state = "";
-	private static String zipcode = "";
-	private static String dateOfBirth = "";
-	private static String ssn = "";
-	private static String ssnCard = "";
-	private static String age = "";
-	private static String height = "";
-	private static String weight = "";
-	private static String ethnicity = "";
-	private static String hairColor = "";
-	private static String eyeColor = "";
-	private static String maritalStatus = "";
-	private static String educationLevel = "";
-	private static String graduateFlag = "";
-	private static String transcriptsFlag = "";
-	private static String englishSpeakFlag = "";
-	private static String englishReadFlag = "";
-	private static String homeLocation = "";
-	private static String personType = "";
-	private static String referredBy = "";
-	private static String referralPhone = "";
-	private static String emergencyContact = "";
-	private static String emergencyPhone = "";
-	private static String emergencyRelationship = "";
-	private static String motherLivingFlag="";
-	private static String fatherLivingFlag="";
-	private static String motherRelationship="";
-	private static String fatherRelationship="";
-	private static String brothers="";
-	private static String sisters="";
-	private static String children="";
-	private static String veteranFlag = "NO";
-	private static String branchOfService = "";
-	private static String rank = "";
-	private static String lengthOfService = "";
-	private static String driversLicenseFlag = "";
-	private static String driversLicenseStatus = "";
-	private static String driversLicenseNumber = "";
-	private static String driversLicenseState = "";
-	private static String driversLicenseExpirationDate = "";
-	private static String stateIdentificationFlag = "NO";
-	private static String stateIdentificationState = "";
-	private static String stateIdentificationExpirationDate = "";
-	private static String governmentBenefits = "";
-	private static String religion = "";
-	private static String religiousExperience = "";
-	private static String alcohol = "";
-	private static String cocaine = "";
-	private static String marijuana = "";
-	private static String oxycodone = "";
-	private static String speed = "";
-	private static String heroin = "";
-	private static String xanax = "";
-	private static String other = "";
-	private static String hallucinogensYearsUsed="";
-	private static String hallucinogensLastUsed="";
-	private static String alcoholYearsUsed = "";
-	private static String cocaineYearsUsed = "";
-	private static String marijuanaYearsUsed = "";
-	private static String oxycodoneYearsUsed = "";
-	private static String speedYearsUsed = "";
-	private static String heroinYearsUsed = "";
-	private static String xanaxYearsUsed = "";
-	private static String otherYearsUsed = "";
-	private static String alcoholLastUsed = "";
-	private static String cocaineLastUsed = "";
-	private static String marijuanaLastUsed = "";
-	private static String oxycodoneLastUsed = "";
-	private static String speedLastUsed = "";
-	private static String heroinLastUsed = "";
-	private static String xanaxLastUsed = "";
-	private static String otherLastUsed = "";
-	private static String otherDrug = "";
-	private static String sober3Years = "";
-	private static String sober1Years = "";
-	private static String usagePattern = "";
-	private static String usageLosses="";
-	private static String usagePattern1 = "";
-	private static String usagePattern2 = "";
-	private static String usagePattern3 = "";
-	private static String usagePattern4 = "";
-	private static String usagePattern5 = "";
-	private static String usagePattern6 = "";
-	private static String usageLosses1 = "";
-	private static String usageLosses2 = "";
-	private static String usageLosses3 = "";
-	private static String usageLosses4 = "";
-	private static String usageLosses5 = "";
-	private static String usageLosses6 = "";
-	private static String usageLosses7 = "";
-	private static String usageLosses8 = "";
-	private static String usageLosses9 = "";
-	private static String quantityPerWeek = "";
-	private static String quantity2Years = "";	
-	private static String abusePhysicalEffects = "";
-	private static String spouseAddicted = "";
-	private static String familyAddicted = "";
-	private static String attendAA = "";
-	private static String attendNA = "";
-	private static String yearsAttended = "";
-	private static String ffYearsAttended = "";
-	private static String otherRehabs="";
-	private static String previousFaithFarmFlag = "";
-	private static String previousFaithFarm = "";
-	private static String faithFarmYear = "";
-	private static String currentHealth = "";
-	private static String currentMedicationsFlag = "NO";
-	private static String currentMedicationsDetails = "";
-	private static String needMedicationFlag = "NO";
-	private static String medicationSuppyFlag = "NO";
-	private static String refillDetails = "";
-	private static String doctorsAppointment = "";
-	private static String doctorsAppointmentDate = "";
-	private static String eyewearFlag = "NO";
-	private static String eyewearUsage = "";
-	private static String industrialInjuryFlag = "NO";
-	private static String industrialInjuryDate = "";
-	private static String industrialInjuryReason = "";
-	private static String industrialInjuryLocation = "";
-	private static String industrialInjuryEmployer = "";
-	private static String industrialInjuryClaimStatus = "";
-	private static String disabilityFlag = "NO";
-	private static String disabilityDetails = "";
-	private static String examinationDate = "";
-	private static String physician = "";
-	private static String physicianAddress = "";
-	private static String herniaSide = "";
-	private static String herniaOperationFlag = "NO";
-	private static String herniaDate="";
-	private static String herniaPhysician="";
-	private static String qtyConsumed1="";
-	private static String qtyConsumed2="";
-	private static String currentMedications="";
-	private static String refillDirections="";
-	private static String medicalConditionDetails="";
-	private static String otherJobSkill="";
+	private  Long intakeId; 
+	private  String farmBase = ""; 
+	private  String firstName = "";
+	private  String lastName = "";
+	private  String middleInitial = "";
+	private  String suffix = "";
+	private  String address = ""; 
+	private  String city = "";  
+	private  String state = "";
+	private  String zipcode = "";
+	private  String dateOfBirth = "";
+	private  String ssn = "";
+	private  String ssnCard = "";
+	private  String age = "";
+	private  String height = "";
+	private  String weight = "";
+	private  String ethnicity = "";
+	private  String hairColor = "";
+	private  String eyeColor = "";
+	private  String maritalStatus = "";
+	private  String educationLevel = "";
+	private  String graduateFlag = "";
+	private  String transcriptsFlag = "";
+	private  String englishSpeakFlag = "";
+	private  String englishReadFlag = "";
+	private  String homeLocation = "";
+	private  String personType = "";
+	private  String referredBy = "";
+	private  String referralPhone = "";
+	private  String emergencyContact = "";
+	private  String emergencyPhone = "";
+	private  String emergencyRelationship = "";
+	private  String motherLivingFlag="";
+	private  String fatherLivingFlag="";
+	private  String motherRelationship="";
+	private  String fatherRelationship="";
+	private  String brothers="";
+	private  String sisters="";
+	private  String children="";
+	private  String veteranFlag = "NO";
+	private  String branchOfService = "";
+	private  String rank = "";
+	private  String lengthOfService = "";
+	private  String driversLicenseFlag = "";
+	private  String driversLicenseStatus = "";
+	private  String driversLicenseNumber = "";
+	private  String driversLicenseState = "";
+	private  String driversLicenseExpirationDate = "";
+	private  String stateIdentificationFlag = "NO";
+	private  String stateIdentificationState = "";
+	private  String stateIdentificationExpirationDate = "";
+	private  String governmentBenefits = "";
+	private  String religion = "";
+	private  String religiousExperience = "";
+	private  String alcohol = "";
+	private  String cocaine = "";
+	private  String marijuana = "";
+	private  String oxycodone = "";
+	private  String speed = "";
+	private  String heroin = "";
+	private  String xanax = "";
+	private  String other = "";
+	private  String hallucinogensYearsUsed="";
+	private  String hallucinogensLastUsed="";
+	private  String alcoholYearsUsed = "";
+	private  String cocaineYearsUsed = "";
+	private  String marijuanaYearsUsed = "";
+	private  String oxycodoneYearsUsed = "";
+	private  String speedYearsUsed = "";
+	private  String heroinYearsUsed = "";
+	private  String xanaxYearsUsed = "";
+	private  String otherYearsUsed = "";
+	private  String alcoholLastUsed = "";
+	private  String cocaineLastUsed = "";
+	private  String marijuanaLastUsed = "";
+	private  String oxycodoneLastUsed = "";
+	private  String speedLastUsed = "";
+	private  String heroinLastUsed = "";
+	private  String xanaxLastUsed = "";
+	private  String otherLastUsed = "";
+	private  String otherDrug = "";
+	private  String sober3Years = "";
+	private  String sober1Years = "";
+	private  String usagePattern = "";
+	private  String usageLosses="";
+	private  String usagePattern1 = "";
+	private  String usagePattern2 = "";
+	private  String usagePattern3 = "";
+	private  String usagePattern4 = "";
+	private  String usagePattern5 = "";
+	private  String usagePattern6 = "";
+	private  String usageLosses1 = "";
+	private  String usageLosses2 = "";
+	private  String usageLosses3 = "";
+	private  String usageLosses4 = "";
+	private  String usageLosses5 = "";
+	private  String usageLosses6 = "";
+	private  String usageLosses7 = "";
+	private  String usageLosses8 = "";
+	private  String usageLosses9 = "";
+	private  String quantityPerWeek = "";
+	private  String quantity2Years = "";	
+	private  String abusePhysicalEffects = "";
+	private  String spouseAddicted = "";
+	private  String familyAddicted = "";
+	private  String attendAA = "";
+	private  String attendNA = "";
+	private  String yearsAttended = "";
+	private  String ffYearsAttended = "";
+	private  String otherRehabs="";
+	private  String previousFaithFarmFlag = "";
+	private  String previousFaithFarm = "";
+	private  String faithFarmYear = "";
+	private  String currentHealth = "";
+	private  String currentMedicationsFlag = "NO";
+	private  String currentMedicationsDetails = "";
+	private  String needMedicationFlag = "NO";
+	private  String medicationSuppyFlag = "NO";
+	private  String refillDetails = "";
+	private  String doctorsAppointment = "";
+	private  String doctorsAppointmentDate = "";
+	private  String eyewearFlag = "NO";
+	private  String eyewearUsage = "";
+	private  String industrialInjuryFlag = "NO";
+	private  String industrialInjuryDate = "";
+	private  String industrialInjuryReason = "";
+	private  String industrialInjuryLocation = "";
+	private  String industrialInjuryEmployer = "";
+	private  String industrialInjuryClaimStatus = "";
+	private  String disabilityFlag = "NO";
+	private  String disabilityDetails = "";
+	private  String examinationDate = "";
+	private  String physician = "";
+	private  String physicianAddress = "";
+	private  String herniaSide = "";
+	private  String herniaOperationFlag = "NO";
+	private  String herniaDate="";
+	private  String herniaPhysician="";
+	private  String qtyConsumed1="";
+	private  String qtyConsumed2="";
+	private  String currentMedications="";
+	private  String refillDirections="";
+	private  String medicalConditionDetails="";
+	private  String otherJobSkill="";
 	
-	private static String question[] = new String[]{ 
+	private  String question[] = new String[]{ 
 						"NO","NO","NO","NO","NO","NO",
 						"NO","NO","NO","NO","NO","NO",
 						"NO","NO","NO","NO","NO","NO",
 						"NO","NO","NO","NO","NO","NO",
 						"NO","NO","NO","NO","NO","NO","NO","NO","NO","NO" };
 	
-	private static String questionAnswerDetails[] = new String[]{ 
+	private  String questionAnswerDetails[] = new String[]{ 
 			"","","","","","",
 			"","","","","","",
 			"","","","","","",
 			"","","","","","",
 			"","","","","","","","","","" };
 	
-	private static String questionAnswerDates[] = new String[]{ 
+	private  String questionAnswerDates[] = new String[]{ 
 		"","","","","","",
 		"","","","","","",
 		"","","","","","",
 		"","","","","","",
 		"","","","","","","","","","" };
 	
-	private static String medicalCondition[] = new String[]{ 
+	private  String medicalCondition[] = new String[]{ 
 		"NO","NO","NO","NO","NO","NO",
 		"NO","NO","NO","NO","NO","NO",
 		"NO","NO","NO","NO","NO","NO",
 		"NO","NO","NO","NO","NO","NO",
 		"NO","NO","NO","NO","NO","NO","NO","NO","NO","NO" };
 	
-	private static String workExperience[] = new String[]{ 
+	private  String workExperience[] = new String[]{ 
 		"","","","","","","",
 		"","","","","","","",
 		"","","","","","","",
 		"","","","","","","",
 		"","","","","","",""};
 	
-	private static String workExperienceOther="";
-	private static String workExperienceOtherDesc="";
+	private  String workExperienceOther="";
+	private  String workExperienceOtherDesc="";
 	
-	private static String employer1="";
-	private static String employerContact1="";
-	private static String employerPhone1="";
-	private static String employerDates1="";
+	private  String employer1="";
+	private  String employerContact1="";
+	private  String employerPhone1="";
+	private  String employerDates1="";
 	
-	private static String employer2="";
-	private static String employerContact2="";
-	private static String employerPhone2="";
-	private static String employerDates2="";
+	private  String employer2="";
+	private  String employerContact2="";
+	private  String employerPhone2="";
+	private  String employerDates2="";
 	
-	private static String employer3="";
-	private static String employerContact3="";
-	private static String employerPhone3="";
-	private static String employerDates3="";
+	private  String employer3="";
+	private  String employerContact3="";
+	private  String employerPhone3="";
+	private  String employerDates3="";
 	
-	private static String employer4="";
-	private static String employerContact4="";
-	private static String employerPhone4="";
-	private static String employerDates4="";
+	private  String employer4="";
+	private  String employerContact4="";
+	private  String employerPhone4="";
+	private  String employerDates4="";
 	
-	private static String lawsuitFlag="NO";
-	private static String currentLawsuitFlag="NO";
-	private static String lawsuitDetails="";
-	private static String currentLawsuitDetails="";
-	private static String lawsuitDate="";
-	private static String currentLawsuitDate="";
-	private static String felonyFlag= "NO";
-	private static String sexualOffenseFlag= "NO";
-	private static String felonyDetails= "";
-	private static String sexualOffenseQty= "";
-	private static String sexualOffenseDetails= "";
-	private static String felonyQty="";
+	private  String lawsuitFlag="NO";
+	private  String currentLawsuitFlag="NO";
+	private  String lawsuitDetails="";
+	private  String currentLawsuitDetails="";
+	private  String lawsuitDate="";
+	private  String currentLawsuitDate="";
+	private  String felonyFlag= "NO";
+	private  String sexualOffenseFlag= "NO";
+	private  String felonyDetails= "";
+	private  String sexualOffenseQty= "";
+	private  String sexualOffenseDetails= "";
+	private  String felonyQty="";
 	
-	private static String SSFlag="";
-	private static String VAFlag="";
-	private static String WCFlag="";
-	private static String otherBenefits="";
+	private  String SSFlag="";
+	private  String VAFlag="";
+	private  String WCFlag="";
+	private  String otherBenefits="";
 	
-	private static String probationFlag = "NO";
-	private static String probationCounty = "";
-	private static String probationState = "";
-	private static String probationOfficer = "";
-	private static String probationOfficerPhone = "";	
-	private static String probationAppt="NO";
-	private static String probationApptDetails="";
-	private static String libraryCard = "";
-	private static String birthCertFlag = "NO";
-	private static String birthCertCounty = "";
-	private static String birthCertState = "";
-	private static String govtHealthCoverage = "";
-	private static String privateHealthCoverage = "";
-	private static String selectiveService = "";
-	private static String pendingCourtDates = "";
-	private static String childSupport = "";
-	private static String restitution = "";
-	private static String homelessLengthOfTime = "";
-	private static String homelessHowOften="";
-	private static String homelessReason = "";
-	private static String incomeAmount = "";
-	private static String incomeSource = "";
-	private static String incomeWeeklyFlag = "NO";
-	private static String incomeBiWeeklyFlag = "NO";
-	private static String incomeMonthlyFlag = "NO";
-	private static String incomeYearlyFlag = "NO";
-	private static ArrayList answer = new ArrayList();
-	private static ArrayList answerDetail = new ArrayList();
-	private static ArrayList answerDate = new ArrayList();
-	private static ArrayList medicationCondition = new ArrayList();
-	private static ArrayList jobSkill = new ArrayList();
-	private static ArrayList employer = new ArrayList();
-	private static ArrayList reference = new ArrayList();
-	private static ArrayList visitor = new ArrayList();
-	private static ArrayList property = new ArrayList();
+	private  String probationFlag = "NO";
+	private  String probationCounty = "";
+	private  String probationState = "";
+	private  String probationOfficer = "";
+	private  String probationOfficerPhone = "";	
+	private  String probationAppt="NO";
+	private  String probationApptDetails="";
+	private  String libraryCard = "";
+	private  String birthCertFlag = "NO";
+	private  String birthCertCounty = "";
+	private  String birthCertState = "";
+	private  String govtHealthCoverage = "";
+	private  String privateHealthCoverage = "";
+	private  String selectiveService = "";
+	private  String pendingCourtDates = "";
+	private  String childSupport = "";
+	private  String restitution = "";
+	private  String homelessLengthOfTime = "";
+	private  String homelessHowOften="";
+	private  String homelessReason = "";
+	private  String incomeAmount = "";
+	private  String incomeSource = "";
+	private  String incomeWeeklyFlag = "NO";
+	private  String incomeBiWeeklyFlag = "NO";
+	private  String incomeMonthlyFlag = "NO";
+	private  String incomeYearlyFlag = "NO";
+	private  ArrayList answer = new ArrayList();
+	private  ArrayList answerDetail = new ArrayList();
+	private  ArrayList answerDate = new ArrayList();
+	private  ArrayList medicationCondition = new ArrayList();
+	private  ArrayList jobSkill = new ArrayList();
+	private  ArrayList employer = new ArrayList();
+	private  ArrayList reference = new ArrayList();
+	private  ArrayList visitor = new ArrayList();
+	private  ArrayList property = new ArrayList();
 		
-	private static String creationDate = "";
-	private static String createdBy = "";
-	private static String lastUpdatedDate = "";
-	private static String lastUpdatedBy = "";
-	private static String submissionDate = "";
-	private static String applicationStatus = "PENDING";
+	private  String creationDate = "";
+	private  String createdBy = "";
+	private  String lastUpdatedDate = "";
+	private  String lastUpdatedBy = "";
+	private  String submissionDate = "";
+	private  String applicationStatus = "PENDING";
 	
-	private static String applicationSignature = "";
-	private static String intakeCounselorSignature = "";
-	private static String directorSignature = "";
-	private static String applicationSignatureDate = "";
-	private static String intakeCounselorSignatureDate = "";
-	private static String directorSignatureDate = "";
+	private  String applicationSignature = "";
+	private  String intakeCounselorSignature = "";
+	private  String directorSignature = "";
+	private  String applicationSignatureDate = "";
+	private  String intakeCounselorSignatureDate = "";
+	private  String directorSignatureDate = "";
 	
-	private static String cellDisclosureConsent = "NO";
-	private static String releaseWaiverConsent = "NO";
-	private static String biblicalBasedCounselingConsent = "NO";
-	private static String entryAgreementConsent = "NO";
-	private static String rulesVisitationConsent = "NO";
-	private static String releaseInformationConsent = "NO";
-	private static String Consent = "NO";
+	private  String cellDisclosureConsent = "NO";
+	private  String releaseWaiverConsent = "NO";
+	private  String biblicalBasedCounselingConsent = "NO";
+	private  String entryAgreementConsent = "NO";
+	private  String rulesVisitationConsent = "NO";
+	private  String releaseInformationConsent = "NO";
+	private  String Consent = "NO";
 	
-	private static String entryDate ="";
-	private static String intakeStatus = "";
-	
-	
-	
-	public static Long getIntakeId() {
+	private  String entryDate ="";
+	private  String intakeStatus = "";
+	public Long getIntakeId() {
 		return intakeId;
 	}
-	public static void setIntakeId(Long intakeId) {
-		Intake.intakeId = intakeId;
+	public void setIntakeId(Long intakeId) {
+		this.intakeId = intakeId;
 	}
-	public static String getFarmBase() {
+	public String getFarmBase() {
 		return farmBase;
 	}
-	public static void setFarmBase(String farmBase) {
-		Intake.farmBase = farmBase;
+	public void setFarmBase(String farmBase) {
+		this.farmBase = farmBase;
 	}
-	public static String getFirstName() {
+	public String getFirstName() {
 		return firstName;
 	}
-	public static void setFirstName(String firstName) {
-		Intake.firstName = firstName;
+	public void setFirstName(String firstName) {
+		this.firstName = firstName;
 	}
-	public static String getLastName() {
+	public String getLastName() {
 		return lastName;
 	}
-	public static void setLastName(String lastName) {
-		Intake.lastName = lastName;
+	public void setLastName(String lastName) {
+		this.lastName = lastName;
 	}
-	public static String getMiddleInitial() {
+	public String getMiddleInitial() {
 		return middleInitial;
 	}
-	public static void setMiddleInitial(String middleInitial) {
-		Intake.middleInitial = middleInitial;
+	public void setMiddleInitial(String middleInitial) {
+		this.middleInitial = middleInitial;
 	}
-	public static String getSuffix() {
+	public String getSuffix() {
 		return suffix;
 	}
-	public static void setSuffix(String suffix) {
-		Intake.suffix = suffix;
+	public void setSuffix(String suffix) {
+		this.suffix = suffix;
 	}
-	public static String getAddress() {
+	public String getAddress() {
 		return address;
 	}
-	public static void setAddress(String address) {
-		Intake.address = address;
+	public void setAddress(String address) {
+		this.address = address;
 	}
-	public static String getCity() {
+	public String getCity() {
 		return city;
 	}
-	public static void setCity(String city) {
-		Intake.city = city;
+	public void setCity(String city) {
+		this.city = city;
 	}
-	public static String getState() {
+	public String getState() {
 		return state;
 	}
-	public static void setState(String state) {
-		Intake.state = state;
+	public void setState(String state) {
+		this.state = state;
 	}
-	public static String getZipcode() {
+	public String getZipcode() {
 		return zipcode;
 	}
-	public static void setZipcode(String zipcode) {
-		Intake.zipcode = zipcode;
+	public void setZipcode(String zipcode) {
+		this.zipcode = zipcode;
 	}
-	public static String getDateOfBirth() {
+	public String getDateOfBirth() {
 		return dateOfBirth;
 	}
-	public static void setDateOfBirth(String dateOfBirth) {
-		Intake.dateOfBirth = dateOfBirth;
+	public void setDateOfBirth(String dateOfBirth) {
+		this.dateOfBirth = dateOfBirth;
 	}
-	public static String getSsn() {
+	public String getSsn() {
 		return ssn;
 	}
-	public static void setSsn(String ssn) {
-		Intake.ssn = ssn;
+	public void setSsn(String ssn) {
+		this.ssn = ssn;
 	}
-	public static String getSsnCard() {
+	public String getSsnCard() {
 		return ssnCard;
 	}
-	public static void setSsnCard(String ssnCard) {
-		Intake.ssnCard = ssnCard;
+	public void setSsnCard(String ssnCard) {
+		this.ssnCard = ssnCard;
 	}
-	public static String getAge() {
+	public String getAge() {
 		return age;
 	}
-	public static void setAge(String age) {
-		Intake.age = age;
+	public void setAge(String age) {
+		this.age = age;
 	}
-	public static String getHeight() {
+	public String getHeight() {
 		return height;
 	}
-	public static void setHeight(String height) {
-		Intake.height = height;
+	public void setHeight(String height) {
+		this.height = height;
 	}
-	public static String getWeight() {
+	public String getWeight() {
 		return weight;
 	}
-	public static void setWeight(String weight) {
-		Intake.weight = weight;
+	public void setWeight(String weight) {
+		this.weight = weight;
 	}
-	public static String getEthnicity() {
+	public String getEthnicity() {
 		return ethnicity;
 	}
-	public static void setEthnicity(String ethnicity) {
-		Intake.ethnicity = ethnicity;
+	public void setEthnicity(String ethnicity) {
+		this.ethnicity = ethnicity;
 	}
-	public static String getHairColor() {
+	public String getHairColor() {
 		return hairColor;
 	}
-	public static void setHairColor(String hairColor) {
-		Intake.hairColor = hairColor;
+	public void setHairColor(String hairColor) {
+		this.hairColor = hairColor;
 	}
-	public static String getEyeColor() {
+	public String getEyeColor() {
 		return eyeColor;
 	}
-	public static void setEyeColor(String eyeColor) {
-		Intake.eyeColor = eyeColor;
+	public void setEyeColor(String eyeColor) {
+		this.eyeColor = eyeColor;
 	}
-	public static String getMaritalStatus() {
+	public String getMaritalStatus() {
 		return maritalStatus;
 	}
-	public static void setMaritalStatus(String maritalStatus) {
-		Intake.maritalStatus = maritalStatus;
+	public void setMaritalStatus(String maritalStatus) {
+		this.maritalStatus = maritalStatus;
 	}
-	public static String getEducationLevel() {
+	public String getEducationLevel() {
 		return educationLevel;
 	}
-	public static void setEducationLevel(String educationLevel) {
-		Intake.educationLevel = educationLevel;
+	public void setEducationLevel(String educationLevel) {
+		this.educationLevel = educationLevel;
 	}
-	public static String getGraduateFlag() {
+	public String getGraduateFlag() {
 		return graduateFlag;
 	}
-	public static void setGraduateFlag(String graduateFlag) {
-		Intake.graduateFlag = graduateFlag;
+	public void setGraduateFlag(String graduateFlag) {
+		this.graduateFlag = graduateFlag;
 	}
-	public static String getTranscriptsFlag() {
+	public String getTranscriptsFlag() {
 		return transcriptsFlag;
 	}
-	public static void setTranscriptsFlag(String transcriptsFlag) {
-		Intake.transcriptsFlag = transcriptsFlag;
+	public void setTranscriptsFlag(String transcriptsFlag) {
+		this.transcriptsFlag = transcriptsFlag;
 	}
-	public static String getEnglishSpeakFlag() {
+	public String getEnglishSpeakFlag() {
 		return englishSpeakFlag;
 	}
-	public static void setEnglishSpeakFlag(String englishSpeakFlag) {
-		Intake.englishSpeakFlag = englishSpeakFlag;
+	public void setEnglishSpeakFlag(String englishSpeakFlag) {
+		this.englishSpeakFlag = englishSpeakFlag;
 	}
-	public static String getEnglishReadFlag() {
+	public String getEnglishReadFlag() {
 		return englishReadFlag;
 	}
-	public static void setEnglishReadFlag(String englishReadFlag) {
-		Intake.englishReadFlag = englishReadFlag;
+	public void setEnglishReadFlag(String englishReadFlag) {
+		this.englishReadFlag = englishReadFlag;
 	}
-	public static String getHomeLocation() {
+	public String getHomeLocation() {
 		return homeLocation;
 	}
-	public static void setHomeLocation(String homeLocation) {
-		Intake.homeLocation = homeLocation;
+	public void setHomeLocation(String homeLocation) {
+		this.homeLocation = homeLocation;
 	}
-	public static String getPersonType() {
+	public String getPersonType() {
 		return personType;
 	}
-	public static void setPersonType(String personType) {
-		Intake.personType = personType;
+	public void setPersonType(String personType) {
+		this.personType = personType;
 	}
-	public static String getReferredBy() {
+	public String getReferredBy() {
 		return referredBy;
 	}
-	public static void setReferredBy(String referredBy) {
-		Intake.referredBy = referredBy;
+	public void setReferredBy(String referredBy) {
+		this.referredBy = referredBy;
 	}
-	public static String getReferralPhone() {
+	public String getReferralPhone() {
 		return referralPhone;
 	}
-	public static void setReferralPhone(String referralPhone) {
-		Intake.referralPhone = referralPhone;
+	public void setReferralPhone(String referralPhone) {
+		this.referralPhone = referralPhone;
 	}
-	public static String getEmergencyContact() {
+	public String getEmergencyContact() {
 		return emergencyContact;
 	}
-	public static void setEmergencyContact(String emergencyContact) {
-		Intake.emergencyContact = emergencyContact;
+	public void setEmergencyContact(String emergencyContact) {
+		this.emergencyContact = emergencyContact;
 	}
-	public static String getEmergencyPhone() {
+	public String getEmergencyPhone() {
 		return emergencyPhone;
 	}
-	public static void setEmergencyPhone(String emergencyPhone) {
-		Intake.emergencyPhone = emergencyPhone;
+	public void setEmergencyPhone(String emergencyPhone) {
+		this.emergencyPhone = emergencyPhone;
 	}
-	public static String getEmergencyRelationship() {
+	public String getEmergencyRelationship() {
 		return emergencyRelationship;
 	}
-	public static void setEmergencyRelationship(String emergencyRelationship) {
-		Intake.emergencyRelationship = emergencyRelationship;
+	public void setEmergencyRelationship(String emergencyRelationship) {
+		this.emergencyRelationship = emergencyRelationship;
 	}
-	
-	public static String getMotherLivingFlag() {
+	public String getMotherLivingFlag() {
 		return motherLivingFlag;
 	}
-	public static void setMotherLivingFlag(String motherLivingFlag) {
-		Intake.motherLivingFlag = motherLivingFlag;
+	public void setMotherLivingFlag(String motherLivingFlag) {
+		this.motherLivingFlag = motherLivingFlag;
 	}
-	public static String getFatherLivingFlag() {
+	public String getFatherLivingFlag() {
 		return fatherLivingFlag;
 	}
-	public static void setFatherLivingFlag(String fatherLivingFlag) {
-		Intake.fatherLivingFlag = fatherLivingFlag;
+	public void setFatherLivingFlag(String fatherLivingFlag) {
+		this.fatherLivingFlag = fatherLivingFlag;
 	}
-	public static String getMotherRelationship() {
+	public String getMotherRelationship() {
 		return motherRelationship;
 	}
-	public static void setMotherRelationship(String motherRelationship) {
-		Intake.motherRelationship = motherRelationship;
+	public void setMotherRelationship(String motherRelationship) {
+		this.motherRelationship = motherRelationship;
 	}
-	public static String getFatherRelationship() {
+	public String getFatherRelationship() {
 		return fatherRelationship;
 	}
-	public static void setFatherRelationship(String fatherRelationship) {
-		Intake.fatherRelationship = fatherRelationship;
+	public void setFatherRelationship(String fatherRelationship) {
+		this.fatherRelationship = fatherRelationship;
 	}
-	public static String getBrothers() {
+	public String getBrothers() {
 		return brothers;
 	}
-	public static void setBrothers(String brothers) {
-		Intake.brothers = brothers;
+	public void setBrothers(String brothers) {
+		this.brothers = brothers;
 	}
-	public static String getSisters() {
+	public String getSisters() {
 		return sisters;
 	}
-	public static void setSisters(String sisters) {
-		Intake.sisters = sisters;
+	public void setSisters(String sisters) {
+		this.sisters = sisters;
 	}
-	public static String getChildren() {
+	public String getChildren() {
 		return children;
 	}
-	public static void setChildren(String children) {
-		Intake.children = children;
+	public void setChildren(String children) {
+		this.children = children;
 	}
-	
-	public static String getVeteranFlag() {
+	public String getVeteranFlag() {
 		return veteranFlag;
 	}
-	public static void setVeteranFlag(String veteranFlag) {
-		Intake.veteranFlag = veteranFlag;
+	public void setVeteranFlag(String veteranFlag) {
+		this.veteranFlag = veteranFlag;
 	}
-	public static String getBranchOfService() {
+	public String getBranchOfService() {
 		return branchOfService;
 	}
-	public static void setBranchOfService(String branchOfService) {
-		Intake.branchOfService = branchOfService;
+	public void setBranchOfService(String branchOfService) {
+		this.branchOfService = branchOfService;
 	}
-	public static String getRank() {
+	public String getRank() {
 		return rank;
 	}
-	public static void setRank(String rank) {
-		Intake.rank = rank;
+	public void setRank(String rank) {
+		this.rank = rank;
 	}
-	public static String getLengthOfService() {
+	public String getLengthOfService() {
 		return lengthOfService;
 	}
-	public static void setLengthOfService(String lengthOfService) {
-		Intake.lengthOfService = lengthOfService;
+	public void setLengthOfService(String lengthOfService) {
+		this.lengthOfService = lengthOfService;
 	}
-	public static String getDriversLicenseFlag() {
+	public String getDriversLicenseFlag() {
 		return driversLicenseFlag;
 	}
-	public static void setDriversLicenseFlag(String driversLicenseFlag) {
-		Intake.driversLicenseFlag = driversLicenseFlag;
+	public void setDriversLicenseFlag(String driversLicenseFlag) {
+		this.driversLicenseFlag = driversLicenseFlag;
 	}
-	public static String getDriversLicenseStatus() {
+	public String getDriversLicenseStatus() {
 		return driversLicenseStatus;
 	}
-	public static void setDriversLicenseStatus(String driversLicenseStatus) {
-		Intake.driversLicenseStatus = driversLicenseStatus;
+	public void setDriversLicenseStatus(String driversLicenseStatus) {
+		this.driversLicenseStatus = driversLicenseStatus;
 	}
-	public static String getDriversLicenseNumber() {
+	public String getDriversLicenseNumber() {
 		return driversLicenseNumber;
 	}
-	public static void setDriversLicenseNumber(String driversLicenseNumber) {
-		Intake.driversLicenseNumber = driversLicenseNumber;
+	public void setDriversLicenseNumber(String driversLicenseNumber) {
+		this.driversLicenseNumber = driversLicenseNumber;
 	}
-	public static String getDriversLicenseState() {
+	public String getDriversLicenseState() {
 		return driversLicenseState;
 	}
-	public static void setDriversLicenseState(String driversLicenseState) {
-		Intake.driversLicenseState = driversLicenseState;
+	public void setDriversLicenseState(String driversLicenseState) {
+		this.driversLicenseState = driversLicenseState;
 	}
-	public static String getDriversLicenseExpirationDate() {
+	public String getDriversLicenseExpirationDate() {
 		return driversLicenseExpirationDate;
 	}
-	public static void setDriversLicenseExpirationDate(
-			String driversLicenseExpirationDate) {
-		Intake.driversLicenseExpirationDate = driversLicenseExpirationDate;
+	public void setDriversLicenseExpirationDate(String driversLicenseExpirationDate) {
+		this.driversLicenseExpirationDate = driversLicenseExpirationDate;
 	}
-	public static String getStateIdentificationFlag() {
+	public String getStateIdentificationFlag() {
 		return stateIdentificationFlag;
 	}
-	public static void setStateIdentificationFlag(String stateIdentificationFlag) {
-		Intake.stateIdentificationFlag = stateIdentificationFlag;
+	public void setStateIdentificationFlag(String stateIdentificationFlag) {
+		this.stateIdentificationFlag = stateIdentificationFlag;
 	}
-	public static String getStateIdentificationState() {
+	public String getStateIdentificationState() {
 		return stateIdentificationState;
 	}
-	public static void setStateIdentificationState(String stateIdentificationState) {
-		Intake.stateIdentificationState = stateIdentificationState;
+	public void setStateIdentificationState(String stateIdentificationState) {
+		this.stateIdentificationState = stateIdentificationState;
 	}
-	public static String getStateIdentificationExpirationDate() {
+	public String getStateIdentificationExpirationDate() {
 		return stateIdentificationExpirationDate;
 	}
-	public static void setStateIdentificationExpirationDate(
+	public void setStateIdentificationExpirationDate(
 			String stateIdentificationExpirationDate) {
-		Intake.stateIdentificationExpirationDate = stateIdentificationExpirationDate;
+		this.stateIdentificationExpirationDate = stateIdentificationExpirationDate;
 	}
-	public static String getGovernmentBenefits() {
+	public String getGovernmentBenefits() {
 		return governmentBenefits;
 	}
-	public static void setGovernmentBenefits(String governmentBenefits) {
-		Intake.governmentBenefits = governmentBenefits;
+	public void setGovernmentBenefits(String governmentBenefits) {
+		this.governmentBenefits = governmentBenefits;
 	}
-	public static String getReligion() {
+	public String getReligion() {
 		return religion;
 	}
-	public static void setReligion(String religion) {
-		Intake.religion = religion;
+	public void setReligion(String religion) {
+		this.religion = religion;
 	}
-	public static String getReligiousExperience() {
+	public String getReligiousExperience() {
 		return religiousExperience;
 	}
-	public static void setReligiousExperience(String religiousExperience) {
-		Intake.religiousExperience = religiousExperience;
+	public void setReligiousExperience(String religiousExperience) {
+		this.religiousExperience = religiousExperience;
 	}
-	public static String getAlcohol() {
+	public String getAlcohol() {
 		return alcohol;
 	}
-	public static void setAlcohol(String alcohol) {
-		Intake.alcohol = alcohol;
+	public void setAlcohol(String alcohol) {
+		this.alcohol = alcohol;
 	}
-	public static String getCocaine() {
+	public String getCocaine() {
 		return cocaine;
 	}
-	public static void setCocaine(String cocaine) {
-		Intake.cocaine = cocaine;
+	public void setCocaine(String cocaine) {
+		this.cocaine = cocaine;
 	}
-	public static String getMarijuana() {
+	public String getMarijuana() {
 		return marijuana;
 	}
-	public static void setMarijuana(String marijuana) {
-		Intake.marijuana = marijuana;
+	public void setMarijuana(String marijuana) {
+		this.marijuana = marijuana;
 	}
-	public static String getOxycodone() {
+	public String getOxycodone() {
 		return oxycodone;
 	}
-	public static void setOxycodone(String oxycodone) {
-		Intake.oxycodone = oxycodone;
+	public void setOxycodone(String oxycodone) {
+		this.oxycodone = oxycodone;
 	}
-	public static String getSpeed() {
+	public String getSpeed() {
 		return speed;
 	}
-	public static void setSpeed(String speed) {
-		Intake.speed = speed;
+	public void setSpeed(String speed) {
+		this.speed = speed;
 	}
-	public static String getHeroin() {
+	public String getHeroin() {
 		return heroin;
 	}
-	public static void setHeroin(String heroin) {
-		Intake.heroin = heroin;
+	public void setHeroin(String heroin) {
+		this.heroin = heroin;
 	}
-	public static String getXanax() {
+	public String getXanax() {
 		return xanax;
 	}
-	public static void setXanax(String xanax) {
-		Intake.xanax = xanax;
+	public void setXanax(String xanax) {
+		this.xanax = xanax;
 	}
-	public static String getOther() {
+	public String getOther() {
 		return other;
 	}
-	public static void setOther(String other) {
-		Intake.other = other;
+	public void setOther(String other) {
+		this.other = other;
 	}
-	public static String getAlcoholYearsUsed() {
-		return alcoholYearsUsed;
-	}
-	public static void setAlcoholYearsUsed(String alcoholYearsUsed) {
-		Intake.alcoholYearsUsed = alcoholYearsUsed;
-	}
-	public static String getCocaineYearsUsed() {
-		return cocaineYearsUsed;
-	}
-	public static void setCocaineYearsUsed(String cocaineYearsUsed) {
-		Intake.cocaineYearsUsed = cocaineYearsUsed;
-	}
-	public static String getMarijuanaYearsUsed() {
-		return marijuanaYearsUsed;
-	}
-	public static void setMarijuanaYearsUsed(String marijuanaYearsUsed) {
-		Intake.marijuanaYearsUsed = marijuanaYearsUsed;
-	}
-	public static String getOxycodoneYearsUsed() {
-		return oxycodoneYearsUsed;
-	}
-	public static void setOxycodoneYearsUsed(String oxycodoneYearsUsed) {
-		Intake.oxycodoneYearsUsed = oxycodoneYearsUsed;
-	}
-	public static String getSpeedYearsUsed() {
-		return speedYearsUsed;
-	}
-	public static void setSpeedYearsUsed(String speedYearsUsed) {
-		Intake.speedYearsUsed = speedYearsUsed;
-	}
-	public static String getHeroinYearsUsed() {
-		return heroinYearsUsed;
-	}
-	public static void setHeroinYearsUsed(String heroinYearsUsed) {
-		Intake.heroinYearsUsed = heroinYearsUsed;
-	}
-	public static String getXanaxYearsUsed() {
-		return xanaxYearsUsed;
-	}
-	public static void setXanaxYearsUsed(String xanaxYearsUsed) {
-		Intake.xanaxYearsUsed = xanaxYearsUsed;
-	}
-	public static String getOtherYearsUsed() {
-		return otherYearsUsed;
-	}
-	public static void setOtherYearsUsed(String otherYearsUsed) {
-		Intake.otherYearsUsed = otherYearsUsed;
-	}
-	public static String getAlcoholLastUsed() {
-		return alcoholLastUsed;
-	}
-	public static void setAlcoholLastUsed(String alcoholLastUsed) {
-		Intake.alcoholLastUsed = alcoholLastUsed;
-	}
-	public static String getCocaineLastUsed() {
-		return cocaineLastUsed;
-	}
-	public static void setCocaineLastUsed(String cocaineLastUsed) {
-		Intake.cocaineLastUsed = cocaineLastUsed;
-	}
-	public static String getMarijuanaLastUsed() {
-		return marijuanaLastUsed;
-	}
-	public static void setMarijuanaLastUsed(String marijuanaLastUsed) {
-		Intake.marijuanaLastUsed = marijuanaLastUsed;
-	}
-	public static String getOxycodoneLastUsed() {
-		return oxycodoneLastUsed;
-	}
-	public static void setOxycodoneLastUsed(String oxycodoneLastUsed) {
-		Intake.oxycodoneLastUsed = oxycodoneLastUsed;
-	}
-	public static String getSpeedLastUsed() {
-		return speedLastUsed;
-	}
-	public static void setSpeedLastUsed(String speedLastUsed) {
-		Intake.speedLastUsed = speedLastUsed;
-	}
-	public static String getHeroinLastUsed() {
-		return heroinLastUsed;
-	}
-	public static void setHeroinLastUsed(String heroinLastUsed) {
-		Intake.heroinLastUsed = heroinLastUsed;
-	}
-	public static String getXanaxLastUsed() {
-		return xanaxLastUsed;
-	}
-	public static void setXanaxLastUsed(String xanaxLastUsed) {
-		Intake.xanaxLastUsed = xanaxLastUsed;
-	}
-	public static String getOtherLastUsed() {
-		return otherLastUsed;
-	}
-	public static void setOtherLastUsed(String otherLastUsed) {
-		Intake.otherLastUsed = otherLastUsed;
-	}
-	public static String getOtherDrug() {
-		return otherDrug;
-	}
-	public static void setOtherDrug(String otherDrug) {
-		Intake.otherDrug = otherDrug;
-	}
-	public static String getSober3Years() {
-		return sober3Years;
-	}
-	public static void setSober3Years(String sober3Years) {
-		Intake.sober3Years = sober3Years;
-	}
-	public static String getSober1Years() {
-		return sober1Years;
-	}
-	public static void setSober1Years(String sober1Years) {
-		Intake.sober1Years = sober1Years;
-	}
-	
-	public static String getUsagePattern1() {
-		return usagePattern1;
-	}
-	public static void setUsagePattern1(String usagePattern1) {
-		Intake.usagePattern1 = usagePattern1;
-	}
-	public static String getUsagePattern2() {
-		return usagePattern2;
-	}
-	public static void setUsagePattern2(String usagePattern2) {
-		Intake.usagePattern2 = usagePattern2;
-	}
-	public static String getUsagePattern3() {
-		return usagePattern3;
-	}
-	public static void setUsagePattern3(String usagePattern3) {
-		Intake.usagePattern3 = usagePattern3;
-	}
-	public static String getUsagePattern4() {
-		return usagePattern4;
-	}
-	public static void setUsagePattern4(String usagePattern4) {
-		Intake.usagePattern4 = usagePattern4;
-	}
-	public static String getUsagePattern5() {
-		return usagePattern5;
-	}
-	public static void setUsagePattern5(String usagePattern5) {
-		Intake.usagePattern5 = usagePattern5;
-	}
-	public static String getUsagePattern6() {
-		return usagePattern6;
-	}
-	public static void setUsagePattern6(String usagePattern6) {
-		Intake.usagePattern6 = usagePattern6;
-	}
-	public static String getUsageLosses1() {
-		return usageLosses1;
-	}
-	public static void setUsageLosses1(String usageLosses1) {
-		Intake.usageLosses1 = usageLosses1;
-	}
-	public static String getUsageLosses2() {
-		return usageLosses2;
-	}
-	public static void setUsageLosses2(String usageLosses2) {
-		Intake.usageLosses2 = usageLosses2;
-	}
-	public static String getUsageLosses3() {
-		return usageLosses3;
-	}
-	public static void setUsageLosses3(String usageLosses3) {
-		Intake.usageLosses3 = usageLosses3;
-	}
-	public static String getUsageLosses4() {
-		return usageLosses4;
-	}
-	public static void setUsageLosses4(String usageLosses4) {
-		Intake.usageLosses4 = usageLosses4;
-	}
-	public static String getUsageLosses5() {
-		return usageLosses5;
-	}
-	public static void setUsageLosses5(String usageLosses5) {
-		Intake.usageLosses5 = usageLosses5;
-	}
-	public static String getUsageLosses6() {
-		return usageLosses6;
-	}
-	public static void setUsageLosses6(String usageLosses6) {
-		Intake.usageLosses6 = usageLosses6;
-	}
-	public static String getUsageLosses7() {
-		return usageLosses7;
-	}
-	public static void setUsageLosses7(String usageLosses7) {
-		Intake.usageLosses7 = usageLosses7;
-	}
-	public static String getUsageLosses8() {
-		return usageLosses8;
-	}
-	public static void setUsageLosses8(String usageLosses8) {
-		Intake.usageLosses8 = usageLosses8;
-	}
-	public static String getUsageLosses9() {
-		return usageLosses9;
-	}
-	public static void setUsageLosses9(String usageLosses9) {
-		Intake.usageLosses9 = usageLosses9;
-	}
-	public static String getQuantityPerWeek() {
-		return quantityPerWeek;
-	}
-	public static void setQuantityPerWeek(String quantityPerWeek) {
-		Intake.quantityPerWeek = quantityPerWeek;
-	}
-	public static String getQuantity2Years() {
-		return quantity2Years;
-	}
-	public static void setQuantity2Years(String quantity2Years) {
-		Intake.quantity2Years = quantity2Years;
-	}
-	
-	public static String getAbusePhysicalEffects() {
-		return abusePhysicalEffects;
-	}
-	public static void setAbusePhysicalEffects(String abusePhysicalEffects) {
-		Intake.abusePhysicalEffects = abusePhysicalEffects;
-	}
-	public static String getSpouseAddicted() {
-		return spouseAddicted;
-	}
-	public static void setSpouseAddicted(String spouseAddicted) {
-		Intake.spouseAddicted = spouseAddicted;
-	}
-	public static String getFamilyAddicted() {
-		return familyAddicted;
-	}
-	public static void setFamilyAddicted(String familyAddicted) {
-		Intake.familyAddicted = familyAddicted;
-	}
-	public static String getAttendAA() {
-		return attendAA;
-	}
-	public static void setAttendAA(String attendAA) {
-		Intake.attendAA = attendAA;
-	}
-	public static String getAttendNA() {
-		return attendNA;
-	}
-	public static void setAttendNA(String attendNA) {
-		Intake.attendNA = attendNA;
-	}
-	public static String getYearsAttended() {
-		return yearsAttended;
-	}
-	public static void setYearsAttended(String yearsAttended) {
-		Intake.yearsAttended = yearsAttended;
-	}
-	public static String getFfYearsAttended() {
-		return ffYearsAttended;
-	}
-	public static void setFfYearsAttended(String ffYearsAttended) {
-		Intake.ffYearsAttended = ffYearsAttended;
-	}
-	public static String getOtherRehabs() {
-		return otherRehabs;
-	}
-	public static void setOtherRehabs(String otherRehabs) {
-		Intake.otherRehabs = otherRehabs;
-	}
-	public static String getPreviousFaithFarm() {
-		return previousFaithFarm;
-	}
-	public static void setPreviousFaithFarm(String previousFaithFarm) {
-		Intake.previousFaithFarm = previousFaithFarm;
-	}
-	public static String getFaithFarmYear() {
-		return faithFarmYear;
-	}
-	public static void setFaithFarmYear(String faithFarmYear) {
-		Intake.faithFarmYear = faithFarmYear;
-	}
-	public static String getCurrentHealth() {
-		return currentHealth;
-	}
-	public static void setCurrentHealth(String currentHealth) {
-		Intake.currentHealth = currentHealth;
-	}
-	public static String getCurrentMedicationsFlag() {
-		return currentMedicationsFlag;
-	}
-	public static void setCurrentMedicationsFlag(String currentMedicationsFlag) {
-		Intake.currentMedicationsFlag = currentMedicationsFlag;
-	}
-	public static String getCurrentMedicationsDetails() {
-		return currentMedicationsDetails;
-	}
-	public static void setCurrentMedicationsDetails(String currentMedicationsDetails) {
-		Intake.currentMedicationsDetails = currentMedicationsDetails;
-	}
-	public static String getNeedMedicationFlag() {
-		return needMedicationFlag;
-	}
-	public static void setNeedMedicationFlag(String needMedicationFlag) {
-		Intake.needMedicationFlag = needMedicationFlag;
-	}
-	public static String getMedicationSuppyFlag() {
-		return medicationSuppyFlag;
-	}
-	public static void setMedicationSuppyFlag(String medicationSuppyFlag) {
-		Intake.medicationSuppyFlag = medicationSuppyFlag;
-	}
-	public static String getRefillDetails() {
-		return refillDetails;
-	}
-	public static void setRefillDetails(String refillDetails) {
-		Intake.refillDetails = refillDetails;
-	}
-	public static String getDoctorsAppointment() {
-		return doctorsAppointment;
-	}
-	public static void setDoctorsAppointment(String doctorsAppointment) {
-		Intake.doctorsAppointment = doctorsAppointment;
-	}
-	public static String getEyewearFlag() {
-		return eyewearFlag;
-	}
-	public static void setEyewearFlag(String eyewearFlag) {
-		Intake.eyewearFlag = eyewearFlag;
-	}
-	public static String getEyewearUsage() {
-		return eyewearUsage;
-	}
-	public static void setEyewearUsage(String eyewearUsage) {
-		Intake.eyewearUsage = eyewearUsage;
-	}
-	public static String getIndustrialInjuryFlag() {
-		return industrialInjuryFlag;
-	}
-	public static void setIndustrialInjuryFlag(String industrialInjuryFlag) {
-		Intake.industrialInjuryFlag = industrialInjuryFlag;
-	}
-	public static String getIndustrialInjuryDate() {
-		return industrialInjuryDate;
-	}
-	public static void setIndustrialInjuryDate(String industrialInjuryDate) {
-		Intake.industrialInjuryDate = industrialInjuryDate;
-	}
-	public static String getIndustrialInjuryReason() {
-		return industrialInjuryReason;
-	}
-	public static void setIndustrialInjuryReason(String industrialInjuryReason) {
-		Intake.industrialInjuryReason = industrialInjuryReason;
-	}
-	public static String getIndustrialInjuryLocation() {
-		return industrialInjuryLocation;
-	}
-	public static void setIndustrialInjuryLocation(String industrialInjuryLocation) {
-		Intake.industrialInjuryLocation = industrialInjuryLocation;
-	}
-	public static String getIndustrialInjuryEmployer() {
-		return industrialInjuryEmployer;
-	}
-	public static void setIndustrialInjuryEmployer(String industrialInjuryEmployer) {
-		Intake.industrialInjuryEmployer = industrialInjuryEmployer;
-	}
-	public static String getIndustrialInjuryClaimStatus() {
-		return industrialInjuryClaimStatus;
-	}
-	public static void setIndustrialInjuryClaimStatus(
-			String industrialInjuryClaimStatus) {
-		Intake.industrialInjuryClaimStatus = industrialInjuryClaimStatus;
-	}
-	public static String getDisabilityFlag() {
-		return disabilityFlag;
-	}
-	public static void setDisabilityFlag(String disabilityFlag) {
-		Intake.disabilityFlag = disabilityFlag;
-	}
-	public static String getDisabilityDetails() {
-		return disabilityDetails;
-	}
-	public static void setDisabilityDetails(String disabilityDetails) {
-		Intake.disabilityDetails = disabilityDetails;
-	}
-	public static String getExaminationDate() {
-		return examinationDate;
-	}
-	public static void setExaminationDate(String examinationDate) {
-		Intake.examinationDate = examinationDate;
-	}
-	public static String getPhysician() {
-		return physician;
-	}
-	public static void setPhysician(String physician) {
-		Intake.physician = physician;
-	}
-	public static String getPhysicianAddress() {
-		return physicianAddress;
-	}
-	public static void setPhysicianAddress(String physicianAddress) {
-		Intake.physicianAddress = physicianAddress;
-	}
-	public static String getHerniaSide() {
-		return herniaSide;
-	}
-	public static void setHerniaSide(String herniaSide) {
-		Intake.herniaSide = herniaSide;
-	}
-	public static String getHerniaOperationFlag() {
-		return herniaOperationFlag;
-	}
-	public static void setHerniaOperationFlag(String herniaOperationFlag) {
-		Intake.herniaOperationFlag = herniaOperationFlag;
-	}
-	
-	
-	public static String getHerniaDate() {
-		return herniaDate;
-	}
-	public static void setHerniaDate(String herniaDate) {
-		Intake.herniaDate = herniaDate;
-	}
-	public static String getHerniaPhysician() {
-		return herniaPhysician;
-	}
-	public static void setHerniaPhysician(String herniaPhysician) {
-		Intake.herniaPhysician = herniaPhysician;
-	}
-	public static String getLawsuitFlag() {
-		return lawsuitFlag;
-	}
-	public static void setLawsuitFlag(String lawsuitFlag) {
-		Intake.lawsuitFlag = lawsuitFlag;
-	}
-	public static String getCurrentLawsuitFlag() {
-		return currentLawsuitFlag;
-	}
-	public static void setCurrentLawsuitFlag(String currentLawsuitFlag) {
-		Intake.currentLawsuitFlag = currentLawsuitFlag;
-	}
-	public static String getLawsuitDetails() {
-		return lawsuitDetails;
-	}
-	public static void setLawsuitDetails(String lawsuitDetails) {
-		Intake.lawsuitDetails = lawsuitDetails;
-	}
-	
-	public static String getLawsuitDate() {
-		return lawsuitDate;
-	}
-	public static void setLawsuitDate(String lawsuitDate) {
-		Intake.lawsuitDate = lawsuitDate;
-	}
-	
-	public static String getCurrentLawsuitDetails() {
-		return currentLawsuitDetails;
-	}
-	public static void setCurrentLawsuitDetails(String currentLawsuitDetails) {
-		Intake.currentLawsuitDetails = currentLawsuitDetails;
-	}
-	public static String getCurrentLawsuitDate() {
-		return currentLawsuitDate;
-	}
-	public static void setCurrentLawsuitDate(String currentLawsuitDate) {
-		Intake.currentLawsuitDate = currentLawsuitDate;
-	}
-	public static String getFelonyFlag() {
-		return felonyFlag;
-	}
-	public static void setFelonyFlag(String felonyFlag) {
-		Intake.felonyFlag = felonyFlag;
-	}
-	public static String getSexualOffenseFlag() {
-		return sexualOffenseFlag;
-	}
-	public static void setSexualOffenseFlag(String sexualOffenseFlag) {
-		Intake.sexualOffenseFlag = sexualOffenseFlag;
-	}
-	public static String getFelonyDetails() {
-		return felonyDetails;
-	}
-	public static void setFelonyDetails(String felonyDetails) {
-		Intake.felonyDetails = felonyDetails;
-	}
-	public static String getSexualOffenseQty() {
-		return sexualOffenseQty;
-	}
-	public static void setSexualOffenseQty(String sexualOffenseQty) {
-		Intake.sexualOffenseQty = sexualOffenseQty;
-	}
-	public static String getSexualOffenseDetails() {
-		return sexualOffenseDetails;
-	}
-	public static void setSexualOffenseDetails(String sexualOffenseDetails) {
-		Intake.sexualOffenseDetails = sexualOffenseDetails;
-	}
-	public static String getFelonyQty() {
-		return felonyQty;
-	}
-	public static void setFelonyQty(String felonyQty) {
-		Intake.felonyQty = felonyQty;
-	}
-	public static String getProbationFlag() {
-		return probationFlag;
-	}
-	public static void setProbationFlag(String probationFlag) {
-		Intake.probationFlag = probationFlag;
-	}
-	
-	public static String getProbationCounty() {
-		return probationCounty;
-	}
-	public static void setProbationCounty(String probationCounty) {
-		Intake.probationCounty = probationCounty;
-	}
-	public static String getProbationState() {
-		return probationState;
-	}
-	public static void setProbationState(String probationState) {
-		Intake.probationState = probationState;
-	}
-	public static String getProbationOfficer() {
-		return probationOfficer;
-	}
-	public static void setProbationOfficer(String probationOfficer) {
-		Intake.probationOfficer = probationOfficer;
-	}
-	public static String getProbationOfficerPhone() {
-		return probationOfficerPhone;
-	}
-	public static void setProbationOfficerPhone(String probationOfficerPhone) {
-		Intake.probationOfficerPhone = probationOfficerPhone;
-	}
-	public static String getProbationAppt() {
-		return probationAppt;
-	}
-	public static void setProbationAppt(String probationAppt) {
-		Intake.probationAppt = probationAppt;
-	}
-	public static String getProbationApptDetails() {
-		return probationApptDetails;
-	}
-	public static void setProbationApptDetails(String probationApptDetails) {
-		Intake.probationApptDetails = probationApptDetails;
-	}
-	public static String getLibraryCard() {
-		return libraryCard;
-	}
-	public static void setLibraryCard(String libraryCard) {
-		Intake.libraryCard = libraryCard;
-	}
-	public static String getBirthCertFlag() {
-		return birthCertFlag;
-	}
-	public static void setBirthCertFlag(String birthCertFlag) {
-		Intake.birthCertFlag = birthCertFlag;
-	}
-	public static String getBirthCertCounty() {
-		return birthCertCounty;
-	}
-	public static void setBirthCertCounty(String birthCertCounty) {
-		Intake.birthCertCounty = birthCertCounty;
-	}
-	public static String getBirthCertState() {
-		return birthCertState;
-	}
-	public static void setBirthCertState(String birthCertState) {
-		Intake.birthCertState = birthCertState;
-	}
-	public static String getGovtHealthCoverage() {
-		return govtHealthCoverage;
-	}
-	public static void setGovtHealthCoverage(String govtHealthCoverage) {
-		Intake.govtHealthCoverage = govtHealthCoverage;
-	}
-	public static String getSelectiveService() {
-		return selectiveService;
-	}
-	public static void setSelectiveService(String selectiveService) {
-		Intake.selectiveService = selectiveService;
-	}
-	public static String getPendingCourtDates() {
-		return pendingCourtDates;
-	}
-	public static void setPendingCourtDates(String pendingCourtDates) {
-		Intake.pendingCourtDates = pendingCourtDates;
-	}
-	public static String getChildSupport() {
-		return childSupport;
-	}
-	public static void setChildSupport(String childSupport) {
-		Intake.childSupport = childSupport;
-	}
-	public static String getRestitution() {
-		return restitution;
-	}
-	public static void setRestitution(String restitution) {
-		Intake.restitution = restitution;
-	}
-	
-	public static String getHomelessLengthOfTime() {
-		return homelessLengthOfTime;
-	}
-	public static void setHomelessLengthOfTime(String homelessLengthOfTime) {
-		Intake.homelessLengthOfTime = homelessLengthOfTime;
-	}
-	public static String getHomelessHowOften() {
-		return homelessHowOften;
-	}
-	public static void setHomelessHowOften(String homelessHowOften) {
-		Intake.homelessHowOften = homelessHowOften;
-	}
-	public static String getHomelessReason() {
-		return homelessReason;
-	}
-	public static void setHomelessReason(String homelessReason) {
-		Intake.homelessReason = homelessReason;
-	}
-	public static String getIncomeAmount() {
-		return incomeAmount;
-	}
-	public static void setIncomeAmount(String incomeAmount) {
-		Intake.incomeAmount = incomeAmount;
-	}
-	public static String getIncomeSource() {
-		return incomeSource;
-	}
-	public static void setIncomeSource(String incomeSource) {
-		Intake.incomeSource = incomeSource;
-	}
-	public static String getIncomeWeeklyFlag() {
-		return incomeWeeklyFlag;
-	}
-	public static void setIncomeWeeklyFlag(String incomeWeeklyFlag) {
-		Intake.incomeWeeklyFlag = incomeWeeklyFlag;
-	}
-	public static String getIncomeMonthlyFlag() {
-		return incomeMonthlyFlag;
-	}
-	public static void setIncomeMonthlyFlag(String incomeMonthlyFlag) {
-		Intake.incomeMonthlyFlag = incomeMonthlyFlag;
-	}
-	public static String getIncomeYearlyFlag() {
-		return incomeYearlyFlag;
-	}
-	public static void setIncomeYearlyFlag(String incomeYearlyFlag) {
-		Intake.incomeYearlyFlag = incomeYearlyFlag;
-	}
-	public static ArrayList getAnswer() {
-		return answer;
-	}
-	public static void setAnswer(ArrayList answer) {
-		Intake.answer = answer;
-	}
-	public static ArrayList getAnswerDetail() {
-		return answerDetail;
-	}
-	public static void setAnswerDetail(ArrayList answerDetail) {
-		Intake.answerDetail = answerDetail;
-	}
-	public static ArrayList getAnswerDate() {
-		return answerDate;
-	}
-	public static void setAnswerDate(ArrayList answerDate) {
-		Intake.answerDate = answerDate;
-	}
-	public static ArrayList getMedicationCondition() {
-		return medicationCondition;
-	}
-	public static void setMedicationCondition(ArrayList medicationCondition) {
-		Intake.medicationCondition = medicationCondition;
-	}
-	public static ArrayList getJobSkill() {
-		return jobSkill;
-	}
-	public static void setJobSkill(ArrayList jobSkill) {
-		Intake.jobSkill = jobSkill;
-	}
-	public static ArrayList getEmployer() {
-		return employer;
-	}
-	public static void setEmployer(ArrayList employer) {
-		Intake.employer = employer;
-	}
-	public static ArrayList getReference() {
-		return reference;
-	}
-	public static void setReference(ArrayList reference) {
-		Intake.reference = reference;
-	}
-	public static ArrayList getVisitor() {
-		return visitor;
-	}
-	public static void setVisitor(ArrayList visitor) {
-		Intake.visitor = visitor;
-	}
-	public static ArrayList getProperty() {
-		return property;
-	}
-	public static void setProperty(ArrayList property) {
-		Intake.property = property;
-	}
-	public static String getCreationDate() {
-		return creationDate;
-	}
-	public static void setCreationDate(String creationDate) {
-		Intake.creationDate = creationDate;
-	}
-	public static String getCreatedBy() {
-		return createdBy;
-	}
-	public static void setCreatedBy(String createdBy) {
-		Intake.createdBy = createdBy;
-	}
-	public static String getLastUpdatedDate() {
-		return lastUpdatedDate;
-	}
-	public static void setLastUpdatedDate(String lastUpdatedDate) {
-		Intake.lastUpdatedDate = lastUpdatedDate;
-	}
-	public static String getLastUpdatedBy() {
-		return lastUpdatedBy;
-	}
-	public static void setLastUpdatedBy(String lastUpdatedBy) {
-		Intake.lastUpdatedBy = lastUpdatedBy;
-	}
-	public static String getSubmissionDate() {
-		return submissionDate;
-	}
-	public static void setSubmissionDate(String submissionDate) {
-		Intake.submissionDate = submissionDate;
-	}
-	public static String getApplicationStatus() {
-		return applicationStatus;
-	}
-	public static void setApplicationStatus(String applicationStatus) {
-		Intake.applicationStatus = applicationStatus;
-	}
-	public static String getApplicationSignature() {
-		return applicationSignature;
-	}
-	public static void setApplicationSignature(String applicationSignature) {
-		Intake.applicationSignature = applicationSignature;
-	}
-	public static String getIntakeCounselorSignature() {
-		return intakeCounselorSignature;
-	}
-	public static void setIntakeCounselorSignature(String intakeCounselorSignature) {
-		Intake.intakeCounselorSignature = intakeCounselorSignature;
-	}
-	public static String getDirectorSignature() {
-		return directorSignature;
-	}
-	public static void setDirectorSignature(String directorSignature) {
-		Intake.directorSignature = directorSignature;
-	}
-	public static String getApplicationSignatureDate() {
-		return applicationSignatureDate;
-	}
-	public static void setApplicationSignatureDate(String applicationSignatureDate) {
-		Intake.applicationSignatureDate = applicationSignatureDate;
-	}
-	public static String getIntakeCounselorSignatureDate() {
-		return intakeCounselorSignatureDate;
-	}
-	public static void setIntakeCounselorSignatureDate(
-			String intakeCounselorSignatureDate) {
-		Intake.intakeCounselorSignatureDate = intakeCounselorSignatureDate;
-	}
-	public static String getDirectorSignatureDate() {
-		return directorSignatureDate;
-	}
-	public static void setDirectorSignatureDate(String directorSignatureDate) {
-		Intake.directorSignatureDate = directorSignatureDate;
-	}
-	public static String getCellDisclosureConsent() {
-		return cellDisclosureConsent;
-	}
-	public static void setCellDisclosureConsent(String cellDisclosureConsent) {
-		Intake.cellDisclosureConsent = cellDisclosureConsent;
-	}
-	public static String getReleaseWaiverConsent() {
-		return releaseWaiverConsent;
-	}
-	public static void setReleaseWaiverConsent(String releaseWaiverConsent) {
-		Intake.releaseWaiverConsent = releaseWaiverConsent;
-	}
-	public static String getBiblicalBasedCounselingConsent() {
-		return biblicalBasedCounselingConsent;
-	}
-	public static void setBiblicalBasedCounselingConsent(
-			String biblicalBasedCounselingConsent) {
-		Intake.biblicalBasedCounselingConsent = biblicalBasedCounselingConsent;
-	}
-	public static String getEntryAgreementConsent() {
-		return entryAgreementConsent;
-	}
-	public static void setEntryAgreementConsent(String entryAgreementConsent) {
-		Intake.entryAgreementConsent = entryAgreementConsent;
-	}
-	public static String getRulesVisitationConsent() {
-		return rulesVisitationConsent;
-	}
-	public static void setRulesVisitationConsent(String rulesVisitationConsent) {
-		Intake.rulesVisitationConsent = rulesVisitationConsent;
-	}
-	public static String getReleaseInformationConsent() {
-		return releaseInformationConsent;
-	}
-	public static void setReleaseInformationConsent(String releaseInformationConsent) {
-		Intake.releaseInformationConsent = releaseInformationConsent;
-	}
-	public static String getConsent() {
-		return Consent;
-	}
-	public static void setConsent(String consent) {
-		Consent = consent;
-	}
-	public static String getPrivateHealthCoverage() {
-		return privateHealthCoverage;
-	}
-	public static void setPrivateHealthCoverage(String privateHealthCoverage) {
-		Intake.privateHealthCoverage = privateHealthCoverage;
-	}
-	public static String getIncomeBiWeeklyFlag() {
-		return incomeBiWeeklyFlag;
-	}
-	public static void setIncomeBiWeeklyFlag(String incomeBiWeeklyFlag) {
-		Intake.incomeBiWeeklyFlag = incomeBiWeeklyFlag;
-	}
-	public static String getSSFlag() {
-		return SSFlag;
-	}
-	public static void setSSFlag(String sSFlag) {
-		SSFlag = sSFlag;
-	}
-	public static String getVAFlag() {
-		return VAFlag;
-	}
-	public static void setVAFlag(String vAFlag) {
-		VAFlag = vAFlag;
-	}
-	public static String getWCFlag() {
-		return WCFlag;
-	}
-	public static void setWCFlag(String wCFlag) {
-		WCFlag = wCFlag;
-	}
-	public static String getOtherBenefits() {
-		return otherBenefits;
-	}
-	public static void setOtherBenefits(String otherBenefits) {
-		Intake.otherBenefits = otherBenefits;
-	}
-	public static String getPreviousFaithFarmFlag() {
-		return previousFaithFarmFlag;
-	}
-	public static void setPreviousFaithFarmFlag(String previousFaithFarmFlag) {
-		Intake.previousFaithFarmFlag = previousFaithFarmFlag;
-	}
-	public static String[] getQuestion() {
-		return question;
-	}
-	public static void setQuestion(String[] question) {
-		Intake.question = question;
-	}
-	public static String getDoctorsAppointmentDate() {
-		return doctorsAppointmentDate;
-	}
-	public static void setDoctorsAppointmentDate(String doctorsAppointmentDate) {
-		Intake.doctorsAppointmentDate = doctorsAppointmentDate;
-	}
-	public static String[] getQuestionAnswerDetails() {
-		return questionAnswerDetails;
-	}
-	public static void setQuestionAnswerDetails(String[] questionAnswerDetails) {
-		Intake.questionAnswerDetails = questionAnswerDetails;
-	}
-	public static String[] getQuestionAnswerDates() {
-		return questionAnswerDates;
-	}
-	public static void setQuestionAnswerDates(String[] questionAnswerDates) {
-		Intake.questionAnswerDates = questionAnswerDates;
-	}
-	public static String[] getMedicalCondition() {
-		return medicalCondition;
-	}
-	public static void setMedicalCondition(String[] medicalCondition) {
-		Intake.medicalCondition = medicalCondition;
-	}
-	public static String[] getWorkExperience() {
-		return workExperience;
-	}
-	public static void setWorkExperience(String[] workExperience) {
-		Intake.workExperience = workExperience;
-	}
-	public static String getWorkExperienceOther() {
-		return workExperienceOther;
-	}
-	public static void setWorkExperienceOther(String workExperienceOther) {
-		Intake.workExperienceOther = workExperienceOther;
-	}
-	public static String getWorkExperienceOtherDesc() {
-		return workExperienceOtherDesc;
-	}
-	public static void setWorkExperienceOtherDesc(String workExperienceOtherDesc) {
-		Intake.workExperienceOtherDesc = workExperienceOtherDesc;
-	}
-	public static String getEmployer1() {
-		return employer1;
-	}
-	public static void setEmployer1(String employer1) {
-		Intake.employer1 = employer1;
-	}
-	public static String getEmployerContact1() {
-		return employerContact1;
-	}
-	public static void setEmployerContact1(String employerContact1) {
-		Intake.employerContact1 = employerContact1;
-	}
-	public static String getEmployerPhone1() {
-		return employerPhone1;
-	}
-	public static void setEmployerPhone1(String employerPhone1) {
-		Intake.employerPhone1 = employerPhone1;
-	}
-	public static String getEmployerDates1() {
-		return employerDates1;
-	}
-	public static void setEmployerDates1(String employerDates1) {
-		Intake.employerDates1 = employerDates1;
-	}
-	public static String getEmployer2() {
-		return employer2;
-	}
-	public static void setEmployer2(String employer2) {
-		Intake.employer2 = employer2;
-	}
-	public static String getEmployerContact2() {
-		return employerContact2;
-	}
-	public static void setEmployerContact2(String employerContact2) {
-		Intake.employerContact2 = employerContact2;
-	}
-	public static String getEmployerPhone2() {
-		return employerPhone2;
-	}
-	public static void setEmployerPhone2(String employerPhone2) {
-		Intake.employerPhone2 = employerPhone2;
-	}
-	public static String getEmployerDates2() {
-		return employerDates2;
-	}
-	public static void setEmployerDates2(String employerDates2) {
-		Intake.employerDates2 = employerDates2;
-	}
-	public static String getEmployer3() {
-		return employer3;
-	}
-	public static void setEmployer3(String employer3) {
-		Intake.employer3 = employer3;
-	}
-	public static String getEmployerContact3() {
-		return employerContact3;
-	}
-	public static void setEmployerContact3(String employerContact3) {
-		Intake.employerContact3 = employerContact3;
-	}
-	public static String getEmployerPhone3() {
-		return employerPhone3;
-	}
-	public static void setEmployerPhone3(String employerPhone3) {
-		Intake.employerPhone3 = employerPhone3;
-	}
-	public static String getEmployerDates3() {
-		return employerDates3;
-	}
-	public static void setEmployerDates3(String employerDates3) {
-		Intake.employerDates3 = employerDates3;
-	}
-	public static String getEmployer4() {
-		return employer4;
-	}
-	public static void setEmployer4(String employer4) {
-		Intake.employer4 = employer4;
-	}
-	public static String getEmployerContact4() {
-		return employerContact4;
-	}
-	public static void setEmployerContact4(String employerContact4) {
-		Intake.employerContact4 = employerContact4;
-	}
-	public static String getEmployerPhone4() {
-		return employerPhone4;
-	}
-	public static void setEmployerPhone4(String employerPhone4) {
-		Intake.employerPhone4 = employerPhone4;
-	}
-	public static String getEmployerDates4() {
-		return employerDates4;
-	}
-	public static void setEmployerDates4(String employerDates4) {
-		Intake.employerDates4 = employerDates4;
-	}
-	public static String getQtyConsumed1() {
-		return qtyConsumed1;
-	}
-	public static void setQtyConsumed1(String qtyConsumed1) {
-		Intake.qtyConsumed1 = qtyConsumed1;
-	}
-	public static String getQtyConsumed2() {
-		return qtyConsumed2;
-	}
-	public static void setQtyConsumed2(String qtyConsumed2) {
-		Intake.qtyConsumed2 = qtyConsumed2;
-	}
-	public static String getCurrentMedications() {
-		return currentMedications;
-	}
-	public static void setCurrentMedications(String currentMedications) {
-		Intake.currentMedications = currentMedications;
-	}
-	public static String getRefillDirections() {
-		return refillDirections;
-	}
-	public static void setRefillDirections(String refillDirections) {
-		Intake.refillDirections = refillDirections;
-	}
-	public static String getMedicalConditionDetails() {
-		return medicalConditionDetails;
-	}
-	public static void setMedicalConditionDetails(String medicalConditionDetails) {
-		Intake.medicalConditionDetails = medicalConditionDetails;
-	}
-	public static String getHallucinogensYearsUsed() {
+	public String getHallucinogensYearsUsed() {
 		return hallucinogensYearsUsed;
 	}
-	public static void setHallucinogensYearsUsed(String hallucinogensYearsUsed) {
-		Intake.hallucinogensYearsUsed = hallucinogensYearsUsed;
+	public void setHallucinogensYearsUsed(String hallucinogensYearsUsed) {
+		this.hallucinogensYearsUsed = hallucinogensYearsUsed;
 	}
-	public static String getHallucinogensLastUsed() {
+	public String getHallucinogensLastUsed() {
 		return hallucinogensLastUsed;
 	}
-	public static void setHallucinogensLastUsed(String hallucinogensLastUsed) {
-		Intake.hallucinogensLastUsed = hallucinogensLastUsed;
+	public void setHallucinogensLastUsed(String hallucinogensLastUsed) {
+		this.hallucinogensLastUsed = hallucinogensLastUsed;
 	}
-	public static String getUsagePattern() {
+	public String getAlcoholYearsUsed() {
+		return alcoholYearsUsed;
+	}
+	public void setAlcoholYearsUsed(String alcoholYearsUsed) {
+		this.alcoholYearsUsed = alcoholYearsUsed;
+	}
+	public String getCocaineYearsUsed() {
+		return cocaineYearsUsed;
+	}
+	public void setCocaineYearsUsed(String cocaineYearsUsed) {
+		this.cocaineYearsUsed = cocaineYearsUsed;
+	}
+	public String getMarijuanaYearsUsed() {
+		return marijuanaYearsUsed;
+	}
+	public void setMarijuanaYearsUsed(String marijuanaYearsUsed) {
+		this.marijuanaYearsUsed = marijuanaYearsUsed;
+	}
+	public String getOxycodoneYearsUsed() {
+		return oxycodoneYearsUsed;
+	}
+	public void setOxycodoneYearsUsed(String oxycodoneYearsUsed) {
+		this.oxycodoneYearsUsed = oxycodoneYearsUsed;
+	}
+	public String getSpeedYearsUsed() {
+		return speedYearsUsed;
+	}
+	public void setSpeedYearsUsed(String speedYearsUsed) {
+		this.speedYearsUsed = speedYearsUsed;
+	}
+	public String getHeroinYearsUsed() {
+		return heroinYearsUsed;
+	}
+	public void setHeroinYearsUsed(String heroinYearsUsed) {
+		this.heroinYearsUsed = heroinYearsUsed;
+	}
+	public String getXanaxYearsUsed() {
+		return xanaxYearsUsed;
+	}
+	public void setXanaxYearsUsed(String xanaxYearsUsed) {
+		this.xanaxYearsUsed = xanaxYearsUsed;
+	}
+	public String getOtherYearsUsed() {
+		return otherYearsUsed;
+	}
+	public void setOtherYearsUsed(String otherYearsUsed) {
+		this.otherYearsUsed = otherYearsUsed;
+	}
+	public String getAlcoholLastUsed() {
+		return alcoholLastUsed;
+	}
+	public void setAlcoholLastUsed(String alcoholLastUsed) {
+		this.alcoholLastUsed = alcoholLastUsed;
+	}
+	public String getCocaineLastUsed() {
+		return cocaineLastUsed;
+	}
+	public void setCocaineLastUsed(String cocaineLastUsed) {
+		this.cocaineLastUsed = cocaineLastUsed;
+	}
+	public String getMarijuanaLastUsed() {
+		return marijuanaLastUsed;
+	}
+	public void setMarijuanaLastUsed(String marijuanaLastUsed) {
+		this.marijuanaLastUsed = marijuanaLastUsed;
+	}
+	public String getOxycodoneLastUsed() {
+		return oxycodoneLastUsed;
+	}
+	public void setOxycodoneLastUsed(String oxycodoneLastUsed) {
+		this.oxycodoneLastUsed = oxycodoneLastUsed;
+	}
+	public String getSpeedLastUsed() {
+		return speedLastUsed;
+	}
+	public void setSpeedLastUsed(String speedLastUsed) {
+		this.speedLastUsed = speedLastUsed;
+	}
+	public String getHeroinLastUsed() {
+		return heroinLastUsed;
+	}
+	public void setHeroinLastUsed(String heroinLastUsed) {
+		this.heroinLastUsed = heroinLastUsed;
+	}
+	public String getXanaxLastUsed() {
+		return xanaxLastUsed;
+	}
+	public void setXanaxLastUsed(String xanaxLastUsed) {
+		this.xanaxLastUsed = xanaxLastUsed;
+	}
+	public String getOtherLastUsed() {
+		return otherLastUsed;
+	}
+	public void setOtherLastUsed(String otherLastUsed) {
+		this.otherLastUsed = otherLastUsed;
+	}
+	public String getOtherDrug() {
+		return otherDrug;
+	}
+	public void setOtherDrug(String otherDrug) {
+		this.otherDrug = otherDrug;
+	}
+	public String getSober3Years() {
+		return sober3Years;
+	}
+	public void setSober3Years(String sober3Years) {
+		this.sober3Years = sober3Years;
+	}
+	public String getSober1Years() {
+		return sober1Years;
+	}
+	public void setSober1Years(String sober1Years) {
+		this.sober1Years = sober1Years;
+	}
+	public String getUsagePattern() {
 		return usagePattern;
 	}
-	public static void setUsagePattern(String usagePattern) {
-		Intake.usagePattern = usagePattern;
+	public void setUsagePattern(String usagePattern) {
+		this.usagePattern = usagePattern;
 	}
-	public static String getUsageLosses() {
+	public String getUsageLosses() {
 		return usageLosses;
 	}
-	public static void setUsageLosses(String usageLosses) {
-		Intake.usageLosses = usageLosses;
+	public void setUsageLosses(String usageLosses) {
+		this.usageLosses = usageLosses;
 	}
-	public static String getEntryDate() {
-		return entryDate;
+	public String getUsagePattern1() {
+		return usagePattern1;
 	}
-	public static void setEntryDate(String entryDate) {
-		Intake.entryDate = entryDate;
+	public void setUsagePattern1(String usagePattern1) {
+		this.usagePattern1 = usagePattern1;
 	}
-	public static String getIntakeStatus() {
-		return intakeStatus;
+	public String getUsagePattern2() {
+		return usagePattern2;
 	}
-	public static void setIntakeStatus(String intakeStatus) {
-		Intake.intakeStatus = intakeStatus;
+	public void setUsagePattern2(String usagePattern2) {
+		this.usagePattern2 = usagePattern2;
 	}
-	public static String getOtherJobSkill() {
+	public String getUsagePattern3() {
+		return usagePattern3;
+	}
+	public void setUsagePattern3(String usagePattern3) {
+		this.usagePattern3 = usagePattern3;
+	}
+	public String getUsagePattern4() {
+		return usagePattern4;
+	}
+	public void setUsagePattern4(String usagePattern4) {
+		this.usagePattern4 = usagePattern4;
+	}
+	public String getUsagePattern5() {
+		return usagePattern5;
+	}
+	public void setUsagePattern5(String usagePattern5) {
+		this.usagePattern5 = usagePattern5;
+	}
+	public String getUsagePattern6() {
+		return usagePattern6;
+	}
+	public void setUsagePattern6(String usagePattern6) {
+		this.usagePattern6 = usagePattern6;
+	}
+	public String getUsageLosses1() {
+		return usageLosses1;
+	}
+	public void setUsageLosses1(String usageLosses1) {
+		this.usageLosses1 = usageLosses1;
+	}
+	public String getUsageLosses2() {
+		return usageLosses2;
+	}
+	public void setUsageLosses2(String usageLosses2) {
+		this.usageLosses2 = usageLosses2;
+	}
+	public String getUsageLosses3() {
+		return usageLosses3;
+	}
+	public void setUsageLosses3(String usageLosses3) {
+		this.usageLosses3 = usageLosses3;
+	}
+	public String getUsageLosses4() {
+		return usageLosses4;
+	}
+	public void setUsageLosses4(String usageLosses4) {
+		this.usageLosses4 = usageLosses4;
+	}
+	public String getUsageLosses5() {
+		return usageLosses5;
+	}
+	public void setUsageLosses5(String usageLosses5) {
+		this.usageLosses5 = usageLosses5;
+	}
+	public String getUsageLosses6() {
+		return usageLosses6;
+	}
+	public void setUsageLosses6(String usageLosses6) {
+		this.usageLosses6 = usageLosses6;
+	}
+	public String getUsageLosses7() {
+		return usageLosses7;
+	}
+	public void setUsageLosses7(String usageLosses7) {
+		this.usageLosses7 = usageLosses7;
+	}
+	public String getUsageLosses8() {
+		return usageLosses8;
+	}
+	public void setUsageLosses8(String usageLosses8) {
+		this.usageLosses8 = usageLosses8;
+	}
+	public String getUsageLosses9() {
+		return usageLosses9;
+	}
+	public void setUsageLosses9(String usageLosses9) {
+		this.usageLosses9 = usageLosses9;
+	}
+	public String getQuantityPerWeek() {
+		return quantityPerWeek;
+	}
+	public void setQuantityPerWeek(String quantityPerWeek) {
+		this.quantityPerWeek = quantityPerWeek;
+	}
+	public String getQuantity2Years() {
+		return quantity2Years;
+	}
+	public void setQuantity2Years(String quantity2Years) {
+		this.quantity2Years = quantity2Years;
+	}
+	public String getAbusePhysicalEffects() {
+		return abusePhysicalEffects;
+	}
+	public void setAbusePhysicalEffects(String abusePhysicalEffects) {
+		this.abusePhysicalEffects = abusePhysicalEffects;
+	}
+	public String getSpouseAddicted() {
+		return spouseAddicted;
+	}
+	public void setSpouseAddicted(String spouseAddicted) {
+		this.spouseAddicted = spouseAddicted;
+	}
+	public String getFamilyAddicted() {
+		return familyAddicted;
+	}
+	public void setFamilyAddicted(String familyAddicted) {
+		this.familyAddicted = familyAddicted;
+	}
+	public String getAttendAA() {
+		return attendAA;
+	}
+	public void setAttendAA(String attendAA) {
+		this.attendAA = attendAA;
+	}
+	public String getAttendNA() {
+		return attendNA;
+	}
+	public void setAttendNA(String attendNA) {
+		this.attendNA = attendNA;
+	}
+	public String getYearsAttended() {
+		return yearsAttended;
+	}
+	public void setYearsAttended(String yearsAttended) {
+		this.yearsAttended = yearsAttended;
+	}
+	public String getFfYearsAttended() {
+		return ffYearsAttended;
+	}
+	public void setFfYearsAttended(String ffYearsAttended) {
+		this.ffYearsAttended = ffYearsAttended;
+	}
+	public String getOtherRehabs() {
+		return otherRehabs;
+	}
+	public void setOtherRehabs(String otherRehabs) {
+		this.otherRehabs = otherRehabs;
+	}
+	public String getPreviousFaithFarmFlag() {
+		return previousFaithFarmFlag;
+	}
+	public void setPreviousFaithFarmFlag(String previousFaithFarmFlag) {
+		this.previousFaithFarmFlag = previousFaithFarmFlag;
+	}
+	public String getPreviousFaithFarm() {
+		return previousFaithFarm;
+	}
+	public void setPreviousFaithFarm(String previousFaithFarm) {
+		this.previousFaithFarm = previousFaithFarm;
+	}
+	public String getFaithFarmYear() {
+		return faithFarmYear;
+	}
+	public void setFaithFarmYear(String faithFarmYear) {
+		this.faithFarmYear = faithFarmYear;
+	}
+	public String getCurrentHealth() {
+		return currentHealth;
+	}
+	public void setCurrentHealth(String currentHealth) {
+		this.currentHealth = currentHealth;
+	}
+	public String getCurrentMedicationsFlag() {
+		return currentMedicationsFlag;
+	}
+	public void setCurrentMedicationsFlag(String currentMedicationsFlag) {
+		this.currentMedicationsFlag = currentMedicationsFlag;
+	}
+	public String getCurrentMedicationsDetails() {
+		return currentMedicationsDetails;
+	}
+	public void setCurrentMedicationsDetails(String currentMedicationsDetails) {
+		this.currentMedicationsDetails = currentMedicationsDetails;
+	}
+	public String getNeedMedicationFlag() {
+		return needMedicationFlag;
+	}
+	public void setNeedMedicationFlag(String needMedicationFlag) {
+		this.needMedicationFlag = needMedicationFlag;
+	}
+	public String getMedicationSuppyFlag() {
+		return medicationSuppyFlag;
+	}
+	public void setMedicationSuppyFlag(String medicationSuppyFlag) {
+		this.medicationSuppyFlag = medicationSuppyFlag;
+	}
+	public String getRefillDetails() {
+		return refillDetails;
+	}
+	public void setRefillDetails(String refillDetails) {
+		this.refillDetails = refillDetails;
+	}
+	public String getDoctorsAppointment() {
+		return doctorsAppointment;
+	}
+	public void setDoctorsAppointment(String doctorsAppointment) {
+		this.doctorsAppointment = doctorsAppointment;
+	}
+	public String getDoctorsAppointmentDate() {
+		return doctorsAppointmentDate;
+	}
+	public void setDoctorsAppointmentDate(String doctorsAppointmentDate) {
+		this.doctorsAppointmentDate = doctorsAppointmentDate;
+	}
+	public String getEyewearFlag() {
+		return eyewearFlag;
+	}
+	public void setEyewearFlag(String eyewearFlag) {
+		this.eyewearFlag = eyewearFlag;
+	}
+	public String getEyewearUsage() {
+		return eyewearUsage;
+	}
+	public void setEyewearUsage(String eyewearUsage) {
+		this.eyewearUsage = eyewearUsage;
+	}
+	public String getIndustrialInjuryFlag() {
+		return industrialInjuryFlag;
+	}
+	public void setIndustrialInjuryFlag(String industrialInjuryFlag) {
+		this.industrialInjuryFlag = industrialInjuryFlag;
+	}
+	public String getIndustrialInjuryDate() {
+		return industrialInjuryDate;
+	}
+	public void setIndustrialInjuryDate(String industrialInjuryDate) {
+		this.industrialInjuryDate = industrialInjuryDate;
+	}
+	public String getIndustrialInjuryReason() {
+		return industrialInjuryReason;
+	}
+	public void setIndustrialInjuryReason(String industrialInjuryReason) {
+		this.industrialInjuryReason = industrialInjuryReason;
+	}
+	public String getIndustrialInjuryLocation() {
+		return industrialInjuryLocation;
+	}
+	public void setIndustrialInjuryLocation(String industrialInjuryLocation) {
+		this.industrialInjuryLocation = industrialInjuryLocation;
+	}
+	public String getIndustrialInjuryEmployer() {
+		return industrialInjuryEmployer;
+	}
+	public void setIndustrialInjuryEmployer(String industrialInjuryEmployer) {
+		this.industrialInjuryEmployer = industrialInjuryEmployer;
+	}
+	public String getIndustrialInjuryClaimStatus() {
+		return industrialInjuryClaimStatus;
+	}
+	public void setIndustrialInjuryClaimStatus(String industrialInjuryClaimStatus) {
+		this.industrialInjuryClaimStatus = industrialInjuryClaimStatus;
+	}
+	public String getDisabilityFlag() {
+		return disabilityFlag;
+	}
+	public void setDisabilityFlag(String disabilityFlag) {
+		this.disabilityFlag = disabilityFlag;
+	}
+	public String getDisabilityDetails() {
+		return disabilityDetails;
+	}
+	public void setDisabilityDetails(String disabilityDetails) {
+		this.disabilityDetails = disabilityDetails;
+	}
+	public String getExaminationDate() {
+		return examinationDate;
+	}
+	public void setExaminationDate(String examinationDate) {
+		this.examinationDate = examinationDate;
+	}
+	public String getPhysician() {
+		return physician;
+	}
+	public void setPhysician(String physician) {
+		this.physician = physician;
+	}
+	public String getPhysicianAddress() {
+		return physicianAddress;
+	}
+	public void setPhysicianAddress(String physicianAddress) {
+		this.physicianAddress = physicianAddress;
+	}
+	public String getHerniaSide() {
+		return herniaSide;
+	}
+	public void setHerniaSide(String herniaSide) {
+		this.herniaSide = herniaSide;
+	}
+	public String getHerniaOperationFlag() {
+		return herniaOperationFlag;
+	}
+	public void setHerniaOperationFlag(String herniaOperationFlag) {
+		this.herniaOperationFlag = herniaOperationFlag;
+	}
+	public String getHerniaDate() {
+		return herniaDate;
+	}
+	public void setHerniaDate(String herniaDate) {
+		this.herniaDate = herniaDate;
+	}
+	public String getHerniaPhysician() {
+		return herniaPhysician;
+	}
+	public void setHerniaPhysician(String herniaPhysician) {
+		this.herniaPhysician = herniaPhysician;
+	}
+	public String getQtyConsumed1() {
+		return qtyConsumed1;
+	}
+	public void setQtyConsumed1(String qtyConsumed1) {
+		this.qtyConsumed1 = qtyConsumed1;
+	}
+	public String getQtyConsumed2() {
+		return qtyConsumed2;
+	}
+	public void setQtyConsumed2(String qtyConsumed2) {
+		this.qtyConsumed2 = qtyConsumed2;
+	}
+	public String getCurrentMedications() {
+		return currentMedications;
+	}
+	public void setCurrentMedications(String currentMedications) {
+		this.currentMedications = currentMedications;
+	}
+	public String getRefillDirections() {
+		return refillDirections;
+	}
+	public void setRefillDirections(String refillDirections) {
+		this.refillDirections = refillDirections;
+	}
+	public String getMedicalConditionDetails() {
+		return medicalConditionDetails;
+	}
+	public void setMedicalConditionDetails(String medicalConditionDetails) {
+		this.medicalConditionDetails = medicalConditionDetails;
+	}
+	public String getOtherJobSkill() {
 		return otherJobSkill;
 	}
-	public static void setOtherJobSkill(String otherJobSkill) {
-		Intake.otherJobSkill = otherJobSkill;
+	public void setOtherJobSkill(String otherJobSkill) {
+		this.otherJobSkill = otherJobSkill;
 	}
-	
-	
+	public String[] getQuestion() {
+		return question;
+	}
+	public void setQuestion(String[] question) {
+		this.question = question;
+	}
+	public String[] getQuestionAnswerDetails() {
+		return questionAnswerDetails;
+	}
+	public void setQuestionAnswerDetails(String[] questionAnswerDetails) {
+		this.questionAnswerDetails = questionAnswerDetails;
+	}
+	public String[] getQuestionAnswerDates() {
+		return questionAnswerDates;
+	}
+	public void setQuestionAnswerDates(String[] questionAnswerDates) {
+		this.questionAnswerDates = questionAnswerDates;
+	}
+	public String[] getMedicalCondition() {
+		return medicalCondition;
+	}
+	public void setMedicalCondition(String[] medicalCondition) {
+		this.medicalCondition = medicalCondition;
+	}
+	public String[] getWorkExperience() {
+		return workExperience;
+	}
+	public void setWorkExperience(String[] workExperience) {
+		this.workExperience = workExperience;
+	}
+	public String getWorkExperienceOther() {
+		return workExperienceOther;
+	}
+	public void setWorkExperienceOther(String workExperienceOther) {
+		this.workExperienceOther = workExperienceOther;
+	}
+	public String getWorkExperienceOtherDesc() {
+		return workExperienceOtherDesc;
+	}
+	public void setWorkExperienceOtherDesc(String workExperienceOtherDesc) {
+		this.workExperienceOtherDesc = workExperienceOtherDesc;
+	}
+	public String getEmployer1() {
+		return employer1;
+	}
+	public void setEmployer1(String employer1) {
+		this.employer1 = employer1;
+	}
+	public String getEmployerContact1() {
+		return employerContact1;
+	}
+	public void setEmployerContact1(String employerContact1) {
+		this.employerContact1 = employerContact1;
+	}
+	public String getEmployerPhone1() {
+		return employerPhone1;
+	}
+	public void setEmployerPhone1(String employerPhone1) {
+		this.employerPhone1 = employerPhone1;
+	}
+	public String getEmployerDates1() {
+		return employerDates1;
+	}
+	public void setEmployerDates1(String employerDates1) {
+		this.employerDates1 = employerDates1;
+	}
+	public String getEmployer2() {
+		return employer2;
+	}
+	public void setEmployer2(String employer2) {
+		this.employer2 = employer2;
+	}
+	public String getEmployerContact2() {
+		return employerContact2;
+	}
+	public void setEmployerContact2(String employerContact2) {
+		this.employerContact2 = employerContact2;
+	}
+	public String getEmployerPhone2() {
+		return employerPhone2;
+	}
+	public void setEmployerPhone2(String employerPhone2) {
+		this.employerPhone2 = employerPhone2;
+	}
+	public String getEmployerDates2() {
+		return employerDates2;
+	}
+	public void setEmployerDates2(String employerDates2) {
+		this.employerDates2 = employerDates2;
+	}
+	public String getEmployer3() {
+		return employer3;
+	}
+	public void setEmployer3(String employer3) {
+		this.employer3 = employer3;
+	}
+	public String getEmployerContact3() {
+		return employerContact3;
+	}
+	public void setEmployerContact3(String employerContact3) {
+		this.employerContact3 = employerContact3;
+	}
+	public String getEmployerPhone3() {
+		return employerPhone3;
+	}
+	public void setEmployerPhone3(String employerPhone3) {
+		this.employerPhone3 = employerPhone3;
+	}
+	public String getEmployerDates3() {
+		return employerDates3;
+	}
+	public void setEmployerDates3(String employerDates3) {
+		this.employerDates3 = employerDates3;
+	}
+	public String getEmployer4() {
+		return employer4;
+	}
+	public void setEmployer4(String employer4) {
+		this.employer4 = employer4;
+	}
+	public String getEmployerContact4() {
+		return employerContact4;
+	}
+	public void setEmployerContact4(String employerContact4) {
+		this.employerContact4 = employerContact4;
+	}
+	public String getEmployerPhone4() {
+		return employerPhone4;
+	}
+	public void setEmployerPhone4(String employerPhone4) {
+		this.employerPhone4 = employerPhone4;
+	}
+	public String getEmployerDates4() {
+		return employerDates4;
+	}
+	public void setEmployerDates4(String employerDates4) {
+		this.employerDates4 = employerDates4;
+	}
+	public String getLawsuitFlag() {
+		return lawsuitFlag;
+	}
+	public void setLawsuitFlag(String lawsuitFlag) {
+		this.lawsuitFlag = lawsuitFlag;
+	}
+	public String getCurrentLawsuitFlag() {
+		return currentLawsuitFlag;
+	}
+	public void setCurrentLawsuitFlag(String currentLawsuitFlag) {
+		this.currentLawsuitFlag = currentLawsuitFlag;
+	}
+	public String getLawsuitDetails() {
+		return lawsuitDetails;
+	}
+	public void setLawsuitDetails(String lawsuitDetails) {
+		this.lawsuitDetails = lawsuitDetails;
+	}
+	public String getCurrentLawsuitDetails() {
+		return currentLawsuitDetails;
+	}
+	public void setCurrentLawsuitDetails(String currentLawsuitDetails) {
+		this.currentLawsuitDetails = currentLawsuitDetails;
+	}
+	public String getLawsuitDate() {
+		return lawsuitDate;
+	}
+	public void setLawsuitDate(String lawsuitDate) {
+		this.lawsuitDate = lawsuitDate;
+	}
+	public String getCurrentLawsuitDate() {
+		return currentLawsuitDate;
+	}
+	public void setCurrentLawsuitDate(String currentLawsuitDate) {
+		this.currentLawsuitDate = currentLawsuitDate;
+	}
+	public String getFelonyFlag() {
+		return felonyFlag;
+	}
+	public void setFelonyFlag(String felonyFlag) {
+		this.felonyFlag = felonyFlag;
+	}
+	public String getSexualOffenseFlag() {
+		return sexualOffenseFlag;
+	}
+	public void setSexualOffenseFlag(String sexualOffenseFlag) {
+		this.sexualOffenseFlag = sexualOffenseFlag;
+	}
+	public String getFelonyDetails() {
+		return felonyDetails;
+	}
+	public void setFelonyDetails(String felonyDetails) {
+		this.felonyDetails = felonyDetails;
+	}
+	public String getSexualOffenseQty() {
+		return sexualOffenseQty;
+	}
+	public void setSexualOffenseQty(String sexualOffenseQty) {
+		this.sexualOffenseQty = sexualOffenseQty;
+	}
+	public String getSexualOffenseDetails() {
+		return sexualOffenseDetails;
+	}
+	public void setSexualOffenseDetails(String sexualOffenseDetails) {
+		this.sexualOffenseDetails = sexualOffenseDetails;
+	}
+	public String getFelonyQty() {
+		return felonyQty;
+	}
+	public void setFelonyQty(String felonyQty) {
+		this.felonyQty = felonyQty;
+	}
+	public String getSSFlag() {
+		return SSFlag;
+	}
+	public void setSSFlag(String sSFlag) {
+		SSFlag = sSFlag;
+	}
+	public String getVAFlag() {
+		return VAFlag;
+	}
+	public void setVAFlag(String vAFlag) {
+		VAFlag = vAFlag;
+	}
+	public String getWCFlag() {
+		return WCFlag;
+	}
+	public void setWCFlag(String wCFlag) {
+		WCFlag = wCFlag;
+	}
+	public String getOtherBenefits() {
+		return otherBenefits;
+	}
+	public void setOtherBenefits(String otherBenefits) {
+		this.otherBenefits = otherBenefits;
+	}
+	public String getProbationFlag() {
+		return probationFlag;
+	}
+	public void setProbationFlag(String probationFlag) {
+		this.probationFlag = probationFlag;
+	}
+	public String getProbationCounty() {
+		return probationCounty;
+	}
+	public void setProbationCounty(String probationCounty) {
+		this.probationCounty = probationCounty;
+	}
+	public String getProbationState() {
+		return probationState;
+	}
+	public void setProbationState(String probationState) {
+		this.probationState = probationState;
+	}
+	public String getProbationOfficer() {
+		return probationOfficer;
+	}
+	public void setProbationOfficer(String probationOfficer) {
+		this.probationOfficer = probationOfficer;
+	}
+	public String getProbationOfficerPhone() {
+		return probationOfficerPhone;
+	}
+	public void setProbationOfficerPhone(String probationOfficerPhone) {
+		this.probationOfficerPhone = probationOfficerPhone;
+	}
+	public String getProbationAppt() {
+		return probationAppt;
+	}
+	public void setProbationAppt(String probationAppt) {
+		this.probationAppt = probationAppt;
+	}
+	public String getProbationApptDetails() {
+		return probationApptDetails;
+	}
+	public void setProbationApptDetails(String probationApptDetails) {
+		this.probationApptDetails = probationApptDetails;
+	}
+	public String getLibraryCard() {
+		return libraryCard;
+	}
+	public void setLibraryCard(String libraryCard) {
+		this.libraryCard = libraryCard;
+	}
+	public String getBirthCertFlag() {
+		return birthCertFlag;
+	}
+	public void setBirthCertFlag(String birthCertFlag) {
+		this.birthCertFlag = birthCertFlag;
+	}
+	public String getBirthCertCounty() {
+		return birthCertCounty;
+	}
+	public void setBirthCertCounty(String birthCertCounty) {
+		this.birthCertCounty = birthCertCounty;
+	}
+	public String getBirthCertState() {
+		return birthCertState;
+	}
+	public void setBirthCertState(String birthCertState) {
+		this.birthCertState = birthCertState;
+	}
+	public String getGovtHealthCoverage() {
+		return govtHealthCoverage;
+	}
+	public void setGovtHealthCoverage(String govtHealthCoverage) {
+		this.govtHealthCoverage = govtHealthCoverage;
+	}
+	public String getPrivateHealthCoverage() {
+		return privateHealthCoverage;
+	}
+	public void setPrivateHealthCoverage(String privateHealthCoverage) {
+		this.privateHealthCoverage = privateHealthCoverage;
+	}
+	public String getSelectiveService() {
+		return selectiveService;
+	}
+	public void setSelectiveService(String selectiveService) {
+		this.selectiveService = selectiveService;
+	}
+	public String getPendingCourtDates() {
+		return pendingCourtDates;
+	}
+	public void setPendingCourtDates(String pendingCourtDates) {
+		this.pendingCourtDates = pendingCourtDates;
+	}
+	public String getChildSupport() {
+		return childSupport;
+	}
+	public void setChildSupport(String childSupport) {
+		this.childSupport = childSupport;
+	}
+	public String getRestitution() {
+		return restitution;
+	}
+	public void setRestitution(String restitution) {
+		this.restitution = restitution;
+	}
+	public String getHomelessLengthOfTime() {
+		return homelessLengthOfTime;
+	}
+	public void setHomelessLengthOfTime(String homelessLengthOfTime) {
+		this.homelessLengthOfTime = homelessLengthOfTime;
+	}
+	public String getHomelessHowOften() {
+		return homelessHowOften;
+	}
+	public void setHomelessHowOften(String homelessHowOften) {
+		this.homelessHowOften = homelessHowOften;
+	}
+	public String getHomelessReason() {
+		return homelessReason;
+	}
+	public void setHomelessReason(String homelessReason) {
+		this.homelessReason = homelessReason;
+	}
+	public String getIncomeAmount() {
+		return incomeAmount;
+	}
+	public void setIncomeAmount(String incomeAmount) {
+		this.incomeAmount = incomeAmount;
+	}
+	public String getIncomeSource() {
+		return incomeSource;
+	}
+	public void setIncomeSource(String incomeSource) {
+		this.incomeSource = incomeSource;
+	}
+	public String getIncomeWeeklyFlag() {
+		return incomeWeeklyFlag;
+	}
+	public void setIncomeWeeklyFlag(String incomeWeeklyFlag) {
+		this.incomeWeeklyFlag = incomeWeeklyFlag;
+	}
+	public String getIncomeBiWeeklyFlag() {
+		return incomeBiWeeklyFlag;
+	}
+	public void setIncomeBiWeeklyFlag(String incomeBiWeeklyFlag) {
+		this.incomeBiWeeklyFlag = incomeBiWeeklyFlag;
+	}
+	public String getIncomeMonthlyFlag() {
+		return incomeMonthlyFlag;
+	}
+	public void setIncomeMonthlyFlag(String incomeMonthlyFlag) {
+		this.incomeMonthlyFlag = incomeMonthlyFlag;
+	}
+	public String getIncomeYearlyFlag() {
+		return incomeYearlyFlag;
+	}
+	public void setIncomeYearlyFlag(String incomeYearlyFlag) {
+		this.incomeYearlyFlag = incomeYearlyFlag;
+	}
+	public ArrayList getAnswer() {
+		return answer;
+	}
+	public void setAnswer(ArrayList answer) {
+		this.answer = answer;
+	}
+	public ArrayList getAnswerDetail() {
+		return answerDetail;
+	}
+	public void setAnswerDetail(ArrayList answerDetail) {
+		this.answerDetail = answerDetail;
+	}
+	public ArrayList getAnswerDate() {
+		return answerDate;
+	}
+	public void setAnswerDate(ArrayList answerDate) {
+		this.answerDate = answerDate;
+	}
+	public ArrayList getMedicationCondition() {
+		return medicationCondition;
+	}
+	public void setMedicationCondition(ArrayList medicationCondition) {
+		this.medicationCondition = medicationCondition;
+	}
+	public ArrayList getJobSkill() {
+		return jobSkill;
+	}
+	public void setJobSkill(ArrayList jobSkill) {
+		this.jobSkill = jobSkill;
+	}
+	public ArrayList getEmployer() {
+		return employer;
+	}
+	public void setEmployer(ArrayList employer) {
+		this.employer = employer;
+	}
+	public ArrayList getReference() {
+		return reference;
+	}
+	public void setReference(ArrayList reference) {
+		this.reference = reference;
+	}
+	public ArrayList getVisitor() {
+		return visitor;
+	}
+	public void setVisitor(ArrayList visitor) {
+		this.visitor = visitor;
+	}
+	public ArrayList getProperty() {
+		return property;
+	}
+	public void setProperty(ArrayList property) {
+		this.property = property;
+	}
+	public String getCreationDate() {
+		return creationDate;
+	}
+	public void setCreationDate(String creationDate) {
+		this.creationDate = creationDate;
+	}
+	public String getCreatedBy() {
+		return createdBy;
+	}
+	public void setCreatedBy(String createdBy) {
+		this.createdBy = createdBy;
+	}
+	public String getLastUpdatedDate() {
+		return lastUpdatedDate;
+	}
+	public void setLastUpdatedDate(String lastUpdatedDate) {
+		this.lastUpdatedDate = lastUpdatedDate;
+	}
+	public String getLastUpdatedBy() {
+		return lastUpdatedBy;
+	}
+	public void setLastUpdatedBy(String lastUpdatedBy) {
+		this.lastUpdatedBy = lastUpdatedBy;
+	}
+	public String getSubmissionDate() {
+		return submissionDate;
+	}
+	public void setSubmissionDate(String submissionDate) {
+		this.submissionDate = submissionDate;
+	}
+	public String getApplicationStatus() {
+		return applicationStatus;
+	}
+	public void setApplicationStatus(String applicationStatus) {
+		this.applicationStatus = applicationStatus;
+	}
+	public String getApplicationSignature() {
+		return applicationSignature;
+	}
+	public void setApplicationSignature(String applicationSignature) {
+		this.applicationSignature = applicationSignature;
+	}
+	public String getIntakeCounselorSignature() {
+		return intakeCounselorSignature;
+	}
+	public void setIntakeCounselorSignature(String intakeCounselorSignature) {
+		this.intakeCounselorSignature = intakeCounselorSignature;
+	}
+	public String getDirectorSignature() {
+		return directorSignature;
+	}
+	public void setDirectorSignature(String directorSignature) {
+		this.directorSignature = directorSignature;
+	}
+	public String getApplicationSignatureDate() {
+		return applicationSignatureDate;
+	}
+	public void setApplicationSignatureDate(String applicationSignatureDate) {
+		this.applicationSignatureDate = applicationSignatureDate;
+	}
+	public String getIntakeCounselorSignatureDate() {
+		return intakeCounselorSignatureDate;
+	}
+	public void setIntakeCounselorSignatureDate(String intakeCounselorSignatureDate) {
+		this.intakeCounselorSignatureDate = intakeCounselorSignatureDate;
+	}
+	public String getDirectorSignatureDate() {
+		return directorSignatureDate;
+	}
+	public void setDirectorSignatureDate(String directorSignatureDate) {
+		this.directorSignatureDate = directorSignatureDate;
+	}
+	public String getCellDisclosureConsent() {
+		return cellDisclosureConsent;
+	}
+	public void setCellDisclosureConsent(String cellDisclosureConsent) {
+		this.cellDisclosureConsent = cellDisclosureConsent;
+	}
+	public String getReleaseWaiverConsent() {
+		return releaseWaiverConsent;
+	}
+	public void setReleaseWaiverConsent(String releaseWaiverConsent) {
+		this.releaseWaiverConsent = releaseWaiverConsent;
+	}
+	public String getBiblicalBasedCounselingConsent() {
+		return biblicalBasedCounselingConsent;
+	}
+	public void setBiblicalBasedCounselingConsent(
+			String biblicalBasedCounselingConsent) {
+		this.biblicalBasedCounselingConsent = biblicalBasedCounselingConsent;
+	}
+	public String getEntryAgreementConsent() {
+		return entryAgreementConsent;
+	}
+	public void setEntryAgreementConsent(String entryAgreementConsent) {
+		this.entryAgreementConsent = entryAgreementConsent;
+	}
+	public String getRulesVisitationConsent() {
+		return rulesVisitationConsent;
+	}
+	public void setRulesVisitationConsent(String rulesVisitationConsent) {
+		this.rulesVisitationConsent = rulesVisitationConsent;
+	}
+	public String getReleaseInformationConsent() {
+		return releaseInformationConsent;
+	}
+	public void setReleaseInformationConsent(String releaseInformationConsent) {
+		this.releaseInformationConsent = releaseInformationConsent;
+	}
+	public String getConsent() {
+		return Consent;
+	}
+	public void setConsent(String consent) {
+		Consent = consent;
+	}
+	public String getEntryDate() {
+		return entryDate;
+	}
+	public void setEntryDate(String entryDate) {
+		this.entryDate = entryDate;
+	}
+	public String getIntakeStatus() {
+		return intakeStatus;
+	}
+	public void setIntakeStatus(String intakeStatus) {
+		this.intakeStatus = intakeStatus;
+	}
 	
 	
 	
