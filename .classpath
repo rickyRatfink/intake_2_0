@@ -18,5 +18,6 @@
 	<classpathentry kind="lib" path="C:/development/workspace/dispatch_2_0/WebContent/WEB-INF/lib/jsp-api.jar"/>
 	<classpathentry kind="lib" path="C:/development/workspace/dispatch_2_0/WebContent/WEB-INF/lib/mysql-connector-java-3.1.14-bin.jar"/>
 	<classpathentry kind="lib" path="C:/development/workspace/dispatch_2_0/WebContent/WEB-INF/lib/servlet-api.jar"/>
+	<classpathentry kind="lib" path="C:/development/workspace/intake_2_0/WebContent/WEB-INF/lib/commons-codec-1.6.jar"/>
 	<classpathentry kind="output" path="build/classes"/>
 </classpath>
