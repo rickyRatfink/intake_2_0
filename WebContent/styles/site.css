@@ -175,6 +175,23 @@ div.menu ul li
 	
 }
 
+
+div.studentSearch {
+	background:#fcfcfc;
+	height:330px;
+	width:400px;	
+	border-top:1px solid #a5b3c5;
+	border-bottom:1px solid #a5b3c5;
+	border-left:1px solid #a5b3c5;
+	border-right:1px solid #a5b3c5;
+	padding-bottom: 10px;
+	padding-left: 10px;
+	padding-top: 10px;
+	font: 12px Verdana;
+	color: #000000;
+	text-align:left; 
+}
+
 /* CSS below targets the drop down menu on the last menu item*/
 /*Begin*/
 
@@ -672,3 +689,4 @@ td {
 	font-size : 0em; 
 	vertical-align:top;
 }
+

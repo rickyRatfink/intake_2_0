@@ -19,7 +19,13 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
 <head><title>
 	Log In
-</title><link href="<%=request.getContextPath()%>/styles/site.css" rel="stylesheet" type="text/css" />
+</title>
+
+	<link href="<%=request.getContextPath()%>/styles/site.css" rel="stylesheet" type="text/css" />
+    <link href="<%=request.getContextPath()%>/styles/tcal.css" rel="stylesheet" type="text/css" />
+    <script type="text/javascript" src="<%=request.getContextPath()%>/scripts/tcal.js"></script>
+    <script type="text/javascript" src="<%=request.getContextPath()%>/scripts/chart.js"></script>
+
     <script  type="text/javascript" src="<%=request.getContextPath()%>/scripts/jquery-1.4.1.min.js">
     </script>
     <script type="text/javascript" src="<%=request.getContextPath()%>/scripts/jquery.format.1.02.js">
@@ -60,7 +66,7 @@
 		<li><a href="<%=request.getContextPath()%>/pages/main.jsp">Home</a></li>
         <li><a href=".<%=request.getContextPath()%>/pages/main.jsp">About</a></li>
         <% if ("ADMIN".equals(user.getUserRole())) { %>
-             <li><a href="<%=request.getContextPath()%>/pages/">Search</a></li>
+             <li><a href="<%=request.getContextPath()%>/pages/student/search.jsp">Search</a></li>
              <li><a href="<%=request.getContextPath()%>/pages/">New Student</a></li>
              <li><a href="<%=request.getContextPath()%>/pages/">Search Result</a></li>
              <li><a href="<%=request.getContextPath()%>/cwt">CWT</a></li>

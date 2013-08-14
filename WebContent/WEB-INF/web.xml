@@ -14,6 +14,10 @@
         <servlet-name>CWTServlet</servlet-name>
         <servlet-class>org.faithfarm.cwt.CWTServlet</servlet-class>
   </servlet>
+  <servlet>
+        <servlet-name>StudentServlet</servlet-name>
+        <servlet-class>org.faithfarm.intake.StudentServlet</servlet-class>
+  </servlet>
     
   <servlet-mapping>
 	    <servlet-name>SecureLogin</servlet-name>
@@ -23,7 +27,11 @@
 	    <servlet-name>CWTServlet</servlet-name>
 	    <url-pattern>/cwt</url-pattern>
   </servlet-mapping>
-    <servlet-mapping>
+  <servlet-mapping>
+	    <servlet-name>StudentServlet</servlet-name>
+	    <url-pattern>/student</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
 	    <servlet-name>IntakeServlet</servlet-name>
 	    <url-pattern>/intake</url-pattern>
   </servlet-mapping>
