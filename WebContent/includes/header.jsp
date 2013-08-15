@@ -23,6 +23,7 @@
 
 	<link href="<%=request.getContextPath()%>/styles/site.css" rel="stylesheet" type="text/css" />
     <link href="<%=request.getContextPath()%>/styles/tcal.css" rel="stylesheet" type="text/css" />
+   
     <script type="text/javascript" src="<%=request.getContextPath()%>/scripts/tcal.js"></script>
     <script type="text/javascript" src="<%=request.getContextPath()%>/scripts/chart.js"></script>
 

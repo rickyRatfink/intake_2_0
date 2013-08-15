@@ -17,7 +17,7 @@ import org.faithfarm.util.Validator;
  
 public class IntakeServlet extends HttpServlet {
 
-	private IntakeDao dao = new IntakeDao();
+	private static IntakeDao dao = new IntakeDao();
 	private static SystemUser systemUser = new SystemUser();
 	private static Intake intake = new Intake();
 	
@@ -360,7 +360,7 @@ public class IntakeServlet extends HttpServlet {
 		
 	} 
 	
-	private void loadDropDownLists(HttpSession session) {
+	public static void loadDropDownLists(HttpSession session) {
 					    
 		      ArrayList states = new ArrayList();
 		        states.add("Alabama");
