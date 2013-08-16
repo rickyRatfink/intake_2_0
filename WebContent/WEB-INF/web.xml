@@ -18,7 +18,14 @@
         <servlet-name>StudentServlet</servlet-name>
         <servlet-class>org.faithfarm.intake.StudentServlet</servlet-class>
   </servlet>
-    
+    <servlet>
+        <servlet-name>GridServlet</servlet-name>
+        <servlet-class>org.faithfarm.intake.GridServlet</servlet-class>
+  </servlet> 
+  <servlet-mapping>
+	    <servlet-name>GridServlet</servlet-name>
+	    <url-pattern>/grid</url-pattern>
+  </servlet-mapping>
   <servlet-mapping>
 	    <servlet-name>SecureLogin</servlet-name>
 	    <url-pattern>/login</url-pattern>

@@ -176,22 +176,21 @@ public class Validator {
 
 	}
 
-	public static String decryptSsn(String base64) {
-		String clearSsn = base64;
-
-		try {
-			Cipher des = Cipher.getInstance("DES"); 
-			Key key = new SecretKeySpec("potatoes".getBytes(), "DES");
-			des.init(2, key);
-			clearSsn = new String(des.doFinal(Base64.decodeBase64(base64
-					.getBytes())));
-		} catch (BadPaddingException e) {
-			System.out.println("BadPaddingException in decryptSsn: "
-					+ e.getMessage());
-		} catch (Exception e) {
-			System.out.println("General exception in decryptSsn: "
-					+ e.getMessage());
-		}
-		return clearSsn;
-	}
+	
+	
+	  public static String decryptSsn(String base64) {
+		       String clearSsn = base64;
+		       System.out.println("Decrypting: " + base64);
+		       try {
+		         Cipher des = Cipher.getInstance("DES");
+		         Key key = new SecretKeySpec("potatoes".getBytes(), "DES");
+		         des.init(2, key);
+		         clearSsn = new String(des.doFinal(Base64.decodeBase64(base64.getBytes())));
+		       } catch (BadPaddingException e) {
+		         System.out.println("BadPaddingException in decryptSsn: " + e.getMessage());
+		       } catch (Exception e) {
+		         System.out.println("General exception in decryptSsn: " + e.getMessage());
+		       }
+		       return clearSsn;
+		     }
 }

@@ -3,6 +3,7 @@
 <%@ page import="java.util.Date" %>
 <%@ page import="java.text.SimpleDateFormat" %>
 <%@ page import="org.faithfarm.domain.SystemUser" %>
+<%@ page import="org.faithfarm.intake.IntakeServlet" %>
 
 <% 
     SystemUser user = null;
@@ -18,7 +19,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
 <head><title>
-	Log In
+	Faith Farm Student Information System
 </title>
 
 	<link href="<%=request.getContextPath()%>/styles/site.css" rel="stylesheet" type="text/css" />
@@ -59,24 +60,39 @@
                         [ <a href="<%=request.getContextPath()%>/login" >Log In</a> ]
                     <% } %>
             </div>
-             <div class="clear hideSkiplink">
+             <div class="clear hideSkiplink"> 
                           
                
-<div class="menu" >
-	<ul>
-			 <li><a href="<%=request.getContextPath()%>/pages/student/personal.jsp">Personal</a></li>
-       		 <li><a href="<%=request.getContextPath()%>/pages/student/religious.jsp">Religious</a></li>
-             <li><a href="<%=request.getContextPath()%>/pages/student/substance.jsp">Substance</a></li>
-             <li><a href="<%=request.getContextPath()%>/pages/student/health.jsp">Health</a></li>
-             <li><a href="<%=request.getContextPath()%>/pages/student/legal.jsp">Legal</a></li>
-             <li><a href="<%=request.getContextPath()%>/pages/student/employment.jsp">Employment</a></li>
-             <li><a href="<%=request.getContextPath()%>/pages/student/status.jsp">Status</a></li>
-             <li><a href="<%=request.getContextPath()%>/pages/student/search.jsp">Search</a></li>
-             <li><a href="<%=request.getContextPath()%>/pages/student/search.jsp">Fast Find</a></li>
-        
-     </ul>
-</div>
-                    
+    
+		<div class="menu" >	
+		<ul>
+    		<li><a href="<%=request.getContextPath()%>/pages/student/personal.jsp" >Personal</a></li>
+      		<li><a href="<%=request.getContextPath()%>/pages/student/religious.jsp" >Religious</a></li>
+            <li><a href="<%=request.getContextPath()%>/pages/student/substance.jsp" >Substance</a></li>
+            <li><a href="<%=request.getContextPath()%>/pages/student/health.jsp" >Health</a></li>
+            <li><a href="<%=request.getContextPath()%>/pages/student/legal.jsp" >Legal</a></li>
+            <li><a href="<%=request.getContextPath()%>/pages/student/employment.jsp" >Employment</a></li>
+            <li><a href="<%=request.getContextPath()%>/pages/student/status.jsp" >Status</a></li>
+            <li><a href="<%=request.getContextPath()%>/pages/student/search.jsp" >Search</a></li>
+            <li><a href="<%=request.getContextPath()%>/pages/student/search.jsp" >Fast Find</a></li>
+        </ul>
+		<table>
+    	<tr>
+    		 <td width="33"></td>
+		     <td><font style="color:#FFFFFF"><b>Student Name:</b>&nbsp;<font style="color:#aeadad"><%=IntakeServlet.getIntake().getFirstName() %>&nbsp;<%=IntakeServlet.getIntake().getLastName() %></font>
+		     &nbsp;&nbsp;&nbsp;</td>
+		     <td><font style="color:#FFFFFF"><b>SSN:</b>&nbsp;<font style="color:#aeadad"><%=IntakeServlet.getIntake().getSsn() %></font>
+		     &nbsp;&nbsp;&nbsp;</td>
+		     <td><font style="color:#FFFFFF"><b>Date Entered:</b>&nbsp;<font style="color:#aeadad"><%=IntakeServlet.getIntake().getCreationDate() %></font>
+		     &nbsp;&nbsp;&nbsp;</td>
+		     <td><a href="<%=request.getContextPath()%>/pages/student/card.jsp" style="color:#19fd01"><b>Print Card</b></a>
+		     &nbsp;&nbsp;&nbsp;</td>
+		     <td colspan="4"><a href="<%=request.getContextPath()%>/pages/student/card.jsp" style="color:#19fd01""><b>Print Student Information</b></a></td>
+    	</tr>
+    </table>
+    </div>
+
+                  
           
             
             </div>

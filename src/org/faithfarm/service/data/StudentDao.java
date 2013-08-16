@@ -70,9 +70,6 @@ public class StudentDao {
 				query.append(" AND ENTRY_DATE BETWEEN'"+ entryDate +"' AND '"+exitDate+"'");
 			if (!"ALL".equals(farm)&&!"".equals(farm))
 				query.append(" AND FARM_BASE='"+farm +"'");
-		
-			
-			System.out.println (query);
 			
 			Statement Stmt = null;
 			Stmt = Conn.prepareStatement(query.toString());
