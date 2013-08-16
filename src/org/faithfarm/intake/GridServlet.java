@@ -66,8 +66,7 @@ public class GridServlet extends HttpServlet {
 
 	private StringBuffer studentXml(HttpServletRequest req) {
 	  
-	 System.out.println (">"+firstName);
-  	 
+	 
 		ResultSet rs = null;
 		StringBuffer data = new StringBuffer("");
 		
@@ -219,7 +218,7 @@ public class GridServlet extends HttpServlet {
 				connection.close();
 				rs.close();
 		//}
-		req.getSession().setAttribute("rows",new Integer(row));
+		//req.getSession().setAttribute("rows",new Integer(row));
 		} catch (Exception e) {
 			System.out.println (e.getMessage());
 		} 
