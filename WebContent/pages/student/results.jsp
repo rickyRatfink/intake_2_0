@@ -58,7 +58,7 @@ $(document).ready(function() {
 
 function selectRow () {
 
-	alert( jQuery('#list1').jqGrid('getGridParam','selrow') );
+	//alert( jQuery('#list1').jqGrid('getGridParam','selrow') );
 	document.getElementById('key').value=jQuery('#list1').jqGrid('getGridParam','selrow');
 }
 </script>
