@@ -29,23 +29,24 @@ public class StudentServlet extends HttpServlet {
 			      String action = req.getParameter("action");
 			      
 			      if ("Search Students".equals(action)) {
-			    	  String firstName = valid8r.cleanData(req.getParameter("firstName"));
-			    	  String lastName = valid8r.cleanData(req.getParameter("lastName"));
-			    	  String beginDate = valid8r.cleanData(req.getParameter("entryDate"));
-			    	  String endDate = valid8r.cleanData(req.getParameter("exitDate"));
-			    	  String ssn1 = valid8r.cleanData(req.getParameter("ssn1"));
-			    	  String ssn2 = valid8r.cleanData(req.getParameter("ssn2"));
-			    	  String ssn3 = valid8r.cleanData(req.getParameter("ssn3"));
-			    	  String ssn=ssn1+ssn2+ssn3;
-			    	  String dob = valid8r.cleanData(req.getParameter("dob"));
-			    	  String farm = valid8r.cleanData(req.getParameter("farm"));
-			    	  String pictureFlag = valid8r.cleanData(req.getParameter("pictureFlag"));
-			    	  String archivedFlag = valid8r.cleanData(req.getParameter("archivedFlag"));
-			    	  String gedFlag = valid8r.cleanData(req.getParameter("gedFlag"));
+			    	  String ssn1=valid8r.cleanData(req.getParameter("ssn1"));
+			    	  String ssn2=valid8r.cleanData(req.getParameter("ssn2"));
+			    	  String ssn3=valid8r.cleanData(req.getParameter("ssn3"));
+			    	 
+			    	  GridServlet.setFirstName(valid8r.cleanData(req.getParameter("firstName")));
+			    	  GridServlet.setLastName(valid8r.cleanData(req.getParameter("lastName")));
+			    	  GridServlet.setEntryDate(valid8r.cleanData(req.getParameter("entryDate")));
+			    	  GridServlet.setExitDate(valid8r.cleanData(req.getParameter("exitDate")));
+			    	  GridServlet.setSsn(ssn1+ssn2+ssn3);
+			    	  GridServlet.setDob(valid8r.cleanData(req.getParameter("dob")));
+			    	  GridServlet.setFarm(valid8r.cleanData(req.getParameter("farm")));
+			    	  GridServlet.setPictureFlag(valid8r.cleanData(req.getParameter("pictureFlag")));
+			    	  GridServlet.setArchivedFlag(valid8r.cleanData(req.getParameter("archivedFlag")));
+			    	  GridServlet.setGedFlag(valid8r.cleanData(req.getParameter("gedFlag")));
 			    	  
-			    	  dao.searchStudents(firstName, lastName, beginDate, endDate, ssn, dob, farm, pictureFlag, archivedFlag, gedFlag, session);
+			    	  //dao.searchStudents(firstName, lastName, beginDate, endDate, ssn, dob, farm, pictureFlag, archivedFlag, gedFlag, session);
 			    	  url="pages/student/results.jsp";
-			      } else if ("edit".equals(action)) {
+			      } else if ("View/Edit".equals(action)) {
 			    	  String key=req.getParameter("key");
 			    	  Intake intake=dao.getStudent(key, session);
 			    	  IntakeServlet.setIntake(intake);
