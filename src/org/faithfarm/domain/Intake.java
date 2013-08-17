@@ -149,6 +149,15 @@ public class Intake implements Serializable {
 	private  String refillDirections="";
 	private  String medicalConditionDetails="";
 	private  String otherJobSkill="";
+	private String exitDate="";
+	private String supervisor="";
+	private String job="";
+	private String area="";
+	private String currentClass="";
+	private String room="";
+	private String bed="";
+	private String archiveFlag="";
+	
 	
 	private  String question[] = new String[]{ 
 						"NO","NO","NO","NO","NO","NO",
@@ -1721,6 +1730,54 @@ public class Intake implements Serializable {
 	}
 	public void setIntakeStatus(String intakeStatus) {
 		this.intakeStatus = intakeStatus;
+	}
+	public String getSupervisor() {
+		return supervisor;
+	}
+	public void setSupervisor(String supervisor) {
+		this.supervisor = supervisor;
+	}
+	public String getJob() {
+		return job;
+	}
+	public void setJob(String job) {
+		this.job = job;
+	}
+	public String getArea() {
+		return area;
+	}
+	public void setArea(String area) {
+		this.area = area;
+	}
+	public String getCurrentClass() {
+		return currentClass;
+	}
+	public void setCurrentClass(String currentClass) {
+		this.currentClass = currentClass;
+	}
+	public String getRoom() {
+		return room;
+	}
+	public void setRoom(String room) {
+		this.room = room;
+	}
+	public String getBed() {
+		return bed;
+	}
+	public void setBed(String bed) {
+		this.bed = bed;
+	}
+	public String getArchiveFlag() {
+		return archiveFlag;
+	}
+	public void setArchiveFlag(String archiveFlag) {
+		this.archiveFlag = archiveFlag;
+	}
+	public String getExitDate() {
+		return exitDate;
+	}
+	public void setExitDate(String exitDate) {
+		this.exitDate = exitDate;
 	}
 	
 	

@@ -171,7 +171,7 @@ public class Validator {
 
 	public static String convertEpoch(Long epoch) {
 		Date ddate = new java.util.Date(epoch);
-		DateFormat df = new SimpleDateFormat("EEE, MMM d, ''yy");
+		DateFormat df = new SimpleDateFormat("MM/dd/yyyy");
 		return df.format(ddate);
 
 	}

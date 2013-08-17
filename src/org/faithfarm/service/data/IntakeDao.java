@@ -13,6 +13,7 @@ import javax.servlet.http.HttpSession;
 
 import org.faithfarm.domain.Address;
 import org.faithfarm.domain.Intake;
+import org.faithfarm.domain.StudentHistory;
 import org.faithfarm.domain.SystemUser;
 import org.faithfarm.util.Validator;
 
@@ -276,7 +277,7 @@ public class IntakeDao {
 			query.append("`INTAKE_STATUS`,");
 			query.append("`IMAGE_HEADSHOT`,");
 			query.append("`IMAGE_STATE_ID`,");
-			query.append("`IMAGE_SSN`) ");
+			query.append("`IMAGE_SSN`,`FARM_BASE`,`SUPERVISOR`,`JOB`,`CLASS`,`AREA`,`ROOM`,`BED`) ");
 			query.append("VALUES");
 			query.append(" (");
 
@@ -432,7 +433,15 @@ public class IntakeDao {
 			query.append("'" + intake.getIntakeStatus() + "',");
 			query.append("'',");
 			query.append("'',");
-			query.append("'' ) ");
+			query.append("'',");
+			query.append("'"+intake.getFarmBase()+"',");
+			query.append("'"+intake.getSupervisor()+"',");
+			query.append("'"+intake.getJob()+"',");
+			query.append("'"+intake.getCurrentClass()+"',");
+			query.append("'"+intake.getArea()+"',");
+			query.append("'"+intake.getRoom()+"',");
+			query.append("'"+intake.getBed()+"' )");
+			
 
 			
 			PreparedStatement Stmt = null;
@@ -953,7 +962,50 @@ public class IntakeDao {
 		}
 		return key;
 	}
+	
+	public Long insertHistory(StudentHistory h, String user, HttpSession session) {
 
+		Long key = new Long("0");
+
+		try {
+			Connection Conn = this.getConnection();
+			// Do something with the Connection
+
+			StringBuffer query = new StringBuffer();
+			query.append("INSERT INTO "+SERVER+".STUDENT_HISTORY (INTAKE_ID, FARM, PHASE, PROGRAM_STATUS, REASON, BEGIN_DATE, END_DATE,CREATION_DATE,CREATED_BY) VALUE(");
+			query.append("'" + h.getIntakeId() + "',");
+			query.append("'" + h.getFarm() + "',");
+			query.append("'" + h.getPhase() + "',");
+			query.append("'" + h.getProgramStatus() + "',");
+			query.append("'" + h.getReason() + "',");
+			query.append("'" + h.getBeginDate() + "',");
+			query.append("'" + h.getEndDate() + "',");
+			query.append("'" + valid8r.getEpoch() + "',");
+			query.append("'" + user + "' );");
+			
+			System.out.println (query);
+			PreparedStatement Stmt = null;
+			Stmt = Conn.prepareStatement(query.toString(),
+					Stmt.RETURN_GENERATED_KEYS);
+			Stmt.executeUpdate(query.toString());
+
+			ResultSet generatedKeys = Stmt.getGeneratedKeys();
+
+			if (generatedKeys.next())
+				key = generatedKeys.getLong(1);
+
+			// Clean up after ourselves
+			Stmt.close();
+			Conn.close();
+		} catch (SQLException E) {
+			System.out.println(E.getMessage());
+			session.setAttribute("SYSTEM_ERROR", E.getMessage());
+		} catch (ClassNotFoundException e) {
+			session.setAttribute("SYSTEM_ERROR", e.getMessage());
+			e.printStackTrace();
+		}
+		return key;
+	}
 	public Long insertAddress(Address d, HttpSession session) {
 
 		Long key = new Long("0");

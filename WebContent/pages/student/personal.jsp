@@ -9,6 +9,7 @@
    Validator valid8r = new Validator();
 	
    String message=(String)request.getAttribute("MESSAGE");
+   String warning=(String)request.getAttribute("WARNING");
 
    String lastNameErr=(String)request.getAttribute("lastNameErr");
    if (lastNameErr==null) lastNameErr="";
@@ -151,7 +152,10 @@ function moveOnMax(field,nextFieldID){
 
 <form method="POST" action="<%=request.getContextPath()%>/intake">
 <% if (message!=null) { %>
-<h5><img src="images/success.png"/><%=message %></h5>	
+<h3><font style="color:#0C0"><img src="<%=request.getContextPath()%>/img/success.png"/><%=message %></font></h3><br />	
+<% } %>
+<% if (warning!=null) { %>
+<h3><font style="color:#F90"><img src="<%=request.getContextPath()%>/img/warning.jpg"/><%=warning %></font></h3><br />	
 <% } %>
     <table width="750">
 	<tr>
@@ -821,11 +825,12 @@ function moveOnMax(field,nextFieldID){
             <td class="fieldError"><%=motherLivingFlagErr%></td>
             <td class="fieldError"><%=fatherLivingFlagErr%></td>
          </tr>
-         </table>
-     </td>
-     </tr>
-   
-    <tr>
+         
+         
+             <tr>
+		<td colspan="8">&nbsp;</td>
+	</tr>
+        <tr>
      <td colspan="8">
      	<table width="100%">
         <tr>
@@ -845,11 +850,58 @@ function moveOnMax(field,nextFieldID){
 		<td colspan="8">&nbsp;</td>
 	</tr>
 
+    <tr>
+		<td colspan="8"><b>Homelessness Documentation:</b><br /></td>
+	</tr>
+    
+     <tr>
+		<td colspan="8"><br />How long have you been homeless?<br /></td>
+      </tr>
+      <tr>
+      	<td colspan="8">
+			<input type="radio" name="homelessLengthOfTime" value="Less than 2 weeks" <% if ("Less than 2 weeks".equals(IntakeServlet.getIntake().getHomelessLengthOfTime())) { %>checked<% } %> />&nbsp;Less than 2 weeks&nbsp;&nbsp;
+            <input type="radio" name="homelessLengthOfTime" value="2 weeks to 1 month" <% if ("2 weeks to 1 month".equals(IntakeServlet.getIntake().getHomelessLengthOfTime())) { %>checked<% } %>/>&nbsp;2 weeks to 1 month&nbsp;&nbsp;
+            <input type="radio" name="homelessLengthOfTime" value="1 to 3 months" <% if ("1 to 3 months".equals(IntakeServlet.getIntake().getHomelessLengthOfTime())) { %>checked<% } %>/>&nbsp;1 to 3 months&nbsp;&nbsp;
+            <input type="radio" name="homelessLengthOfTime" value="3 months to 1 year" <% if ("3 months to 1 year".equals(IntakeServlet.getIntake().getHomelessLengthOfTime())) { %>checked<% } %>/>&nbsp;3 months to 1 year&nbsp;&nbsp;
+            <input type="radio" name="homelessLengthOfTime" value="more than 1 year" <% if ("more than 1 year".equals(IntakeServlet.getIntake().getHomelessLengthOfTime())) { %>checked<% } %>/>&nbsp;more than 1 year
+         </td>
+     </tr>
+     <tr>
+     	<td></td>
+     </tr>
+     <tr>
+		<td colspan="8"><br />How often have you been homeless?<br /></td>
+      </tr>
+      <tr>
+      	<td colspan="8">
+			<input type="radio" name="homelessHowOften" value="Never" <% if ("Never".equals(IntakeServlet.getIntake().getHomelessHowOften())) { %>checked<% } %>/>&nbsp;Never&nbsp;&nbsp;
+            <input type="radio" name="homelessHowOften" value="1 to 2 times" <% if ("1 to 2 times".equals(IntakeServlet.getIntake().getHomelessHowOften())) { %>checked<% } %>/>&nbsp;1 to 2 times&nbsp;&nbsp;
+            <input type="radio" name="homelessHowOften" value="more than 2 times in 2 years" <% if ("more than 2 times in 2 years".equals(IntakeServlet.getIntake().getHomelessHowOften())) { %>checked<% } %>/>&nbsp;more than 2 times in 2 years&nbsp;&nbsp;
+            <input type="radio" name="homelessHowOften" value="Long term" <% if ("Long term".equals(IntakeServlet.getIntake().getHomelessHowOften())) { %>checked<% } %>/>&nbsp;Long term
+        </td>
+     </tr>
+     <tr>
+		<td colspan="8"><br />Reason for homelessness:<br /></td>
+      </tr>
+      <tr>
+      	<td colspan="8">
+			<input type="radio" name="homelessReason" value="Lack of a fixed, regular and adequate night time residence." <% if ("Lack of a fixed, regular and adequate night time residence.".equals(IntakeServlet.getIntake().getHomelessReason())) { %>checked<% } %>/>&nbsp;Lack of a fixed, regular and adequate night time residence.<br />
+            <input type="radio" name="homelessReason" value="Primary night time residence is a shelter designed to provide temporary living accomodations (including welfar hotels, congregate shelters, and transitional housing for the mentally ill)." <% if ("Primary night time residence is a shelter designed to provide temporary living accomodations (including welfar hotels, congregate shelters, and transitional housing for the mentally ill).".equals(IntakeServlet.getIntake().getHomelessReason())) { %>checked<% } %>/>&nbsp;Primary night time residence is a shelter designed to provide temporary living accomodations (including welfar hotels, congregate shelters, and transitional housing for the mentally ill).<br />
+            <input type="radio" name="homelessReason" value="Primary night time residence is an institution that provides a temporary residence for individuals intended to be institutionalized." <% if ("Primary night time residence is an institution that provides a temporary residence for individuals intended to be institutionalized.".equals(IntakeServlet.getIntake().getHomelessReason())) { %>checked<% } %>/>&nbsp;Primary night time residence is an institution that provides a temporary residence for individuals intended to be institutionalized.<br />
+            <input type="radio" name="homelessReason" value="Primary night time residence is a public or private place not designated for, or ordinarily used as a regular sleeping accomodation for human beings."<% if ("Primary night time residence is a public or private place not designated for, or ordinarily used as a regular sleeping accomodation for human beings.".equals(IntakeServlet.getIntake().getHomelessReason())) { %>checked<% } %> />&nbsp;Primary night time residence is a public or private place not designated for, or ordinarily used as a regular sleeping accomodation for human beings.
+        </td>
+     </tr>
+         </table>
+     </td>
+     </tr>
+   
+
 	<tr>
-		<td colspan="11" valign="bottom" align="center" height="45"><input type="submit" name="action" value="Update" class="imageButtonSave" title="Update Information" /></td>
+		<td colspan="8" valign="bottom" align="center" height="45"><input type="submit" name="action" value="Save" class="imageButtonSave" title="Update Information" /></td>
 	</tr>
 
 	</table>
+     <input type="hidden" name="source" value="personal"/>
 </form>
   </div>
 

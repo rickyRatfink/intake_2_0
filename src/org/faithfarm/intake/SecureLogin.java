@@ -235,6 +235,24 @@ public class SecureLogin extends HttpServlet {
 	        farm.add("WOMEN'S HOME");
 	        farm.add("ALL");
 	        
+	        ArrayList programStatus = new ArrayList();
+	        programStatus.add("In Program");
+	        programStatus.add("Walked Off");
+	        programStatus.add("Dismissed");
+	        programStatus.add("Left Prop./Did Not Graduate");
+	        programStatus.add("Left Prop./Graduated");
+	        programStatus.add("Left Prop./Graduated to SLS");
+	        programStatus.add("Left Prop./Graduated to Omega");
+	        programStatus.add("Dismissed - Banned 30 days");
+	        programStatus.add("Dismissed - Banned 60 days");
+	        programStatus.add("Dismissed - Banned 90 days");
+	        programStatus.add("Dismissed - Banned Perm.");
+	       
+	        ArrayList phase = new ArrayList();
+	        phase.add("Phase I");
+	        phase.add("SLS");
+	        phase.add("Omega");
+	        
 	        session.setAttribute("dllSuffix",convertToUpperCase(suffix));
 	        session.setAttribute("dllSecurityQuestion",convertToUpperCase(securityQuestion));
 	        session.setAttribute("dllLocation",convertToUpperCase(location));
@@ -252,6 +270,8 @@ public class SecureLogin extends HttpServlet {
 	        session.setAttribute("dllTvSize",convertToUpperCase(tvsize));
 	        session.setAttribute("dllCWTStatus",convertToUpperCase(cwtStatus));
 	        session.setAttribute("dllFarm",convertToUpperCase(farm));
+	        session.setAttribute("dllProgramStatus",convertToUpperCase(programStatus));
+	        session.setAttribute("dllPhase",convertToUpperCase(phase));
 	        
 	   }
 	   

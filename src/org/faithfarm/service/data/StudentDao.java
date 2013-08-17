@@ -251,10 +251,21 @@ public class StudentDao {
 				intake.setEntryAgreementConsent(valid8r.cleanData(RS.getString(134)));
 				intake.setRulesVisitationConsent(valid8r.cleanData(RS.getString(135)));
 				intake.setReleaseInformationConsent(valid8r.cleanData(RS.getString(136)));
+				intake.setCreationDate(valid8r.cleanData(RS.getString(137)));
+				intake.setCreatedBy(valid8r.cleanData(RS.getString(138)));
 				intake.setEntryDate(valid8r.cleanData(RS.getString(142)));
 				intake.setSubmissionDate(valid8r.cleanData(RS.getString(141)));
-				intake.setIntakeStatus(valid8r.cleanData(RS.getString(43)));;
+				intake.setIntakeStatus(valid8r.cleanData(RS.getString(143)));;
 				intake.setProbationState(valid8r.cleanData(RS.getString(147)));
+				intake.setExitDate(valid8r.cleanData(RS.getString(154)));
+				intake.setFarmBase(valid8r.cleanData(RS.getString(153)));
+				intake.setSupervisor(valid8r.cleanData(RS.getString(155)));
+				intake.setJob(valid8r.cleanData(RS.getString(156)));
+				intake.setCurrentClass(valid8r.cleanData(RS.getString(157)));
+				intake.setArea(valid8r.cleanData(RS.getString(158)));
+				intake.setRoom(valid8r.cleanData(RS.getString(159)));
+				intake.setBed(valid8r.cleanData(RS.getString(160)));
+				intake.setArchiveFlag(valid8r.cleanData(RS.getString(161)));
 			}
 			
 			

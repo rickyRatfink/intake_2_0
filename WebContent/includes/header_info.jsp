@@ -4,10 +4,11 @@
 <%@ page import="java.text.SimpleDateFormat" %>
 <%@ page import="org.faithfarm.domain.SystemUser" %>
 <%@ page import="org.faithfarm.intake.IntakeServlet" %>
+<%@ page import="org.faithfarm.util.Validator" %>
 
 <% 
     SystemUser user = null;
-	
+	Validator v8r = new Validator();
 	try {
 	  user = (SystemUser)session.getAttribute("USER_"+session.getId()); 
 	  if (user==null) user = new SystemUser();
@@ -74,7 +75,7 @@
             <li><a href="<%=request.getContextPath()%>/pages/student/employment.jsp" >Employment</a></li>
             <li><a href="<%=request.getContextPath()%>/pages/student/status.jsp" >Status</a></li>
             <li><a href="<%=request.getContextPath()%>/pages/student/search.jsp" >Search</a></li>
-            <li><a href="<%=request.getContextPath()%>/pages/student/search.jsp" >Fast Find</a></li>
+            <li><a href="<%=request.getContextPath()%>/pages/main.jsp" >Home</a></li>
         </ul>
 		<table>
     	<tr>
@@ -83,13 +84,24 @@
 		     &nbsp;&nbsp;&nbsp;</td>
 		     <td><font style="color:#FFFFFF"><b>SSN:</b>&nbsp;<font style="color:#aeadad"><%=IntakeServlet.getIntake().getSsn() %></font>
 		     &nbsp;&nbsp;&nbsp;</td>
-		     <td><font style="color:#FFFFFF"><b>Date Entered:</b>&nbsp;<font style="color:#aeadad"><%=IntakeServlet.getIntake().getCreationDate() %></font>
+		     <%
+		     String sDate = IntakeServlet.getIntake().getCreationDate();
+		    
+		     try {
+		    	Long lDate=new Long(sDate);
+		    	sDate = v8r.convertEpoch(lDate);
+		    	
+		     } catch (Exception e) { 
+		    	 System.out.println(e.getMessage());
+		     }
+		     %>
+		     <td><font style="color:#FFFFFF"><b>Date Entered:</b>&nbsp;<font style="color:#aeadad"><%=IntakeServlet.getIntake().getEntryDate() %></font>
 		     &nbsp;&nbsp;&nbsp;</td>
 		     <td><a href="<%=request.getContextPath()%>/pages/student/card.jsp" style="color:#19fd01"><b>Print Card</b></a>
 		     &nbsp;&nbsp;&nbsp;</td>
 		     <td colspan="4"><a href="<%=request.getContextPath()%>/pages/student/card.jsp" style="color:#19fd01""><b>Print Student Information</b></a></td>
     	</tr>
-    </table>
+    </table> 
     </div>
 
                   

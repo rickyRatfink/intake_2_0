@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.faithfarm.domain.Intake;
+import org.faithfarm.domain.StudentHistory;
 import org.faithfarm.domain.SystemUser;
 import org.faithfarm.service.data.StudentDao;
 import org.faithfarm.util.Validator;
@@ -50,6 +51,14 @@ public class StudentServlet extends HttpServlet {
 			    	  String key=req.getParameter("key");
 			    	  Intake intake=dao.getStudent(key, session);
 			    	  IntakeServlet.setIntake(intake);
+			    	  IntakeServlet.loadDropDownLists(session);
+			    	  url="pages/student/personal.jsp";
+			      }
+			      else if ("Create Student".equals(action)) {
+			    	  Intake intake=new Intake();
+			    	  StudentHistory history = new StudentHistory();
+			    	  IntakeServlet.setIntake(intake);
+			    	  IntakeServlet.setHistory(history);
 			    	  IntakeServlet.loadDropDownLists(session);
 			    	  url="pages/student/personal.jsp";
 			      }

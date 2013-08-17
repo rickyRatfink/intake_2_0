@@ -1067,7 +1067,7 @@ function moveOnMax(field,nextFieldID){
 		<td colspan="8">&nbsp;</td>
 	</tr>
     <tr>
-		<td colspan="11"><b>Homelessness Documentation:</b><br /></td>
+		<td colspan="8"><b>Homelessness Documentation:</b><br /></td>
 	</tr>
     
      <tr>
@@ -2354,10 +2354,12 @@ function moveOnMax(field,nextFieldID){
          </td>
     </tr>
 	<tr>
-		<td colspan="11" valign="bottom" align="center" height="45"><input type="submit" name="action" value="Save Application" class="imageButtonSave" title="Save Application" /></td>
+		<td colspan="11" valign="bottom" align="center" height="45"><input type="submit" name="action" value="Save" class="imageButtonSave" title="Save Application" /></td>
 	</tr>
 
 	</table>
+    
+    <input type="hidden" name="source" value="application"/>
 </form>
   </div>
 

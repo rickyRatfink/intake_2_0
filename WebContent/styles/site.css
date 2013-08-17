@@ -4,7 +4,7 @@
 body   
 {
     background: #b6b7bc;
-    font-size: .80em;
+    font-size: .70em;
     font-family: "Helvetica Neue", "Lucida Grande", "Segoe UI", Arial, Helvetica, Verdana, sans-serif;
     margin: 0px;
     padding: 0px;
@@ -662,6 +662,10 @@ td {
 }
 
 #input {}
+.select {
+	font: 1.10em Arial;
+	color : #000000;
+}
 .filterTxt {
 	height: 15px;
 	border:1px solid #768ca5;
@@ -670,6 +674,29 @@ td {
 	background-color:#ffffff;
 	font: 11px Arial;
 	color: #000000;
+}
+.textboxErr {
+	border:1px solid #d2071a;
+	background-color:#f9c131;
+	color: #444446;
+	padding-left: 2px;
+}
+.ddlErr {
+	border:1px solid #d2071a;
+	border-radius:0px;
+	background-color:#f9c131;
+	color: #3F1910;
+}
+.areaErr {
+	border:1px solid #d2071a;
+	border-radius:0px;
+	background-color:#f9c131;
+	color: #3F1910;
+}
+.fieldError {
+	font: bold italic 11px Arial;
+	color: #b71524;
+	text-align:left; 
 }
 .button {
 	background: url('../img/buttonBg.png');

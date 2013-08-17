@@ -9,6 +9,7 @@
    Validator valid8r = new Validator();
 	
    String message=(String)request.getAttribute("MESSAGE");
+  String warning=(String)request.getAttribute("WARNING");
 
  String sober1YearsErr = (String)request.getAttribute("sober1YearsErr");
    if (sober1YearsErr==null) sober1YearsErr="";
@@ -31,6 +32,12 @@ String previousFaithFarmFlagErr = (String)request.getAttribute("previousFaithFar
 %>
 
 <form method="POST" action="<%=request.getContextPath()%>/intake">
+<% if (message!=null) { %>
+<h3><font style="color:#0C0"><img src="<%=request.getContextPath()%>/img/success.png"/><%=message %></font></h3><br />	
+<% } %>
+<% if (warning!=null) { %>
+<h3><font style="color:#F90"><img src="<%=request.getContextPath()%>/img/warning.jpg"/><%=warning %></font></h3><br />	
+<% } %>
     <table width="750">
 	<tr>
 		<td colspan="8"><b>Substance Abuse Information: </b><br /><br /></td>
@@ -261,9 +268,10 @@ String previousFaithFarmFlagErr = (String)request.getAttribute("previousFaithFar
 
 
      <tr>
-		<td colspan="8" valign="bottom" align="center" height="45"><input type="submit" name="action" value="Update" class="imageButtonSave" title="Update Information" /></td>
+		<td colspan="8" valign="bottom" align="center" height="45"><input type="submit" name="action" value="Save" class="imageButtonSave" title="Update Information" /></td>
 	</tr>
     </table>
+    <input type="hidden" name="source" value="substance"/>
 </form>
 
   <br /><br />
