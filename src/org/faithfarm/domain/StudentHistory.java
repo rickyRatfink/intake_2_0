@@ -7,7 +7,7 @@ public class StudentHistory implements Serializable {
 	private Long studentHistoryId;
 	private Long intakeId;
 	private String farm="";
-	private String phase="";
+	private String phase=""; 
 	private String programStatus="";
 	private String beginDate="";
 	private String endDate="";

@@ -175,6 +175,13 @@ public class Validator {
 		return df.format(ddate);
 
 	}
+	
+	public static String convertDate(String sDate) {
+		Date ddate = new java.util.Date(sDate);
+		DateFormat df = new SimpleDateFormat("MM/dd/yyyy");
+		return df.format(ddate);
+
+	}
 
 	
 	

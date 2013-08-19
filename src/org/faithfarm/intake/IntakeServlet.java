@@ -22,6 +22,14 @@ public class IntakeServlet extends HttpServlet {
 	private static SystemUser systemUser = new SystemUser();
 	private static Intake intake = new Intake();
 	private static StudentHistory history = new StudentHistory();
+	public static StudentHistory getHistory() {
+		return history;
+	}
+
+	public static void setHistory(StudentHistory history) {
+		IntakeServlet.history = history;
+	}
+
 	private static String source = "";
 	private static int validAreaCount=0;
 	private static boolean personal=false;
@@ -72,8 +80,6 @@ public class IntakeServlet extends HttpServlet {
 			System.out.println("employment>"+employment);
 			System.out.println("status>"+status);
 			
-			
-			
 			if (!success) { 
 				req.setAttribute("WARNING", source+" information has errors.  Please check marked fields and correct data.");
 				url=url;
@@ -94,12 +100,17 @@ public class IntakeServlet extends HttpServlet {
 				req.setAttribute("MESSAGE", "Application successfully saved!"); 
 				url=url;
 			}
-				
-			
-			
 		
-		
-		}//end null user else
+		} else if ("Update".equals(action)) {
+			String key = req.getParameter("key");
+			//boolean success = validateApplication(req);
+			//if (success)
+			this.setFields(source, req);
+			dao.updateIntake(intake,history,user.getUsername(),session);
+		    req.setAttribute("updateFlag", "YES");
+		    url="pages/student/"+source+".jsp?upateFlag=YES";
+		    req.setAttribute("MESSAGE", source+" information successfully updated!");
+		}
 		req.getRequestDispatcher("/"+url).forward(req, resp);
 		}
 		catch (Exception e) {
@@ -271,36 +282,7 @@ public class IntakeServlet extends HttpServlet {
 					this.getIntake().getUsageLosses9());
 		}
 		
-		String question[] = new String[]{ 
-				"NO","NO","NO","NO","NO","NO",
-				"NO","NO","NO","NO","NO","NO",
-				"NO","NO","NO","NO","NO","NO",
-				"NO","NO","NO","NO","NO","NO",
-				"NO","NO","NO","NO","NO","NO","NO","NO","NO","NO" };
-		for (int i=0;i<32;i++) {
-			question[i]=valid8r.cleanData(req.getParameter("question"+i));
-		}
-		this.getIntake().setQuestion(question);
-		
-		String questionAnswer[] = new String[]{ 
-				"","","","","","",
-				"","","","","","",
-				"","","","","","",
-				"","","","","","",
-				"","","","","","","","","","" };
-		String questionAnswerDates[] = new String[]{ 
-				"","","","","","",
-				"","","","","","",
-				"","","","","","",
-				"","","","","","",
-				"","","","","","","","","","" };
-		for (int i=0;i<32;i++) {
-			questionAnswer[i]=valid8r.cleanData(req.getParameter("question"+i+"Details"));
-			questionAnswerDates[i]=valid8r.cleanData(req.getParameter("question"+i+"Dates"));
-		}
-		this.getIntake().setQuestionAnswerDetails(questionAnswer);
-		this.getIntake().setQuestionAnswerDates(questionAnswerDates);
-		
+	
 		if ("application".equals(source)||"health".equals(source)) {
 			this.getIntake().setCurrentHealth(valid8r.cleanData(req.getParameter("currentHealth")));
 			this.getIntake().setCurrentMedicationsFlag(valid8r.cleanData(req.getParameter("currentMedicationsFlag")));
@@ -341,6 +323,36 @@ public class IntakeServlet extends HttpServlet {
 			}
 			this.getIntake().setMedicalCondition(medicalCondition);
 			this.getIntake().setHerniaOperationFlag(valid8r.cleanData(req.getParameter("herniaOperationFlag")));
+			
+			String []question = new String[]{ 
+					"NO","NO","NO","NO","NO","NO",
+					"NO","NO","NO","NO","NO","NO",
+					"NO","NO","NO","NO","NO","NO",
+					"NO","NO","NO","NO","NO","NO",
+					"NO","NO","NO","NO","NO","NO","NO","NO","NO","NO" };
+			for (int i=0;i<32;i++) {
+				question[i]=valid8r.cleanData(req.getParameter("question"+i));
+			}
+			this.getIntake().setQuestion(question);
+			
+			String []questionAnswer = new String[]{ 
+					"","","","","","",
+					"","","","","","",
+					"","","","","","",
+					"","","","","","",
+					"","","","","","","","","","" };
+			String []questionAnswerDates = new String[]{ 
+					"","","","","","",
+					"","","","","","",
+					"","","","","","",
+					"","","","","","",
+					"","","","","","","","","","" };
+			for (int i=0;i<32;i++) {
+				questionAnswer[i]=valid8r.cleanData(req.getParameter("question"+i+"Details"));
+				questionAnswerDates[i]=valid8r.cleanData(req.getParameter("question"+i+"Dates"));
+			}
+			this.getIntake().setQuestionAnswerDetails(questionAnswer);
+			this.getIntake().setQuestionAnswerDates(questionAnswerDates);
 		
 		}
 		
@@ -366,6 +378,10 @@ public class IntakeServlet extends HttpServlet {
 			
 			this.getIntake().setProbationAppt(valid8r.cleanData(req.getParameter("probationAppt")));
 			this.getIntake().setProbationApptDetails(valid8r.cleanData(req.getParameter("probationApptDetails")));
+		
+		
+		
+		
 		}
 		
 		
@@ -618,13 +634,7 @@ public class IntakeServlet extends HttpServlet {
 		IntakeServlet.intake = intake;
 	}
 
-	public static StudentHistory getHistory() {
-		return history;
-	}
-
-	public static void setHistory(StudentHistory history) {
-		IntakeServlet.history = history;
-	}
+	
 
 	public static String getSource() {
 		return source;

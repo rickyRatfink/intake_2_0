@@ -22,14 +22,13 @@ import org.faithfarm.util.Validator;
 public class IntakeDao {
 
 	private Validator valid8r = new Validator();
-	private String uid="root";
-	
+	private String uid = "root";
+
 	private String SERVER = "ffarm_dev";
-	private String pwd="admin";
-	
-	
-	//private String SERVER = "ffarm_staging";
-	//private String pwd="j35u59538";
+	private String pwd = "admin";
+
+	// private String SERVER = "ffarm_staging";
+	// private String pwd="j35u59538";
 
 	private Connection getConnection() throws SQLException,
 			ClassNotFoundException {
@@ -37,7 +36,7 @@ public class IntakeDao {
 		Class.forName("com.mysql.jdbc.Driver");
 
 		Connection Conn = DriverManager.getConnection(
-				"jdbc:mysql://localhost:3306/"+SERVER, uid,pwd);
+				"jdbc:mysql://localhost:3306/" + SERVER, uid, pwd);
 
 		return Conn;
 	}
@@ -53,7 +52,8 @@ public class IntakeDao {
 
 			// Do something with the Connection
 			Statement Stmt = Conn.createStatement();
-			StringBuffer s = new StringBuffer("SELECT * FROM "+SERVER+".DONOR ");
+			StringBuffer s = new StringBuffer("SELECT * FROM " + SERVER
+					+ ".DONOR ");
 			s.append("WHERE DONOR_ID=" + id);
 
 			ResultSet RS = Stmt.executeQuery(s.toString());
@@ -86,8 +86,9 @@ public class IntakeDao {
 
 			// Do something with the Connection
 			Statement Stmt = Conn.createStatement();
-			StringBuffer s = new StringBuffer(
-					"SELECT * FROM "+SERVER+".DONOR INNER JOIN "+SERVER+".ADDRESS ON DONOR.DONOR_ID=ADDRESS.DONOR_ID ");
+			StringBuffer s = new StringBuffer("SELECT * FROM " + SERVER
+					+ ".DONOR INNER JOIN " + SERVER
+					+ ".ADDRESS ON DONOR.DONOR_ID=ADDRESS.DONOR_ID ");
 			// s.append("WHERE FIRSTNAME LIKE '%" + firstname +
 			// "%' and lastname like '%"+lastname+"%' ");
 
@@ -114,6 +115,398 @@ public class IntakeDao {
 		return retCode;
 	}
 
+	public void updateIntake(Intake intake, StudentHistory history, String user, HttpSession session) {
+		try {
+
+			Connection Conn = this.getConnection();
+			// Do something with the Connection
+
+			StringBuffer query = new StringBuffer();
+
+			query.append("UPDATE `" + SERVER + "`.`intake` ");
+			query.append("SET ");
+
+			query.append("LASTNAME='" + intake.getLastName() + "',");
+			query.append("		FIRSTNAME='" + intake.getFirstName() + "',");
+			query.append("		MI='" + intake.getMiddleInitial() + "',");
+			query.append("		SUFFIX='" + intake.getSuffix() + "',");
+			query.append("		ADDRESS='" + intake.getAddress() + "',");
+			query.append("		CITY='" + intake.getCity() + "',");
+			query.append("		STATE='" + intake.getState() + "',");
+			query.append("		ZIPCODE='" + intake.getZipcode() + "',");
+			query.append("		DOB='" + intake.getDateOfBirth() + "',");
+			query.append("		SSN='" + intake.getSsn() + "',");
+			query.append("		SSN_CARD_FLAG='', ");
+			query.append("		AGE='" + intake.getAge() + "',");
+			query.append("		HEIGHT='" + intake.getHeight() + "',");
+			query.append("		WEIGHT='" + intake.getWeight() + "',");
+			query.append("		ETHNICITY='" + intake.getEthnicity() + "',");
+			query.append("		HAIR_COLOR='" + intake.getHairColor() + "',");
+			query.append("		EYE_COLOR='" + intake.getEyeColor() + "',");
+			query.append("		MARITAL_STATUS='" + intake.getMaritalStatus()
+					+ "',");
+			query.append("		EDUCATION_LEVEL='" + intake.getEducationLevel()
+					+ "',");
+			query.append("		GRADUATE_FLAG='" + intake.getGraduateFlag() + "',");
+			query.append("		TRANSCRIPTS_FLAG='" + intake.getTranscriptsFlag()
+					+ "',");
+			query.append("		ENGLISH_SPEAKING_FLAG='"
+					+ intake.getEnglishSpeakFlag() + "',");
+			query.append("		ENGLISH_READING_FLAG='"
+					+ intake.getEnglishReadFlag() + "',");
+			query.append("		HOME_LOCATION='" + intake.getHomeLocation() + "',");
+			query.append("		REFERRED_BY='" + intake.getReferredBy() + "',");
+			query.append("		REFERRED_BY_PHONE='" + intake.getReferralPhone()
+					+ "',");
+			query.append("		EMERGENCY_CONTACT='" + intake.getEmergencyContact()
+					+ "',");
+			query.append("		EMERGENCY_PHONE='" + intake.getEmergencyPhone()
+					+ "',");
+			query.append("		EMERGENCRY_RELATIONSHIP='"
+					+ intake.getEmergencyRelationship() + "',");
+			query.append("		MOTHER_LIVING_FLAG='"
+					+ intake.getMotherLivingFlag() + "',");
+			query.append("		FATHER_LIVING_FLAG='"
+					+ intake.getFatherLivingFlag() + "',");
+			query.append("		RELATIONSHIP_WITH_MOTHER='"
+					+ intake.getMotherRelationship() + "',");
+			query.append("		RELATIONSHIP_WITH_FATHER='"
+					+ intake.getFatherRelationship() + "',");
+			query.append("		BROTHERS='" + intake.getBrothers() + "',");
+			query.append("		SISTERS='" + intake.getSisters() + "',");
+			query.append("		CHILDREN='" + intake.getChildren() + "',");
+			query.append("VETERAN_STATUS='" + intake.getVeteranFlag() + "',");
+			query.append("RANK='" + intake.getRank() + "',");
+			query.append("		LENGTH_OF_SERVICE='" + intake.getLengthOfService()
+					+ "',");
+			query.append("		DL_FLAG='" + intake.getDriversLicenseFlag() + "',");
+			query.append("		DL_NUMBER='" + intake.getDriversLicenseNumber()
+					+ "',");
+			query.append("		DL_STATE='" + intake.getDriversLicenseState()
+					+ "',");
+			query.append("		DL_EXP_DATE='', ");// Dl exp date
+			query.append("		STATE_ID_FLAG='', ");// id state flag
+			query.append("		STATE_ID_STATE='', ");// state id state
+			query.append("		STATE_ID_EXP_DATE='', ");// state id exp date
+			query.append("		GOVERNMENT_BENEFITS_FLAG='"
+					+ intake.getGovernmentBenefits() + "',");
+			query.append("		RELIGION='" + intake.getReligion() + "',");
+			query.append("		RELIGIOUS_EXPERIENCE='"
+					+ intake.getReligiousExperience() + "',");
+			query.append("		ALCOHOL_LAST_USED='" + intake.getAlcoholLastUsed()
+					+ "',");
+			query.append("		COCAINE_LAST_USED='" + intake.getCocaineLastUsed()
+					+ "',");
+			query.append("		MARIJUANA_LAST_USED='"
+					+ intake.getMarijuanaLastUsed() + "',");
+			query.append("		OXYCODONE_LAST_USED='"
+					+ intake.getOxycodoneLastUsed() + "',");
+			query.append("		SPEED_LAST_USED='" + intake.getSpeedLastUsed()
+					+ "',");
+			query.append("		HEROIN_LAST_USED='" + intake.getHeroinLastUsed()
+					+ "',");
+			query.append("		XANAX_LAST_USED='" + intake.getXanaxLastUsed()
+					+ "',");
+			query.append("		OTHER_LAST_USED='" + intake.getOtherLastUsed()
+					+ "',");
+			query.append("		ALCOHOL_YEARS_USED='"
+					+ intake.getAlcoholYearsUsed() + "',");
+			query.append("		COCAINE_YEARS_USED='"
+					+ intake.getCocaineYearsUsed() + "',");
+			query.append("					MARIJUANA_YEARS_USED='"
+					+ intake.getMarijuanaYearsUsed() + "',");
+			query.append("		OXYCODONE_YEARS_USED='"
+					+ intake.getOxycodoneYearsUsed() + "',");
+			query.append("		SPEED_YEARS_USED='" + intake.getSpeedYearsUsed()
+					+ "',");
+			query.append("		HEROIN_YEARS_USED='" + intake.getHeroinYearsUsed()
+					+ "',");
+			query.append("		XANAX_YEARS_USED='" + intake.getXanaxYearsUsed()
+					+ "',");
+			query.append("		OTHER_YEARS_USED='" + intake.getOtherYearsUsed()
+					+ "',");
+			query.append("		SOBER_1_YEAR='" + intake.getSober1Years() + "',");
+			query.append("		SOBER_3_YEARS='" + intake.getSober3Years() + "',");
+			query.append("		USAGE_PATTERN='" + intake.getUsagePattern() + "',");
+			query.append("		QUANTITY_PER_WEEK='" + intake.getQtyConsumed1()
+					+ "',");
+			query.append("		QUANTITY_2_YEARS='" + intake.getQtyConsumed2()
+					+ "',");
+			query.append("		USAGE_LOSSES='" + intake.getUsageLosses() + "',");
+			query.append("		PHYSICAL_EFFECTS='"
+					+ intake.getAbusePhysicalEffects() + "',");
+			query.append("		AA_FLAG='" + intake.getAttendAA() + "',");
+			query.append("		NA_FLAG='" + intake.getAttendNA() + "',");
+			query.append("		PREV_FF_FLAG='" + intake.getPreviousFaithFarmFlag()
+					+ "',");
+			query.append("		PREV_FF_YEAR='" + intake.getFfYearsAttended()
+					+ "',");
+			query.append("		PREV_FF_OTHER='" + intake.getPreviousFaithFarm()
+					+ "',");
+			query.append("		CURRENT_HEALTH='" + intake.getCurrentHealth()
+					+ "',");
+			query.append("			MEDICATION_FLAG='"
+					+ intake.getCurrentMedicationsFlag() + "',");
+			query.append("			MEDICATION_SUPPLY_FLAG='"
+					+ intake.getMedicationSuppyFlag() + "',");
+			query.append("			MEDICATION_NEED_FLAG='"
+					+ intake.getNeedMedicationFlag() + "',");
+			query.append("			MEDICATION_DETAILS='"
+					+ intake.getCurrentMedications() + "',");
+			query.append("			MEDICATION_REFILL_DETAILS='"
+					+ intake.getRefillDetails() + "',");
+			query.append("			DOCTOR_APPT_FLAG='"
+					+ intake.getDoctorsAppointment() + "',");
+			query.append("			DOCTOR_APPT_DETAILS='"
+					+ intake.getDoctorsAppointmentDate() + "',");
+			query.append("			EYEWEAR_FLAG='" + intake.getEyewearFlag() + "',");
+			query.append("			EYEWEAR_USAGE='" + intake.getEyewearUsage() + "',");
+			query.append("			HOMELESS_TIME='"
+					+ intake.getHomelessLengthOfTime() + "',");
+			query.append("			HOMELESS_REASON='" + intake.getHomelessHowOften()
+					+ "',");
+			query.append("			HOMELESS_HOW_OFTEN='" + intake.getHomelessReason()
+					+ "',");
+			query.append("			INDUSTRIAL_INJURY_FLAG='"
+					+ intake.getIndustrialInjuryFlag() + "',");
+			query.append("			INDUSTRIAL_INJURY_DATE='"
+					+ intake.getIndustrialInjuryDate() + "',");
+			query.append("			INDUSTRIAL_INJURY_REASON='"
+					+ intake.getIndustrialInjuryReason() + "',");
+			query.append("			INDUSTRIAL_INJURY_LOCATION='"
+					+ intake.getIndustrialInjuryLocation() + "',");
+			query.append("			INDUSTRIAL_INJURY_EMPLOYER='"
+					+ intake.getIndustrialInjuryEmployer() + "',");
+			query.append("			INDUSTRIAL_INJURY_CLAIM_STATUS='"
+					+ intake.getIndustrialInjuryClaimStatus() + "',");
+			query.append("			DISABILITY_FLAG='" + intake.getDisabilityFlag()
+					+ "',");
+			query.append("			DISABILITY_DETAILS='"
+					+ intake.getDisabilityDetails() + "',");
+			query.append("			DISABILITY_EXAMINATION_DATE='"
+					+ intake.getExaminationDate() + "',");
+			query.append("			DISABILITY_PHYSICIAN='" + intake.getPhysician()
+					+ "',");
+			query.append("			DISABILITY_PHYSICIAN_ADDRESS='"
+					+ intake.getPhysicianAddress() + "',");
+			query.append("			HERNIA_SIDE='" + intake.getHerniaSide() + "',");
+			query.append("			HERNIA_DATE='" + intake.getHerniaDate() + "',");
+			query.append("			HERNIA_OPERATION_FLAG='"
+					+ intake.getHerniaOperationFlag() + "',");
+			query.append("			HERNIA_DETAILS='" + intake.getHerniaPhysician()
+					+ "',");
+			query.append("			MEDICAL_CONDITION_DETAILS='"
+					+ intake.getMedicalConditionDetails() + "',");
+			query.append("			LAWSUIT_FLAG='" + intake.getLawsuitFlag() + "',");
+			query.append("			CURRENT_LAWSUIT_FLAG='"
+					+ intake.getCurrentLawsuitFlag() + "',");
+			query.append("			LAWSUIT_DETAILS='" + intake.getLawsuitDetails()
+					+ "',");
+			query.append("			CURRENT_LAWSUIT_DETAILS='"
+					+ intake.getCurrentLawsuitDetails() + "',");
+			query.append("			FELONY_FLAG='" + intake.getFelonyFlag() + "',");
+			query.append("				SEXUAL_OFFENSE_FLAG='"
+					+ intake.getSexualOffenseFlag() + "',");
+			query.append("				FELONY_DETAILS='" + intake.getFelonyDetails()
+					+ "',");
+			query.append("				SEXUAL_OFFENSE_QTY='"
+					+ intake.getSexualOffenseQty() + "',");
+			query.append("				SEXUAL_OFFENSE_DETAILS='"
+					+ intake.getSexualOffenseDetails() + "',");
+			query.append("				PROBATION_FLAG='" + intake.getProbationFlag()
+					+ "',");
+			query.append("				PROBATION_COUNTY='" + intake.getProbationCounty()
+					+ "',");
+			query.append("				PROBATION_STATE='" + intake.getProbationState()
+					+ "',");
+			query.append("				PROBATION_OFFICER='"
+					+ intake.getProbationOfficer() + "',");
+			query.append("				PROBATION_OFFICER_PHONE='"
+					+ intake.getProbationOfficerPhone() + "',");
+			query.append("				PROBATION_APPT_FLAG='"
+					+ intake.getProbationAppt() + "',");
+			query.append("				PROBATION_APPT_DETAILS='"
+					+ intake.getProbationApptDetails() + "',");
+			query.append("				INCOME_AMOUNT='" + intake.getIncomeAmount()
+					+ "',");
+			query.append("				INCOME_SOURCE='" + intake.getIncomeSource()
+					+ "',");
+			query.append("				INCOME_WEEKLY_FLAG='"
+					+ intake.getIncomeWeeklyFlag() + "',");
+			query.append("				INCOME_MONTHLY_FLAG='"
+					+ intake.getIncomeMonthlyFlag() + "',");
+			query.append("				OTHER_JOB_SKILL='"
+					+ intake.getWorkExperienceOtherDesc() + "',");
+			query.append("				APPLICATION_STATUS='"
+					+ intake.getApplicationStatus() + "',");
+			query.append("				APPLICATION_SIGNATURE='"
+					+ intake.getApplicationSignature() + "',");
+			query.append("				INTAKE_COUNSELOR_SIGNATURE='"
+					+ intake.getIntakeCounselorSignature() + "',");
+			query.append("				DIRECTOR_SIGNATURE='"
+					+ intake.getDirectorSignature() + "',");
+			query.append("				APPLICATION_SIGN_DATE='"
+					+ intake.getApplicationSignatureDate() + "',");
+			query.append("				INTAKE_COUNSELOR_SIGN_DATE='', ");
+			query.append("				DIRECTOR_SIGN_DATE='', ");
+			query.append("				CELL_DISCLOSURE_CONSENT='"
+					+ intake.getCellDisclosureConsent() + "',");
+			query.append("				RELEASE_WAIVER_CONSENT='"
+					+ intake.getReleaseWaiverConsent() + "',");
+			query.append("				BIBLICAL_COUNSELING_CONSENT='"
+					+ intake.getBiblicalBasedCounselingConsent() + "',");
+			query.append("				ENTRY_AGREEMENT_CONSENT='"
+					+ intake.getEntryAgreementConsent() + "',");
+			query.append("				RULES_VISITATION_CONSENT='"
+					+ intake.getRulesVisitationConsent() + "',");
+			query.append("			RELEASE_INFORMATION_CONSENT='"
+					+ intake.getReleaseInformationConsent() + "',");
+			query.append("			LAST_UPDATED_DATE='" + valid8r.getEpoch() + "',");
+			query.append("			LAST_UPDATED_BY='" + user + "', ");
+			query.append("			SUBMISSION_DATE='" + valid8r.getEpoch() + "',");
+			query.append("			ENTRY_DATE='" + intake.getEntryDate() + "',");
+			query.append("			INTAKE_STATUS='" + intake.getIntakeStatus() + "',");
+			query.append("			IMAGE_HEADSHOT='', ");
+			query.append("			IMAGE_STATE_ID='', ");
+			query.append("			IMAGE_SSN='', ");
+			query.append("			FARM_BASE='" + intake.getFarmBase() + "',");
+			query.append("			SUPERVISOR='" + intake.getSupervisor() + "',");
+			query.append("			JOB='" + intake.getJob() + "',");
+			query.append("			CLASS='" + intake.getCurrentClass() + "',");
+			query.append("			AREA='" + intake.getArea() + "',");
+			query.append("			ROOM='" + intake.getRoom() + "',");
+			query.append("			BED='" + intake.getBed() + "' WHERE INTAKE_ID = "+intake.getIntakeId());
+			System.out.println(query);
+			PreparedStatement Stmt = null;
+			Stmt = Conn.prepareStatement(query.toString());
+			Stmt.executeUpdate(query.toString());
+
+			/*
+			 * 
+			 * Questions
+			 */
+			StringBuffer query1 = new StringBuffer("");
+			query1.append("DELETE FROM "+SERVER+".intake_question_answer WHERE INTAKE_ID="+intake.getIntakeId());
+			Stmt.executeUpdate(query1.toString());
+			
+			String answer[] = intake.getQuestion();
+			String details[] = intake.getQuestionAnswerDetails();
+			String dates[] = intake.getQuestionAnswerDates();
+
+			for (int i = 0; i < 32; i++) {
+
+				query1 = new StringBuffer("");
+
+				if ("YES".equals(answer[i])) {
+					query1.append("INSERT INTO `" + SERVER
+							+ "`.`intake_question_answer` (question_id, answer, intake_id, detail,dates) ");
+					query1.append("VALUES ( ");
+					query1.append((i+1)+", ");
+					query1.append("'"+answer[i]+"', ");
+					query1.append(intake.getIntakeId()+", ");
+					query1.append("'"+details[i]+"', ");
+					query1.append("'"+dates[i]+"' ) ");
+					System.out.println(query1);
+					Stmt = Conn.prepareStatement(query1.toString(),
+							Stmt.RETURN_GENERATED_KEYS);
+					Stmt.executeUpdate(query1.toString());
+				}
+			}
+
+			/*
+			 * medical conditions
+			 */
+			query1 = new StringBuffer("");
+			query1.append("DELETE FROM "+SERVER+".intake_medical_condition WHERE INTAKE_ID="+intake.getIntakeId());
+			Stmt.executeUpdate(query1.toString());
+
+			String condition[] = intake.getMedicalCondition();
+
+			for (int i = 0; i < 26; i++) {
+
+				query1 = new StringBuffer("");
+
+				if ("YES".equals(condition[i])) {
+					query1.append("INSERT INTO `" + SERVER
+							+ "`.`intake_medical_condition` (intake_id, answer, medical_condition_id) VALUES ( ");
+					query1.append(intake.getIntakeId()+" ,");
+					query1.append("'"+condition[i]+"', ");
+					query1.append((i+1)+") ");
+					System.out.println(query1);
+					Stmt = Conn.prepareStatement(query1.toString());
+					Stmt.executeUpdate(query1.toString());
+				}
+			}
+
+			/*
+			 * job skills
+			 */
+			query1 = new StringBuffer("");
+			query1.append("DELETE FROM "+SERVER+".intake_job_skill WHERE INTAKE_ID="+intake.getIntakeId());
+			Stmt.executeUpdate(query1.toString());
+
+			String work[] = intake.getWorkExperience();
+
+			for (int i = 0; i < 26; i++) {
+
+				 query1 = new StringBuffer("");
+
+				if ("YES".equals(work[i])) {
+					query1.append("INSERT INTO `" + SERVER
+							+ "`.`intake_job_skill` (JOB_SKILL_ID, INTAKE_ID) VALUES ( ");
+					query1.append((i+1)+",");
+					query1.append(intake.getIntakeId()+ ") ");
+					System.out.println(query1);
+					Stmt = Conn.prepareStatement(query1.toString());
+					Stmt.executeUpdate(query1.toString());
+				}
+			}
+			
+			
+			
+			//update student history
+			query1 = new StringBuffer("");
+			query1.append("SELECT farm, phase, program_status, begin_date, end_date FROM "+SERVER+".student_history WHERE INTAKE_ID="+intake.getIntakeId()+ " order by student_history_id desc");
+			ResultSet RS = Stmt.executeQuery(query1.toString());
+			boolean updateHistory = false;
+			
+			if (RS.next())
+				if (RS.isFirst()) {
+					String location=RS.getString(1);
+					String phase=RS.getString(2);
+					String status=RS.getString(3);
+					String beginDate=RS.getString(4);
+					String endDate=RS.getString(5);
+					
+					if (!location.equals(history.getFarm()))
+						updateHistory = true;
+					if (!phase.equals(history.getPhase()))
+						updateHistory = true;
+					if (!status.equals(history.getProgramStatus()))
+						updateHistory = true;
+					if (!beginDate.equals(history.getBeginDate()))
+						updateHistory = true;
+					if (!endDate.equals(history.getEndDate()))
+						updateHistory = true;
+				}
+			if (updateHistory)
+				this.insertHistory(history, user, session);
+			
+
+			
+			
+			// Clean up after ourselves
+			Stmt.close();
+			Conn.close();
+		} catch (SQLException E) {
+			System.out.println(E.getMessage());
+			session.setAttribute("SYSTEM_ERROR", E.getMessage());
+		} catch (ClassNotFoundException e) {
+			session.setAttribute("SYSTEM_ERROR", e.getMessage());
+			e.printStackTrace();
+		}
+	}
+
 	public Long insertIntakeApplication(Intake intake, String user,
 			HttpSession session) {
 		Long key = new Long("0");
@@ -125,7 +518,7 @@ public class IntakeDao {
 
 			StringBuffer query = new StringBuffer();
 
-			query.append("INSERT INTO `"+SERVER+"`.`intake`");
+			query.append("INSERT INTO `" + SERVER + "`.`intake`");
 			query.append("(");
 			query.append("`LASTNAME`,");
 			query.append("`FIRSTNAME`,");
@@ -434,16 +827,14 @@ public class IntakeDao {
 			query.append("'',");
 			query.append("'',");
 			query.append("'',");
-			query.append("'"+intake.getFarmBase()+"',");
-			query.append("'"+intake.getSupervisor()+"',");
-			query.append("'"+intake.getJob()+"',");
-			query.append("'"+intake.getCurrentClass()+"',");
-			query.append("'"+intake.getArea()+"',");
-			query.append("'"+intake.getRoom()+"',");
-			query.append("'"+intake.getBed()+"' )");
-			
+			query.append("'" + intake.getFarmBase() + "',");
+			query.append("'" + intake.getSupervisor() + "',");
+			query.append("'" + intake.getJob() + "',");
+			query.append("'" + intake.getCurrentClass() + "',");
+			query.append("'" + intake.getArea() + "',");
+			query.append("'" + intake.getRoom() + "',");
+			query.append("'" + intake.getBed() + "' )");
 
-			
 			PreparedStatement Stmt = null;
 			Stmt = Conn.prepareStatement(query.toString(),
 					Stmt.RETURN_GENERATED_KEYS);
@@ -453,85 +844,85 @@ public class IntakeDao {
 			if (generatedKeys.next())
 				key = generatedKeys.getLong(1);
 			System.out.println("key=" + key);
-			
+
 			/*
 			 * 
-			 *  Questions
-			 * 
+			 * Questions
 			 */
 			String answer[] = intake.getQuestion();
-			String details[]=intake.getQuestionAnswerDetails();
-			String dates[]=intake.getQuestionAnswerDates();			
-			
-			for (int i=0;i<32;i++) {
-			
-			StringBuffer query1 = new StringBuffer("");
-			
-			if ("YES".equals(answer[i])) {
-				query1.append("INSERT INTO `"+SERVER+"`.`intake_question_answer` (");
-				query1.append("`QUESTION_ID`,");
-				query1.append("`INTAKE_ID`,");
-				query1.append("`ANSWER`,");
-				query1.append("`DETAIL`,");
-				query1.append("`DATES`)");
-				query1.append("VALUES");
-				query1.append("(");
-				query1.append((i+1)+","+key+",'"+answer[i]+"','"+details[i]+"','"+dates[i]+"');");
-					
-				Stmt = Conn.prepareStatement(query1.toString(),
-						Stmt.RETURN_GENERATED_KEYS);
-				Stmt.executeUpdate(query1.toString());
+			String details[] = intake.getQuestionAnswerDetails();
+			String dates[] = intake.getQuestionAnswerDates();
+
+			for (int i = 0; i < 32; i++) {
+
+				StringBuffer query1 = new StringBuffer("");
+
+				if ("YES".equals(answer[i])) {
+					query1.append("INSERT INTO `" + SERVER
+							+ "`.`intake_question_answer` (");
+					query1.append("`QUESTION_ID`,");
+					query1.append("`INTAKE_ID`,");
+					query1.append("`ANSWER`,");
+					query1.append("`DETAIL`,");
+					query1.append("`DATES`)");
+					query1.append("VALUES");
+					query1.append("(");
+					query1.append((i + 1) + "," + key + ",'" + answer[i]
+							+ "','" + details[i] + "','" + dates[i] + "');");
+
+					Stmt = Conn.prepareStatement(query1.toString(),
+							Stmt.RETURN_GENERATED_KEYS);
+					Stmt.executeUpdate(query1.toString());
+				}
 			}
-			}
-			
-			
+
 			/*
 			 * medical conditions
-			 * 
 			 */
-			String condition[]=intake.getMedicalCondition();
-			
-			for (int i=0;i<26;i++) {
-				
-			StringBuffer query1 = new StringBuffer("");
-			
-			if ("YES".equals(condition[i])) {
-				query1.append("INSERT INTO `"+SERVER+"`.`intake_medical_condition` (");
-				query1.append("`MEDICAL_CONDITION_ID`,");
-				query1.append("`INTAKE_ID`,");
-				query1.append("`ANSWER`)");
-				query1.append("VALUES");
-				query1.append("(");
-				query1.append((i+1)+","+key+",'"+condition[i]+"');");
-				Stmt = Conn.prepareStatement(query1.toString(),
-						Stmt.RETURN_GENERATED_KEYS);
-				Stmt.executeUpdate(query1.toString());
+			String condition[] = intake.getMedicalCondition();
+
+			for (int i = 0; i < 26; i++) {
+
+				StringBuffer query1 = new StringBuffer("");
+
+				if ("YES".equals(condition[i])) {
+					query1.append("INSERT INTO `" + SERVER
+							+ "`.`intake_medical_condition` (");
+					query1.append("`MEDICAL_CONDITION_ID`,");
+					query1.append("`INTAKE_ID`,");
+					query1.append("`ANSWER`)");
+					query1.append("VALUES");
+					query1.append("(");
+					query1.append((i + 1) + "," + key + ",'" + condition[i]
+							+ "');");
+					Stmt = Conn.prepareStatement(query1.toString(),
+							Stmt.RETURN_GENERATED_KEYS);
+					Stmt.executeUpdate(query1.toString());
+				}
 			}
-			}
-			
-			
+
 			/*
 			 * job skills
-			 * 
 			 */
-			String work[]=intake.getWorkExperience();
-			
-			for (int i=0;i<26;i++) {
-				
-			StringBuffer query1 = new StringBuffer("");
-			
-			if ("YES".equals(work[i])) {
-				query1.append("INSERT INTO `"+SERVER+"`.`intake_job_skill` (");
-				query1.append("`JOB_SKILL_ID`,");
-				query1.append("`INTAKE_ID` ) ");
-				query1.append("VALUES");
-				query1.append("(");
-				query1.append((i+1)+","+key+");");
-				System.out.println(query1);
-				Stmt = Conn.prepareStatement(query1.toString(),
-						Stmt.RETURN_GENERATED_KEYS);
-				Stmt.executeUpdate(query1.toString());
-			}
+			String work[] = intake.getWorkExperience();
+
+			for (int i = 0; i < 26; i++) {
+
+				StringBuffer query1 = new StringBuffer("");
+
+				if ("YES".equals(work[i])) {
+					query1.append("INSERT INTO `" + SERVER
+							+ "`.`intake_job_skill` (");
+					query1.append("`JOB_SKILL_ID`,");
+					query1.append("`INTAKE_ID` ) ");
+					query1.append("VALUES");
+					query1.append("(");
+					query1.append((i + 1) + "," + key + ");");
+					System.out.println(query1);
+					Stmt = Conn.prepareStatement(query1.toString(),
+							Stmt.RETURN_GENERATED_KEYS);
+					Stmt.executeUpdate(query1.toString());
+				}
 			}
 			// Clean up after ourselves
 			Stmt.close();
@@ -556,8 +947,8 @@ public class IntakeDao {
 
 			// Do something with the Connection
 			Statement Stmt = Conn.createStatement();
-			StringBuffer s = new StringBuffer(
-					"SELECT * FROM "+SERVER+".QUESTION ORDER BY QUESTION_ID ");
+			StringBuffer s = new StringBuffer("SELECT * FROM " + SERVER
+					+ ".QUESTION ORDER BY QUESTION_ID ");
 
 			ResultSet RS = Stmt.executeQuery(s.toString());
 			while (RS.next()) {
@@ -591,8 +982,8 @@ public class IntakeDao {
 
 			// Do something with the Connection
 			Statement Stmt = Conn.createStatement();
-			StringBuffer s = new StringBuffer(
-					"SELECT * FROM "+SERVER+".MEDICAL_CONDITION  ");
+			StringBuffer s = new StringBuffer("SELECT * FROM " + SERVER
+					+ ".MEDICAL_CONDITION  ");
 
 			ResultSet RS = Stmt.executeQuery(s.toString());
 			while (RS.next()) {
@@ -626,8 +1017,8 @@ public class IntakeDao {
 
 			// Do something with the Connection
 			Statement Stmt = Conn.createStatement();
-			StringBuffer s = new StringBuffer(
-					"SELECT * FROM "+SERVER+".JOB_SKILL  ");
+			StringBuffer s = new StringBuffer("SELECT * FROM " + SERVER
+					+ ".JOB_SKILL  ");
 
 			ResultSet RS = Stmt.executeQuery(s.toString());
 			while (RS.next()) {
@@ -660,7 +1051,7 @@ public class IntakeDao {
 			Statement Stmt = Conn.createStatement();
 
 			StringBuffer query = new StringBuffer();
-			query.append("UPDATE "+SERVER+".DONOR SET ");
+			query.append("UPDATE " + SERVER + ".DONOR SET ");
 			retCode = Stmt.executeUpdate(query.toString());
 			Stmt.close();
 			Conn.close();
@@ -684,10 +1075,12 @@ public class IntakeDao {
 
 			// Do something with the Connection
 			Statement Stmt = Conn.createStatement();
-			StringBuffer s = new StringBuffer(
-					"SELECT * FROM "+SERVER+".DONATION ");
-			s.append("INNER JOIN "+SERVER+".DONOR ON DONOR.DONOR_ID=DONATION.DONOR_ID  ");
-			s.append("INNER JOIN "+SERVER+".ADDRESS ON DONOR.DONOR_ID=ADDRESS.DONOR_ID WHERE ");
+			StringBuffer s = new StringBuffer("SELECT * FROM " + SERVER
+					+ ".DONATION ");
+			s.append("INNER JOIN " + SERVER
+					+ ".DONOR ON DONOR.DONOR_ID=DONATION.DONOR_ID  ");
+			s.append("INNER JOIN " + SERVER
+					+ ".ADDRESS ON DONOR.DONOR_ID=ADDRESS.DONOR_ID WHERE ");
 			if (lastname.length() > 0)
 				s.append("DONOR.LASTNAME='" + lastname + "' AND ");
 			if (firstname.length() > 0)
@@ -754,7 +1147,8 @@ public class IntakeDao {
 			// Do something with the Connection
 			Statement Stmt = Conn.createStatement();
 			StringBuffer s = new StringBuffer(
-					"SELECT USER_ID, USERNAME, USER_ROLE, LOGIN_COUNT, FARM_BASE FROM "+SERVER+".SYSTEM_USER ");
+					"SELECT USER_ID, USERNAME, USER_ROLE, LOGIN_COUNT, FARM_BASE FROM "
+							+ SERVER + ".SYSTEM_USER ");
 			s.append("WHERE FARM_BASE='" + farm + "'  ");
 			ResultSet RS = Stmt.executeQuery(s.toString());
 			while (RS.next()) {
@@ -785,41 +1179,42 @@ public class IntakeDao {
 	public boolean secureLogin(String username, String password,
 			HttpServletRequest req) {
 
-		boolean success=true;
+		boolean success = true;
 		ArrayList errors = new ArrayList();
-		
+
 		try {
-			
-			
-			if (username.trim().length() == 0
-					|| username.equals("username")) {
+
+			if (username.trim().length() == 0 || username.equals("username")) {
 				errors.add("Username is required.");
-				success=false;
+				success = false;
 			}
-			if (password.trim().length() == 0
-					|| password.equals("password")) {
+			if (password.trim().length() == 0 || password.equals("password")) {
 				errors.add("Password is required.");
-				success=false;
+				success = false;
 			}
-			
-			
+
 			if (success) {
-				
-				success=false;
-				
+
+				success = false;
+
 				Connection Conn = this.getConnection();
-	
+
 				// Do something with the Connection
 				Statement Stmt = Conn.createStatement();
-	
-				ResultSet RS = Stmt.executeQuery("SELECT * from SYSTEM_USER WHERE USERNAME='"+username+"' AND PASSWORD='"+password+"'");
-	
+
+				ResultSet RS = Stmt
+						.executeQuery("SELECT * from SYSTEM_USER WHERE USERNAME='"
+								+ username
+								+ "' AND PASSWORD='"
+								+ password
+								+ "'");
+
 				SystemUser user = new SystemUser();
-				
+
 				while (RS.next()) {
 					String uid = RS.getString(2);
 					String pwd = RS.getString(3);
-	
+
 					user.setUserId(Integer.valueOf(RS.getString(1)));
 					user.setUsername(RS.getString(2));
 					user.setPassword(RS.getString(3));
@@ -828,20 +1223,19 @@ public class IntakeDao {
 					user.setUserRole(RS.getString(6));
 					user.setFarmBase(RS.getString(7));
 					user.setLoginCount(RS.getInt(8));
-	
-					
-	
+
 					if (username.equals(uid)) {
-						
+
 						if (password.equals(pwd)) {
-							req.getSession().setAttribute("USER_" + req.getSession().getId(), user);
-							this.updateLoginCount(user.getUserId(), req.getSession());
-							success=true;	
+							req.getSession().setAttribute(
+									"USER_" + req.getSession().getId(), user);
+							this.updateLoginCount(user.getUserId(),
+									req.getSession());
+							success = true;
 						}
-	
+
 					}
-				
-				
+
 				}
 
 				// Clean up after ourselves
@@ -850,16 +1244,13 @@ public class IntakeDao {
 				Conn.close();
 			}
 
-			if (!success&&errors.size()==0) {
+			if (!success && errors.size() == 0) {
 				errors.add("Your login attempt was not successful. Please try again.");
-				success=false;
+				success = false;
 			}
-			
-			
-			req.setAttribute("ERRORS_" + req.getSession().getId(),errors);
-					
-			
-	
+
+			req.setAttribute("ERRORS_" + req.getSession().getId(), errors);
+
 		} catch (SQLException E) {
 			req.setAttribute("SYSTEM_ERROR", E.getMessage());
 		} catch (ClassNotFoundException e) {
@@ -867,7 +1258,6 @@ public class IntakeDao {
 			e.printStackTrace();
 		}
 
-		
 		return success;
 	}
 
@@ -880,7 +1270,9 @@ public class IntakeDao {
 			Statement Stmt = Conn.createStatement();
 
 			StringBuffer query = new StringBuffer();
-			query.append("UPDATE "+SERVER+".SYSTEM_USER SET LOGIN_COUNT=LOGIN_COUNT+1 WHERE USER_ID="
+			query.append("UPDATE "
+					+ SERVER
+					+ ".SYSTEM_USER SET LOGIN_COUNT=LOGIN_COUNT+1 WHERE USER_ID="
 					+ id + ";");
 			retCode = Stmt.executeUpdate(query.toString());
 
@@ -906,7 +1298,7 @@ public class IntakeDao {
 			Statement Stmt = Conn.createStatement();
 
 			StringBuffer query = new StringBuffer();
-			query.append("UPDATE "+SERVER+".SYSTEM_USER SET PASSWORD='"
+			query.append("UPDATE " + SERVER + ".SYSTEM_USER SET PASSWORD='"
 					+ password + "', QUESTION='" + question.replace("'", "''")
 					+ "', ANSWER='" + answer + "' WHERE USER_ID=" + id + ";");
 			retCode = Stmt.executeUpdate(query.toString());
@@ -931,7 +1323,8 @@ public class IntakeDao {
 			Class.forName("com.mysql.jdbc.Driver");
 
 			Connection Conn = DriverManager.getConnection(
-					"jdbc:mysql://localhost:3306/"+SERVER+"", "root", "admin");
+					"jdbc:mysql://localhost:3306/" + SERVER + "", "root",
+					"admin");
 
 			// Do something with the Connection
 			/*
@@ -962,7 +1355,7 @@ public class IntakeDao {
 		}
 		return key;
 	}
-	
+
 	public Long insertHistory(StudentHistory h, String user, HttpSession session) {
 
 		Long key = new Long("0");
@@ -972,7 +1365,9 @@ public class IntakeDao {
 			// Do something with the Connection
 
 			StringBuffer query = new StringBuffer();
-			query.append("INSERT INTO "+SERVER+".STUDENT_HISTORY (INTAKE_ID, FARM, PHASE, PROGRAM_STATUS, REASON, BEGIN_DATE, END_DATE,CREATION_DATE,CREATED_BY) VALUE(");
+			query.append("INSERT INTO "
+					+ SERVER
+					+ ".STUDENT_HISTORY (INTAKE_ID, FARM, PHASE, PROGRAM_STATUS, REASON, BEGIN_DATE, END_DATE,CREATION_DATE,CREATED_BY) VALUE(");
 			query.append("'" + h.getIntakeId() + "',");
 			query.append("'" + h.getFarm() + "',");
 			query.append("'" + h.getPhase() + "',");
@@ -982,8 +1377,8 @@ public class IntakeDao {
 			query.append("'" + h.getEndDate() + "',");
 			query.append("'" + valid8r.getEpoch() + "',");
 			query.append("'" + user + "' );");
-			
-			System.out.println (query);
+
+			System.out.println(query);
 			PreparedStatement Stmt = null;
 			Stmt = Conn.prepareStatement(query.toString(),
 					Stmt.RETURN_GENERATED_KEYS);
@@ -1006,6 +1401,7 @@ public class IntakeDao {
 		}
 		return key;
 	}
+
 	public Long insertAddress(Address d, HttpSession session) {
 
 		Long key = new Long("0");
@@ -1017,7 +1413,7 @@ public class IntakeDao {
 			// Do something with the Connection
 
 			StringBuffer query = new StringBuffer();
-			query.append("INSERT INTO "+SERVER+".ADDRESS (");
+			query.append("INSERT INTO " + SERVER + ".ADDRESS (");
 			query.append(" DONOR_ID,LINE1, LINE2, CITY, STATE, ZIPCODE, MAJOR_INTERSECTION, SUBDIVISION, STREET_SUFFIX, STRUCTURE_TYPE, ");
 			query.append("UNIT, BUILDING, FLOOR, ELEVATOR_FLAG, GATED_FLAG, GATE_INSTRUCTIONS, CREATED_BY  ) VALUES (");
 			query.append(d.getDonorId() + ",");
@@ -1071,7 +1467,7 @@ public class IntakeDao {
 			// Do something with the Connection
 
 			StringBuffer query = new StringBuffer();
-			query.append("INSERT INTO "+SERVER+".SYSTEM_USER (");
+			query.append("INSERT INTO " + SERVER + ".SYSTEM_USER (");
 			query.append(" USERNAME, PASSWORD, CREATION_DATE, CREATED_BY, USER_ROLE, FARM_BASE ) VALUES (");
 			query.append("'" + d.getUsername() + "',");
 			query.append("'" + d.getPassword() + "',");

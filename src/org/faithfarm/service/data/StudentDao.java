@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import javax.servlet.http.HttpSession;
 
 import org.faithfarm.domain.Intake;
+import org.faithfarm.domain.StudentHistory;
 import org.faithfarm.util.Validator;
 
 public class StudentDao {
@@ -32,6 +33,44 @@ public class StudentDao {
 				"jdbc:mysql://localhost:3306/" + SERVER, uid, pwd);
 
 		return Conn;
+	}
+	
+	public ArrayList getClassList (String classId, String farm) {
+		
+		ArrayList list = new ArrayList();
+	try {
+			
+			Connection Conn = this.getConnection();
+
+			StringBuffer query = new StringBuffer();
+
+			query.append("SELECT ");
+			query.append(" LASTNAME, ");
+			query.append(" FIRSTNAME, ENTRY_DATE ");
+			query.append(" FROM `"+SERVER+"`.`intake`  ");
+			query.append(" WHERE");
+			query.append(" CLASS='"+classId+"' ");
+			query.append(" AND FARM_BASE='"+farm +"' ORDER BY ENTRY_DATE ASC");
+			Statement Stmt = null;
+			Stmt = Conn.prepareStatement(query.toString());
+			ResultSet RS = Stmt.executeQuery(query.toString());
+			
+			while (RS.next()) {
+				Intake intake = new Intake();
+				intake.setFirstName(RS.getString(1));
+				intake.setLastName(RS.getString(2));
+				intake.setEntryDate(RS.getString(3));
+				list.add(intake);
+		    }
+			Stmt.close();
+			Conn.close();
+		
+		} catch (SQLException E) {
+			System.out.println (E.getMessage());
+		} catch (ClassNotFoundException e) {
+		}
+
+		return list;
 	}
 	
 	public ArrayList searchStudents(
@@ -368,6 +407,31 @@ public class StudentDao {
 			}
 			intake.setWorkExperience(work);
 
+			//get history
+			StringBuffer query1 = new StringBuffer("");
+			
+			ArrayList list = new ArrayList();
+			query1.append("SELECT * FROM `"+SERVER+"`.`student_history` WHERE INTAKE_ID="+intake.getIntakeId()+" ORDER BY STUDENT_HISTORY_ID DESC ");
+			Stmt = Conn.prepareStatement(query1.toString());
+			RS=Stmt.executeQuery(query1.toString());
+			
+			while (RS.next()) {
+				System.out.println(RS.getLong(1));
+				StudentHistory history = new StudentHistory();
+				history.setStudentHistoryId(RS.getLong(1));
+				history.setIntakeId(RS.getLong(2));
+				history.setPhase(RS.getString(3));
+				history.setProgramStatus(RS.getString(4));
+				history.setReason(RS.getString(5));
+				history.setBeginDate(RS.getString(6));
+				history.setEndDate(RS.getString(7));
+				history.setCreationDate(RS.getString(8));
+				history.setCreatedBy(RS.getString(9));
+				history.setFarm(RS.getString(10));
+				list.add(history);
+			}
+			intake.setHistory(list);
+			
 			Stmt.close();
 			Conn.close();
 		

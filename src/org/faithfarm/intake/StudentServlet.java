@@ -1,6 +1,7 @@
 package org.faithfarm.intake;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -52,13 +53,18 @@ public class StudentServlet extends HttpServlet {
 			    	  Intake intake=dao.getStudent(key, session);
 			    	  IntakeServlet.setIntake(intake);
 			    	  IntakeServlet.loadDropDownLists(session);
-			    	  url="pages/student/personal.jsp";
+			    	  req.setAttribute("updateFlag", "YES");
+			    	  url="pages/student/personal.jsp?upateFlag=YES";
 			      }
 			      else if ("Create Student".equals(action)) {
 			    	  Intake intake=new Intake();
+			    	  ArrayList list = new ArrayList();
 			    	  StudentHistory history = new StudentHistory();
+			    	  list.add(history);
 			    	  IntakeServlet.setIntake(intake);
-			    	  IntakeServlet.setHistory(history);
+			    	  IntakeServlet.getIntake().setHistory(list);
+			    	  //IntakeServlet.getIntake().setStudentHistory(history);
+			    	  
 			    	  IntakeServlet.loadDropDownLists(session);
 			    	  url="pages/student/personal.jsp";
 			      }

@@ -22,11 +22,12 @@
 
 package org.faithfarm.reporting;
 
-import static net.sf.dynamicreports.report.builder.DynamicReports.*;
+import static net.sf.dynamicreports.report.builder.DynamicReports.col;
+import static net.sf.dynamicreports.report.builder.DynamicReports.report;
+import static net.sf.dynamicreports.report.builder.DynamicReports.type;
 
-import java.math.BigDecimal;
+import java.io.OutputStream;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import net.sf.dynamicreports.examples.Templates;
@@ -36,6 +37,10 @@ import net.sf.dynamicreports.report.definition.datatype.DRIDataType;
 import net.sf.dynamicreports.report.exception.DRException;
 import net.sf.jasperreports.engine.JRDataSource;
 
+import org.faithfarm.domain.Intake;
+import org.faithfarm.service.data.StudentDao;
+import org.faithfarm.util.Validator;
+
 /**
  * @author Ricardo Mariaca (r.mariaca@dynamicreports.org)
  */
@@ -44,9 +49,13 @@ public class TestRpt {
 	public TestRpt() {
 		build();
 	}
-
+	
+	private StudentDao dao = new StudentDao();
+	private static Validator valid8r = new Validator();
+	
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	private void build() {
+		
 		try {
 			JasperReportBuilder report = report();
 			
@@ -55,9 +64,11 @@ public class TestRpt {
 			}
 			report
 			  .setTemplate(Templates.reportTemplate)
-			  .title(Templates.createTitleComponent("ColumnDetectDataTypes"))
+			  .title(Templates.createTitleComponent("Class List (Boynton Beach)"))
+			  
 			  .pageFooter(Templates.footerComponent)
 			  .setDataSource(createDataSource())
+			  //.toHtml(outputStream);
 			  .show();
 		} catch (DRException e) {
 			e.printStackTrace();
@@ -65,21 +76,24 @@ public class TestRpt {
 	}
 
 	private JRDataSource createDataSource() {
-		DRDataSource dataSource = new DRDataSource("item", "orderdate", "quantity", "unitprice");
-		dataSource.add("Notebook", new Date(), 1, new BigDecimal(500));
+		DRDataSource dataSource = new DRDataSource("Student", "Entry Date");
+		
+		ArrayList list = dao.getClassList("Orientation","BOYNTON BEACH");
+		
+		for (int i=0;i<list.size();i++) {	
+			Intake intake = (Intake)list.get(i);
+			String firstName=intake.getFirstName();
+			String lastName=intake.getLastName();
+			String entryDate=intake.getEntryDate();
+			dataSource.add(firstName+" "+lastName,valid8r.convertDate(entryDate));
+		}
 		return dataSource;
 	}
 
 	private List<Column> createColumns() {
 		List<Column> columns = new ArrayList<Column>();
-		columns.add(new Column("Item",        "item",      "string"));//dataType = "String", "STRING", "java.lang.String", "text"
-		columns.add(new Column("Quantity",    "quantity",  "integer"));//dataType = "Integer", "INTEGER", "java.lang.Integer"
-		columns.add(new Column("Unit price",  "unitprice", "bigDecimal"));//dataType = "bigdecimal", "BIGDECIMAL", "java.math.BigDecimal"
-		columns.add(new Column("Order date",  "orderdate", "date"));//dataType = "Date", "DATE", "java.util.Date"
-		columns.add(new Column("Order date",  "orderdate", "dateYearToFraction"));//dataType = "dateyeartofraction", "DATEYEARTOFRACTION"
-		columns.add(new Column("Order year",  "orderdate", "dateYear"));//dataType = "DateYear", "dateyear", "DATEYEAR"
-		columns.add(new Column("Order month", "orderdate", "dateMonth"));//dataType = "DateMonth", "datemonth", "DATEMONTH"
-		columns.add(new Column("Order day",   "orderdate", "dateDay"));//dataType = "DateDay", "dateday", "DATEDAY"
+		columns.add(new Column("Student",        "Student",      "string"));//dataType = "String", "STRING", "java.lang.String", "text"
+		columns.add(new Column("Entry Date",    "Entry Date",  "string"));//dataType = "Integer", "INTEGER", "java.lang.Integer"
 		return columns;
 	}
 

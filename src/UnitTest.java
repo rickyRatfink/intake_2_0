@@ -64,7 +64,7 @@ public class UnitTest {
 	    	  System.out.println("Phone Number must be in the form XXX-XXX-XXXX");
 	      }
 		*/
-	      
+	      /*
 	      Map<String, String> m = new HashMap<String, String>();
 	      
 	       m.put("1", "Kitchen");
@@ -73,12 +73,16 @@ public class UnitTest {
 	        
 	        for (String key:m.keySet()) {
 	        	System.out.println(key+" "+m.get(key));
-	        }
+	        }*/
 	        /* Initialize frequency table from command line
 	        for (String a : args) {
 	            Integer freq = m.get(a);
 	            m.put(a, (freq == null) ? 1 : freq + 1);
 	        }*/
+		String ssn="595468671";
+		System.out.println(ssn.substring(0,3));
+		System.out.println(ssn.substring(3,5));
+		System.out.println(ssn.substring(5,9));
 
 	     
 	}

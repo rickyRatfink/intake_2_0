@@ -295,12 +295,26 @@ public class Intake implements Serializable {
 	
 	private  String entryDate ="";
 	private  String intakeStatus = "";
+	
+	private  ArrayList history = new ArrayList();
+	
+	
+	public ArrayList getHistory() {
+		return history;
+	}
+
+	public void setHistory(ArrayList history) {
+		this.history = history;
+	}
+
 	public Long getIntakeId() {
 		return intakeId;
 	}
+
 	public void setIntakeId(Long intakeId) {
 		this.intakeId = intakeId;
 	}
+
 	public String getFarmBase() {
 		return farmBase;
 	}
