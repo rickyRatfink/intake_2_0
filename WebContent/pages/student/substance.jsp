@@ -157,8 +157,8 @@ String previousFaithFarmFlagErr = (String)request.getAttribute("previousFaithFar
         
     
         <tr>
-			<td valign="top">Longest time sober in past 3 years?&nbsp;<input type="text" name="sober3Years" value="<%=IntakeServlet.getIntake().getSober3Years()%>" size="9" maxlength="15" <% if (sober3YearsErr.length()>0) { %>class="textboxErr"<% } %> onkeyup="ucase(this)"></td>
-			<td valign="top">in the last year? <input type="text" name="sober1Years" value="<%=IntakeServlet.getIntake().getSober1Years()%>" size="9" maxlength="15" <% if (sober1YearsErr.length()>0) { %>class="textboxErr"<% } %> onkeyup="ucase(this)">
+			<td valign="top">Longest time sober in past 3 years?&nbsp;<input type="text" name="sober3Years" value="<%=IntakeServlet.getIntake().getSober3Years()%>" size="9" maxlength="15" <% if (sober3YearsErr.length()>0) { %>class="textboxErr"<% } %> onKeyUp="ucase(this)"></td>
+			<td valign="top">in the last year? <input type="text" name="sober1Years" value="<%=IntakeServlet.getIntake().getSober1Years()%>" size="9" maxlength="15" <% if (sober1YearsErr.length()>0) { %>class="textboxErr"<% } %> onKeyUp="ucase(this)">
         	</td>
         </tr>
         <tr>
@@ -170,10 +170,10 @@ String previousFaithFarmFlagErr = (String)request.getAttribute("previousFaithFar
 		</tr>
         <tr>
     	<td colspan="8">
-        Physical effects of abuse<br><input type="text" name="abusePhysicalEffects" value="<%=IntakeServlet.getIntake().getAbusePhysicalEffects()%>" size="45" onkeyup="ucase(this)"><br><br>
+        Physical effects of abuse<br><input type="text" name="abusePhysicalEffects" value="<%=IntakeServlet.getIntake().getAbusePhysicalEffects()%>" size="45" onKeyUp="ucase(this)"><br><br>
 		<b>Any Previous Rehabs?</b>&nbsp;
 			<input type="checkbox" name="attendAA" value="YES" <% if ("YES".equals(IntakeServlet.getIntake().getAttendAA())) { %>checked <%}%>/>AA or NA&nbsp;&nbsp;
-            Number of Years&nbsp;<input type="text" name="yearsAttended" value="<%=IntakeServlet.getIntake().getYearsAttended()%>" size="10" maxlength="10" <% if (yearsAttendedErr.length()>0) { %>class="textboxErr"<%}%> onkeyup="ucase(this)"/>&nbsp;<div style="font:11px Arial;color: #b71524;"><b><i><%=yearsAttendedErr%></i></b></div>
+            Number of Years&nbsp;<input type="text" name="yearsAttended" value="<%=IntakeServlet.getIntake().getYearsAttended()%>" size="10" maxlength="10" <% if (yearsAttendedErr.length()>0) { %>class="textboxErr"<%}%> onKeyUp="ucase(this)"/>&nbsp;<div style="font:11px Arial;color: #b71524;"><b><i><%=yearsAttendedErr%></i></b></div>
          </td>
          
          <tr>
@@ -224,7 +224,7 @@ String previousFaithFarmFlagErr = (String)request.getAttribute("previousFaithFar
              </tr>
              <tr>
              	<td colspan="3">
-           		 Other Rehabs<input type="text" name="otherRehabs" value="<%=IntakeServlet.getIntake().getOtherRehabs()%>" size="45" maxlength="45" onkeyup="ucase(this)"/>
+           		 Other Rehabs<input type="text" name="otherRehabs" value="<%=IntakeServlet.getIntake().getOtherRehabs()%>" size="45" maxlength="45" onKeyUp="ucase(this)"/>
                 </td>
              </tr>
             
@@ -268,10 +268,16 @@ String previousFaithFarmFlagErr = (String)request.getAttribute("previousFaithFar
 
 
      <tr>
-		<td colspan="8" valign="bottom" align="center" height="45"><input type="submit" name="action" value="Save" class="imageButtonSave" title="Update Information" /></td>
+		<td colspan="8" valign="bottom" align="center" height="45">   
+    <% if ("YES".equals(request.getParameter("updateFlag"))) { %>
+    	<input type="submit" name="action" value="Update" class="imageButtonSave" title="Update Information" />&nbsp;
+    <% } else { %>
+    	<input type="submit" name="action" value="Save" class="imageButtonSave" title="Save Information" />&nbsp;
+    <% } %></td>
 	</tr>
     </table>
     <input type="hidden" name="source" value="substance"/>
+     <input type="hidden" name="key" value="<%=IntakeServlet.getIntake().getIntakeId()%>"/>
 </form>
 
   <br /><br />

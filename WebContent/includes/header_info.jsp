@@ -15,6 +15,9 @@
 	} catch (Exception e) {
 		user=new SystemUser();
 	}
+	
+	String updateFlag = (String)request.getAttribute("updateFlag");
+	if (updateFlag==null) updateFlag=request.getParameter("updateFlag");
 %>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
@@ -67,13 +70,13 @@
     
 		<div class="menu" >	
 		<ul>
-    		<li><a href="<%=request.getContextPath()%>/pages/student/personal.jsp" >Personal</a></li>
-      		<li><a href="<%=request.getContextPath()%>/pages/student/religious.jsp" >Religious</a></li>
-            <li><a href="<%=request.getContextPath()%>/pages/student/substance.jsp" >Substance</a></li>
-            <li><a href="<%=request.getContextPath()%>/pages/student/health.jsp" >Health</a></li>
-            <li><a href="<%=request.getContextPath()%>/pages/student/legal.jsp" >Legal</a></li>
-            <li><a href="<%=request.getContextPath()%>/pages/student/employment.jsp" >Employment</a></li>
-            <li><a href="<%=request.getContextPath()%>/pages/student/status.jsp" >Status</a></li>
+    		<li><a href="<%=request.getContextPath()%>/pages/student/personal.jsp?updateFlag=<%=updateFlag%>" >Personal</a></li>
+      		<li><a href="<%=request.getContextPath()%>/pages/student/religious.jsp?updateFlag=<%=updateFlag%>" >Religious</a></li>
+            <li><a href="<%=request.getContextPath()%>/pages/student/substance.jsp?updateFlag=<%=updateFlag%>" >Substance</a></li>
+            <li><a href="<%=request.getContextPath()%>/pages/student/health.jsp?updateFlag=<%=updateFlag%>" >Health</a></li>
+            <li><a href="<%=request.getContextPath()%>/pages/student/legal.jsp?updateFlag=<%=updateFlag%>" >Legal</a></li>
+            <li><a href="<%=request.getContextPath()%>/pages/student/employment.jsp?updateFlag=<%=updateFlag%>" >Employment</a></li>
+            <li><a href="<%=request.getContextPath()%>/pages/student/status.jsp?updateFlag=<%=updateFlag%>" >Status</a></li>
             <li><a href="<%=request.getContextPath()%>/pages/student/search.jsp" >Search</a></li>
             <li><a href="<%=request.getContextPath()%>/pages/main.jsp" >Home</a></li>
         </ul>

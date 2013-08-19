@@ -116,6 +116,9 @@ String driversLicenseFlagErr = (String)request.getAttribute("driversLicenseFlagE
  
 	
    String required = "<img src='images/required.png'/>";
+   
+   	String updateFlag = (String)request.getAttribute("updateFlag");
+	if (updateFlag==null) updateFlag = request.getParameter("updateFlag");
 %>
 
 
@@ -159,7 +162,7 @@ function moveOnMax(field,nextFieldID){
 <% } %>
     <table width="750">
 	<tr>
-		<td colspan="8"><b>Personal Information: </b></td>
+		<td colspan="8"><b>Personal Information:<%=updateFlag%> </b></td>
 	</tr>
 
     
@@ -179,13 +182,13 @@ function moveOnMax(field,nextFieldID){
                 </tr>
                 <tr>
                 <td>Last Name</td>
-                <td><input type="text" name="lastname" value="<%=IntakeServlet.getIntake().getLastName()%>" size="30" maxlength="30" <% if (lastNameErr.length()>0) { %>class="textboxErr"<% } %> onkeyup="ucase(this)"></td>
+                <td><input type="text" name="lastname" value="<%=IntakeServlet.getIntake().getLastName()%>" size="30" maxlength="30" <% if (lastNameErr.length()>0) { %>class="textboxErr"<% } %> onKeyUp="ucase(this)"></td>
                 <td>&nbsp;&nbsp;</td>
                 <td>First Name</td>
-                <td><input type="text" name="firstname" value="<%=IntakeServlet.getIntake().getFirstName()%>" size="30" maxlength="30" <% if (firstNameErr.length()>0) { %>class="textboxErr"<% } %> onkeyup="ucase(this)"></td>
+                <td><input type="text" name="firstname" value="<%=IntakeServlet.getIntake().getFirstName()%>" size="30" maxlength="30" <% if (firstNameErr.length()>0) { %>class="textboxErr"<% } %> onKeyUp="ucase(this)"></td>
                 <td>&nbsp;&nbsp;</td>
                 <td>MI</td>
-                <td colspan="2" align="left"><input type="text" name="mi" value="<%=IntakeServlet.getIntake().getMiddleInitial()%>"  size="1" maxlength="1"  <% if (middleInitialErr.length()>0) { %>class="textboxErr"<% } %> onkeyup="ucase(this)"></td>
+                <td colspan="2" align="left"><input type="text" name="mi" value="<%=IntakeServlet.getIntake().getMiddleInitial()%>"  size="1" maxlength="1"  <% if (middleInitialErr.length()>0) { %>class="textboxErr"<% } %> onKeyUp="ucase(this)"></td>
             </tr>
             <tr>
                 <td colspan="3" class="fieldError"><%=lastNameErr%></td>
@@ -203,16 +206,24 @@ function moveOnMax(field,nextFieldID){
                 <td >SSN</td>
                 <td>
                 <%
-                String ssn1=valid8r.cleanData(request.getParameter("ssn1"));
-                String ssn2=valid8r.cleanData(request.getParameter("ssn2"));
-                String ssn3=valid8r.cleanData(request.getParameter("ssn3"));
+				String ssn1="",ssn2="",ssn3="";
+				String ssn=IntakeServlet.getIntake().getSsn();
+				if (ssn.length()==9) {
+					ssn1=ssn.substring(0,3);
+					ssn2=ssn.substring(3,5);
+					ssn3=ssn.substring(5,9);
+				} else {
+					 ssn1=valid8r.cleanData(request.getParameter("ssn1"));
+					 ssn2=valid8r.cleanData(request.getParameter("ssn2"));
+					 ssn3=valid8r.cleanData(request.getParameter("ssn3"));
+				}
                 %>
-                <input id="ssn1"  type="text" name="ssn1" size="3" value="<%=ssn1%>" maxlength="3" <% if (ssnErr.length()>0) { %>class="textboxErr"<% } %> onkeypress="return isNumberKey(event)" onkeyup="moveOnMax(this,'ssn2')" >-
-                <input id="ssn2"  type="text" name="ssn2" size="2" value="<%=ssn2%>" maxlength="2" <% if (ssnErr.length()>0) { %>class="textboxErr"<% } %> onkeypress="return isNumberKey(event)" onkeyup="moveOnMax(this,'ssn3')" >-
-                <input id="ssn3"  type="text" name="ssn3" size="4" value="<%=ssn3%>" maxlength="4" <% if (ssnErr.length()>0) { %>class="textboxErr"<% } %> onkeypress="return isNumberKey(event)" onkeyup="moveOnMax(this,'referred')" ></td>
+                <input id="ssn1"  type="text" name="ssn1" size="3" value="<%=ssn1%>" maxlength="3" <% if (ssnErr.length()>0) { %>class="textboxErr"<% } %> onKeyPress="return isNumberKey(event)" onKeyUp="moveOnMax(this,'ssn2')" >-
+                <input id="ssn2"  type="text" name="ssn2" size="2" value="<%=ssn2%>" maxlength="2" <% if (ssnErr.length()>0) { %>class="textboxErr"<% } %> onKeyPress="return isNumberKey(event)" onKeyUp="moveOnMax(this,'ssn3')" >-
+                <input id="ssn3"  type="text" name="ssn3" size="4" value="<%=ssn3%>" maxlength="4" <% if (ssnErr.length()>0) { %>class="textboxErr"<% } %> onKeyPress="return isNumberKey(event)" onKeyUp="moveOnMax(this,'referred')" ></td>
                 <td>&nbsp;&nbsp;</td>
                 <td >Referred to Faith Farm By</td>
-                <td><input id="referred" type="text" name="referredBy" value="<%=IntakeServlet.getIntake().getReferredBy()%>" size="28" maxlength="28" onkeyup="ucase(this)"></td>
+                <td><input id="referred" type="text" name="referredBy" value="<%=IntakeServlet.getIntake().getReferredBy()%>" size="28" maxlength="28" onKeyUp="ucase(this)"></td>
            		 </tr>
             
            		 <tr>
@@ -228,8 +239,8 @@ function moveOnMax(field,nextFieldID){
     	<td colspan="8">
                 <table width="100%" border="0">
                 <tr>
-                <td>Address of Contact&nbsp;<input type="text" name="address" value="<%=IntakeServlet.getIntake().getAddress()%>" size="30" maxlength="45" <% if (addressErr.length()>0) { %>class="textboxErr"<% } %> onkeyup="ucase(this)">&nbsp;&nbsp;</td>
-                <td>City&nbsp;<input type="text" name="city" value="<%=IntakeServlet.getIntake().getCity()%>" size="20" maxlength="25" <% if (cityErr.length()>0) { %>class="textboxErr"<% } %> onkeyup="ucase(this)">&nbsp;&nbsp;</td>
+                <td>Address of Contact&nbsp;<input type="text" name="address" value="<%=IntakeServlet.getIntake().getAddress()%>" size="30" maxlength="45" <% if (addressErr.length()>0) { %>class="textboxErr"<% } %> onKeyUp="ucase(this)">&nbsp;&nbsp;</td>
+                <td>City&nbsp;<input type="text" name="city" value="<%=IntakeServlet.getIntake().getCity()%>" size="20" maxlength="25" <% if (cityErr.length()>0) { %>class="textboxErr"<% } %> onKeyUp="ucase(this)">&nbsp;&nbsp;</td>
                <td>State&nbsp;
                  <%
                         ArrayList ddl = (ArrayList)session.getAttribute("dll_states");
@@ -255,7 +266,7 @@ function moveOnMax(field,nextFieldID){
                         }
                     %></select>
                 &nbsp;&nbsp;</td>
-               <td >Zipcode&nbsp;&nbsp;<input type="text" name="zipcode" value="<%=IntakeServlet.getIntake().getZipcode()%>" size="5" maxlength="5" onkeypress="return isNumberKey(event)" <% if (zipcodeErr.length()>0) { %>class="textboxErr"<% } %>>&nbsp;&nbsp;
+               <td >Zipcode&nbsp;&nbsp;<input type="text" name="zipcode" value="<%=IntakeServlet.getIntake().getZipcode()%>" size="5" maxlength="5" onKeyPress="return isNumberKey(event)" <% if (zipcodeErr.length()>0) { %>class="textboxErr"<% } %>>&nbsp;&nbsp;
                 </td>
                 </tr>
                 <tr>
@@ -274,7 +285,7 @@ function moveOnMax(field,nextFieldID){
                 <table width="100%" border="0">
                 <tr>
                 <td width="200">Phone Number&nbsp;<i>(xxx)xxx-xxxx</i>&nbsp;
-                <input type="text" name="referral_phone"  value="<%=IntakeServlet.getIntake().getReferralPhone()%>" size="20" maxlength="13" <% if (referralPhoneErr.length()>0) { %>class="textboxErr"<% } %> onkeypress="return isNumberKey(event)"></td>
+                <input type="text" name="referral_phone"  value="<%=IntakeServlet.getIntake().getReferralPhone()%>" size="20" maxlength="13" <% if (referralPhoneErr.length()>0) { %>class="textboxErr"<% } %> onKeyPress="return isNumberKey(event)"></td>
                 <td width="200">Date of Birth&nbsp;<i>(mm/dd/yyyy)</i>&nbsp;<input type="text" name="dob" value="<%=IntakeServlet.getIntake().getDateOfBirth()%>" size="10" maxlength="10"  <% if (dobErr.length()>0) { %>class="textboxErr"<% } %>></td>
                 <td>Age&nbsp;<input type="text" name="age" size="2" value="<%=IntakeServlet.getIntake().getAge()%>" size="5" maxlength="2" onkeypress="return isNumberKey(event)" <% if (ageErr.length()>0) { %>class="textboxErr"<% } %>></td>
                 </tr>
@@ -292,9 +303,9 @@ function moveOnMax(field,nextFieldID){
                 <table width="100%" border="0">
                
                 <tr>
-                <td>Emergency Contact&nbsp;<input type="text" name="emergencyContact" value="<%=IntakeServlet.getIntake().getEmergencyContact()%>" size="28" maxlength="28" <% if (emergencyContactErr.length()>0) { %>class="textboxErr"<% } %> onkeyup="ucase(this)"> </td>
-                <td>Relationship&nbsp;<input type="text" name="emergencyRelationship" value="<%=IntakeServlet.getIntake().getEmergencyRelationship()%>" size="20" maxlength="20" <% if (emergencyRelationshipErr.length()>0) { %>class="textboxErr"<% } %> onkeyup="ucase(this)"></td>
-                <td>Phone&nbsp;<i>(xxx)xxx-xxxx</i>&nbsp;<input type="text" name="emergencyPhone" size="20" value="<%=IntakeServlet.getIntake().getEmergencyPhone()%>" maxlength="13" <% if (emergencyPhoneErr.length()>0) { %>class="textboxErr"<% } %> onkeypress="return isNumberKey(event)"></td>
+                <td>Emergency Contact&nbsp;<input type="text" name="emergencyContact" value="<%=IntakeServlet.getIntake().getEmergencyContact()%>" size="28" maxlength="28" <% if (emergencyContactErr.length()>0) { %>class="textboxErr"<% } %> onKeyUp="ucase(this)"> </td>
+                <td>Relationship&nbsp;<input type="text" name="emergencyRelationship" value="<%=IntakeServlet.getIntake().getEmergencyRelationship()%>" size="20" maxlength="20" <% if (emergencyRelationshipErr.length()>0) { %>class="textboxErr"<% } %> onKeyUp="ucase(this)"></td>
+                <td>Phone&nbsp;<i>(xxx)xxx-xxxx</i>&nbsp;<input type="text" name="emergencyPhone" size="20" value="<%=IntakeServlet.getIntake().getEmergencyPhone()%>" maxlength="13" <% if (emergencyPhoneErr.length()>0) { %>class="textboxErr"<% } %> onKeyPress="return isNumberKey(event)"></td>
                 </tr>
                 <tr>
                 <td class="fieldError"><%=emergencyContactErr%></td>
@@ -593,7 +604,7 @@ function moveOnMax(field,nextFieldID){
     
 	<tr> 
 		<td colspan="8">Source(s)?&nbsp;&nbsp;
-			<input type="text" name="incomeSource" value="<%=IntakeServlet.getIntake().getIncomeSource() %>" size="40" maxlength="45" onkeyup="ucase(this)" />
+			<input type="text" name="incomeSource" value="<%=IntakeServlet.getIntake().getIncomeSource() %>" size="40" maxlength="45" onKeyUp="ucase(this)" />
         </td>	
     </tr>
 
@@ -607,7 +618,7 @@ function moveOnMax(field,nextFieldID){
     
 	<tr>
 		<td colspan="8">Other benefits?&nbsp;&nbsp;
-			<input type="text" name="other_benefits" size="20" maxlength="20"  value="<%=IntakeServlet.getIntake().getOtherBenefits()%>" onkeyup="ucase(this)"/>
+			<input type="text" name="other_benefits" size="20" maxlength="20"  value="<%=IntakeServlet.getIntake().getOtherBenefits()%>" onKeyUp="ucase(this)"/>
         </td>	
     </tr>
     
@@ -683,10 +694,10 @@ function moveOnMax(field,nextFieldID){
             <table width="100%">
             <tr>
             <td width="220">Highest Rank&nbsp;&nbsp;
-                <input type="text" name="rank" size="20" maxlength="20" value="<%=IntakeServlet.getIntake().getRank()%>" <% if (rankErr.length()>0) { %>class="textboxErr"<% } %> onkeyup="ucase(this)"/>
+                <input type="text" name="rank" size="20" maxlength="20" value="<%=IntakeServlet.getIntake().getRank()%>" <% if (rankErr.length()>0) { %>class="textboxErr"<% } %> onKeyUp="ucase(this)"/>
             </td>	
             <td >Length Of Service&nbsp;&nbsp;
-                <input type="text" name="lengthOfService" size="20" maxlength="20" value="<%=IntakeServlet.getIntake().getLengthOfService()%>" <% if (lengthOfServiceErr.length()>0) { %>class="textboxErr"<% } %> onkeyup="ucase(this)"/>
+                <input type="text" name="lengthOfService" size="20" maxlength="20" value="<%=IntakeServlet.getIntake().getLengthOfService()%>" <% if (lengthOfServiceErr.length()>0) { %>class="textboxErr"<% } %> onKeyUp="ucase(this)"/>
             </td>	
         </tr>
          <tr>
@@ -752,7 +763,7 @@ function moveOnMax(field,nextFieldID){
 			%></select>
         </td>	
         <td>DL#:&nbsp;&nbsp;
-			<input type="text" name="driversLicenseNumber" size="22" maxlength="22" value="<%=IntakeServlet.getIntake().getDriversLicenseNumber()%>" <% if (driversLicenseNumberErr.length()>0) { %>class="textboxErr"<% } %> onkeyup="ucase(this)"/>
+			<input type="text" name="driversLicenseNumber" size="22" maxlength="22" value="<%=IntakeServlet.getIntake().getDriversLicenseNumber()%>" <% if (driversLicenseNumberErr.length()>0) { %>class="textboxErr"<% } %> onKeyUp="ucase(this)"/>
         </td>	
        
     </tr>
@@ -834,8 +845,8 @@ function moveOnMax(field,nextFieldID){
      <td colspan="8">
      	<table width="100%">
         <tr>
-        <td width="220">Relationship with Mother?&nbsp;&nbsp;<input type="text" name="motherRelationship" size="20" maxlength="20" value="<%=IntakeServlet.getIntake().getMotherRelationship()%>" onkeyup="ucase(this)"  />&nbsp;&nbsp;&nbsp;&nbsp;</td>
-    	<td>Relationship with Father?&nbsp;&nbsp;<input type="text" name="fatherRelationship" size="20" maxlength="20" value="<%=IntakeServlet.getIntake().getFatherRelationship()%>" onkeyup="ucase(this)"  />
+        <td width="220">Relationship with Mother?&nbsp;&nbsp;<input type="text" name="motherRelationship" size="20" maxlength="20" value="<%=IntakeServlet.getIntake().getMotherRelationship()%>" onKeyUp="ucase(this)"  />&nbsp;&nbsp;&nbsp;&nbsp;</td>
+    	<td>Relationship with Father?&nbsp;&nbsp;<input type="text" name="fatherRelationship" size="20" maxlength="20" value="<%=IntakeServlet.getIntake().getFatherRelationship()%>" onKeyUp="ucase(this)"  />
         <tr>
         
         </table>
@@ -843,9 +854,9 @@ function moveOnMax(field,nextFieldID){
     
   
     <tr>
-    	<td colspan="8">Number of Brothers&nbsp;&nbsp;<input type="text" name="brothers" size="2" value="<%=IntakeServlet.getIntake().getBrothers()%>" onkeypress="return isNumberKey(event)" />&nbsp;&nbsp;&nbsp;&nbsp;
-        				Number of Sisters&nbsp;&nbsp;<input type="text" name="sisters" size="2" value="<%=IntakeServlet.getIntake().getSisters()%>" onkeypress="return isNumberKey(event)" />&nbsp;&nbsp;&nbsp;&nbsp;
-        				Number of Children&nbsp;&nbsp;<input type="text" name="children" size="2" value="<%=IntakeServlet.getIntake().getChildren()%>" onkeypress="return isNumberKey(event)" />
+    	<td colspan="8">Number of Brothers&nbsp;&nbsp;<input type="text" name="brothers" size="2" value="<%=IntakeServlet.getIntake().getBrothers()%>" onKeyPress="return isNumberKey(event)" />&nbsp;&nbsp;&nbsp;&nbsp;
+        				Number of Sisters&nbsp;&nbsp;<input type="text" name="sisters" size="2" value="<%=IntakeServlet.getIntake().getSisters()%>" onKeyPress="return isNumberKey(event)" />&nbsp;&nbsp;&nbsp;&nbsp;
+        				Number of Children&nbsp;&nbsp;<input type="text" name="children" size="2" value="<%=IntakeServlet.getIntake().getChildren()%>" onKeyPress="return isNumberKey(event)" />
     <tr>
 		<td colspan="8">&nbsp;</td>
 	</tr>
@@ -897,11 +908,17 @@ function moveOnMax(field,nextFieldID){
    
 
 	<tr>
-		<td colspan="8" valign="bottom" align="center" height="45"><input type="submit" name="action" value="Save" class="imageButtonSave" title="Update Information" /></td>
+		<td colspan="8" valign="bottom" align="center" height="45">
+            <% if ("YES".equals(updateFlag)) { %>
+    	<input type="submit" name="action" value="Update" class="imageButtonSave" title="Update Information" />&nbsp;
+    <% } else { %>
+    	<input type="submit" name="action" value="Save" class="imageButtonSave" title="Save Information" />&nbsp;
+    <% } %></td>
 	</tr>
 
 	</table>
      <input type="hidden" name="source" value="personal"/>
+      <input type="hidden" name="key" value="<%=IntakeServlet.getIntake().getIntakeId()%>"/>
 </form>
   </div>
 

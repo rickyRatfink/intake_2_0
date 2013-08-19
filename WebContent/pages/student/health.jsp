@@ -169,10 +169,10 @@
 				  
 				<%}%>
                 </select>
-		&nbsp;&nbsp;How Long Ago?<input type="text" name="question<%=i%>Dates" value="<%=answerDates[i]%>"  size="10" maxlength="10" onkeyup="javascript:ucase(this)"/></td>
+		&nbsp;&nbsp;How Long Ago?<input type="text" name="question<%=i%>Dates" value="<%=answerDates[i]%>"  size="10" maxlength="10" onKeyUp="javascript:ucase(this)"/></td>
         </tr>
         <tr>
-        	<td colspan="8">Please describe:&nbsp;<input type="text" name="question<%=i%>Details" value="<%=answerDetails[i]%>" size="40" maxlength="45" onkeyup="javascript:ucase(this)"/></td>
+        	<td colspan="8">Please describe:&nbsp;<input type="text" name="question<%=i%>Details" value="<%=answerDetails[i]%>" size="40" maxlength="45" onKeyUp="javascript:ucase(this)"/></td>
         </tr>
         <%}%>
 
@@ -242,7 +242,7 @@
         <tr><td class="fieldError"><%=currentMedicationsFlagErr%></td></tr>
         <tr>
         <td>
-          <i>If yes, which meds:</i>&nbsp;&nbsp;<input type="text" name="currentMedications" value="<%=IntakeServlet.getIntake().getCurrentMedications()%>" <% if (currentMedicationsErr.length()>0) { %>class="textboxErr"<%}%> size="40" maxlength="40" onkeyup="ucase(this)"/>
+          <i>If yes, which meds:</i>&nbsp;&nbsp;<input type="text" name="currentMedications" value="<%=IntakeServlet.getIntake().getCurrentMedications()%>" <% if (currentMedicationsErr.length()>0) { %>class="textboxErr"<%}%> size="40" maxlength="40" onKeyUp="ucase(this)"/>
          </td>
          </tr>
          <tr><td class="fieldError"><%=currentMedicationsErr%></td></tr>
@@ -337,7 +337,7 @@
              </tr>
              <tr><td class="fieldError"><%=doctorsAppointmentErr%></td></tr>
          <tr>
-         	<td>If yes, when?&nbsp;<input type="text" name="doctorsAppointmentDate" value="<%=IntakeServlet.getIntake().getDoctorsAppointmentDate()%>" size="25" maxlength="25" <% if (doctorsAppointmentDateErr.length()>0) { %>class="textboxErr"<%}%> onkeyup="ucase(this)"/></td>
+         	<td>If yes, when?&nbsp;<input type="text" name="doctorsAppointmentDate" value="<%=IntakeServlet.getIntake().getDoctorsAppointmentDate()%>" size="25" maxlength="25" <% if (doctorsAppointmentDateErr.length()>0) { %>class="textboxErr"<%}%> onKeyUp="ucase(this)"/></td>
          </tr>
          <tr><td class="fieldError"><%=doctorsAppointmentDateErr%></td></tr>
          </table>
@@ -380,7 +380,7 @@
          </tr>
          <tr>
          <td>
-                                    If yes, give diagnosis&nbsp;<input type="text" name="question<%=i%>Details" value="<%=answerDetails[i]%>" size="45" maxlength="45" onkeyup="javascript:ucase(this)"/>
+                                    If yes, give diagnosis&nbsp;<input type="text" name="question<%=i%>Details" value="<%=answerDetails[i]%>" size="45" maxlength="45" onKeyUp="javascript:ucase(this)"/>
          </td>
          </tr>
          </table>
@@ -487,8 +487,8 @@
                                       <%
                                     }
                                     %></select><br />
-                                    If yes, when&nbsp;<input type="text" name="question<%=i%>Dates" value="<%=answerDates[i]%>" size="15" maxlength="15" onkeyup="javascript:ucase(this)"/>
-                                    &nbsp;&nbsp;Details:&nbsp;<input type="text" name="question<%=i%>Details" value="<%=answerDetails[i]%>" size="40" maxlength="45" onkeyup="javascript:ucase(this)"/>
+                                    If yes, when&nbsp;<input type="text" name="question<%=i%>Dates" value="<%=answerDates[i]%>" size="15" maxlength="15" onKeyUp="javascript:ucase(this)"/>
+                                    &nbsp;&nbsp;Details:&nbsp;<input type="text" name="question<%=i%>Details" value="<%=answerDetails[i]%>" size="40" maxlength="45" onKeyUp="javascript:ucase(this)"/>
         <br /><br />
 		<% } %>
         
@@ -532,19 +532,19 @@
             </td>
        </tr>
        <tr>
-       	<td colspan="8">If yes, when&nbsp;<input type="text" name="industrialInjuryDate" value="<%=IntakeServlet.getIntake().getIndustrialInjuryDate()%>" size="15" maxlength="15" <% if (industrialInjuryDateErr.length()>0) {%> class="textboxErr"<%}%> onkeyup="ucase(this)"/></td>
+       	<td colspan="8">If yes, when&nbsp;<input type="text" name="industrialInjuryDate" value="<%=IntakeServlet.getIntake().getIndustrialInjuryDate()%>" size="15" maxlength="15" <% if (industrialInjuryDateErr.length()>0) {%> class="textboxErr"<%}%> onKeyUp="ucase(this)"/></td>
        </tr>
        <tr><td class="fieldError"><%=industrialInjuryDateErr %></td></tr>
        <tr>
-       <td colspan="8">Reason:&nbsp;<input type="text" name="industrialInjuryReason" value="<%=IntakeServlet.getIntake().getIndustrialInjuryReason()%>" size="25" maxlength="45" <% if (industrialInjuryReasonErr.length()>0) {%> class="textboxErr"<%}%> onkeyup="ucase(this)"/></td>
+       <td colspan="8">Reason:&nbsp;<input type="text" name="industrialInjuryReason" value="<%=IntakeServlet.getIntake().getIndustrialInjuryReason()%>" size="25" maxlength="45" <% if (industrialInjuryReasonErr.length()>0) {%> class="textboxErr"<%}%> onKeyUp="ucase(this)"/></td>
        </tr>
        <tr><td class="fieldError"><%=industrialInjuryReasonErr %></td></tr>
        <tr>
-       <td colspan="8">Location&nbsp;<input type="text" name="industrialInjuryLocation" value="<%=IntakeServlet.getIntake().getIndustrialInjuryLocation()%>" size="30" maxlength="30" <% if (industrialInjuryLocationErr.length()>0) {%> class="textboxErr"<%}%> onkeyup="ucase(this)"/></td>
+       <td colspan="8">Location&nbsp;<input type="text" name="industrialInjuryLocation" value="<%=IntakeServlet.getIntake().getIndustrialInjuryLocation()%>" size="30" maxlength="30" <% if (industrialInjuryLocationErr.length()>0) {%> class="textboxErr"<%}%> onKeyUp="ucase(this)"/></td>
        </tr>
        <tr><td class="fieldError"><%=industrialInjuryLocationErr %></td></tr>
        <tr>
-       <td colspan="8">Employer:&nbsp;<input type="text" name="industrialInjuryEmployer" value="<%=IntakeServlet.getIntake().getIndustrialInjuryEmployer()%>" size="30" maxlength="30" <% if (industrialInjuryEmployerErr.length()>0) {%> class="textboxErr"<%}%> onkeyup="ucase(this)"/> </td>
+       <td colspan="8">Employer:&nbsp;<input type="text" name="industrialInjuryEmployer" value="<%=IntakeServlet.getIntake().getIndustrialInjuryEmployer()%>" size="30" maxlength="30" <% if (industrialInjuryEmployerErr.length()>0) {%> class="textboxErr"<%}%> onKeyUp="ucase(this)"/> </td>
 	   </tr>
        <tr><td class="fieldError"><%=industrialInjuryEmployerErr %></td></tr>
     
@@ -585,19 +585,19 @@
        </tr>
        <tr>
        <td>
-           If yes, date of last examination&nbsp;<input type="text" name="examinationDate" value="<%=IntakeServlet.getIntake().getExaminationDate()%>" size="15" maxlength="15" <% if (examinationErr.length()>0) {%> class="textboxErr"<%}%> onkeyup="ucase(this)"/>
+           If yes, date of last examination&nbsp;<input type="text" name="examinationDate" value="<%=IntakeServlet.getIntake().getExaminationDate()%>" size="15" maxlength="15" <% if (examinationErr.length()>0) {%> class="textboxErr"<%}%> onKeyUp="ucase(this)"/>
        </td>
        </tr>
        <tr><td class="fieldError"><%=examinationErr%></td></tr>
        <tr>
        <td>
-           Physician's Name&nbsp;<input type="text" name="physician" value="<%=IntakeServlet.getIntake().getPhysician()%>" size="25" maxlength="45" <% if (physicianErr.length()>0) {%> class="textboxErr"<%}%> onkeyup="ucase(this)"/>
+           Physician's Name&nbsp;<input type="text" name="physician" value="<%=IntakeServlet.getIntake().getPhysician()%>" size="25" maxlength="45" <% if (physicianErr.length()>0) {%> class="textboxErr"<%}%> onKeyUp="ucase(this)"/>
        </td>
        </tr>
        <tr><td class="fieldError"><%=physicianErr%></td></tr>
        <tr>
        <td>
-           Address&nbsp;<input type="text" name="physicianAddress" value="<%=IntakeServlet.getIntake().getPhysicianAddress()%>" size="45" maxlength="45" <% if (physicianAddressErr.length()>0) {%> class="textboxErr"<%}%> onkeyup="ucase(this)">/>
+           Address&nbsp;<input type="text" name="physicianAddress" value="<%=IntakeServlet.getIntake().getPhysicianAddress()%>" size="45" maxlength="45" <% if (physicianAddressErr.length()>0) {%> class="textboxErr"<%}%> onKeyUp="ucase(this)">/>
         </td>
 		</tr>
         <tr><td class="fieldError"><%=physicianAddressErr%></td></tr>
@@ -740,11 +740,16 @@
 	</tr>
     
     <tr>
-		<td colspan="8" valign="bottom" align="center" height="45"><input type="submit" name="action" value="Save" class="imageButtonSave" title="Update Information" /></td>
+		<td colspan="8" valign="bottom" align="center" height="45">    <% if ("YES".equals(request.getParameter("updateFlag"))) { %>
+    	<input type="submit" name="action" value="Update" class="imageButtonSave" title="Update Information" />&nbsp;
+    <% } else { %>
+    	<input type="submit" name="action" value="Save" class="imageButtonSave" title="Save Information" />&nbsp;
+    <% } %></td>
 	</tr>
 
     </table>
 <input type="hidden" name="source" value="health"/>
+ <input type="hidden" name="key" value="<%=IntakeServlet.getIntake().getIntakeId()%>"/>
 
 </form>
     <div class="footer">

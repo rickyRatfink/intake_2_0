@@ -115,12 +115,17 @@
 
 
    <tr>
-		<td colspan="8" valign="bottom" align="center" height="45"><input type="submit" name="action" value="Save" class="imageButtonSave" title="Update Information" /></td>
+		<td colspan="8" valign="bottom" align="center" height="45">    <% if ("YES".equals(request.getParameter("updateFlag"))) { %>
+    	<input type="submit" name="action" value="Update" class="imageButtonSave" title="Update Information" />&nbsp;
+    <% } else { %>
+    	<input type="submit" name="action" value="Save" class="imageButtonSave" title="Save Information" />&nbsp;
+    <% } %></td>
 	</tr>
 
     </table>
 
 <input type="hidden" name="source" value="employment"/>
+ <input type="hidden" name="key" value="<%=IntakeServlet.getIntake().getIntakeId()%>"/>
 </form>
     <div class="footer">
         

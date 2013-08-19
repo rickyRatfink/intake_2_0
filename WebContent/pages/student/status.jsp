@@ -1,4 +1,5 @@
 <%@ page import="org.faithfarm.intake.IntakeServlet" %>
+<%@ page import="org.faithfarm.domain.StudentHistory" %>
 <%@ page import="org.faithfarm.util.Validator" %>
 <%@ page import="java.util.ArrayList" %>
 
@@ -212,9 +213,27 @@
                         <td style="height:20px;border: 1px solid #666;color:#000000;font-weight:bold;padding-left:5px;">Reason For Change of Status</td>
                         <td style="height:20px;border: 1px solid #666;color:#000000;font-weight:bold;padding-left:5px;">Del</td>
                      </tr>
-                     <tr>
-                     	<td colspan="7">No history</td>
+                     <%
+					 ArrayList history = (ArrayList)IntakeServlet.getIntake().getHistory();
+					 for (int i=0;i<history.size();i++)
+					 {
+						 StudentHistory hist=(StudentHistory)history.get(i);
+					 %> 
+                     <tr> 
+                     	<td><%=hist.getBeginDate()%></td>
+                        <td><%=hist.getEndDate()%></td>
+                        <td><%=hist.getFarm()%></td> 
+                        <td><%=hist.getPhase()%></td>
+                        <td><%=hist.getProgramStatus()%></td>
+                        <td><%=hist.getReason()%></td>
+                        <td><a href="">del</a></td>
                      </tr>
+                     <%
+					 } if (history.size()==0) { %> 
+                     <tr>
+                     	<td colspan="7">No history</td> 
+                     </tr>
+                     <% } %>
                 </table>
             </tr>
             </table>
@@ -223,7 +242,11 @@
     </table>
 	<br /><br />
     <div align="center">
+    <% if ("YES".equals(request.getParameter("updateFlag"))) { %>
+    	<input type="submit" name="action" value="Update" class="imageButtonSave" title="Update Information" />&nbsp;
+    <% } else { %>
     	<input type="submit" name="action" value="Save" class="imageButtonSave" title="Save Information" />&nbsp;
+    <% } %>
    		<input type="reset" name="action" value="Cancel" class="imageButtonSave" title="Cancel Changes" />
 	</div>
 
@@ -235,6 +258,7 @@
         
     </div>
    <input type="hidden" name="source" value="status"/>
+    <input type="hidden" name="key" value="<%=IntakeServlet.getIntake().getIntakeId()%>"/>
 </form>
 </body>
 </html>
