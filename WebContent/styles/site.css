@@ -660,6 +660,18 @@ td {
 	background:#ffffff;
 	border-left:1px solid #3a4f63;
 }
+.reportHeader {
+	font: bold .95em Arial;
+	color: #000000;
+	text-align:left; 
+	background:#87cefa;
+}
+.reportRow {
+	font: .90em Arial;
+	color: #000000;
+	text-align:left; 
+}
+
 
 #input {}
 .select {
@@ -717,4 +729,5 @@ td {
 	font-size : 0em; 
 	vertical-align:top;
 }
+
 

@@ -162,7 +162,7 @@ function moveOnMax(field,nextFieldID){
 <% } %>
     <table width="750">
 	<tr>
-		<td colspan="8"><b>Personal Information:<%=updateFlag%> </b></td>
+		<td colspan="8"><b>Personal Information: </b></td>
 	</tr>
 
     
@@ -177,7 +177,7 @@ function moveOnMax(field,nextFieldID){
                     </td>
                 	<td colspan="5">
                     	You may need to refresh your browser to see the lastest photo.<br/>
-                        <a href="">Edit Photo</a>
+                        <a href="<%=request.getContextPath()%>/pages/student/photo.jsp?updateFlag=<%=updateFlag%>">Edit Photo</a>
                     </td>
                 </tr>
                 <tr>

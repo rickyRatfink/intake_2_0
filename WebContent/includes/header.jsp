@@ -71,7 +71,7 @@
              <li><a href="<%=request.getContextPath()%>/student?action=Create Student">New Student</a></li>
              <li><a href="<%=request.getContextPath()%>/pages/student/results.jsp">Search Result</a></li>
              <li><a href="<%=request.getContextPath()%>/cwt">CWT</a></li>
-             <li><a href="<%=request.getContextPath()%>/pages/">Reports for Printing</a></li>
+             <li><a href="<%=request.getContextPath()%>/pages/reports/index.jsp">Reports for Printing</a></li>
              <li><a href="<%=request.getContextPath()%>/pages/">Fast Find</a></li>
         <% } %>
      </ul>
