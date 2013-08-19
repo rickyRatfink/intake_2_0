@@ -45,12 +45,12 @@ public class StudentDao {
 			StringBuffer query = new StringBuffer();
 
 			query.append("SELECT ");
-			query.append(" LASTNAME, ");
-			query.append(" FIRSTNAME, ENTRY_DATE ");
+			query.append(" FIRSTNAME,LASTNAME, ENTRY_DATE ");
 			query.append(" FROM `"+SERVER+"`.`intake`  ");
 			query.append(" WHERE");
 			query.append(" CLASS='"+classId+"' ");
-			query.append(" AND FARM_BASE='"+farm +"' ORDER BY ENTRY_DATE ASC");
+			query.append(" AND FARM_BASE='"+farm.replace("'", "''") +"' ORDER BY ENTRY_DATE ASC");
+			System.out.println(query);
 			Statement Stmt = null;
 			Stmt = Conn.prepareStatement(query.toString());
 			ResultSet RS = Stmt.executeQuery(query.toString());
@@ -444,5 +444,27 @@ public class StudentDao {
 		
 		
 	return intake;
+	}
+	
+	public void updateImage (String image, Long key, HttpSession session) {
+		
+		// Do something with the Connection
+		try {
+			Connection Conn = this.getConnection();
+			Statement Stmt = Conn.createStatement();
+
+			StringBuffer query = new StringBuffer();
+			query.append("UPDATE " + SERVER + ".INTAKE SET IMAGE_HEADSHOT='"
+					+ image + " WHERE INTAKE_ID=" + key + ";");
+			Stmt.executeUpdate(query.toString());
+
+			Stmt.close();
+			Conn.close();
+		} catch (SQLException E) {
+			session.setAttribute("ERROR_" + session.getId(), E.getMessage());
+		} catch (ClassNotFoundException e) {
+			session.setAttribute("ERROR_" + session.getId(), e.getMessage());
+			e.printStackTrace();
+		}
 	}
 }

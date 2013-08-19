@@ -10,11 +10,11 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.faithfarm.domain.Intake;
-import org.faithfarm.domain.StudentHistory;
+import org.faithfarm.domain.StudentHistory; 
 import org.faithfarm.domain.SystemUser;
 import org.faithfarm.service.data.StudentDao;
 import org.faithfarm.util.Validator;
-
+import org.faithfarm.intake.UploadImage;
 
 public class StudentServlet extends HttpServlet {
 
@@ -68,6 +68,50 @@ public class StudentServlet extends HttpServlet {
 			    	  IntakeServlet.loadDropDownLists(session);
 			    	  url="pages/student/personal.jsp";
 			      }
+			      else if ("Upload".equals(action)) {
+			    	  System.out.println("uploading");
+			    	  UploadImage uploader = new UploadImage();
+			    	  String image = uploader.uploadImage(req, resp);
+			    	  System.out.println("uploaded");
+			    	  //dao.updateImage(image, IntakeServlet.getIntake().getIntakeId(), session);
+			      }
+			      else if ("ClassList".equals(action)) {
+			    	  String farm = req.getParameter("farm");
+			    	  ArrayList list0 = dao.getClassList("Orientation", farm);
+			    	  session.setAttribute("classlist_0", list0);
+			    	  
+			    	  ArrayList list1 = dao.getClassList("1", farm);
+			    	  session.setAttribute("classlist_1", list1);
+			    	  
+			    	  ArrayList list2 = dao.getClassList("2", farm);
+			    	  session.setAttribute("classlist_2", list2);
+			    	  
+			    	  ArrayList list3 = dao.getClassList("3", farm);
+			    	  session.setAttribute("classlist_3", list3);
+			    	  
+			    	  ArrayList list4 = dao.getClassList("4", farm);
+			    	  session.setAttribute("classlist_4", list4);
+			    	  
+			    	  ArrayList list5 = dao.getClassList("5", farm);
+			    	  session.setAttribute("classlist_5", list5);
+			    	  
+			    	  ArrayList list6 = dao.getClassList("6", farm);
+			    	  session.setAttribute("classlist_6", list6);
+			    	  
+			    	  ArrayList list7 = dao.getClassList("Fresh Start", farm);
+			    	  session.setAttribute("classlist_7", list7);
+			    	  
+			    	  ArrayList list8 = dao.getClassList("Interns", farm);
+			    	  session.setAttribute("classlist_8", list8);
+			    	  
+			    	  ArrayList list9 = dao.getClassList("SLS", farm);
+			    	  session.setAttribute("classlist_9", list9);
+			    	  
+			    	  ArrayList list10 = dao.getClassList("Student Teacher", farm);
+			    	  session.setAttribute("classlist_10", list10);
+			    	  
+			    	  url="pages/reports/class_list.jsp?farm="+farm;
+			      }
 			      
 			      
 			      req.getRequestDispatcher("/"+url).forward(req, resp);
@@ -78,5 +122,7 @@ public class StudentServlet extends HttpServlet {
 			 {
 			     doGet(req, resp);
 			 }
+	 
+	
 }
 
