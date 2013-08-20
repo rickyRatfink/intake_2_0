@@ -12,14 +12,22 @@
     <h2>
         Report List
     </h2>
-    <h4>Please click one of the following links to generate the report</h4>
-      
+    <br/><br/>  
             <div align="left">
+            <b>Class List</b>
             	<ul>
-            		<li><a href="<%=request.getContextPath()%>/student?action=ClassList&farm=Boynton Beach">Class List (Boynton Beach)</a></li>
-            		<li><a href="<%=request.getContextPath()%>/student?action=ClassList&farm=Fort Lauderdale">Class List (Fort Lauderdale)</a></li>
-            		<li><a href="<%=request.getContextPath()%>/student?action=ClassList&farm=Okeechobee">Class List (Okeechobee))</a></li>
-            		<li><a href="<%=request.getContextPath()%>/student?action=ClassList&farm=Women's Home">Class List (Women's Home)</a></li>
+            		<li><a href="<%=request.getContextPath()%>/student?action=ClassList&farm=Boynton Beach">Boynton Beach</a></li>
+            		<li><a href="<%=request.getContextPath()%>/student?action=ClassList&farm=Fort Lauderdale">Fort Lauderdale</a></li>
+            		<li><a href="<%=request.getContextPath()%>/student?action=ClassList&farm=Okeechobee">Okeechobee</a></li>
+            		<li><a href="<%=request.getContextPath()%>/student?action=ClassList&farm=Women's Home">Women's Home</a></li>
+            	</ul>
+            	<br/><br/>
+            	<b>Bed List</b>
+            	<ul>
+            		<li><a href="<%=request.getContextPath()%>/student?action=BedList&farm=Boynton Beach">Boynton Beach</a></li>
+            		<li><a href="<%=request.getContextPath()%>/student?action=BedList&farm=Fort Lauderdale">Fort Lauderdale</a></li>
+            		<li><a href="<%=request.getContextPath()%>/student?action=BedList&farm=Okeechobee">Okeechobee</a></li>
+            		<li><a href="<%=request.getContextPath()%>/student?action=BedList&farm=Women's Home">Women's Home</a></li>
             	</ul>
             </div>
             
