@@ -9,6 +9,7 @@ import java.util.ArrayList;
 
 import javax.servlet.http.HttpSession;
 
+import org.faithfarm.domain.ClassList;
 import org.faithfarm.domain.Intake;
 import org.faithfarm.domain.StudentHistory;
 import org.faithfarm.util.Validator;
@@ -35,7 +36,7 @@ public class StudentDao {
 		return Conn;
 	}
 	
-	public ArrayList getClassList (String classId, String farm) {
+	public ArrayList getClassListPDF (String classId, String farm) {
 		
 		ArrayList list = new ArrayList();
 	try {
@@ -56,14 +57,19 @@ public class StudentDao {
 			ResultSet RS = Stmt.executeQuery(query.toString());
 			
 			while (RS.next()) {
-				Intake intake = new Intake();
-				intake.setFirstName(RS.getString(1));
-				intake.setLastName(RS.getString(2));
-				intake.setEntryDate(RS.getString(3));
-				list.add(intake);
+				//Intake intake = new Intake();
+				ClassList roster = new ClassList();
+				roster.setName(RS.getString(1)+" "+RS.getString(2));
+				roster.setEntryDate(valid8r.convertDate(RS.getString(3)));
+				//intake.setFirstName(RS.getString(1));
+				//intake.setLastName(RS.getString(2));
+				//intake.setEntryDate(valid8r.convertDate(RS.getString(3)));
+				//list.add(intake);
+				list.add(roster);
 		    }
 			Stmt.close();
-			Conn.close();
+			Conn.close();			
+			
 		
 		} catch (SQLException E) {
 			System.out.println (E.getMessage());
@@ -73,6 +79,84 @@ public class StudentDao {
 		return list;
 	}
 	
+public ArrayList getClassList (String classId, String farm) {
+		
+		ArrayList list = new ArrayList();
+	try {
+			
+			Connection Conn = this.getConnection();
+
+			StringBuffer query = new StringBuffer();
+
+			query.append("SELECT ");
+			query.append(" INTAKE_ID, FIRSTNAME,LASTNAME, ENTRY_DATE ");
+			query.append(" FROM `"+SERVER+"`.`intake`  ");
+			query.append(" WHERE");
+			query.append(" CLASS='"+classId+"' ");
+			query.append(" AND FARM_BASE='"+farm.replace("'", "''") +"' ORDER BY ENTRY_DATE ASC");
+			//System.out.println(query);
+			Statement Stmt = null;
+			Stmt = Conn.prepareStatement(query.toString());
+			ResultSet RS = Stmt.executeQuery(query.toString());
+			
+			while (RS.next()) {
+				Intake intake = new Intake();
+				intake.setIntakeId(RS.getLong(1));
+				intake.setFirstName(RS.getString(2));
+				intake.setLastName(RS.getString(3));
+				intake.setEntryDate(valid8r.convertDate(RS.getString(4)));
+				list.add(intake);
+			}
+			Stmt.close();
+			Conn.close();			
+			
+		
+		} catch (SQLException E) {
+			System.out.println (E.getMessage());
+		} catch (ClassNotFoundException e) {
+		}
+
+		return list;
+	}
+	
+
+public ArrayList getBedList (String farm) {
+	
+	ArrayList list = new ArrayList();
+try {
+		
+		Connection Conn = this.getConnection();
+
+		StringBuffer query = new StringBuffer();
+
+		query.append("SELECT ");
+		query.append(" FIRSTNAME,LASTNAME, ENTRY_DATE ");
+		query.append(" FROM `"+SERVER+"`.`intake`  ");
+		query.append(" WHERE");
+		query.append("  FARM_BASE='"+farm.replace("'", "''") +"' ORDER BY ENTRY_DATE ASC");
+		Statement Stmt = null;
+		Stmt = Conn.prepareStatement(query.toString());
+		ResultSet RS = Stmt.executeQuery(query.toString());
+		
+		while (RS.next()) {
+			Intake intake = new Intake();
+			intake.setFirstName(RS.getString(1));
+			intake.setLastName(RS.getString(2));
+			intake.setEntryDate(valid8r.convertDate(RS.getString(3)));
+			list.add(intake);
+		}
+		Stmt.close();
+		Conn.close();			
+		
+	
+	} catch (SQLException E) {
+		System.out.println (E.getMessage());
+	} catch (ClassNotFoundException e) {
+	}
+
+	return list;
+}
+
 	public ArrayList searchStudents(
 			String firstName, String lastName, String entryDate, String exitDate, String ssn,
 			String dob, String farm, String pictureFlag, String archivedFlag, String gedFlag,

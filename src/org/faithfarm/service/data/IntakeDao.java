@@ -114,6 +114,32 @@ public class IntakeDao {
 
 		return retCode;
 	}
+	
+	public void updateClass(Intake intake, HttpSession session) {
+		try {
+
+			Connection Conn = this.getConnection();
+			// Do something with the Connection
+
+			StringBuffer query = new StringBuffer();
+
+			query.append("UPDATE `" + SERVER + "`.`intake` ");
+			query.append("SET CLASS='"+intake.getCurrentClass()+"' WHERE INTAKE_ID="+intake.getIntakeId());
+			PreparedStatement Stmt = null;
+			//System.out.println(query);
+			Stmt = Conn.prepareStatement(query.toString());
+			Stmt.executeUpdate(query.toString());
+
+			Stmt.close();
+			Conn.close();
+		} catch (SQLException E) {
+			System.out.println(E.getMessage());
+			session.setAttribute("SYSTEM_ERROR", E.getMessage());
+		} catch (ClassNotFoundException e) {
+			session.setAttribute("SYSTEM_ERROR", e.getMessage());
+			e.printStackTrace();
+		}
+	}
 
 	public void updateIntake(Intake intake, StudentHistory history, String user, HttpSession session) {
 		try {

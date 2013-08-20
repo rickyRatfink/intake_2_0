@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="DJR_9213" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="30" rightMargin="10" topMargin="20" bottomMargin="10" scriptletClass="ar.com.fdvs.dj.core.DJDefaultScriptlet" whenResourceMissingType="Key" uuid="fa092ddf-7974-4f22-b54f-0cc6256a2e89">
+	<style name="dj_style_1_" mode="Transparent" forecolor="#0000FF" backcolor="#FFFFFF" radius="0" hAlign="Left" vAlign="Bottom" rotation="None" isBlankWhenNull="true" fontName="Arial" fontSize="14" isBold="true" isItalic="false" isUnderline="false" isPdfEmbedded="false">
+		<box padding="2">
+			<pen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="reportSubtitleStyle" mode="Transparent" forecolor="#000000" backcolor="#FFFFFF" radius="0" hAlign="Left" vAlign="Bottom" rotation="None" isBlankWhenNull="true" fontName="Arial" fontSize="10" isBold="false" isItalic="false" isUnderline="false" isPdfEmbedded="false">
+		<box padding="2">
+			<pen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="defaultHeaderStyle" mode="Opaque" forecolor="#000000" backcolor="#C0C0C0" radius="0" hAlign="Center" vAlign="Middle" rotation="None" isBlankWhenNull="true" fontName="Arial" fontSize="10" isBold="true" isItalic="false" isUnderline="false" isPdfEmbedded="false">
+		<box padding="2">
+			<pen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+			<bottomPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="dj_style_2_" mode="Transparent" forecolor="#000000" backcolor="#00FFFF" radius="0" hAlign="Left" vAlign="Bottom" rotation="None" isBlankWhenNull="true" fontName="Arial" fontSize="10" isBold="false" isItalic="false" isUnderline="false" isPdfEmbedded="false">
+		<box padding="2">
+			<pen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="dj_style_3_" mode="Transparent" forecolor="#000000" backcolor="#FFFFFF" radius="0" hAlign="Left" vAlign="Bottom" rotation="None" isBlankWhenNull="true" fontName="Arial" fontSize="10" isBold="false" isItalic="false" isUnderline="false" isPdfEmbedded="false">
+		<box padding="2">
+			<pen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="dj_style_4_" mode="Transparent" forecolor="#000000" backcolor="#00FFFF" radius="0" hAlign="Left" vAlign="Bottom" rotation="None" isBlankWhenNull="true" fontName="Arial" fontSize="10" isBold="false" isItalic="false" isUnderline="false" isPdfEmbedded="false">
+		<box padding="2">
+			<pen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="Arial_for_column_DJR_9213_COLUMN_0_" mode="Transparent" forecolor="#000000" backcolor="#00FFFF" radius="0" hAlign="Left" vAlign="Bottom" rotation="None" isBlankWhenNull="true" fontName="Arial" fontSize="10" isBold="false" isItalic="false" isUnderline="false" isPdfEmbedded="false">
+		<box padding="2">
+			<pen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+		</box>
+		<conditionalStyle>
+			<conditionExpression><![CDATA[new java.lang.Boolean(((Number)$V{REPORT_COUNT}).doubleValue() % 2 == 0)]]></conditionExpression>
+			<style mode="Opaque" backcolor="#C8C8C8"/>
+		</conditionalStyle>
+	</style>
+	<style name="Arial_for_column_DJR_9213_COLUMN_1_" mode="Transparent" forecolor="#000000" backcolor="#00FFFF" radius="0" hAlign="Left" vAlign="Bottom" rotation="None" isBlankWhenNull="true" fontName="Arial" fontSize="10" isBold="false" isItalic="false" isUnderline="false" isPdfEmbedded="false">
+		<box padding="2">
+			<pen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+		</box>
+		<conditionalStyle>
+			<conditionExpression><![CDATA[new java.lang.Boolean(((Number)$V{REPORT_COUNT}).doubleValue() % 2 == 0)]]></conditionExpression>
+			<style mode="Opaque" backcolor="#C8C8C8"/>
+		</conditionalStyle>
+	</style>
+	<parameter name="DJR_9213_variable-footer_global_entryDate_vf" class="ar.com.fdvs.dj.domain.DJValueFormatter"/>
+	<field name="name" class="java.lang.String"/>
+	<field name="entryDate" class="java.lang.String"/>
+	<variable name="DJR_9213_variable-footer_global_entryDate" class="java.lang.Long" resetType="Group" resetGroup="DJR_9213_global_column_0" calculation="Count">
+		<variableExpression><![CDATA[$F{entryDate}]]></variableExpression>
+		<initialValueExpression><![CDATA[new java.lang.Long("0")]]></initialValueExpression>
+	</variable>
+	<group name="DJR_9213_global_column_0">
+		<groupExpression><![CDATA["global"]]></groupExpression>
+		<groupHeader>
+			<band splitType="Immediate"/>
+		</groupHeader>
+		<groupFooter>
+			<band height="20" splitType="Immediate">
+				<textField isStretchWithOverflow="true" evaluationGroup="DJR_9213_global_column_0">
+					<reportElement uuid="46eac1cf-d094-4e67-bc00-f20177922e6b" key="variable_for_column_1_in_group_0" style="dj_style_2_" positionType="Float" stretchType="RelativeToTallestObject" x="277" y="0" width="278" height="20"/>
+					<textElement/>
+					<textFieldExpression><![CDATA[(((ar.com.fdvs.dj.domain.DJValueFormatter)$P{DJR_9213_variable-footer_global_entryDate_vf}).evaluate( $V{DJR_9213_variable-footer_global_entryDate}, ((ar.com.fdvs.dj.core.DJDefaultScriptlet)$P{REPORT_PARAMETERS_MAP}.get("REPORT_SCRIPTLET")).getCurrentFiels(), ((ar.com.fdvs.dj.core.DJDefaultScriptlet)$P{REPORT_PARAMETERS_MAP}.get("REPORT_SCRIPTLET")).getCurrentVariables(), ((ar.com.fdvs.dj.core.DJDefaultScriptlet)$P{REPORT_PARAMETERS_MAP}.get("REPORT_SCRIPTLET")).getCurrentParams() ))]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true">
+					<reportElement uuid="5fe0d433-edc5-4970-9e1a-b5ba0dc9f660" key="global_legend_footer" style="dj_style_3_" positionType="Float" stretchType="RelativeToTallestObject" x="0" y="0" width="277" height="20"/>
+					<textElement/>
+					<textFieldExpression><![CDATA["global"]]></textFieldExpression>
+				</textField>
+			</band>
+		</groupFooter>
+	</group>
+	<pageHeader>
+		<band height="121">
+			<textField isStretchWithOverflow="true">
+				<reportElement uuid="6ef49d06-c227-470a-b778-08a502677365" style="dj_style_1_" positionType="Float" x="0" y="76" width="555" height="30" isRemoveLineWhenBlank="true">
+					<printWhenExpression><![CDATA[new java.lang.Boolean(((Number)$V{PAGE_NUMBER}).doubleValue() == 1)]]></printWhenExpression>
+				</reportElement>
+				<textElement/>
+				<textFieldExpression><![CDATA["Class List"]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement uuid="d84e88b4-8d72-470a-b785-f03cb1bbe9bb" style="reportSubtitleStyle" positionType="Float" x="0" y="106" width="555" height="15" isRemoveLineWhenBlank="true">
+					<printWhenExpression><![CDATA[new java.lang.Boolean(((Number)$V{PAGE_NUMBER}).doubleValue() == 1)]]></printWhenExpression>
+				</reportElement>
+				<textElement/>
+				<textFieldExpression><![CDATA["Boynton Beach on 08/20/2013"]]></textFieldExpression>
+			</textField>
+			<image scaleImage="FillFrame">
+				<reportElement uuid="93889b12-966e-4796-96c9-2727028f493b" x="0" y="0" width="120" height="76" isRemoveLineWhenBlank="true"/>
+				<imageExpression><![CDATA["C:/development/workspace/intake_2_0/WebContent/generated/reports/images/logo.jpg"]]></imageExpression>
+			</image>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="30">
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement uuid="7b5b0e2d-6c38-40bf-a085-0930bdc4b3ac" key="header_Orientation" style="defaultHeaderStyle" positionType="Float" stretchType="RelativeToTallestObject" x="0" y="0" width="277" height="30" isPrintWhenDetailOverflows="true"/>
+				<textElement/>
+				<textFieldExpression><![CDATA["Orientation"]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement uuid="7d626ac5-56af-4011-9345-242b448b053c" key="header_" style="defaultHeaderStyle" positionType="Float" stretchType="RelativeToTallestObject" x="277" y="0" width="278" height="30" isPrintWhenDetailOverflows="true"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[""]]></textFieldExpression>
+			</textField>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="15" splitType="Immediate">
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement uuid="d1213dd8-b1ab-483b-96d7-38b7d0e68eaf" style="Arial_for_column_DJR_9213_COLUMN_0_" positionType="Float" stretchType="RelativeToTallestObject" x="0" y="0" width="277" height="15" isPrintWhenDetailOverflows="true"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{name}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement uuid="c87d5016-4ec6-4546-8489-3983304f7a80" style="Arial_for_column_DJR_9213_COLUMN_1_" positionType="Float" stretchType="RelativeToTallestObject" x="277" y="0" width="278" height="15" isPrintWhenDetailOverflows="true"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{entryDate}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<pageFooter>
+		<band/>
+	</pageFooter>
+	<summary>
+		<band/>
+	</summary>
+</jasperReport>
