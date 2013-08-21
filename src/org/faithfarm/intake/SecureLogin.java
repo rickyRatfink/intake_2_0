@@ -1,7 +1,9 @@
 package org.faithfarm.intake;
 
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Properties;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -10,20 +12,23 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.faithfarm.domain.SystemUser;
+import org.faithfarm.service.data.CWTDao;
 import org.faithfarm.service.data.IntakeDao;
-
+import org.faithfarm.service.data.StudentDao;
+ 
   
 public class SecureLogin extends HttpServlet {
      
 	private IntakeDao dao = new IntakeDao();
-     
+    private StudentDao sdao = new StudentDao();
+    private CWTDao cdao = new CWTDao();  
+    
 	 protected void doGet(HttpServletRequest req, HttpServletResponse resp)
 			   throws ServletException, IOException
-			   { 
-			      String next="";
-			      
+			   {  
+			      String next=""; 
+			      System.out.println ("SecureLogin");
 		 		  HttpSession session = req.getSession(true);		     
-			      
 			      String action=req.getParameter("action");
 			      
 			      if ("Log In".equals(action)) 
@@ -286,4 +291,7 @@ public class SecureLogin extends HttpServlet {
 		   
 		   return newList;
 	   }
+	  
+	
+	   
 }

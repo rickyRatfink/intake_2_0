@@ -1,5 +1,7 @@
 package org.faithfarm.service.data;
 
+import java.io.FileInputStream;
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -7,11 +9,13 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.Properties;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.faithfarm.domain.Address;
+import org.faithfarm.domain.CourseRotationHistory;
 import org.faithfarm.domain.Intake;
 import org.faithfarm.domain.StudentHistory;
 import org.faithfarm.domain.SystemUser;
@@ -22,21 +26,36 @@ import org.faithfarm.util.Validator;
 public class IntakeDao {
 
 	private Validator valid8r = new Validator();
-	private String uid = "root";
-
-	private String SERVER = "ffarm_dev";
-	private String pwd = "admin";
-
+	private String SERVER = "";
+	private String uid = "";
+	private String pwd = "";
+	private String database = "";
+	
 	// private String SERVER = "ffarm_staging";
 	// private String pwd="j35u59538";
 
 	private Connection getConnection() throws SQLException,
 			ClassNotFoundException {
 
+		Properties prop = new Properties();
+	    
+    	try {
+               //load a properties file
+    		//prop.load(new FileInputStream("c:\\development\\workspace\\intake_2_0\\src\\properties\\config.properties"));
+    		prop.load(new FileInputStream("c:\\properties\\config.properties"));
+    		this.setUid(prop.getProperty("dbuser")); 
+    		this.setPwd(prop.getProperty("dbpassword"));
+    		this.setDatabase(prop.getProperty("database"));
+    		this.setSERVER(prop.getProperty("dburl")); 
+    	
+    	} catch (IOException ex) {
+    		System.out.println (ex.getMessage());
+    		ex.printStackTrace();
+        }
 		Class.forName("com.mysql.jdbc.Driver");
-
+        System.out.println ("jdbc:mysql://"+this.getSERVER()+"/" + this.getDatabase()+","+ uid+","+ pwd);
 		Connection Conn = DriverManager.getConnection(
-				"jdbc:mysql://localhost:3306/" + SERVER, uid, pwd);
+				"jdbc:mysql://"+this.getSERVER()+"/" + database, uid, pwd);
 
 		return Conn;
 	}
@@ -52,7 +71,7 @@ public class IntakeDao {
 
 			// Do something with the Connection
 			Statement Stmt = Conn.createStatement();
-			StringBuffer s = new StringBuffer("SELECT * FROM " + SERVER
+			StringBuffer s = new StringBuffer("SELECT * FROM " + this.getDatabase()
 					+ ".DONOR ");
 			s.append("WHERE DONOR_ID=" + id);
 
@@ -86,8 +105,8 @@ public class IntakeDao {
 
 			// Do something with the Connection
 			Statement Stmt = Conn.createStatement();
-			StringBuffer s = new StringBuffer("SELECT * FROM " + SERVER
-					+ ".DONOR INNER JOIN " + SERVER
+			StringBuffer s = new StringBuffer("SELECT * FROM " + this.getDatabase()
+					+ ".DONOR INNER JOIN " + this.getDatabase()
 					+ ".ADDRESS ON DONOR.DONOR_ID=ADDRESS.DONOR_ID ");
 			// s.append("WHERE FIRSTNAME LIKE '%" + firstname +
 			// "%' and lastname like '%"+lastname+"%' ");
@@ -114,7 +133,7 @@ public class IntakeDao {
 
 		return retCode;
 	}
-	
+
 	public void updateClass(Intake intake, HttpSession session) {
 		try {
 
@@ -123,10 +142,11 @@ public class IntakeDao {
 
 			StringBuffer query = new StringBuffer();
 
-			query.append("UPDATE `" + SERVER + "`.`intake` ");
-			query.append("SET CLASS='"+intake.getCurrentClass()+"' WHERE INTAKE_ID="+intake.getIntakeId());
+			query.append("UPDATE `" + this.getDatabase() + "`.`intake` ");
+			query.append("SET CLASS='" + intake.getCurrentClass()
+					+ "' WHERE INTAKE_ID=" + intake.getIntakeId());
 			PreparedStatement Stmt = null;
-			//System.out.println(query);
+			// System.out.println(query);
 			Stmt = Conn.prepareStatement(query.toString());
 			Stmt.executeUpdate(query.toString());
 
@@ -141,7 +161,9 @@ public class IntakeDao {
 		}
 	}
 
-	public void updateIntake(Intake intake, StudentHistory history, String user, HttpSession session) {
+	public void updateClassRotationHistory(int m0, int m1, int m2, int m3,
+			int m4, int m5, int grad, int h0, int h1, int h2, int h3, int h4,
+			int h5, int h6, String user, HttpSession session) {
 		try {
 
 			Connection Conn = this.getConnection();
@@ -149,7 +171,106 @@ public class IntakeDao {
 
 			StringBuffer query = new StringBuffer();
 
-			query.append("UPDATE `" + SERVER + "`.`intake` ");
+			query.append("INSERT INTO `" + this.getDatabase()
+					+ "`.`COURSE_ROTATION_HISTORY` ");
+			query.append(" (");
+			query.append(" `ROTATION_DATE`,");
+			query.append(" `MOVED_COURSE_0_TO_1`,");
+			query.append(" `MOVED_COURSE_1_TO_2`,");
+			query.append(" `MOVED_COURSE_2_TO_3`,");
+			query.append(" `MOVED_COURSE_3_TO_4`,");
+			query.append(" `MOVED_COURSE_4_TO_5`,");
+			query.append(" `MOVED_COURSE_5_TO_6`,");
+			query.append(" `HELD_COURSE_0`,");
+			query.append(" `HELD_COURSE_1`,");
+			query.append(" `HELD_COURSE_2`,");
+			query.append(" `HELD_COURSE_3`,");
+			query.append(" `HELD_COURSE_4`,");
+			query.append(" `HELD_COURSE_5`,");
+			query.append(" `HELD_COURSE_6`,");
+			query.append(" `GRADUATED`,`CREATED_BY`) VALUES ( ");
+			
+			query.append ( "'"+valid8r.getEpoch()+"',"+ m0+","+ m1+","+ m2+","+ m3+","+ m4+","+ m5+","+ h0+","+ h1+","+ h2+","+ h3+","+ h4+","+ h5+","+ h6+ ","+ grad+",'"+user+"')");
+			PreparedStatement Stmt = null;
+			System.out.println(query);
+			Stmt = Conn.prepareStatement(query.toString());
+			Stmt.executeUpdate(query.toString());
+
+			Stmt.close();
+			Conn.close();
+		} catch (SQLException E) {
+			System.out.println(E.getMessage());
+			session.setAttribute("SYSTEM_ERROR", E.getMessage());
+		} catch (ClassNotFoundException e) {
+			session.setAttribute("SYSTEM_ERROR", e.getMessage());
+			e.printStackTrace();
+		}
+	}
+	
+	public ArrayList getRotationHistory(HttpSession session) {
+		
+		ArrayList list = new ArrayList();
+		
+		try {
+
+			Connection Conn = this.getConnection();
+			// Do something with the Connection
+
+			StringBuffer query = new StringBuffer();
+
+			query.append("SELECT * FROM `" + this.getDatabase()
+					+ "`.`COURSE_ROTATION_HISTORY` ");
+			
+			
+			PreparedStatement Stmt = null;
+			Stmt = Conn.prepareStatement(query.toString());
+			ResultSet rs = Stmt.executeQuery(query.toString());
+			
+			while (rs.next()) {
+				CourseRotationHistory history = new CourseRotationHistory();
+				history.setRotationId(rs.getLong(1));
+				history.setRotationDate(rs.getString(2));
+				history.setMoved_course_0_to_1(new Integer(rs.getString(3)).intValue());
+				history.setMoved_course_1_to_2(new Integer(rs.getString(4)).intValue());
+				history.setMoved_course_2_to_3(new Integer(rs.getString(5)).intValue());
+				history.setMoved_course_3_to_4(new Integer(rs.getString(6)).intValue());
+				history.setMoved_course_4_to_5(new Integer(rs.getString(7)).intValue());
+				history.setMoved_course_5_to_6(new Integer(rs.getString(8)).intValue());
+				history.setHeld_course_0(new Integer(rs.getString(9)).intValue());
+				history.setHeld_course_1(new Integer(rs.getString(10)).intValue());
+				history.setHeld_course_2(new Integer(rs.getString(11)).intValue());
+				history.setHeld_course_3(new Integer(rs.getString(12)).intValue());
+				history.setHeld_course_4(new Integer(rs.getString(13)).intValue());
+				history.setHeld_course_5(new Integer(rs.getString(14)).intValue());
+				history.setHeld_course_6(new Integer(rs.getString(15)).intValue());
+				history.setGraduated(new Integer(rs.getString(16)).intValue());
+				history.setCreatedBy(rs.getString(17));
+				list.add(history);
+			}
+			
+			
+			Stmt.close();
+			Conn.close();
+		} catch (SQLException E) {
+			System.out.println(E.getMessage());
+			session.setAttribute("SYSTEM_ERROR", E.getMessage());
+		} catch (ClassNotFoundException e) {
+			session.setAttribute("SYSTEM_ERROR", e.getMessage());
+			e.printStackTrace();
+		}
+		return list;
+	}
+
+	public void updateIntake(Intake intake, StudentHistory history,
+			String user, HttpSession session) {
+		try {
+
+			Connection Conn = this.getConnection();
+			// Do something with the Connection
+
+			StringBuffer query = new StringBuffer();
+
+			query.append("UPDATE `" + this.getDatabase() + "`.`intake` ");
 			query.append("SET ");
 
 			query.append("LASTNAME='" + intake.getLastName() + "',");
@@ -401,7 +522,8 @@ public class IntakeDao {
 			query.append("			CLASS='" + intake.getCurrentClass() + "',");
 			query.append("			AREA='" + intake.getArea() + "',");
 			query.append("			ROOM='" + intake.getRoom() + "',");
-			query.append("			BED='" + intake.getBed() + "' WHERE INTAKE_ID = "+intake.getIntakeId());
+			query.append("			BED='" + intake.getBed() + "' WHERE INTAKE_ID = "
+					+ intake.getIntakeId());
 			System.out.println(query);
 			PreparedStatement Stmt = null;
 			Stmt = Conn.prepareStatement(query.toString());
@@ -412,9 +534,11 @@ public class IntakeDao {
 			 * Questions
 			 */
 			StringBuffer query1 = new StringBuffer("");
-			query1.append("DELETE FROM "+SERVER+".intake_question_answer WHERE INTAKE_ID="+intake.getIntakeId());
+			query1.append("DELETE FROM " + this.getDatabase()
+					+ ".intake_question_answer WHERE INTAKE_ID="
+					+ intake.getIntakeId());
 			Stmt.executeUpdate(query1.toString());
-			
+
 			String answer[] = intake.getQuestion();
 			String details[] = intake.getQuestionAnswerDetails();
 			String dates[] = intake.getQuestionAnswerDates();
@@ -424,14 +548,15 @@ public class IntakeDao {
 				query1 = new StringBuffer("");
 
 				if ("YES".equals(answer[i])) {
-					query1.append("INSERT INTO `" + SERVER
+					query1.append("INSERT INTO `"
+							+ this.getDatabase()
 							+ "`.`intake_question_answer` (question_id, answer, intake_id, detail,dates) ");
 					query1.append("VALUES ( ");
-					query1.append((i+1)+", ");
-					query1.append("'"+answer[i]+"', ");
-					query1.append(intake.getIntakeId()+", ");
-					query1.append("'"+details[i]+"', ");
-					query1.append("'"+dates[i]+"' ) ");
+					query1.append((i + 1) + ", ");
+					query1.append("'" + answer[i] + "', ");
+					query1.append(intake.getIntakeId() + ", ");
+					query1.append("'" + details[i] + "', ");
+					query1.append("'" + dates[i] + "' ) ");
 					System.out.println(query1);
 					Stmt = Conn.prepareStatement(query1.toString(),
 							Stmt.RETURN_GENERATED_KEYS);
@@ -443,7 +568,9 @@ public class IntakeDao {
 			 * medical conditions
 			 */
 			query1 = new StringBuffer("");
-			query1.append("DELETE FROM "+SERVER+".intake_medical_condition WHERE INTAKE_ID="+intake.getIntakeId());
+			query1.append("DELETE FROM " + this.getDatabase()
+					+ ".intake_medical_condition WHERE INTAKE_ID="
+					+ intake.getIntakeId());
 			Stmt.executeUpdate(query1.toString());
 
 			String condition[] = intake.getMedicalCondition();
@@ -453,11 +580,12 @@ public class IntakeDao {
 				query1 = new StringBuffer("");
 
 				if ("YES".equals(condition[i])) {
-					query1.append("INSERT INTO `" + SERVER
+					query1.append("INSERT INTO `"
+							+ this.getDatabase()
 							+ "`.`intake_medical_condition` (intake_id, answer, medical_condition_id) VALUES ( ");
-					query1.append(intake.getIntakeId()+" ,");
-					query1.append("'"+condition[i]+"', ");
-					query1.append((i+1)+") ");
+					query1.append(intake.getIntakeId() + " ,");
+					query1.append("'" + condition[i] + "', ");
+					query1.append((i + 1) + ") ");
 					System.out.println(query1);
 					Stmt = Conn.prepareStatement(query1.toString());
 					Stmt.executeUpdate(query1.toString());
@@ -468,42 +596,46 @@ public class IntakeDao {
 			 * job skills
 			 */
 			query1 = new StringBuffer("");
-			query1.append("DELETE FROM "+SERVER+".intake_job_skill WHERE INTAKE_ID="+intake.getIntakeId());
+			query1.append("DELETE FROM " + this.getDatabase()
+					+ ".intake_job_skill WHERE INTAKE_ID="
+					+ intake.getIntakeId());
 			Stmt.executeUpdate(query1.toString());
 
 			String work[] = intake.getWorkExperience();
 
 			for (int i = 0; i < 26; i++) {
 
-				 query1 = new StringBuffer("");
+				query1 = new StringBuffer("");
 
 				if ("YES".equals(work[i])) {
-					query1.append("INSERT INTO `" + SERVER
-							+ "`.`intake_job_skill` (JOB_SKILL_ID, INTAKE_ID) VALUES ( ");
-					query1.append((i+1)+",");
-					query1.append(intake.getIntakeId()+ ") ");
+					query1.append("INSERT INTO `"
+							+ this.getDatabase()							+ "`.`intake_job_skill` (JOB_SKILL_ID, INTAKE_ID) VALUES ( ");
+					query1.append((i + 1) + ",");
+					query1.append(intake.getIntakeId() + ") ");
 					System.out.println(query1);
 					Stmt = Conn.prepareStatement(query1.toString());
 					Stmt.executeUpdate(query1.toString());
 				}
 			}
-			
-			
-			
-			//update student history
+
+			// update student history
 			query1 = new StringBuffer("");
-			query1.append("SELECT farm, phase, program_status, begin_date, end_date FROM "+SERVER+".student_history WHERE INTAKE_ID="+intake.getIntakeId()+ " order by student_history_id desc");
+			query1.append("SELECT farm, phase, program_status, begin_date, end_date FROM "
+					+ this.getDatabase()
+					+ ".student_history WHERE INTAKE_ID="
+					+ intake.getIntakeId()
+					+ " order by student_history_id desc");
 			ResultSet RS = Stmt.executeQuery(query1.toString());
 			boolean updateHistory = false;
-			
+
 			if (RS.next())
 				if (RS.isFirst()) {
-					String location=RS.getString(1);
-					String phase=RS.getString(2);
-					String status=RS.getString(3);
-					String beginDate=RS.getString(4);
-					String endDate=RS.getString(5);
-					
+					String location = RS.getString(1);
+					String phase = RS.getString(2);
+					String status = RS.getString(3);
+					String beginDate = RS.getString(4);
+					String endDate = RS.getString(5);
+
 					if (!location.equals(history.getFarm()))
 						updateHistory = true;
 					if (!phase.equals(history.getPhase()))
@@ -517,10 +649,7 @@ public class IntakeDao {
 				}
 			if (updateHistory)
 				this.insertHistory(history, user, session);
-			
 
-			
-			
 			// Clean up after ourselves
 			Stmt.close();
 			Conn.close();
@@ -544,7 +673,7 @@ public class IntakeDao {
 
 			StringBuffer query = new StringBuffer();
 
-			query.append("INSERT INTO `" + SERVER + "`.`intake`");
+			query.append("INSERT INTO `" + this.getDatabase() + "`.`intake`");
 			query.append("(");
 			query.append("`LASTNAME`,");
 			query.append("`FIRSTNAME`,");
@@ -884,7 +1013,7 @@ public class IntakeDao {
 				StringBuffer query1 = new StringBuffer("");
 
 				if ("YES".equals(answer[i])) {
-					query1.append("INSERT INTO `" + SERVER
+					query1.append("INSERT INTO `" + this.getDatabase()
 							+ "`.`intake_question_answer` (");
 					query1.append("`QUESTION_ID`,");
 					query1.append("`INTAKE_ID`,");
@@ -912,7 +1041,7 @@ public class IntakeDao {
 				StringBuffer query1 = new StringBuffer("");
 
 				if ("YES".equals(condition[i])) {
-					query1.append("INSERT INTO `" + SERVER
+					query1.append("INSERT INTO `" + this.getDatabase()
 							+ "`.`intake_medical_condition` (");
 					query1.append("`MEDICAL_CONDITION_ID`,");
 					query1.append("`INTAKE_ID`,");
@@ -937,7 +1066,7 @@ public class IntakeDao {
 				StringBuffer query1 = new StringBuffer("");
 
 				if ("YES".equals(work[i])) {
-					query1.append("INSERT INTO `" + SERVER
+					query1.append("INSERT INTO `" + this.getDatabase()
 							+ "`.`intake_job_skill` (");
 					query1.append("`JOB_SKILL_ID`,");
 					query1.append("`INTAKE_ID` ) ");
@@ -973,7 +1102,7 @@ public class IntakeDao {
 
 			// Do something with the Connection
 			Statement Stmt = Conn.createStatement();
-			StringBuffer s = new StringBuffer("SELECT * FROM " + SERVER
+			StringBuffer s = new StringBuffer("SELECT * FROM " + this.getDatabase()
 					+ ".QUESTION ORDER BY QUESTION_ID ");
 
 			ResultSet RS = Stmt.executeQuery(s.toString());
@@ -1008,7 +1137,7 @@ public class IntakeDao {
 
 			// Do something with the Connection
 			Statement Stmt = Conn.createStatement();
-			StringBuffer s = new StringBuffer("SELECT * FROM " + SERVER
+			StringBuffer s = new StringBuffer("SELECT * FROM " + this.getDatabase()
 					+ ".MEDICAL_CONDITION  ");
 
 			ResultSet RS = Stmt.executeQuery(s.toString());
@@ -1043,7 +1172,7 @@ public class IntakeDao {
 
 			// Do something with the Connection
 			Statement Stmt = Conn.createStatement();
-			StringBuffer s = new StringBuffer("SELECT * FROM " + SERVER
+			StringBuffer s = new StringBuffer("SELECT * FROM " + this.getDatabase()
 					+ ".JOB_SKILL  ");
 
 			ResultSet RS = Stmt.executeQuery(s.toString());
@@ -1077,7 +1206,7 @@ public class IntakeDao {
 			Statement Stmt = Conn.createStatement();
 
 			StringBuffer query = new StringBuffer();
-			query.append("UPDATE " + SERVER + ".DONOR SET ");
+			query.append("UPDATE " + this.getDatabase() + ".DONOR SET ");
 			retCode = Stmt.executeUpdate(query.toString());
 			Stmt.close();
 			Conn.close();
@@ -1101,11 +1230,11 @@ public class IntakeDao {
 
 			// Do something with the Connection
 			Statement Stmt = Conn.createStatement();
-			StringBuffer s = new StringBuffer("SELECT * FROM " + SERVER
+			StringBuffer s = new StringBuffer("SELECT * FROM " + this.getDatabase()
 					+ ".DONATION ");
-			s.append("INNER JOIN " + SERVER
+			s.append("INNER JOIN " + this.getDatabase()
 					+ ".DONOR ON DONOR.DONOR_ID=DONATION.DONOR_ID  ");
-			s.append("INNER JOIN " + SERVER
+			s.append("INNER JOIN " + this.getDatabase()
 					+ ".ADDRESS ON DONOR.DONOR_ID=ADDRESS.DONOR_ID WHERE ");
 			if (lastname.length() > 0)
 				s.append("DONOR.LASTNAME='" + lastname + "' AND ");
@@ -1174,8 +1303,9 @@ public class IntakeDao {
 			Statement Stmt = Conn.createStatement();
 			StringBuffer s = new StringBuffer(
 					"SELECT USER_ID, USERNAME, USER_ROLE, LOGIN_COUNT, FARM_BASE FROM "
-							+ SERVER + ".SYSTEM_USER ");
+							+ this.getDatabase() + ".SYSTEM_USER ");
 			s.append("WHERE FARM_BASE='" + farm + "'  ");
+			
 			ResultSet RS = Stmt.executeQuery(s.toString());
 			while (RS.next()) {
 				SystemUser d = new SystemUser();
@@ -1234,7 +1364,7 @@ public class IntakeDao {
 								+ "' AND PASSWORD='"
 								+ password
 								+ "'");
-
+				
 				SystemUser user = new SystemUser();
 
 				while (RS.next()) {
@@ -1278,6 +1408,7 @@ public class IntakeDao {
 			req.setAttribute("ERRORS_" + req.getSession().getId(), errors);
 
 		} catch (SQLException E) {
+			System.out.println (E.getMessage());
 			req.setAttribute("SYSTEM_ERROR", E.getMessage());
 		} catch (ClassNotFoundException e) {
 			req.setAttribute("SYSTEM_ERROR", e.getMessage());
@@ -1297,7 +1428,7 @@ public class IntakeDao {
 
 			StringBuffer query = new StringBuffer();
 			query.append("UPDATE "
-					+ SERVER
+					+ this.getDatabase()
 					+ ".SYSTEM_USER SET LOGIN_COUNT=LOGIN_COUNT+1 WHERE USER_ID="
 					+ id + ";");
 			retCode = Stmt.executeUpdate(query.toString());
@@ -1324,7 +1455,7 @@ public class IntakeDao {
 			Statement Stmt = Conn.createStatement();
 
 			StringBuffer query = new StringBuffer();
-			query.append("UPDATE " + SERVER + ".SYSTEM_USER SET PASSWORD='"
+			query.append("UPDATE " + this.getDatabase() + ".SYSTEM_USER SET PASSWORD='"
 					+ password + "', QUESTION='" + question.replace("'", "''")
 					+ "', ANSWER='" + answer + "' WHERE USER_ID=" + id + ";");
 			retCode = Stmt.executeUpdate(query.toString());
@@ -1349,13 +1480,13 @@ public class IntakeDao {
 			Class.forName("com.mysql.jdbc.Driver");
 
 			Connection Conn = DriverManager.getConnection(
-					"jdbc:mysql://localhost:3306/" + SERVER + "", "root",
+					"jdbc:mysql://localhost:3306/" + this.getDatabase() + "", "root",
 					"admin");
 
 			// Do something with the Connection
 			/*
 			 * StringBuffer query = new StringBuffer();
-			 * query.append("INSERT INTO "+SERVER+".DONOR ("); query.append(
+			 * query.append("INSERT INTO "+this.getDatabase()+".DONOR ("); query.append(
 			 * " LASTNAME, FIRSTNAME, SUFFIX, CONTACT_PHONE, EMAIL_ADDRESS, CREATION_DATE, CREATED_BY ) VALUES ("
 			 * ); query.append("'" + d.getLastname() + "',"); query.append("'" +
 			 * d.getFirstname() + "',"); query.append("'" + d.getSuffix() +
@@ -1392,7 +1523,7 @@ public class IntakeDao {
 
 			StringBuffer query = new StringBuffer();
 			query.append("INSERT INTO "
-					+ SERVER
+					+ this.getDatabase()
 					+ ".STUDENT_HISTORY (INTAKE_ID, FARM, PHASE, PROGRAM_STATUS, REASON, BEGIN_DATE, END_DATE,CREATION_DATE,CREATED_BY) VALUE(");
 			query.append("'" + h.getIntakeId() + "',");
 			query.append("'" + h.getFarm() + "',");
@@ -1439,7 +1570,7 @@ public class IntakeDao {
 			// Do something with the Connection
 
 			StringBuffer query = new StringBuffer();
-			query.append("INSERT INTO " + SERVER + ".ADDRESS (");
+			query.append("INSERT INTO " + this.getDatabase() + ".ADDRESS (");
 			query.append(" DONOR_ID,LINE1, LINE2, CITY, STATE, ZIPCODE, MAJOR_INTERSECTION, SUBDIVISION, STREET_SUFFIX, STRUCTURE_TYPE, ");
 			query.append("UNIT, BUILDING, FLOOR, ELEVATOR_FLAG, GATED_FLAG, GATE_INSTRUCTIONS, CREATED_BY  ) VALUES (");
 			query.append(d.getDonorId() + ",");
@@ -1493,7 +1624,7 @@ public class IntakeDao {
 			// Do something with the Connection
 
 			StringBuffer query = new StringBuffer();
-			query.append("INSERT INTO " + SERVER + ".SYSTEM_USER (");
+			query.append("INSERT INTO " + this.getDatabase() + ".SYSTEM_USER (");
 			query.append(" USERNAME, PASSWORD, CREATION_DATE, CREATED_BY, USER_ROLE, FARM_BASE ) VALUES (");
 			query.append("'" + d.getUsername() + "',");
 			query.append("'" + d.getPassword() + "',");
@@ -1515,7 +1646,7 @@ public class IntakeDao {
 			// Clean up after ourselves
 			Stmt.close();
 			Conn.close();
-		} catch (SQLException E) {
+		} catch (SQLException E) { 
 			session.setAttribute("SYSTEM_ERROR", E.getMessage());
 		} catch (ClassNotFoundException e) {
 			session.setAttribute("SYSTEM_ERROR", e.getMessage());
@@ -1523,5 +1654,39 @@ public class IntakeDao {
 		}
 		return key;
 	}
+
+	public String getSERVER() {
+		return SERVER;
+	}
+
+	public void setSERVER(String sERVER) {
+		SERVER = sERVER;
+	}
+
+	public String getUid() {
+		return uid;
+	}
+
+	public void setUid(String uid) {
+		this.uid = uid;
+	}
+
+	public String getPwd() {
+		return pwd;
+	}
+
+	public void setPwd(String pwd) {
+		this.pwd = pwd;
+	}
+
+	public String getDatabase() {
+		return database;
+	}
+
+	public void setDatabase(String database) {
+		this.database = database;
+	}
+	
+	
 
 }

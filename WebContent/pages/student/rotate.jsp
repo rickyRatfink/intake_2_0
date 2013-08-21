@@ -1,4 +1,5 @@
 <%@ page import="org.faithfarm.domain.Intake" %>
+<%@ page import="org.faithfarm.domain.CourseRotationHistory" %>
 <%@ page import="org.faithfarm.util.Validator" %>
 <%@ page import="java.util.ArrayList" %>
 <jsp:include page="../../includes/header.jsp" flush="true"/>
@@ -8,6 +9,14 @@
 	 String farm=request.getParameter("farm");
 	 java.util.Date sDate = new java.util.Date();
 	 String runDate = v8r.convertDate(sDate.toString());
+	 
+	 CourseRotationHistory history = null;
+	 history = (CourseRotationHistory)session.getAttribute("history_stats");
+	 if (history==null)
+		 history=new CourseRotationHistory();
+	 
+	 Integer iTotal = (Integer)session.getAttribute("total_students");
+	 int totalCount = iTotal.intValue();
 %>
 
 
@@ -18,7 +27,28 @@
 	<tr>
 		<td><h1>Class Roster</h1></td>
 	</tr>
-	
+	<tr>
+		<td><b>Last Rotated</b>:&nbsp;&nbsp;<%=history.getRotationDate()%> by <%=history.getCreatedBy() %><br/>
+		<b>Moved</b>:&nbsp;&nbsp;0/<%=history.getMoved_course_0_to_1() %>&nbsp;&nbsp;
+		1/<%=history.getMoved_course_1_to_2() %>&nbsp;&nbsp;
+		2/<%=history.getMoved_course_2_to_3() %>&nbsp;&nbsp;
+		3/<%=history.getMoved_course_3_to_4() %>&nbsp;&nbsp;
+		4/<%=history.getMoved_course_4_to_5() %>&nbsp;&nbsp;
+		5/<%=history.getMoved_course_5_to_6() %><br/>
+		<b>Held:&nbsp;&nbsp;</b>0/<%=history.getHeld_course_0() %>&nbsp;&nbsp;
+		1/<%=history.getHeld_course_1() %>&nbsp;&nbsp;
+		2/<%=history.getHeld_course_2() %>&nbsp;&nbsp;
+		3/<%=history.getHeld_course_3() %>&nbsp;&nbsp;
+		4/<%=history.getHeld_course_4() %>&nbsp;&nbsp;
+		5/<%=history.getHeld_course_5() %>&nbsp;&nbsp;
+		6/<%=history.getHeld_course_6() %><br/>
+		<b>Graduated:&nbsp;&nbsp;</b>
+		<%=history.getGraduated() %><br/>
+		<b>Total Enrolled Students:&nbsp;&nbsp;</b>
+		<%=totalCount %>
+		
+		</td>
+	</tr>
 </table>
 <table width="850" class="report">
 	<% 

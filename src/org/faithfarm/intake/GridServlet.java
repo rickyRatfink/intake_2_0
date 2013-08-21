@@ -1,15 +1,17 @@
 package org.faithfarm.intake;
 
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.Properties;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 import org.faithfarm.util.Validator;
 
@@ -30,17 +32,46 @@ public class GridServlet extends HttpServlet {
 	private static String gedFlag = "";
 	private static String farm="";
 	
-	Connection connection = null;
-	private String uid = "root";
-
-	private String SERVER = "ffarm_dev";
-	private String pwd = "admin";
+	private String SERVER = "";
+	private String uid = "";
+	private String pwd = "";
+	private String database = "";
 
 	// private String SERVER = "ffarm_staging";
 	// private String pwd="j35u59538";
 
 	public GridServlet() {
 		super();
+	}
+	
+	private Connection getConnection() throws SQLException,
+	ClassNotFoundException {
+
+		Properties prop = new Properties();
+	    //Connection Conn = null;
+    	try {
+               //load a properties file
+    		//prop.load(new FileInputStream("c:\\development\\workspace\\dispatch_2_1\\src\\properties\\config.properties"));
+    		prop.load(new FileInputStream("c:\\properties\\config.properties"));
+    		this.setUid(prop.getProperty("dbuser")); 
+    		this.setPwd(prop.getProperty("dbpassword"));
+    		this.setDatabase(prop.getProperty("database"));
+    		this.setSERVER(prop.getProperty("dburl")); 
+     			
+    	} catch (IOException ex) { 
+    		System.out.println (ex.getMessage());
+    		ex.printStackTrace();
+        }
+    	
+		Class.forName("com.mysql.jdbc.Driver");
+        //System.out.println ("jdbc:mysql://"+this.getSERVER()+"/" + database+","+ uid+","+ pwd);
+		Connection Conn = DriverManager.getConnection(
+				"jdbc:mysql://"+this.getSERVER()+"/" + this.getDatabase(), this.getUid(), this.getPwd());
+		 if (Conn==null)System.out.println("connection is null");
+
+
+		
+		return Conn;
 	}
 
 	public void doGet(HttpServletRequest request, HttpServletResponse response)
@@ -65,6 +96,7 @@ public class GridServlet extends HttpServlet {
   }
 
 	private StringBuffer studentXml(HttpServletRequest req) {
+	  System.out.println("1");
 	  
 	 
 		ResultSet rs = null;
@@ -74,7 +106,7 @@ public class GridServlet extends HttpServlet {
 
 		int page, limit;
 
-		String sidx = null, sord = null;
+		String sidx = "1", sord = "desc";
 
 		try {
 			page = Integer.parseInt(req.getParameter("page"));
@@ -102,13 +134,18 @@ public class GridServlet extends HttpServlet {
 
 		try {
 
-			Class.forName("com.mysql.jdbc.Driver").newInstance();
-
-			Connection connection = DriverManager.getConnection(
-					"jdbc:mysql://localhost:3306/" + SERVER, uid, pwd);
-
+			//connection = this.getConnection();
+			
+			//Class.forName("com.mysql.jdbc.Driver");
+	        Connection connection = this.getConnection();
+	       System.out.println ("connecting..."); 		
+	        //Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/ffarm_prod", "root", "webmaster#59");
+	        //Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/ffarm_dev", "root", "admin");
+		    //this.setDatabase("ffarm_dev");
+		    //this.setDatabase("ffarm_prod");
+	        //System.out.println ("connectted..."); 
 			StringBuffer selectQuery = new StringBuffer("");
-			selectQuery.append("select count(*)  FROM `"+SERVER+"`.`intake`  ");
+			selectQuery.append("select count(*)  FROM `"+this.getDatabase()+"`.`intake`  ");
 			selectQuery.append(" WHERE");
 			selectQuery.append(" 1=1 ");
 				if (firstName.length()>0)
@@ -123,7 +160,7 @@ public class GridServlet extends HttpServlet {
 					selectQuery.append(" AND ENTRY_DATE BETWEEN'"+ entryDate +"' AND '"+exitDate+"'");
 				if (!"ALL".equals(farm)&&!"".equals(farm))
 					selectQuery.append(" AND FARM_BASE='"+farm +"'");
-
+System.out.println(selectQuery.toString()); 
 			rs = connection.createStatement().executeQuery(selectQuery.toString());
 			
 			if (rs.next())
@@ -150,7 +187,7 @@ public class GridServlet extends HttpServlet {
 			selectQuery.append(" if (MI is null,'',MI), ");
 			selectQuery.append(" if (DOB is null,'',DOB),");
 			selectQuery.append(" SSN");
-			selectQuery.append(" FROM `"+SERVER+"`.`intake`  ");
+			selectQuery.append(" FROM `"+this.getDatabase()+"`.`intake`  ");
 			selectQuery.append(" WHERE");
 			selectQuery.append(" 1=1 ");
 				if (firstName.length()>0)
@@ -169,7 +206,7 @@ public class GridServlet extends HttpServlet {
 				selectQuery.append(" order by "+sidx + " "+sord+ " limit "+limit+ " offset "+start);
 				;
 				
-				
+				System.out.println(selectQuery.toString());
 				rs = connection.createStatement().executeQuery(selectQuery.toString());
 	
 				data = new StringBuffer();
@@ -312,6 +349,38 @@ public class GridServlet extends HttpServlet {
 
 	public static void setFarm(String farm) {
 		GridServlet.farm = farm;
+	}
+
+	public String getSERVER() {
+		return SERVER;
+	}
+
+	public void setSERVER(String sERVER) {
+		SERVER = sERVER;
+	}
+
+	public String getUid() {
+		return uid;
+	}
+
+	public void setUid(String uid) {
+		this.uid = uid;
+	}
+
+	public String getPwd() {
+		return pwd;
+	}
+
+	public void setPwd(String pwd) {
+		this.pwd = pwd;
+	}
+
+	public String getDatabase() {
+		return database;
+	}
+
+	public void setDatabase(String database) {
+		this.database = database;
 	}
 	
 }

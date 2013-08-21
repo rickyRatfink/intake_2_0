@@ -1,7 +1,10 @@
 package org.faithfarm.intake;
 
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Properties;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -15,7 +18,7 @@ import org.faithfarm.domain.SystemUser;
 import org.faithfarm.intake.validation.IntakeValidator;
 import org.faithfarm.service.data.IntakeDao;
 import org.faithfarm.util.Validator;
- 
+
 public class IntakeServlet extends HttpServlet {
 
 	private static IntakeDao dao = new IntakeDao();
@@ -64,14 +67,14 @@ public class IntakeServlet extends HttpServlet {
 			url=source+".jsp";
 		} 
 		
-			
+		this.loadProperties();	
 		//this.setFields(req);
 		
 		if ("Save".equals(action)) {
 			this.setFields(source, req);
 			this.setValidAreaCount(0);
 			boolean success = validateApplication(req);
-			System.out.println(">"+validAreaCount);
+			/*System.out.println(">"+validAreaCount);
 			System.out.println("personal>"+personal);
 			System.out.println("religious>"+religious);
 			System.out.println("substance>"+substance);
@@ -79,7 +82,7 @@ public class IntakeServlet extends HttpServlet {
 			System.out.println("legal>"+legal);
 			System.out.println("employment>"+employment);
 			System.out.println("status>"+status);
-			
+			*/
 			if (!success) { 
 				req.setAttribute("WARNING", source+" information has errors.  Please check marked fields and correct data.");
 				url=url;
@@ -616,7 +619,45 @@ public class IntakeServlet extends HttpServlet {
 		        retCode = dao.getMedicalConditions(session);
 		        retCode = dao.getJobSkills(session);
 	}
-
+	private void loadProperties() {
+	   	Properties prop = new Properties();
+	    
+    	try {
+               //load a properties file
+    		prop.load(new FileInputStream("c:\\development\\workspace\\intake_2_0\\src\\properties\\config.properties"));
+    		dao.setUid(prop.getProperty("dbuser"));
+    		dao.setPwd(prop.getProperty("dbpassword"));
+    		dao.setDatabase(prop.getProperty("database"));
+    		dao.setSERVER(prop.getProperty("dburl"));
+    		 
+    		//get the property value and print it out
+            System.out.println(prop.getProperty("database"));
+    		System.out.println(prop.getProperty("dbuser"));
+    		System.out.println(prop.getProperty("dbpassword"));
+ 
+    	} catch (IOException ex) {
+    		ex.printStackTrace();
+        }
+	}
+	/*
+	private void writeProperties() {
+	 	Properties prop = new Properties();
+	 	 System.out.println("writing");
+    	try {
+    		//set the properties value
+    		prop.setProperty("database", "localhost");
+    		prop.setProperty("dbuser", "root");
+    		prop.setProperty("dbpassword", "admin");
+ 
+    		//save properties to project root folder
+    		prop.store(new FileOutputStream("c:\\development\\workspace\\intake_2_0\\src\\properties\\config.properties"), null);
+    		this.loadProperties();
+    	} catch (IOException ex) {
+    		ex.printStackTrace();
+    		System.out.println(ex.getMessage());
+        }
+    
+	}*/
 	
 	public static SystemUser getSystemUser() {
 		return systemUser;

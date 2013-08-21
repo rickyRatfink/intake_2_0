@@ -1,11 +1,14 @@
 package org.faithfarm.service.data;
 
+import java.io.FileInputStream;
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.Properties;
 
 import javax.servlet.http.HttpSession;
 
@@ -17,21 +20,35 @@ import org.faithfarm.util.Validator;
 public class StudentDao {
 
 	private Validator valid8r = new Validator();
-	private String uid = "root";
-
-	private String SERVER = "ffarm_dev";
-	private String pwd = "admin";
-
+	private String SERVER = "";
+	private String uid = "";
+	private String pwd = "";
+	private String database = "";
 	// private String SERVER = "ffarm_staging";
 	// private String pwd="j35u59538";
 
 	private Connection getConnection() throws SQLException,
 			ClassNotFoundException {
-
+		
+		Properties prop = new Properties();
+	    
+    	try {
+               //load a properties file
+    		//prop.load(new FileInputStream("c:\\development\\workspace\\intake_2_0\\src\\properties\\config.properties"));
+    		prop.load(new FileInputStream("c:\\properties\\config.properties"));
+    		this.setUid(prop.getProperty("dbuser")); 
+    		this.setPwd(prop.getProperty("dbpassword"));
+    		this.setDatabase(prop.getProperty("database"));
+    		this.setSERVER(prop.getProperty("dburl")); 
+    	
+    	} catch (IOException ex) {
+    		System.out.println (ex.getMessage());
+    		ex.printStackTrace();
+        }
 		Class.forName("com.mysql.jdbc.Driver");
-
+        System.out.println ("jdbc:mysql://"+this.getDatabase()+"/" + database+","+ uid+","+ pwd);
 		Connection Conn = DriverManager.getConnection(
-				"jdbc:mysql://localhost:3306/" + SERVER, uid, pwd);
+				"jdbc:mysql://"+this.getSERVER()+"/" + database, uid, pwd);
 
 		return Conn;
 	}
@@ -47,10 +64,10 @@ public class StudentDao {
 
 			query.append("SELECT ");
 			query.append(" FIRSTNAME,LASTNAME, ENTRY_DATE ");
-			query.append(" FROM `"+SERVER+"`.`intake`  ");
+			query.append(" FROM `"+this.getDatabase()+"`.`intake`  ");
 			query.append(" WHERE");
 			query.append(" CLASS='"+classId+"' ");
-			query.append(" AND FARM_BASE='"+farm.replace("'", "''") +"' ORDER BY ENTRY_DATE ASC");
+			query.append(" AND FARM_BASE='"+farm.replace("'", "''") +"' AND  ORDER BY ENTRY_DATE ASC");
 			System.out.println(query);
 			Statement Stmt = null;
 			Stmt = Conn.prepareStatement(query.toString());
@@ -90,7 +107,7 @@ public ArrayList getClassList (String classId, String farm) {
 
 			query.append("SELECT ");
 			query.append(" INTAKE_ID, FIRSTNAME,LASTNAME, ENTRY_DATE ");
-			query.append(" FROM `"+SERVER+"`.`intake`  ");
+			query.append(" FROM `"+this.getDatabase()+"`.`intake`  ");
 			query.append(" WHERE");
 			query.append(" CLASS='"+classId+"' ");
 			query.append(" AND FARM_BASE='"+farm.replace("'", "''") +"' ORDER BY ENTRY_DATE ASC");
@@ -131,7 +148,7 @@ try {
 
 		query.append("SELECT ");
 		query.append(" FIRSTNAME,LASTNAME, ENTRY_DATE ");
-		query.append(" FROM `"+SERVER+"`.`intake`  ");
+		query.append(" FROM `"+this.getDatabase()+"`.`intake`  ");
 		query.append(" WHERE");
 		query.append("  FARM_BASE='"+farm.replace("'", "''") +"' ORDER BY ENTRY_DATE ASC");
 		Statement Stmt = null;
@@ -178,7 +195,7 @@ try {
 			query.append(" if (MI is null,'',MI), ");
 			query.append(" if (DOB is null,'',DOB),");
 			query.append(" SSN");
-			query.append(" FROM `"+SERVER+"`.`intake`  ");
+			query.append(" FROM `"+this.getDatabase()+"`.`intake`  ");
 			query.append(" WHERE");
 			query.append(" 1=1 ");
 			if (firstName.length()>0)
@@ -193,7 +210,7 @@ try {
 				query.append(" AND ENTRY_DATE BETWEEN'"+ entryDate +"' AND '"+exitDate+"'");
 			if (!"ALL".equals(farm)&&!"".equals(farm))
 				query.append(" AND FARM_BASE='"+farm +"'");
-			
+			System.out.println(query);
 			Statement Stmt = null;
 			Stmt = Conn.prepareStatement(query.toString());
 			ResultSet RS = Stmt.executeQuery(query.toString());
@@ -233,8 +250,8 @@ try {
 
 			StringBuffer query = new StringBuffer();
 
-			query.append("SELECT * FROM "+SERVER+".INTAKE WHERE INTAKE_ID="+key);
-		
+			query.append("SELECT * FROM "+this.getDatabase()+".INTAKE WHERE INTAKE_ID="+key);
+		System.out.println (query);
 			
 			Statement Stmt = null;
 			Stmt = Conn.prepareStatement(query.toString());
@@ -416,7 +433,7 @@ try {
 			   
 			   for (int i=0;i<32;i++) { 
 				    StringBuffer query1 = new StringBuffer("");
-					query1.append("SELECT ANSWER, DETAIL, DATES FROM `"+SERVER+"`.`intake_question_answer` WHERE QUESTION_ID="+(i+1)+" AND INTAKE_ID="+intake.getIntakeId());
+					query1.append("SELECT ANSWER, DETAIL, DATES FROM `"+this.getDatabase()+"`.`intake_question_answer` WHERE QUESTION_ID="+(i+1)+" AND INTAKE_ID="+intake.getIntakeId());
 					Stmt = Conn.prepareStatement(query1.toString());
 					RS=Stmt.executeQuery(query1.toString());
 				
@@ -451,7 +468,7 @@ try {
 				
 			StringBuffer query1 = new StringBuffer("");
 			
-				query1.append("SELECT intake_medical_condition_id FROM `"+SERVER+"`.`intake_medical_condition` WHERE MEDICAL_CONDITION_ID="+(i+1)+" AND INTAKE_ID="+intake.getIntakeId());
+				query1.append("SELECT intake_medical_condition_id FROM `"+this.getDatabase()+"`.`intake_medical_condition` WHERE MEDICAL_CONDITION_ID="+(i+1)+" AND INTAKE_ID="+intake.getIntakeId());
 				Stmt = Conn.prepareStatement(query1.toString());
 				RS=Stmt.executeQuery(query1.toString());
 			
@@ -478,7 +495,7 @@ try {
 				
 			StringBuffer query1 = new StringBuffer("");
 			
-				query1.append("SELECT INTAKE_JOB_SKILL_ID FROM `"+SERVER+"`.`intake_job_skill` WHERE JOB_SKILL_ID="+(i+1)+" AND INTAKE_ID="+intake.getIntakeId());
+				query1.append("SELECT INTAKE_JOB_SKILL_ID FROM `"+this.getDatabase()+"`.`intake_job_skill` WHERE JOB_SKILL_ID="+(i+1)+" AND INTAKE_ID="+intake.getIntakeId());
 				Stmt = Conn.prepareStatement(query1.toString());
 				RS=Stmt.executeQuery(query1.toString());
 				
@@ -495,7 +512,7 @@ try {
 			StringBuffer query1 = new StringBuffer("");
 			
 			ArrayList list = new ArrayList();
-			query1.append("SELECT * FROM `"+SERVER+"`.`student_history` WHERE INTAKE_ID="+intake.getIntakeId()+" ORDER BY STUDENT_HISTORY_ID DESC ");
+			query1.append("SELECT * FROM `"+this.getDatabase()+"`.`student_history` WHERE INTAKE_ID="+intake.getIntakeId()+" ORDER BY STUDENT_HISTORY_ID DESC ");
 			Stmt = Conn.prepareStatement(query1.toString());
 			RS=Stmt.executeQuery(query1.toString());
 			
@@ -538,7 +555,7 @@ try {
 			Statement Stmt = Conn.createStatement();
 
 			StringBuffer query = new StringBuffer();
-			query.append("UPDATE " + SERVER + ".INTAKE SET IMAGE_HEADSHOT='"
+			query.append("UPDATE " + this.getDatabase() + ".INTAKE SET IMAGE_HEADSHOT='"
 					+ image + " WHERE INTAKE_ID=" + key + ";");
 			Stmt.executeUpdate(query.toString());
 
@@ -551,4 +568,38 @@ try {
 			e.printStackTrace();
 		}
 	}
+
+	public String getUid() {
+		return uid;
+	}
+
+	public void setUid(String uid) {
+		this.uid = uid;
+	}
+
+	public String getSERVER() {
+		return SERVER;
+	}
+
+	public void setSERVER(String sERVER) {
+		SERVER = sERVER;
+	}
+
+	public String getPwd() {
+		return pwd;
+	}
+
+	public void setPwd(String pwd) {
+		this.pwd = pwd;
+	}
+
+	public String getDatabase() {
+		return database;
+	}
+
+	public void setDatabase(String database) {
+		this.database = database;
+	}
+	
+	
 }

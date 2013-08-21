@@ -1,5 +1,7 @@
 package org.faithfarm.service.data;
 
+import java.io.FileInputStream;
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -9,6 +11,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Properties;
 
 import javax.servlet.http.HttpSession;
 
@@ -23,35 +26,45 @@ import org.faithfarm.util.Validator;
 public class CWTDao {
 
 	private Validator valid8r = new Validator();
-	private String uid = "root";
-
-	private String SERVER = "ffarm_dev";
-	private String pwd = "admin";
-
+	private String SERVER = "";
+	private String uid = "";
+	private String pwd = "";
+	private String database = "";
+	
 	// private String SERVER = "ffarm_staging";
 	// private String pwd="j35u59538";
 
 	private Connection getConnection() throws SQLException,
 			ClassNotFoundException {
-
+	Properties prop = new Properties();
+	    
+    	try {
+            //load a properties file
+    		//prop.load(new FileInputStream("c:\\development\\workspace\\intake_2_0\\src\\properties\\config.properties"));
+    		prop.load(new FileInputStream("c:\\properties\\config.properties"));
+    		this.setUid(prop.getProperty("dbuser")); 
+    		this.setPwd(prop.getProperty("dbpassword"));
+    		this.setDatabase(prop.getProperty("database"));
+    		this.setSERVER(prop.getProperty("dburl")); 
+    	
+    	} catch (IOException ex) {
+    		System.out.println (ex.getMessage());
+    		ex.printStackTrace();
+        }
 		Class.forName("com.mysql.jdbc.Driver");
-
+        System.out.println ("jdbc:mysql://"+this.getDatabase()+"/" + database+","+ uid+","+ pwd);
 		Connection Conn = DriverManager.getConnection(
-				"jdbc:mysql://localhost:3306/" + SERVER, uid, pwd);
+				"jdbc:mysql://"+this.getSERVER()+"/" + database, uid, pwd);
 
 		return Conn;
 	}
-
 	public Long insertProgram(Program program, HttpSession session) {
 
 		Long key = new Long("0");
 
 		try {
-			Class.forName("com.mysql.jdbc.Driver");
-
-			Connection Conn = DriverManager.getConnection(
-					"jdbc:mysql://localhost:3306/" + SERVER + "", "root",
-					"admin");
+			
+			Connection Conn = this.getConnection();
 
 			StringBuffer query = new StringBuffer();
 
@@ -198,7 +211,7 @@ public class CWTDao {
 			Class.forName("com.mysql.jdbc.Driver");
 
 			Connection Conn = DriverManager.getConnection(
-					"jdbc:mysql://localhost:3306/" + SERVER + "", "root",
+					"jdbc:mysql://localhost:3306/" + this.getConnection() + "", "root",
 					"admin");
 
 			StringBuffer query = new StringBuffer();
@@ -318,7 +331,7 @@ public class CWTDao {
 			Class.forName("com.mysql.jdbc.Driver");
 
 			Connection Conn = DriverManager.getConnection(
-					"jdbc:mysql://localhost:3306/" + SERVER + "", "root",
+					"jdbc:mysql://localhost:3306/" + this.getConnection() + "", "root",
 					"admin");
 
 			StringBuffer query = new StringBuffer();
@@ -359,7 +372,7 @@ public class CWTDao {
 			Class.forName("com.mysql.jdbc.Driver");
 
 			Connection Conn = DriverManager.getConnection(
-					"jdbc:mysql://localhost:3306/" + SERVER + "", "root",
+					"jdbc:mysql://localhost:3306/" + this.getConnection() + "", "root",
 					"admin");
 
 			StringBuffer query = new StringBuffer();
@@ -414,7 +427,7 @@ public class CWTDao {
 			Class.forName("com.mysql.jdbc.Driver");
 
 			Connection Conn = DriverManager.getConnection(
-					"jdbc:mysql://localhost:3306/" + SERVER + "", "root",
+					"jdbc:mysql://localhost:3306/" + this.getConnection() + "", "root",
 					"admin");
 
 			StringBuffer query = new StringBuffer();
@@ -480,5 +493,36 @@ public class CWTDao {
 		}
 		return key;
 	}
+	public Validator getValid8r() {
+		return valid8r;
+	}
+	public void setValid8r(Validator valid8r) {
+		this.valid8r = valid8r;
+	}
+	public String getSERVER() {
+		return SERVER;
+	}
+	public void setSERVER(String sERVER) {
+		SERVER = sERVER;
+	}
+	public String getUid() {
+		return uid;
+	}
+	public void setUid(String uid) {
+		this.uid = uid;
+	}
+	public String getPwd() {
+		return pwd;
+	}
+	public void setPwd(String pwd) {
+		this.pwd = pwd;
+	}
+	public String getDatabase() {
+		return database;
+	}
+	public void setDatabase(String database) {
+		this.database = database;
+	}
+	
 
 }

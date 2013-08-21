@@ -32,7 +32,8 @@ $(document).ready(function() {
 
 	$("#list1").jqGrid({
 
-	    url:'http://localhost:8080/<%=request.getContextPath()%>/grid?type=student',
+	    //url:'http://seascapesolutions.com:8080<%=request.getContextPath()%>/grid?type=student',
+	    url:'http://localhost:8080<%=request.getContextPath()%>/grid?type=student',
 	    colNames:['Student ID','Lastname','MI','Firstname','SSN','DOB'],
 	    colModel:[
 	              {name:'intake_id',index:'intake_id', width:100,sortable:true},
@@ -51,7 +52,7 @@ $(document).ready(function() {
 	    multiselect: false,	 
 	    height: 450,
 	    width: 900,
-	    caption: "Student Records" });
+	    caption: "Student Records!" });
 
 	   
 });	    
