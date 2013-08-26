@@ -17,8 +17,13 @@
                 <li><a href="<%=request.getContextPath()%>/cwt?action=metrics">Metrics</a></li>
                 <li><a href="<%=request.getContextPath()%>/cwt?action=modules">Modules</a></li>
                 <li><a href="">Exams</a></li>
-                <li><a href="">Students</a></li>
+                <li><a href="">Students</a></li> 
             </ul>
+            <ul style="color: Blue">
+                <li><a href="<%=request.getContextPath()%>/cwt?action=departments">Departments</a></li>
+                <li><a href="<%=request.getContextPath()%>/cwt?action=jobs">Jobs</a></li>
+                <li><a href="<%=request.getContextPath()%>/cwt?action=supervisors">Supervisors</a></li>
+             </ul>
         
 			<br/><br/>
 	        <p>

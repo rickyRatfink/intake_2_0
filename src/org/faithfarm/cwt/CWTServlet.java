@@ -9,9 +9,12 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.faithfarm.domain.Department;
+import org.faithfarm.domain.Job;
 import org.faithfarm.domain.Metric;
 import org.faithfarm.domain.Module;
 import org.faithfarm.domain.Program;
+import org.faithfarm.domain.Supervisor;
 import org.faithfarm.domain.SystemUser;
 import org.faithfarm.service.data.CWTDao;
 import org.faithfarm.util.Validator;
@@ -24,6 +27,10 @@ public class CWTServlet extends HttpServlet {
 	private static Program program = new Program();
 	private static Metric metric = new Metric();
 	private static Module module = new Module();
+	private static Department department = new Department();
+	private static Job job = new Job();
+	private static Supervisor supervisor = new Supervisor();
+	
 	private static Validator valid8r = new Validator();
 
 	 protected void doGet(HttpServletRequest req, HttpServletResponse resp)
@@ -52,7 +59,16 @@ public class CWTServlet extends HttpServlet {
 					} else if ("modules".equals(action)) {
 						dao.getModuleList(session);
 						url="pages/cwt/modules/results.jsp";
-					}	else if ("Create Program".equals(action)) {
+					} else if ("departments".equals(action)) {	
+						dao.getDepartmentList("",session);
+						url="pages/cwt/department/results.jsp";
+					} else if ("jobs".equals(action)) {	
+						dao.getJobList("",session);
+						url="pages/cwt/job/results.jsp";
+					} else if ("supervisors".equals(action)) {	
+						dao.getSupervisorList(session);
+						url="pages/cwt/supervisor/results.jsp";
+					} else if ("Create Program".equals(action)) {
 						this.setProgram(new Program());
 						url="pages/cwt/programs/create.jsp";
 					} else if ("Save Program".equals(action)) {
@@ -104,8 +120,42 @@ public class CWTServlet extends HttpServlet {
 						}
 						else
 							url="pages/cwt/modules/create.jsp";
+					} else if ("Create Department".equals(action)) {
+						this.setDepartment(new Department());
+						url="pages/cwt/department/create.jsp";
+					} else if ("Save Department".equals(action)) {
+						pass1=this.validateDepartment(user, req);
+						department.setCreatedBy(user.getUsername());
+						if (pass1) {
+							Long key = dao.insertDepartment(this.getDepartment(), session);
+							if (key>0) {
+								req.setAttribute("MESSAGE", "department successfully saved");
+								url="pages/cwt/department/results.jsp";
+							}
+							else
+								url="error.jsp";
+						}
+						else 
+							url="pages/cwt/department/create.jsp";
 					}
-					
+					else if ("Create Job".equals(action)) {
+						this.setJob(new Job());
+						dao.getDepartments(user.getFarmBase(),session);
+						url="pages/cwt/job/create.jsp";
+					} else if ("Save Job".equals(action)) {
+						pass1=this.validateJob(user, req);
+						if (pass1) {
+							Long key = dao.insertJob(this.getJob(), session);
+							if (key>0) {
+								req.setAttribute("MESSAGE", "job successfully saved");
+								url="pages/cwt/job/results.jsp";
+							}
+							else
+								url="error.jsp";
+						}
+						else 
+							url="pages/cwt/job/create.jsp";
+					}
 				}	
 					
 				}
@@ -224,6 +274,57 @@ public class CWTServlet extends HttpServlet {
  		 return success;
  	 }
      
+     
+private boolean validateDepartment (SystemUser user, HttpServletRequest req) {
+		 
+		 boolean success=true;
+		 
+		 this.getDepartment().setTitle(valid8r.cleanData(req.getParameter("title")));
+		 this.getDepartment().setFarmBase(valid8r.cleanData(req.getParameter("farmBase")));
+		  this.getMetric().setCreatedBy(user.getUsername());			
+		 
+		 String fieldErr = valid8r.validateRequired("department title", department.getTitle());
+		 if (fieldErr.length() > 0) {
+			 	req.setAttribute("departmentNameErr", fieldErr);
+				success = false;
+		 }
+		
+		 fieldErr = valid8r.validateRequired("farm location", department.getFarmBase());
+		 if (fieldErr.length() > 0) {
+			 	req.setAttribute("farmBaseErr", fieldErr);
+				success = false;
+		 }	 
+		
+		
+		 return success;
+	 }
+     
+
+private boolean validateJob (SystemUser user, HttpServletRequest req) {
+	 
+	 boolean success=true;
+	 
+	 this.getJob().setTitle(valid8r.cleanData(req.getParameter("title")));
+	 this.getJob().setDepartmentId(new Long(req.getParameter("departmentId")));
+	 this.getJob().setCreatedBy(user.getUsername());			
+	 
+	 String fieldErr = valid8r.validateRequired("job title", job.getTitle());
+	 if (fieldErr.length() > 0) {
+		 	req.setAttribute("jobNameErr", fieldErr);
+			success = false;
+	 }
+	
+	 fieldErr = valid8r.validateRequired("department", job.getDepartmentId());
+	 if (fieldErr.length() > 0) {
+		 	req.setAttribute("departmentErr", fieldErr);
+			success = false;
+	 }	 
+	
+	
+	 return success;
+}
+
+     
 	public CWTDao getDao() {
 		return dao;
 	}
@@ -262,6 +363,30 @@ public class CWTServlet extends HttpServlet {
 
 	public static void setProgram(Program program) {
 		CWTServlet.program = program;
+	}
+
+	public static Department getDepartment() {
+		return department;
+	}
+
+	public static void setDepartment(Department department) {
+		CWTServlet.department = department;
+	}
+
+	public static Job getJob() {
+		return job;
+	}
+
+	public static void setJob(Job job) {
+		CWTServlet.job = job;
+	}
+
+	public static Supervisor getSupervisor() {
+		return supervisor;
+	}
+
+	public static void setSupervisor(Supervisor supervisor) {
+		CWTServlet.supervisor = supervisor;
 	}
 
 	

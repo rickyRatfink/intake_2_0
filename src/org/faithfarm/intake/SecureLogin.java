@@ -1,9 +1,7 @@
 package org.faithfarm.intake;
 
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Properties;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -11,6 +9,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.faithfarm.domain.Department;
 import org.faithfarm.domain.SystemUser;
 import org.faithfarm.service.data.CWTDao;
 import org.faithfarm.service.data.IntakeDao;
@@ -22,6 +21,7 @@ public class SecureLogin extends HttpServlet {
 	private IntakeDao dao = new IntakeDao();
     private StudentDao sdao = new StudentDao();
     private CWTDao cdao = new CWTDao();  
+    private String activeFarm="";
     
 	 protected void doGet(HttpServletRequest req, HttpServletResponse resp)
 			   throws ServletException, IOException
@@ -57,8 +57,8 @@ public class SecureLogin extends HttpServlet {
 	      if (success) {
 	    	  buildStateList(session);
 	    	  SystemUser user = (SystemUser)session.getAttribute("USER_" + session.getId());
-	    	   
-	    	  if (user!=null&&user.getLoginCount().intValue()==0)
+	    	  activeFarm = user.getFarmBase();
+	    	 if (user!=null&&user.getLoginCount().intValue()==0)
 	    		  next="setpassword.jsp";	    	  
 	    	  else
 	    		  next="pages/main.jsp"; 
@@ -258,6 +258,12 @@ public class SecureLogin extends HttpServlet {
 	        phase.add("SLS");
 	        phase.add("Omega");
 	        
+	        ArrayList dList = new ArrayList();
+	        ArrayList departments = cdao.getDepartmentList(this.getActiveFarm(), session);
+	        for (int i=0;i<departments.size();i++) {
+	        	Department d= (Department)departments.get(i);
+	        	dList.add(d.getTitle());
+	        }
 	        session.setAttribute("dllSuffix",convertToUpperCase(suffix));
 	        session.setAttribute("dllSecurityQuestion",convertToUpperCase(securityQuestion));
 	        session.setAttribute("dllLocation",convertToUpperCase(location));
@@ -277,6 +283,7 @@ public class SecureLogin extends HttpServlet {
 	        session.setAttribute("dllFarm",convertToUpperCase(farm));
 	        session.setAttribute("dllProgramStatus",convertToUpperCase(programStatus));
 	        session.setAttribute("dllPhase",convertToUpperCase(phase));
+	        session.setAttribute("dllDepartments",convertToUpperCase(dList));
 	        
 	   }
 	   
@@ -291,6 +298,14 @@ public class SecureLogin extends HttpServlet {
 		   
 		   return newList;
 	   }
+
+	public String getActiveFarm() {
+		return activeFarm;
+	}
+
+	public void setActiveFarm(String activeFarm) {
+		this.activeFarm = activeFarm;
+	}
 	  
 	
 	   

@@ -15,10 +15,12 @@ import java.util.Properties;
 
 import javax.servlet.http.HttpSession;
 
+import org.faithfarm.domain.Department;
+import org.faithfarm.domain.Job;
 import org.faithfarm.domain.Metric;
 import org.faithfarm.domain.Module;
 import org.faithfarm.domain.Program;
-import org.faithfarm.domain.SystemUser;
+import org.faithfarm.domain.Supervisor;
 import org.faithfarm.util.Validator;
 
 //import com.mysql.jdbc.PreparedStatement;
@@ -52,7 +54,7 @@ public class CWTDao {
     		ex.printStackTrace();
         }
 		Class.forName("com.mysql.jdbc.Driver");
-        System.out.println ("jdbc:mysql://"+this.getDatabase()+"/" + database+","+ uid+","+ pwd);
+        //System.out.println ("jdbc:mysql://"+this.getSERVER()+"/" + this.getDatabase()+","+ uid+","+ pwd);
 		Connection Conn = DriverManager.getConnection(
 				"jdbc:mysql://"+this.getSERVER()+"/" + database, uid, pwd);
 
@@ -68,7 +70,7 @@ public class CWTDao {
 
 			StringBuffer query = new StringBuffer();
 
-			query.append("INSERT INTO `"+SERVER+"`.`cwt_program` ");
+			query.append("INSERT INTO `"+this.getDatabase()+"`.`cwt_program` ");
 			query.append("(");
 			query.append("`program_name`,");
 			query.append("`description`,");
@@ -82,7 +84,6 @@ public class CWTDao {
 			query.append("'"+valid8r.getEpoch()+"',");
 			query.append("'"+program.getCreatedBy()+"'");
 			query.append(")");
-			
 			
 			PreparedStatement Stmt = null;
 			Stmt = Conn.prepareStatement(query.toString(),
@@ -101,6 +102,7 @@ public class CWTDao {
 			System.out.println (E.getMessage());
 			session.setAttribute("SYSTEM_ERROR", E.getMessage());
 		} catch (ClassNotFoundException e) {
+			System.out.println (e.getMessage());
 			session.setAttribute("SYSTEM_ERROR", e.getMessage());
 			e.printStackTrace();
 		}
@@ -117,7 +119,7 @@ public class CWTDao {
 
 			StringBuffer query = new StringBuffer();
 
-			query.append("SELECT PROGRAM_ID, PROGRAM_NAME, DESCRIPTION, STATUS, CREATION_DATE, CREATED_BY FROM `"+SERVER+"`.`cwt_program` ");
+			query.append("SELECT PROGRAM_ID, PROGRAM_NAME, DESCRIPTION, STATUS, CREATION_DATE, CREATED_BY FROM `"+this.getDatabase()+"`.`cwt_program` ");
 			
 			Statement Stmt = null;
 			Stmt = Conn.prepareStatement(query.toString());
@@ -159,12 +161,12 @@ public class CWTDao {
 
 			StringBuffer query = new StringBuffer();
 
-			//query.append("SELECT METRIC_ID, METRIC_NAME, DESCRIPTION, STATUS, CREATION_DATE, CREATED_BY FROM `"+SERVER+"`.`cwt_metrics` ");
+			//query.append("SELECT METRIC_ID, METRIC_NAME, DESCRIPTION, STATUS, CREATION_DATE, CREATED_BY FROM `"+this.getDatabase()+"`.`cwt_metrics` ");
 			query.append("SELECT ");
 			query.append("METRIC_ID, METRIC_NAME, CWT_PROGRAM.PROGRAM_ID, CWT_METRICS.DESCRIPTION,"); 
 			query.append("CWT_METRICS.STATUS, CWT_METRICS.CREATION_DATE, CWT_METRICS.CREATED_BY ");
 			query.append("FROM ");
-			query.append("`"+SERVER+"`.`cwt_metrics` INNER JOIN `"+SERVER+"`.`cwt_program`");
+			query.append("`"+this.getDatabase()+"`.`cwt_metrics` INNER JOIN `"+this.getDatabase()+"`.`cwt_program`");
 			query.append("ON CWT_METRICS.PROGRAM_ID = CWT_PROGRAM.PROGRAM_ID ");
 			
 			Statement Stmt = null;
@@ -210,13 +212,10 @@ public class CWTDao {
 		try {
 			Class.forName("com.mysql.jdbc.Driver");
 
-			Connection Conn = DriverManager.getConnection(
-					"jdbc:mysql://localhost:3306/" + this.getConnection() + "", "root",
-					"admin");
-
+			Connection Conn = this.getConnection();
 			StringBuffer query = new StringBuffer();
 
-			query.append("SELECT PROGRAM_ID, PROGRAM_NAME FROM `"+SERVER+"`.`cwt_program` ");
+			query.append("SELECT PROGRAM_ID, PROGRAM_NAME FROM `"+this.getDatabase()+"`.`cwt_program` ");
 			
 			PreparedStatement Stmt = null;
 			Stmt = Conn.prepareStatement(query.toString());
@@ -241,6 +240,44 @@ public class CWTDao {
 		}
 		
 	}
+	
+	public void getDepartments(String farm, HttpSession session) {
+
+		
+		try {
+		
+			Connection Conn = this.getConnection();
+			StringBuffer query = new StringBuffer();
+
+			query.append("SELECT DEPARTMENT_ID, TITLE FROM `"+this.getDatabase()+"`.`cwt_department` ");
+			if (farm.length()>0)
+				query.append(" WHERE FARM_BASE='"+farm+"' ");
+			
+			System.out.println (query);
+		
+			PreparedStatement Stmt = null;
+			Stmt = Conn.prepareStatement(query.toString());
+			ResultSet RS = Stmt.executeQuery(query.toString());
+			Map<Long, String> m = new HashMap<Long, String>();
+			    
+			while (RS.next()) {
+				Long key = RS.getLong(1);
+				String value = RS.getString(2);
+				m.put(key, value);
+			}
+			session.setAttribute("department_map", m);
+			Stmt.close();
+			Conn.close();
+		
+		} catch (SQLException E) {
+			System.out.println (E.getMessage());
+			session.setAttribute("SYSTEM_ERROR", E.getMessage());
+		} catch (ClassNotFoundException e) {
+			session.setAttribute("SYSTEM_ERROR", e.getMessage());
+			e.printStackTrace();
+		}
+		
+	}
 
 	
 	public void getModuleList(HttpSession session) {
@@ -252,7 +289,7 @@ public class CWTDao {
 
 			StringBuffer query = new StringBuffer();
 
-			query.append("SELECT MODULE_ID, MODULE_NAME, DESCRIPTION, STATUS, CREATION_DATE, CREATED_BY FROM `"+SERVER+"`.`CWT_MODULES` ");
+			query.append("SELECT MODULE_ID, MODULE_NAME, DESCRIPTION, STATUS, CREATION_DATE, CREATED_BY FROM `"+this.getDatabase()+"`.`CWT_MODULES` ");
 			
 			Statement Stmt = null;
 			Stmt = Conn.prepareStatement(query.toString());
@@ -295,7 +332,7 @@ public class CWTDao {
 
 			StringBuffer query = new StringBuffer();
 
-			query.append("SELECT * FROM `"+SERVER+"`.`cwt_program` WHERE PROGRAM_ID="+id);
+			query.append("SELECT * FROM `"+this.getDatabase()+"`.`cwt_program` WHERE PROGRAM_ID="+id);
 			
 			PreparedStatement Stmt = null;
 			Stmt = Conn.prepareStatement(query.toString());
@@ -330,13 +367,11 @@ public class CWTDao {
 		try {
 			Class.forName("com.mysql.jdbc.Driver");
 
-			Connection Conn = DriverManager.getConnection(
-					"jdbc:mysql://localhost:3306/" + this.getConnection() + "", "root",
-					"admin");
+			Connection Conn = this.getConnection();
 
 			StringBuffer query = new StringBuffer();
 
-			query.append("SELECT METRIC_ID, METRIC_NAME FROM `"+SERVER+"`.`cwt_metrics` ");
+			query.append("SELECT METRIC_ID, METRIC_NAME FROM `"+this.getDatabase()+"`.`cwt_metrics` ");
 			
 			PreparedStatement Stmt = null;
 			Stmt = Conn.prepareStatement(query.toString());
@@ -371,13 +406,11 @@ public class CWTDao {
 		try {
 			Class.forName("com.mysql.jdbc.Driver");
 
-			Connection Conn = DriverManager.getConnection(
-					"jdbc:mysql://localhost:3306/" + this.getConnection() + "", "root",
-					"admin");
+			Connection Conn = this.getConnection();
 
 			StringBuffer query = new StringBuffer();
 
-			query.append("INSERT INTO `"+SERVER+"`.`cwt_metrics` ");
+			query.append("INSERT INTO `"+this.getDatabase()+"`.`cwt_metrics` ");
 			query.append("(");
 			query.append("`program_id`,");
 			query.append("`metric_name`,");
@@ -424,15 +457,11 @@ public class CWTDao {
 		Long key = new Long("0");
 
 		try {
-			Class.forName("com.mysql.jdbc.Driver");
-
-			Connection Conn = DriverManager.getConnection(
-					"jdbc:mysql://localhost:3306/" + this.getConnection() + "", "root",
-					"admin");
+			Connection Conn = this.getConnection();
 
 			StringBuffer query = new StringBuffer();
 
-			query.append("INSERT INTO `"+SERVER+"`.`cwt_modules` ");
+			query.append("INSERT INTO `"+this.getDatabase()+"`.`cwt_modules` ");
 			query.append("(");
 			query.append("`module_name`,");
 			query.append("`description`,");
@@ -465,7 +494,7 @@ public class CWTDao {
 				
 				if (keys[i]!=null) {
 					query = new StringBuffer("");
-					query.append("INSERT INTO `"+SERVER+"`.`cwt_program_metric_modules` ");
+					query.append("INSERT INTO `"+this.getDatabase()+"`.`cwt_program_metric_modules` ");
 					query.append("(");
 					query.append("`metric_id`,");
 					query.append("`module_id`,");
@@ -493,6 +522,401 @@ public class CWTDao {
 		}
 		return key;
 	}
+	
+	public Department getDepartment(Long key, HttpSession session) {
+		
+		Department p = new Department();
+		
+		try {
+			
+			Connection Conn = this.getConnection();
+
+			StringBuffer query = new StringBuffer();
+
+			query.append("SELECT DEPARTMENT_ID, FARM_BASE, TITLE, CREATION_DATE, CREATED_BY FROM `"+this.getDatabase()+"`.`cwt_department` ");
+			query.append(" WHERE DEPARTMENT_ID="+key);
+			System.out.println (query);
+			
+			Statement Stmt = null;
+			Stmt = Conn.prepareStatement(query.toString());
+			ResultSet RS = Stmt.executeQuery(query.toString());
+			
+			while (RS.next()) {
+				
+				p.setDepartmentId(RS.getLong(1));
+				p.setFarmBase(RS.getString(2));
+				p.setTitle(RS.getString(3));
+				p.setCreationDate(RS.getString(4));
+				p.setCreatedBy(RS.getString(5));
+			}
+			Stmt.close();
+			Conn.close();
+		
+		} catch (SQLException E) {
+			System.out.println (E.getMessage());
+			session.setAttribute("SYSTEM_ERROR", E.getMessage());
+		} catch (ClassNotFoundException e) {
+			session.setAttribute("SYSTEM_ERROR", e.getMessage());
+			e.printStackTrace();
+		}
+		
+		return p;	
+	}
+	public ArrayList getDepartmentList(String farm, HttpSession session) {
+		ArrayList list = new ArrayList();
+		
+		try {
+			Connection Conn = this.getConnection();
+
+			StringBuffer query = new StringBuffer();
+
+			query.append("SELECT DEPARTMENT_ID, FARM_BASE, TITLE, CREATION_DATE, CREATED_BY FROM `"+this.getDatabase()+"`.`cwt_department` ");
+			if (farm.length()>0)
+				query.append(" WHERE FARM_BASE='"+farm+"' ");
+			
+			System.out.println (query);
+			
+			Statement Stmt = null;
+			Stmt = Conn.prepareStatement(query.toString());
+			ResultSet RS = Stmt.executeQuery(query.toString());
+			
+			
+			while (RS.next()) {
+				Department p = new Department();
+				p.setDepartmentId(RS.getLong(1));
+				p.setFarmBase(RS.getString(2));
+				p.setTitle(RS.getString(3));
+				p.setCreationDate(RS.getString(4));
+				p.setCreatedBy(RS.getString(5));
+				list.add(p);			
+			}
+			session.setAttribute("department_results", list);
+			Stmt.close();
+			Conn.close();
+		
+		} catch (SQLException E) {
+			System.out.println (E.getMessage());
+			session.setAttribute("SYSTEM_ERROR", E.getMessage());
+		} catch (ClassNotFoundException e) {
+			session.setAttribute("SYSTEM_ERROR", e.getMessage());
+			e.printStackTrace();
+		}
+	
+	return list;	
+	}
+	public Long insertDepartment(Department d, HttpSession session) {
+		Long key = new Long("0");
+
+		try {
+			
+			Connection Conn = this.getConnection();
+
+			StringBuffer query = new StringBuffer();
+
+			query.append("INSERT INTO `"+this.getDatabase()+"`.`cwt_department` ");
+			query.append("(`farm_base`,");
+			query.append("`title`,");
+			query.append("`creation_date`,");
+			query.append("`created_by`)");
+			query.append(" VALUES (");
+			query.append("'"+d.getFarmBase()+"',");
+			query.append("'"+d.getTitle()+"',");
+			query.append("'"+valid8r.getEpoch()+"',");
+			query.append("'"+d.getCreatedBy()+"'");
+			query.append(")");
+			System.out.println (query);
+			
+			PreparedStatement Stmt = null;
+			Stmt = Conn.prepareStatement(query.toString(),
+					Stmt.RETURN_GENERATED_KEYS);
+			
+			Stmt.executeUpdate(query.toString());
+
+			ResultSet generatedKeys = Stmt.getGeneratedKeys();
+			if (generatedKeys.next())
+				key = generatedKeys.getLong(1);
+
+			Stmt.close();
+			Conn.close();
+
+		} catch (SQLException E) {
+			System.out.println (E.getMessage());
+			session.setAttribute("SYSTEM_ERROR", E.getMessage());
+		} catch (ClassNotFoundException e) {
+			System.out.println (e.getMessage());
+			session.setAttribute("SYSTEM_ERROR", e.getMessage());
+			e.printStackTrace();
+		}
+		return key;
+	}	
+	
+	public Job getJob(Long key, HttpSession session) {
+		
+		Job p = new Job();
+		
+		try {
+			
+			Connection Conn = this.getConnection();
+
+			StringBuffer query = new StringBuffer();
+
+			query.append("SELECT Job_ID, DEPARTMENT_ID, TITLE, DESCRIPTION, CREATION_DATE, CREATED_BY FROM `"+this.getDatabase()+"`.`cwt_Job` ");
+			query.append(" WHERE Job_ID="+key);
+			System.out.println (query);
+			
+			Statement Stmt = null;
+			Stmt = Conn.prepareStatement(query.toString());
+			ResultSet RS = Stmt.executeQuery(query.toString());
+			
+			while (RS.next()) {				
+				p.setJobId(RS.getLong(1));
+				p.setDescription(RS.getString(2));
+				p.setTitle(RS.getString(3));
+				p.setCreationDate(RS.getString(4));
+				p.setCreatedBy(RS.getString(5));
+			}
+			Stmt.close();
+			Conn.close();
+		
+		} catch (SQLException E) {
+			System.out.println (E.getMessage());
+			session.setAttribute("SYSTEM_ERROR", E.getMessage());
+		} catch (ClassNotFoundException e) {
+			session.setAttribute("SYSTEM_ERROR", e.getMessage());
+			e.printStackTrace();
+		}
+		
+		return p;	
+	}
+	public void getJobList(String farm, HttpSession session) {
+	try {
+			
+			Connection Conn = this.getConnection();
+
+			StringBuffer query = new StringBuffer();
+
+			query.append("SELECT Job_ID, cwt_job.DEPARTMENT_ID, cwt_department.TITLE, cwt_job.TITLE, DESCRIPTION, cwt_job.CREATION_DATE, cwt_job.CREATED_BY, FARM_BASE FROM `"+this.getDatabase()+"`.`cwt_Job` ");
+			query.append("INNER JOIN `"+this.getDatabase()+"`.`cwt_DEPARTMENT` ON cwt_department.department_id=cwt_job.department_id ");
+			if (farm.length()>0)
+				query.append(" WHERE FARM_BASE='"+farm+"' ");
+			System.out.println (query);
+			
+			Statement Stmt = null;
+			Stmt = Conn.prepareStatement(query.toString());
+			ResultSet RS = Stmt.executeQuery(query.toString());
+			
+			ArrayList list = new ArrayList();
+			
+			while (RS.next()) {
+				Job p = new Job();
+				p.setJobId(RS.getLong(1));
+				p.setDepartmentId(RS.getLong(2));
+				p.setDepartmentTitle(RS.getString(3));
+				p.setTitle(RS.getString(4));
+				p.setDescription(RS.getString(5));
+				p.setCreationDate(RS.getString(6));
+				p.setCreatedBy(RS.getString(7));
+				p.setFarmBase(RS.getString(8));
+				list.add(p);			
+			}
+			session.setAttribute("job_results", list);
+			Stmt.close();
+			Conn.close();
+		
+		} catch (SQLException E) {
+			System.out.println (E.getMessage());
+			session.setAttribute("SYSTEM_ERROR", E.getMessage());
+		} catch (ClassNotFoundException e) {
+			session.setAttribute("SYSTEM_ERROR", e.getMessage());
+			e.printStackTrace();
+		}
+			
+	}
+	public Long insertJob(Job d, HttpSession session) {
+		Long key = new Long("0");
+
+		try {
+			
+			Connection Conn = this.getConnection();
+
+			StringBuffer query = new StringBuffer();
+
+			query.append("INSERT INTO `"+this.getDatabase()+"`.`cwt_Job` ");
+			query.append("(");
+			query.append("`department_id`,");
+			query.append("`title`,");
+			query.append("`description`,");
+			query.append("`creation_date`,");
+			query.append("`created_by`)");
+			query.append(" VALUES (");
+			query.append(d.getDepartmentId()+",");
+			query.append("'"+d.getTitle()+"',");
+			query.append("'"+d.getDescription()+"',");
+			query.append("'"+valid8r.getEpoch()+"',");
+			query.append("'"+d.getCreatedBy()+"'");
+			query.append(")");
+			System.out.println (query);
+			
+			PreparedStatement Stmt = null;
+			Stmt = Conn.prepareStatement(query.toString(),
+					Stmt.RETURN_GENERATED_KEYS);
+			
+			Stmt.executeUpdate(query.toString());
+
+			ResultSet generatedKeys = Stmt.getGeneratedKeys();
+			if (generatedKeys.next())
+				key = generatedKeys.getLong(1);
+
+			Stmt.close();
+			Conn.close();
+
+		} catch (SQLException E) {
+			System.out.println (E.getMessage());
+			session.setAttribute("SYSTEM_ERROR", E.getMessage());
+		} catch (ClassNotFoundException e) {
+			System.out.println (e.getMessage());
+			session.setAttribute("SYSTEM_ERROR", e.getMessage());
+			e.printStackTrace();
+		}
+		return key;
+	}
+	
+	
+	
+	
+	
+	
+	public Supervisor getSupervisor(Long key, HttpSession session) {
+		
+		Supervisor p = new Supervisor();
+		
+		try {
+			
+			Connection Conn = this.getConnection();
+
+			StringBuffer query = new StringBuffer();
+
+			query.append("SELECT SUPERVISOR_ID, DEPARTMENT_ID, FIRSTNAME, LASTNAME, TITLE, CREATION_DATE, CREATED_BY FROM `"+this.getDatabase()+"`.`cwt_Supervisor` ");
+			query.append(" WHERE Supervisor_ID="+key);
+			System.out.println (query);
+			
+			Statement Stmt = null;
+			Stmt = Conn.prepareStatement(query.toString());
+			ResultSet RS = Stmt.executeQuery(query.toString());
+			
+			while (RS.next()) {				
+				p.setSupervisorId(RS.getLong(1));
+				p.setDepartmentId(RS.getLong(2));
+				p.setFirstname(RS.getString(3));
+				p.setLastname(RS.getString(4));
+				p.setLastname(RS.getString(5));
+				p.setCreationDate(RS.getString(6));
+				p.setCreatedBy(RS.getString(7));
+			}
+			Stmt.close();
+			Conn.close();
+		
+		} catch (SQLException E) {
+			System.out.println (E.getMessage());
+			session.setAttribute("SYSTEM_ERROR", E.getMessage());
+		} catch (ClassNotFoundException e) {
+			session.setAttribute("SYSTEM_ERROR", e.getMessage());
+			e.printStackTrace();
+		}
+		
+		return p;	
+	}
+	public void getSupervisorList(HttpSession session) {
+	try {
+			
+			Connection Conn = this.getConnection();
+
+			StringBuffer query = new StringBuffer();
+
+			query.append("SELECT SUPERVISOR_ID, DEPARTMENT_ID, FIRSTNAME, LASTNAME, TITLE, CREATION_DATE, CREATED_BY FROM `"+this.getDatabase()+"`.`cwt_Supervisor` ");
+			System.out.println (query);
+			
+			Statement Stmt = null;
+			Stmt = Conn.prepareStatement(query.toString());
+			ResultSet RS = Stmt.executeQuery(query.toString());
+			
+			ArrayList list = new ArrayList();
+			
+			while (RS.next()) {
+				Supervisor p = new Supervisor();
+				p.setSupervisorId(RS.getLong(1));
+				p.setDepartmentId(RS.getLong(2));
+				p.setFirstname(RS.getString(3));
+				p.setLastname(RS.getString(4));
+				p.setTitle(RS.getString(5));
+				p.setCreationDate(RS.getString(6));
+				p.setCreatedBy(RS.getString(7));
+				list.add(p);			
+			}
+			session.setAttribute("Supervisor_results", list);
+			Stmt.close();
+			Conn.close();
+		
+		} catch (SQLException E) {
+			System.out.println (E.getMessage());
+			session.setAttribute("SYSTEM_ERROR", E.getMessage());
+		} catch (ClassNotFoundException e) {
+			session.setAttribute("SYSTEM_ERROR", e.getMessage());
+			e.printStackTrace();
+		}
+			
+	}
+	public Long insertSupervisor(Supervisor d) {
+		Long key = new Long("0");
+
+		try {
+			
+			Connection Conn = this.getConnection();
+
+			StringBuffer query = new StringBuffer();
+
+			query.append("INSERT INTO `"+this.getDatabase()+"`.`cwt_job` ");
+			query.append("(");
+			query.append("`department_id`,");
+			query.append("`firstname`,");
+			query.append("`lastname`,");
+			query.append("`title`,");
+			query.append("`creation_date`,");
+			query.append("`created_by`)");
+			query.append(" VALUES (");
+			query.append("'"+d.getDepartmentId()+"',");
+			query.append("'"+d.getFirstname()+"',");
+			query.append("'"+d.getLastname()+"',");
+			query.append("'"+d.getTitle()+"',");
+			query.append("'"+valid8r.getEpoch()+"',");
+			query.append("'"+d.getCreatedBy()+"'");
+			query.append(")");
+			System.out.println (query);
+			
+			PreparedStatement Stmt = null;
+			Stmt = Conn.prepareStatement(query.toString(),
+					Stmt.RETURN_GENERATED_KEYS);
+			
+			Stmt.executeUpdate(query.toString());
+
+			ResultSet generatedKeys = Stmt.getGeneratedKeys();
+			if (generatedKeys.next())
+				key = generatedKeys.getLong(1);
+
+			Stmt.close();
+			Conn.close();
+
+		} catch (SQLException E) {
+			System.out.println (E.getMessage());
+			//session.setAttribute("SYSTEM_ERROR", E.getMessage());
+		} catch (ClassNotFoundException e) {
+			System.out.println (e.getMessage());
+			//session.setAttribute("SYSTEM_ERROR", e.getMessage());
+			e.printStackTrace();
+		}
+		return key;
+	}
+	
 	public Validator getValid8r() {
 		return valid8r;
 	}

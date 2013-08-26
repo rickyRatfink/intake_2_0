@@ -62,7 +62,8 @@
                 <tr>
                     <td class="searchRow<%=rowClass%>">
                     	 <img src="<%=request.getContextPath()%>/img/Edit.gif" width="20" height="20"/>&nbsp;
-                   		 <img src="<%=request.getContextPath()%>/img/Report.gif" width="20" height="20"/></td>
+                   		 <img src="<%=request.getContextPath()%>/img/Report.gif" width="20" height="20"/>
+                   		 <img src="<%=request.getContextPath()%>/img/enroll.png" width="20" height="20" title="Enroll Students"/></td>
                     <td class="searchRowSpcr<%=rowClass%>"></td>
                     <td class="searchRow<%=rowClass%>" ><%=module.getModuleName()%></td>
                     <td class="searchRowSpcr<%=rowClass%>"></td>
