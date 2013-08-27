@@ -278,6 +278,84 @@ public class CWTDao {
 		}
 		
 	}
+public void getSupervisors(String farm, HttpSession session) {
+
+		
+		try {
+		
+			Connection Conn = this.getConnection();
+			StringBuffer query = new StringBuffer();
+
+			query.append("SELECT SUPERVISOR_ID, CONCAT(FIRSTNAME,' ',LASTNAME) AS NAME FROM `"+this.getDatabase()+"`.`cwt_supervisor` ");
+			query.append(" INNER JOIN `"+this.getDatabase()+"`.`cwt_department` ON cwt_supervisor.department_id=cwt_department.department_id ");
+			if (farm.length()>0)
+				query.append(" WHERE FARM_BASE='"+farm+"' ");
+			
+			System.out.println (query);
+		
+			PreparedStatement Stmt = null;
+			Stmt = Conn.prepareStatement(query.toString());
+			ResultSet RS = Stmt.executeQuery(query.toString());
+			Map<Long, String> m = new HashMap<Long, String>();
+			    
+			while (RS.next()) {
+				Long key = RS.getLong(1);
+				String value = RS.getString(2);
+				m.put(key, value);
+			}
+			session.setAttribute("supervisor_map", m);
+			Stmt.close();
+			Conn.close();
+		
+		} catch (SQLException E) {
+			System.out.println (E.getMessage());
+			session.setAttribute("SYSTEM_ERROR", E.getMessage());
+		} catch (ClassNotFoundException e) {
+			session.setAttribute("SYSTEM_ERROR", e.getMessage());
+			e.printStackTrace();
+		}
+		
+	}
+	
+	public void getJobs(String farm, HttpSession session) {
+
+		
+		try {
+		
+			Connection Conn = this.getConnection();
+			StringBuffer query = new StringBuffer();
+
+			query.append("SELECT JOB_ID, cwt_job.TITLE FROM `"+this.getDatabase()+"`.`cwt_job` ");
+			query.append("INNER JOIN `"+this.getDatabase()+"`.`cwt_department`  ");
+			query.append("ON cwt_job.department_id=cwt_department.department_id  ");
+			if (farm.length()>0)
+				query.append(" WHERE FARM_BASE='"+farm+"' ");
+			
+			System.out.println (query);
+		
+			PreparedStatement Stmt = null;
+			Stmt = Conn.prepareStatement(query.toString());
+			ResultSet RS = Stmt.executeQuery(query.toString());
+			Map<Long, String> m = new HashMap<Long, String>();
+			    
+			while (RS.next()) {
+				Long key = RS.getLong(1);
+				String value = RS.getString(2);
+				m.put(key, value);
+			}
+			session.setAttribute("job_map", m);
+			Stmt.close();
+			Conn.close();
+		
+		} catch (SQLException E) {
+			System.out.println (E.getMessage());
+			session.setAttribute("SYSTEM_ERROR", E.getMessage());
+		} catch (ClassNotFoundException e) {
+			session.setAttribute("SYSTEM_ERROR", e.getMessage());
+			e.printStackTrace();
+		}
+		
+	}
 
 	
 	public void getModuleList(HttpSession session) {
@@ -767,6 +845,27 @@ public class CWTDao {
 			if (generatedKeys.next())
 				key = generatedKeys.getLong(1);
 
+			
+			/* 
+			 * link metrics to newly created module
+			 */
+			Long[]keys = d.getMetricId();
+			for (int i=0;i<keys.length;i++) {
+				
+				if (keys[i]!=null) {
+					query = new StringBuffer("");
+					query.append("INSERT INTO `"+this.getDatabase()+"`.`cwt_job_metric` ");
+					query.append("(");
+					query.append("`metric_id`,");
+					query.append("`job_id`) ");
+					query.append(" VALUES (");
+					query.append(keys[i]+",");
+					query.append(key+") ");
+					System.out.println(query);
+					Stmt = Conn.prepareStatement(query.toString());
+					Stmt.executeUpdate(query.toString());
+				}
+			}
 			Stmt.close();
 			Conn.close();
 
@@ -833,8 +932,12 @@ public class CWTDao {
 
 			StringBuffer query = new StringBuffer();
 
-			query.append("SELECT SUPERVISOR_ID, DEPARTMENT_ID, FIRSTNAME, LASTNAME, TITLE, CREATION_DATE, CREATED_BY FROM `"+this.getDatabase()+"`.`cwt_Supervisor` ");
-			System.out.println (query);
+			query.append("SELECT SUPERVISOR_ID, cwt_Supervisor.DEPARTMENT_ID, FIRSTNAME, LASTNAME, cwt_job.title, cwt_Supervisor.CREATION_DATE, cwt_Supervisor.CREATED_BY, CWT_DEPARTMENT.TITLE, CWT_DEPARTMENT.FARM_BASE ");
+			query.append(" FROM `"+this.getDatabase()+"`.`cwt_Supervisor` INNER JOIN `"+this.getDatabase()+"`.`cwt_job` ");
+			query.append(" ON cwt_supervisor.job_id=cwt_job.job_id ");
+			query.append(" INNER JOIN `"+this.getDatabase()+"`.`cwt_department` ");
+			query.append(" ON cwt_job.department_id=cwt_department.department_id ");
+			System.out.println (query); 
 			
 			Statement Stmt = null;
 			Stmt = Conn.prepareStatement(query.toString());
@@ -851,6 +954,8 @@ public class CWTDao {
 				p.setTitle(RS.getString(5));
 				p.setCreationDate(RS.getString(6));
 				p.setCreatedBy(RS.getString(7));
+				p.setDepartmentTitle(RS.getString(8));
+				p.setFarmBase(RS.getString(9));
 				list.add(p);			
 			}
 			session.setAttribute("Supervisor_results", list);
@@ -866,7 +971,7 @@ public class CWTDao {
 		}
 			
 	}
-	public Long insertSupervisor(Supervisor d) {
+	public Long insertSupervisor(Supervisor d,HttpSession session) {
 		Long key = new Long("0");
 
 		try {
@@ -875,19 +980,19 @@ public class CWTDao {
 
 			StringBuffer query = new StringBuffer();
 
-			query.append("INSERT INTO `"+this.getDatabase()+"`.`cwt_job` ");
+			query.append("INSERT INTO `"+this.getDatabase()+"`.`cwt_supervisor` ");
 			query.append("(");
 			query.append("`department_id`,");
 			query.append("`firstname`,");
 			query.append("`lastname`,");
-			query.append("`title`,");
+			query.append("`job_id`,");
 			query.append("`creation_date`,");
 			query.append("`created_by`)");
 			query.append(" VALUES (");
 			query.append("'"+d.getDepartmentId()+"',");
 			query.append("'"+d.getFirstname()+"',");
 			query.append("'"+d.getLastname()+"',");
-			query.append("'"+d.getTitle()+"',");
+			query.append("'"+d.getJobId()+"',");
 			query.append("'"+valid8r.getEpoch()+"',");
 			query.append("'"+d.getCreatedBy()+"'");
 			query.append(")");

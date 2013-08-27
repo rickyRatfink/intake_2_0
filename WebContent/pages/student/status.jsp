@@ -2,6 +2,7 @@
 <%@ page import="org.faithfarm.domain.StudentHistory" %>
 <%@ page import="org.faithfarm.util.Validator" %>
 <%@ page import="java.util.ArrayList" %>
+<%@ page import="java.util.Map" %>
 
 <jsp:include page="../../includes/header_info.jsp" flush="true"/>
  
@@ -13,6 +14,9 @@
      String warning=(String)request.getAttribute("WARNING");
 
    ArrayList ddl = new ArrayList();
+   
+	String updateFlag = (String)request.getAttribute("updateFlag");
+	if (updateFlag==null) updateFlag = request.getParameter("updateFlag");
 %>
 
 <form method="POST" action="<%=request.getContextPath()%>/intake">
@@ -33,13 +37,62 @@
             	<td >Supervisor</td>
             </tr>
             <tr>
-            	<td><input type="text" name="supervisor" value="<%=IntakeServlet.getIntake().getSupervisor() %>" size="20" maxlength="20"/></td>
+            	<td><!-- <input type="text" name="supervisor" value="<%=IntakeServlet.getIntake().getSupervisor() %>" size="20" maxlength="20"/>-->
+            	<%
+                            Map<Long, String> supervisor = (Map)session.getAttribute("supervisor_map");
+                            %>
+                            <select name="supervisor_id" style="font-size:.90em;">
+                            <option value="0"></option>
+                            <%
+                            if (supervisor!=null) {
+                              for (Long key:supervisor.keySet()) {
+                                %>
+                                <option 
+                                    value="<%=key%>"
+                                    <%
+                                    if
+                                    (key.equals(IntakeServlet.getIntake().getSupervisorId()))
+                                    {%>selected<%}%>>
+                                  <%=supervisor.get(key)%>-<%=key %>
+                                </option>
+                                <%
+                              }
+                              %>
+                              <%
+                            }
+                        %></select>
+            	
+            	</td>
             </tr>
             <tr>
             	<td>Job</td>
             </tr>
             <tr>
-            	<td><input type="text" name="job" value="<%=IntakeServlet.getIntake().getJob() %>" size="20" maxlength="20"/></td>
+            	<td><!-- <input type="text" name="job" value="<%=IntakeServlet.getIntake().getJob() %>" size="20" maxlength="20"/>-->
+            	<%
+                            Map<Long, String> job = (Map)session.getAttribute("job_map");
+                            %>
+                            <select name="job_id" style="font-size:.90em;">
+                            <option value="0"></option>
+                            <%
+                            if (job!=null) {
+                              for (Long key:job.keySet()) {
+                                %>
+                                <option 
+                                    value="<%=key%>"
+                                    <%
+                                    if
+                                    (key.equals(IntakeServlet.getIntake().getJobId()))
+                                    {%>selected<%}%>>
+                                  <%=job.get(key)%>
+                                </option>
+                                <%
+                              }
+                              %>
+                              <%
+                            }
+                        %></select>
+            	</td>
             </tr>
             <tr>
             	<td>Class</td>
@@ -51,7 +104,31 @@
             	<td>Area</td>
             </tr>
             <tr>
-            	<td><input type="text" name="area" value="<%=IntakeServlet.getIntake().getArea() %>" size="20" maxlength="20"/></td>
+            	<td><!-- <input type="text" name="area" value="<%=IntakeServlet.getIntake().getArea() %>" size="20" maxlength="20"/>-->
+            	            <%
+                            Map<Long, String> dept = (Map)session.getAttribute("department_map");
+                            %>
+                            <select name="department_id" style="font-size:.90em;">
+                            <option value="0"></option>
+                            <%
+                            if (dept!=null) {
+                              for (Long key:dept.keySet()) {
+                                %>
+                                <option 
+                                    value="<%=key%>"
+                                    <%
+                                    if
+                                    (key.equals(IntakeServlet.getIntake().getDepartmentId()))
+                                    {%>selected<%}%>>
+                                  <%=dept.get(key)%>
+                                </option>
+                                <%
+                              }
+                              %>
+                              <%
+                            }
+                        %></select>
+            	</td>
             </tr>
             <tr>
             	<td>Room</td>
@@ -100,10 +177,25 @@
                 <td width="100"><b>Date Ended</b></td>
                 <td width="50"><b>Reset?</b></td>
             </tr>
+            <% ArrayList history = (ArrayList)IntakeServlet.getIntake().getHistory();
+            
+            if (history.size()>0) {
+			   StudentHistory status=(StudentHistory)history.get(0);
+		    %>
             <tr>
-            	<td colspan="8">No data</td>
+            	<td></td>
+            	<td><%=status.getFarm() %></td>
+            	<td><%=status.getPhase() %></td>
+            	<td><%=status.getProgramStatus() %></td>
+            	<td><%=status.getReason() %></td>
+            	<td><%=status.getBeginDate() %></td>
+            	<td><%=status.getEndDate() %></td>
+            	<td></td>
         	</tr>
-            <tr>
+        	<% } else { %>
+        		<td colspan="8">No Status</td>
+        	<% } %>
+        	<tr>
             	<td colspan="8">
                		 <hr style="border-bottom: 1px dotted #000000;"/>
                 </td>
@@ -214,8 +306,10 @@
                         <td style="height:20px;border: 1px solid #666;color:#000000;font-weight:bold;padding-left:5px;">Del</td>
                      </tr>
                      <%
-					 ArrayList history = (ArrayList)IntakeServlet.getIntake().getHistory();
-					 for (int i=0;i<history.size();i++)
+					 //ArrayList history = (ArrayList)IntakeServlet.getIntake().getHistory();
+					 
+                     
+                     for (int i=0;i<history.size();i++)
 					 {
 						 StudentHistory hist=(StudentHistory)history.get(i);
 					 %> 
@@ -229,7 +323,8 @@
                         <td><a href="">del</a></td>
                      </tr>
                      <%
-					 } if (history.size()==0) { %> 
+					 }  
+                     if (history.size()==0) { %> 
                      <tr>
                      	<td colspan="7">No history</td> 
                      </tr>
@@ -242,7 +337,7 @@
     </table>
 	<br /><br />
     <div align="center">
-    <% if ("YES".equals(request.getParameter("updateFlag"))) { %>
+    <% if ("YES".equals(updateFlag)) { %>
     	<input type="submit" name="action" value="Update" class="imageButtonSave" title="Update Information" />&nbsp;
     <% } else { %>
     	<input type="submit" name="action" value="Save" class="imageButtonSave" title="Save Information" />&nbsp;

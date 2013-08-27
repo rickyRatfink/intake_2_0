@@ -405,7 +405,10 @@ try {
 				intake.setArea(valid8r.cleanData(RS.getString(158)));
 				intake.setRoom(valid8r.cleanData(RS.getString(159)));
 				intake.setBed(valid8r.cleanData(RS.getString(160)));
-				intake.setArchiveFlag(valid8r.cleanData(RS.getString(161)));
+				intake.setArchiveFlag(valid8r.cleanData(RS.getString(161)));				
+				intake.setDepartmentId(RS.getLong(162));
+				intake.setSupervisorId(RS.getLong(163));
+				intake.setJobId(RS.getLong(164));
 			}
 			
 			

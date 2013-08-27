@@ -54,7 +54,7 @@
             </div>
             <div class="loginDisplay">
                 	<% if (user.getUsername()!=null) { %>
-                        Welcome <b><%=user.getUsername() %></b>!&nbsp;[ <a href="<%=request.getContextPath()%>/login?action=Log Out" >Log Out</a> ]
+                        Welcome <b><%=user.getUsername() %>@<%=user.getFarmBase() %> </b>&nbsp;&nbsp;[ <a href="<%=request.getContextPath()%>/login?action=Log Out" >Log Out</a> ]
                     <% } else { %>
                         [ <a href="<%=request.getContextPath()%>/login" >Log In</a> ]
                     <% } %>
@@ -67,6 +67,7 @@
 		<li><a href="<%=request.getContextPath()%>/pages/main.jsp">Home</a></li>
         <li><a href=".<%=request.getContextPath()%>/pages/main.jsp">About</a></li>
         <% if ("ADMIN".equals(user.getUserRole())) { %>
+             <li><a href="<%=request.getContextPath()%>/student?action=Apps">Applications</a></li>
              <li><a href="<%=request.getContextPath()%>/pages/student/search.jsp">Search</a></li>
              <li><a href="<%=request.getContextPath()%>/student?action=Create Student">New Student</a></li>
              <li><a href="<%=request.getContextPath()%>/pages/student/results.jsp">Search Result</a></li>

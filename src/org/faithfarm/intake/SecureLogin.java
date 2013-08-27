@@ -285,6 +285,10 @@ public class SecureLogin extends HttpServlet {
 	        session.setAttribute("dllPhase",convertToUpperCase(phase));
 	        session.setAttribute("dllDepartments",convertToUpperCase(dList));
 	        
+	        SystemUser user = (SystemUser)session.getAttribute("USER_" + session.getId());
+	        cdao.getDepartments(user.getFarmBase(),session);
+	        cdao.getJobs(user.getFarmBase(), session);
+	        cdao.getSupervisors(user.getFarmBase(), session);
 	   }
 	   
 	   private ArrayList convertToUpperCase(ArrayList list) {

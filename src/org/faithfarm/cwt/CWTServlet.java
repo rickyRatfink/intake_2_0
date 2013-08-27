@@ -140,6 +140,7 @@ public class CWTServlet extends HttpServlet {
 					}
 					else if ("Create Job".equals(action)) {
 						this.setJob(new Job());
+						dao.getMetrics(session);
 						dao.getDepartments(user.getFarmBase(),session);
 						url="pages/cwt/job/create.jsp";
 					} else if ("Save Job".equals(action)) {
@@ -155,8 +156,26 @@ public class CWTServlet extends HttpServlet {
 						}
 						else 
 							url="pages/cwt/job/create.jsp";
+					} else if ("Create Supervisor".equals(action)) {
+						dao.getJobs("",session);
+						dao.getDepartments(user.getFarmBase(),session);
+						url="pages/cwt/supervisor/create.jsp";
+					} else if ("Save Supervisor".equals(action)) {
+						pass1=this.validateSupervisor(user, req);
+						supervisor.setCreatedBy(user.getUsername());
+						if (pass1) {
+							Long key = dao.insertSupervisor(this.getSupervisor(), session);
+							if (key>0) {
+								req.setAttribute("MESSAGE", "supervisor successfully saved");
+								url="pages/cwt/supervisor/results.jsp";
+							}
+							else
+								url="error.jsp";
+						}
+						else 
+							url="pages/cwt/supervisor/create.jsp";
 					}
-				}	
+				} 
 					
 				}
 				catch (Exception e) {
@@ -243,7 +262,7 @@ public class CWTServlet extends HttpServlet {
  		 
  		 Map<Long, String> ddl = (Map)req.getSession().getAttribute("metric_map");
  		 int count=0;
- 		 Long[]keys = new Long[4];
+ 		 Long[]keys = new Long[200];
          if (ddl!=null) {
            for (Long key:ddl.keySet()) {
         	   if (req.getParameter("metricId"+key)!=null && req.getParameter("metricId"+key).equals(key+"")) {
@@ -319,6 +338,54 @@ private boolean validateJob (SystemUser user, HttpServletRequest req) {
 		 	req.setAttribute("departmentErr", fieldErr);
 			success = false;
 	 }	 
+	 
+	 Map<Long, String> ddl = (Map)req.getSession().getAttribute("metric_map");
+		 int count=0;
+		 Long[]keys = new Long[200];
+     if (ddl!=null) {
+       for (Long key:ddl.keySet()) {
+    	   if (req.getParameter("metricId"+key)!=null && req.getParameter("metricId"+key).equals(key+"")) {
+    		   keys[count]=key;
+    		   count++;
+    	   }
+       }
+       this.getJob().setMetricId(keys);
+     }
+	
+	 return success;
+}
+
+private boolean validateSupervisor (SystemUser user, HttpServletRequest req) {
+	 
+	 boolean success=true;
+	 
+	 this.getSupervisor().setJobId(new Long(valid8r.cleanData(req.getParameter("jobId"))));
+	 this.getSupervisor().setFirstname(valid8r.cleanData(req.getParameter("firstname")));
+	 this.getSupervisor().setLastname(valid8r.cleanData(req.getParameter("lastname")));
+	 this.getSupervisor().setDepartmentId(new Long(valid8r.cleanData(req.getParameter("departmentId"))));
+	 this.getSupervisor().setCreatedBy(user.getUsername());
+	 String fieldErr = valid8r.validateRequired("firstname", supervisor.getFirstname());
+	 if (fieldErr.length() > 0) {
+		 	req.setAttribute("firstnameErr", fieldErr);
+			success = false;
+	 }
+	 fieldErr = valid8r.validateRequired("lastname", supervisor.getLastname());
+	 if (fieldErr.length() > 0) {
+		 	req.setAttribute("lastnameErr", fieldErr);
+			success = false;
+	 }
+	 fieldErr = valid8r.validateRequired("department", supervisor.getDepartmentId());
+	 if (fieldErr.length() > 0) {
+		 	req.setAttribute("departmentErr", fieldErr);
+			success = false;
+	 }
+	 fieldErr = valid8r.validateRequired("job", supervisor.getJobId());
+	 if (fieldErr.length() > 0) {
+		 	req.setAttribute("jobErr", fieldErr);
+			success = false;
+	 }
+	
+	  
 	
 	
 	 return success;

@@ -14,6 +14,8 @@
     String workExperienceOtherDescErr = (String)request.getAttribute("workExperienceOtherDescErr");
    if (workExperienceOtherDescErr==null) workExperienceOtherDescErr="";
 
+	String updateFlag = (String)request.getAttribute("updateFlag");
+	if (updateFlag==null) updateFlag = request.getParameter("updateFlag");
 %>
 <form method="POST" action="<%=request.getContextPath()%>/intake">
 <% if (message!=null) { %>
@@ -115,7 +117,7 @@
 
 
    <tr>
-		<td colspan="8" valign="bottom" align="center" height="45">    <% if ("YES".equals(request.getParameter("updateFlag"))) { %>
+		<td colspan="8" valign="bottom" align="center" height="45">    <% if ("YES".equals(updateFlag)) { %>
     	<input type="submit" name="action" value="Update" class="imageButtonSave" title="Update Information" />&nbsp;
     <% } else { %>
     	<input type="submit" name="action" value="Save" class="imageButtonSave" title="Save Information" />&nbsp;

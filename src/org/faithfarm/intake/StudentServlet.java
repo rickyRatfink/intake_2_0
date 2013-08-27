@@ -33,7 +33,21 @@ public class StudentServlet extends HttpServlet {
 			      
 			      String action = req.getParameter("action");
 			     
-			      if ("Search Students".equals(action)) {
+			      
+			      if ("Apps".equals(action)) {
+			    	  GridServlet.setFirstName("");
+			    	  GridServlet.setLastName("");
+			    	  GridServlet.setEntryDate("");
+			    	  GridServlet.setExitDate("");
+			    	  GridServlet.setSsn("");
+			    	  GridServlet.setDob("");
+			    	  GridServlet.setFarm("ALL");
+			    	  GridServlet.setPictureFlag("");
+			    	  GridServlet.setArchivedFlag("");
+			    	  GridServlet.setGedFlag("");
+			    	 
+			    	  url="pages/applications/results.jsp";
+			      } else if ("Search Students".equals(action)) {
 			    	  String ssn1=valid8r.cleanData(req.getParameter("ssn1"));
 			    	  String ssn2=valid8r.cleanData(req.getParameter("ssn2"));
 			    	  String ssn3=valid8r.cleanData(req.getParameter("ssn3"));

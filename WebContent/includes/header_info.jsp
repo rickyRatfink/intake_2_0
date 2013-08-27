@@ -54,12 +54,12 @@
                 <a href="/Default.aspx"> 
                 <h1>
                    Faith Farm Student Management 2.0
-                </h1>
+                </h1> 
                 </a>
             </div>
             <div class="loginDisplay">
                 	<% if (user.getUsername()!=null) { %>
-                        Welcome <b><%=user.getUsername() %></b>!&nbsp;[ <a href="<%=request.getContextPath()%>/login?action=Log Out" >Log Out</a> ]
+                        Welcome <b><%=user.getUsername() %>@<%=user.getFarmBase() %> </b>&nbsp;&nbsp;[ <a href="<%=request.getContextPath()%>/login?action=Log Out" >Log Out</a> ]
                     <% } else { %>
                         [ <a href="<%=request.getContextPath()%>/login" >Log In</a> ]
                     <% } %>
@@ -84,9 +84,9 @@
     	<tr>
     		 <td width="33"></td>
 		     <td><font style="color:#FFFFFF"><b>Student Name:</b>&nbsp;<font style="color:#aeadad"><%=IntakeServlet.getIntake().getFirstName() %>&nbsp;<%=IntakeServlet.getIntake().getLastName() %></font>
-		     &nbsp;&nbsp;&nbsp;</td>
-		     <td><font style="color:#FFFFFF"><b>SSN:</b>&nbsp;<font style="color:#aeadad"><%=IntakeServlet.getIntake().getSsn() %></font>
-		     &nbsp;&nbsp;&nbsp;</td>
+		     &nbsp;&nbsp;&nbsp;
+		     <font style="color:#FFFFFF"><b>SSN:</b>&nbsp;<font style="color:#aeadad"><%=IntakeServlet.getIntake().getSsn() %></font>
+		     &nbsp;&nbsp;&nbsp;
 		     <%
 		     String sDate = IntakeServlet.getIntake().getCreationDate();
 		    
@@ -98,11 +98,20 @@
 		    	 System.out.println(e.getMessage());
 		     }
 		     %>
-		     <td><font style="color:#FFFFFF"><b>Date Entered:</b>&nbsp;<font style="color:#aeadad"><%=IntakeServlet.getIntake().getEntryDate() %></font>
-		     &nbsp;&nbsp;&nbsp;</td>
-		     <td><a href="<%=request.getContextPath()%>/pages/student/card.jsp" style="color:#19fd01"><b>Print Card</b></a>
-		     &nbsp;&nbsp;&nbsp;</td>
-		     <td colspan="4"><a href="<%=request.getContextPath()%>/pages/student/card.jsp" style="color:#19fd01""><b>Print Student Information</b></a></td>
+		     <font style="color:#FFFFFF"><b>Date Entered:</b>&nbsp;<font style="color:#aeadad"><%=IntakeServlet.getIntake().getEntryDate() %></font>
+		     </td>
+		     </tr>
+		     <tr>
+		      <td width="33"></td>
+		     <td>
+		     <a href="<%=request.getContextPath()%>/pages/student/card.jsp" style="color:#19fd01"><b>Print Card</b></a>
+		     &nbsp;&nbsp;&nbsp;
+		     <a href="<%=request.getContextPath()%>/pages/student/card.jsp" style="color:#19fd01""><b>Print Student Information</b></a>
+		     <% if ("PENDING".equals(IntakeServlet.getIntake().getApplicationStatus())&&IntakeServlet.getIntake().getIntakeId()!=null) { %>
+		     &nbsp;&nbsp;&nbsp;<a href="<%=request.getContextPath()%>/intake?action=Admit&id=<%=IntakeServlet.getIntake().getIntakeId() %>" style="color:#19fd01""><b>Admit To Program</b></a>
+		     &nbsp;&nbsp;&nbsp;<a href="<%=request.getContextPath()%>/intake?action=Deny&id=<%=IntakeServlet.getIntake().getIntakeId() %>" style="color:#19fd01""><b>Deny Admission</b></a>
+		     </td>
+		     <% } %>
     	</tr>
     </table> 
     </div>

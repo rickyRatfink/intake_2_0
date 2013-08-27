@@ -12,6 +12,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.faithfarm.util.Validator;
 
@@ -89,16 +90,18 @@ public class GridServlet extends HttpServlet {
      StringBuffer data = new StringBuffer();
      
      if ("student".equals(resultType)) 
-    	 data=this.studentXml(request);
+    	 data=this.studentXml("",request);
+     if ("application".equals(resultType)) 
+    	 data=this.studentXml("PENDING",request);
   
     	 response.getWriter().write(data.toString());
     
   }
 
-	private StringBuffer studentXml(HttpServletRequest req) {
-	  System.out.println("1");
-	  
-	 
+	private StringBuffer studentXml(String status, HttpServletRequest req) {
+	 	 
+		HttpSession session = req.getSession();
+		
 		ResultSet rs = null;
 		StringBuffer data = new StringBuffer("");
 		
@@ -138,7 +141,7 @@ public class GridServlet extends HttpServlet {
 			
 			//Class.forName("com.mysql.jdbc.Driver");
 	        Connection connection = this.getConnection();
-	       System.out.println ("connecting..."); 		
+	      		
 	        //Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/ffarm_prod", "root", "webmaster#59");
 	        //Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/ffarm_dev", "root", "admin");
 		    //this.setDatabase("ffarm_dev");
@@ -160,7 +163,10 @@ public class GridServlet extends HttpServlet {
 					selectQuery.append(" AND ENTRY_DATE BETWEEN'"+ entryDate +"' AND '"+exitDate+"'");
 				if (!"ALL".equals(farm)&&!"".equals(farm))
 					selectQuery.append(" AND FARM_BASE='"+farm +"'");
-System.out.println(selectQuery.toString()); 
+				if (status.length()>0)
+					selectQuery.append(" AND APPLICATION_STATUS='"+status +"'");
+				
+			//System.out.println(selectQuery.toString()); 
 			rs = connection.createStatement().executeQuery(selectQuery.toString());
 			
 			if (rs.next())
@@ -185,8 +191,10 @@ System.out.println(selectQuery.toString());
 			selectQuery.append(" LASTNAME, ");
 			selectQuery.append(" FIRSTNAME, ");
 			selectQuery.append(" if (MI is null,'',MI), ");
+			selectQuery.append(" SSN,");
 			selectQuery.append(" if (DOB is null,'',DOB),");
-			selectQuery.append(" SSN");
+			selectQuery.append(" APPLICATION_STATUS, ");
+			selectQuery.append(" FARM_BASE, CONCAT(CITY,', ',STATE) AS LOCATION ");
 			selectQuery.append(" FROM `"+this.getDatabase()+"`.`intake`  ");
 			selectQuery.append(" WHERE");
 			selectQuery.append(" 1=1 ");
@@ -202,7 +210,8 @@ System.out.println(selectQuery.toString());
 					selectQuery.append(" AND ENTRY_DATE BETWEEN'"+ entryDate +"' AND '"+exitDate+"'");
 				if (!"ALL".equals(farm)&&!"".equals(farm))
 					selectQuery.append(" AND FARM_BASE='"+farm +"'");
-				
+				if (status.length()>0)
+					selectQuery.append(" AND APPLICATION_STATUS='"+status +"'");
 				selectQuery.append(" order by "+sidx + " "+sord+ " limit "+limit+ " offset "+start);
 				;
 				
@@ -225,6 +234,9 @@ System.out.println(selectQuery.toString());
 					data.append("<cell>" + rs.getString(3) + "</cell>");
 					data.append("<cell>" + rs.getString(5) + "</cell>");
 					data.append("<cell>" + rs.getString(6) + "</cell>");
+					data.append("<cell>" + rs.getString(7) + "</cell>");
+					data.append("<cell>" + rs.getString(8) + "</cell>");
+					data.append("<cell>" + rs.getString(9) + "</cell>");
 					data.append("</row>");
 					++row;
 				} 
@@ -237,9 +249,16 @@ System.out.println(selectQuery.toString());
 					data.append("<cell></cell>");
 					data.append("<cell></cell>");
 					data.append("<cell></cell>");
+					data.append("<cell></cell>");
+					data.append("<cell></cell>");
+					data.append("<cell></cell>");
 					data.append("</row>");
+					
 					for (int i=2;i<22;i++) {
 						data.append("<row id='"+i+"'>");
+						data.append("<cell></cell>");
+						data.append("<cell></cell>");
+						data.append("<cell></cell>");
 						data.append("<cell></cell>");
 						data.append("<cell></cell>");
 						data.append("<cell></cell>");
@@ -252,6 +271,12 @@ System.out.println(selectQuery.toString());
 				
 				data.append("</rows>");
 	
+	/*			int height=450;
+				if (row<20)
+					height=row*25;
+				
+				session.setAttribute("grid_height", height);
+				*/
 				connection.close();
 				rs.close();
 		//}

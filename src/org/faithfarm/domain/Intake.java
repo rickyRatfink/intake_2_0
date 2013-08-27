@@ -296,6 +296,10 @@ public class Intake implements Serializable {
 	private  String entryDate ="";
 	private  String intakeStatus = "";
 	
+	private Long departmentId;
+	private Long jobId;
+	private Long supervisorId;
+	
 	private  ArrayList history = new ArrayList();
 	
 	
@@ -1792,6 +1796,30 @@ public class Intake implements Serializable {
 	}
 	public void setExitDate(String exitDate) {
 		this.exitDate = exitDate;
+	}
+
+	public Long getDepartmentId() {
+		return departmentId;
+	}
+
+	public void setDepartmentId(Long departmentId) {
+		this.departmentId = departmentId;
+	}
+
+	public Long getJobId() {
+		return jobId;
+	}
+
+	public void setJobId(Long jobId) {
+		this.jobId = jobId;
+	}
+
+	public Long getSupervisorId() {
+		return supervisorId;
+	}
+
+	public void setSupervisorId(Long supervisorId) {
+		this.supervisorId = supervisorId;
 	}
 	
 	

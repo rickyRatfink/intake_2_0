@@ -62,6 +62,8 @@ public class IntakeServlet extends HttpServlet {
 		try {
 		
 		SystemUser user = (SystemUser)session.getAttribute("USER_"+session.getId());
+		
+		
 		if (user==null) {
 			this.loadDropDownLists(session);
 			url=source+".jsp";
@@ -70,7 +72,33 @@ public class IntakeServlet extends HttpServlet {
 		this.loadProperties();	
 		//this.setFields(req);
 		
-		if ("Save".equals(action)) {
+		if ("Admit".equals(action)) {
+			String sDate = valid8r.convertEpoch(valid8r.getEpoch());
+			intake.setApplicationStatus("ACCEPTED");
+			intake.setEntryDate(sDate);
+			intake.setCurrentClass("Orientation");
+			dao.updateIntake(intake, history, user.getUsername(), session);
+			
+			StudentHistory history = new StudentHistory();
+			history.setFarm(user.getFarmBase());
+			history.setPhase("PHASE I");
+			history.setProgramStatus("IN PROGRAM");
+			history.setIntakeId(intake.getIntakeId());
+			history.setBeginDate(sDate);
+			dao.insertHistory(history, user.getUsername(), session);
+			
+			//url="student?action=Apps";
+			url="student?action=View/Edit&key="+intake.getIntakeId();
+		    req.setAttribute("MESSAGE", "Applicant has been admitted!");
+			
+		} else if ("Deny".equals(action)) {
+			intake.setApplicationStatus("DENIED");
+			dao.updateIntake(intake, history, user.getUsername(), session);
+			url="student?action=Apps";
+			this.setIntake(new Intake());
+		    req.setAttribute("MESSAGE", "Applicant has been denied!");
+			
+		} else if ("Save".equals(action)) {
 			this.setFields(source, req);
 			this.setValidAreaCount(0);
 			boolean success = validateApplication(req);
@@ -435,6 +463,11 @@ public class IntakeServlet extends HttpServlet {
 			this.getIntake().setBed(valid8r.cleanData(req.getParameter("bed")));
 			this.getIntake().setEntryDate(valid8r.cleanData(req.getParameter("entryDate")));
 			this.getIntake().setArchiveFlag(valid8r.cleanData(req.getParameter("archivedFlag")));
+			
+			this.getIntake().setSupervisorId(new Long(valid8r.cleanData(req.getParameter("supervisor_id"))));
+			this.getIntake().setJobId(new Long(valid8r.cleanData(req.getParameter("job_id"))));
+			this.getIntake().setDepartmentId(new Long(valid8r.cleanData(req.getParameter("department_id"))));
+			
 			this.getHistory().setFarm(valid8r.cleanData(req.getParameter("farm")));
 			this.getHistory().setPhase(valid8r.cleanData(req.getParameter("phase")));
 			this.getHistory().setProgramStatus(valid8r.cleanData(req.getParameter("programStatus")));
@@ -442,6 +475,9 @@ public class IntakeServlet extends HttpServlet {
 			this.getHistory().setEndDate(valid8r.cleanData(req.getParameter("endDate")));
 			this.getHistory().setReason(valid8r.cleanData(req.getParameter("reason")));
 		}
+		
+		if ("application".equals(source))
+			this.getIntake().setApplicationStatus("PENDING");
 		
 		this.getHistory().setIntakeId(intake.getIntakeId());
 		

@@ -29,7 +29,7 @@ public class IntakeDao {
 	private String SERVER = "";
 	private String uid = "";
 	private String pwd = "";
-	private String database = "";
+	private String database = ""; 
 	
 	// private String SERVER = "ffarm_staging";
 	// private String pwd="j35u59538";
@@ -272,8 +272,7 @@ public class IntakeDao {
 
 			query.append("UPDATE `" + this.getDatabase() + "`.`intake` ");
 			query.append("SET ");
-
-			query.append("LASTNAME='" + intake.getLastName() + "',");
+			query.append("      LASTNAME='" + intake.getLastName() + "',");
 			query.append("		FIRSTNAME='" + intake.getFirstName() + "',");
 			query.append("		MI='" + intake.getMiddleInitial() + "',");
 			query.append("		SUFFIX='" + intake.getSuffix() + "',");
@@ -522,8 +521,12 @@ public class IntakeDao {
 			query.append("			CLASS='" + intake.getCurrentClass() + "',");
 			query.append("			AREA='" + intake.getArea() + "',");
 			query.append("			ROOM='" + intake.getRoom() + "',");
-			query.append("			BED='" + intake.getBed() + "' WHERE INTAKE_ID = "
-					+ intake.getIntakeId());
+			query.append("			BED='" + intake.getBed() + "',");
+			query.append("			DEPARTMENT_ID=" + intake.getDepartmentId() + ",");
+			query.append("			SUPERVISOR_ID=" + intake.getSupervisorId() + ",");
+			query.append("			JOB_ID=" + intake.getJobId() );
+			
+			query.append(" WHERE INTAKE_ID = " + intake.getIntakeId());
 			System.out.println(query);
 			PreparedStatement Stmt = null;
 			Stmt = Conn.prepareStatement(query.toString());
@@ -642,9 +645,9 @@ public class IntakeDao {
 						updateHistory = true;
 					if (!status.equals(history.getProgramStatus()))
 						updateHistory = true;
-					if (!beginDate.equals(history.getBeginDate()))
+					if (!beginDate.equals(history.getBeginDate())&&history.getBeginDate().length()>0)
 						updateHistory = true;
-					if (!endDate.equals(history.getEndDate()))
+					if (!endDate.equals(history.getEndDate())&&history.getEndDate().length()>0)
 						updateHistory = true;
 				}
 			if (updateHistory)
@@ -825,7 +828,7 @@ public class IntakeDao {
 			query.append("`INTAKE_STATUS`,");
 			query.append("`IMAGE_HEADSHOT`,");
 			query.append("`IMAGE_STATE_ID`,");
-			query.append("`IMAGE_SSN`,`FARM_BASE`,`SUPERVISOR`,`JOB`,`CLASS`,`AREA`,`ROOM`,`BED`) ");
+			query.append("`IMAGE_SSN`,`FARM_BASE`,`SUPERVISOR`,`JOB`,`CLASS`,`AREA`,`ROOM`,`BED`,`SUPERVISOR_ID,`DEPARTMENT_ID`,`JOB_ID`) ");
 			query.append("VALUES");
 			query.append(" (");
 
@@ -988,7 +991,11 @@ public class IntakeDao {
 			query.append("'" + intake.getCurrentClass() + "',");
 			query.append("'" + intake.getArea() + "',");
 			query.append("'" + intake.getRoom() + "',");
-			query.append("'" + intake.getBed() + "' )");
+			query.append("'" + intake.getBed() + "',");
+			query.append(intake.getSupervisorId() + ",");
+			query.append(intake.getDepartmentId() + ",");
+			query.append(intake.getJobId() + " )");
+
 
 			PreparedStatement Stmt = null;
 			Stmt = Conn.prepareStatement(query.toString(),
