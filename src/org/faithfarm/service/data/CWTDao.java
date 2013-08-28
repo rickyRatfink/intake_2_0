@@ -19,6 +19,7 @@ import org.faithfarm.domain.Department;
 import org.faithfarm.domain.Job;
 import org.faithfarm.domain.Metric;
 import org.faithfarm.domain.Module;
+import org.faithfarm.domain.ModuleRoster;
 import org.faithfarm.domain.Program;
 import org.faithfarm.domain.Supervisor;
 import org.faithfarm.util.Validator;
@@ -362,12 +363,16 @@ public void getSupervisors(String farm, HttpSession session) {
 
 		
 		try {
-		
+		 
 			Connection Conn = this.getConnection();
 
 			StringBuffer query = new StringBuffer();
 
-			query.append("SELECT MODULE_ID, MODULE_NAME, DESCRIPTION, STATUS, CREATION_DATE, CREATED_BY FROM `"+this.getDatabase()+"`.`CWT_MODULES` ");
+			query.append("SELECT MODULE_ID, MODULE_NAME, DESCRIPTION, STATUS, CWT_MODULES.CREATION_DATE, CWT_MODULES.CREATED_BY, MEETING_DAYS, MEETING_TIMES, ");
+			query.append(" INSTRUCTOR_ID, MEETING_LOCATION, CONCAT (FIRSTNAME,' ',LASTNAME) as NAME FROM `"+this.getDatabase()+"`.`CWT_MODULES` ");
+			query.append(" INNER JOIN `"+this.getDatabase()+"`.cwt_supervisor ");
+			query.append(" ON cwt_supervisor.supervisor_id=cwt_modules.instructor_id ");
+			System.out.println(query);
 			
 			Statement Stmt = null;
 			Stmt = Conn.prepareStatement(query.toString());
@@ -383,7 +388,12 @@ public void getSupervisors(String farm, HttpSession session) {
 				p.setStatus(RS.getString(4));
 				p.setCreationDate(RS.getString(5));
 				p.setCreatedBy(RS.getString(6));
-				list.add(p);			
+				p.setMeetingDays(RS.getString(7));
+				p.setMeetingTimes(RS.getString(8));
+				p.setInstructorId(RS.getLong(9));
+				p.setMeetingLocation(RS.getString(10));
+				p.setInstructorName(RS.getString(11));
+				list.add(p);	 		
 			}
 			session.setAttribute("module_results", list);
 			Stmt.close();
@@ -543,17 +553,20 @@ public void getSupervisors(String farm, HttpSession session) {
 			query.append("(");
 			query.append("`module_name`,");
 			query.append("`description`,");
-			query.append("`status`,");
+			query.append("`status`,`meeting_days`,`meeting_times`,`instructor_id`,`meeting_location`,");
 			query.append("`creation_date`,");
 			query.append("`created_by`)");
 			query.append(" VALUES (");
 			query.append("'"+module.getModuleName()+"',");
 			query.append("'"+module.getDescription()+"',");
 			query.append("'"+module.getStatus()+"',");
+			query.append("'"+module.getMeetingDays()+"',");
+			query.append("'"+module.getMeetingTimes()+"',");
+			query.append(""+module.getInstructorId()+",");
+			query.append("'"+module.getMeetingLocation()+"',");
 			query.append("'"+valid8r.getEpoch()+"',");
 			query.append("'"+module.getCreatedBy()+"'");
 			query.append(")");
-			
 			PreparedStatement Stmt = null;
 			Stmt = Conn.prepareStatement(query.toString(),
 					Stmt.RETURN_GENERATED_KEYS);
@@ -1020,6 +1033,112 @@ public void getSupervisors(String farm, HttpSession session) {
 			e.printStackTrace();
 		}
 		return key;
+	}
+	public Module getModule(Long key, HttpSession session) {
+
+		Module module=new Module();
+		
+		try {
+		
+			Connection Conn = this.getConnection();
+			StringBuffer query = new StringBuffer();
+
+			query.append("SELECT MODULE_ID, MODULE_NAME, DESCRIPTION, STATUS, CWT_MODULES.CREATION_DATE, CWT_MODULES.CREATED_BY, MEETING_DAYS, MEETING_TIMES, ");
+			query.append(" INSTRUCTOR_ID, MEETING_LOCATION, CONCAT (FIRSTNAME,' ',LASTNAME) as NAME FROM `"+this.getDatabase()+"`.`CWT_MODULES` ");
+			query.append(" INNER JOIN `"+this.getDatabase()+"`.cwt_supervisor ");
+			query.append(" ON cwt_supervisor.supervisor_id=cwt_modules.instructor_id ");
+			System.out.println(query);
+			
+			Statement Stmt = null;
+			Stmt = Conn.prepareStatement(query.toString());
+			ResultSet RS = Stmt.executeQuery(query.toString());
+						
+			if (RS.next())
+				if (RS.isFirst()) {
+					module.setModuleId(RS.getLong(1));
+					module.setModuleName(RS.getString(2));
+					module.setDescription(RS.getString(3));
+					module.setStatus(RS.getString(4));
+					module.setCreationDate(RS.getString(5));
+					module.setCreatedBy(RS.getString(6));
+					module.setMeetingDays(RS.getString(7));
+					module.setMeetingTimes(RS.getString(8));
+					module.setInstructorId(RS.getLong(9));
+					module.setMeetingLocation(RS.getString(10));
+					module.setInstructorName(RS.getString(11));
+				}
+			
+			Stmt.close();
+			Conn.close();
+		
+		} catch (SQLException E) {
+			System.out.println (E.getMessage());
+			session.setAttribute("SYSTEM_ERROR", E.getMessage());
+		} catch (ClassNotFoundException e) {
+			session.setAttribute("SYSTEM_ERROR", e.getMessage());
+			e.printStackTrace();
+		}
+		
+	return module;	
+	}
+	
+	public ArrayList getModuleRoster(Long id, HttpSession session) {
+		
+		ArrayList list = new ArrayList();
+		
+		try {
+		
+			Connection Conn = this.getConnection();
+			
+			String query= ""+
+			"	SELECT DISTINCT INTAKE.INTAKE_ID, CONCAT(INTAKE.FIRSTNAME,' ',INTAKE.LASTNAME) AS STUDENT, CWT_JOB.TITLE, INTAKE.ENTRY_DATE, " +
+			"		CWT_DEPARTMENT.TITLE, CONCAT(CWT_SUPERVISOR.FIRSTNAME,' ',CWT_SUPERVISOR.LASTNAME) AS SUPERVISOR " +
+			"   FROM CWT_MODULES INNER JOIN CWT_PROGRAM_METRIC_MODULES" + 
+			"		ON CWT_MODULES.MODULE_ID=CWT_PROGRAM_METRIC_MODULES.MODULE_ID" +
+			"	INNER JOIN CWT_JOB_METRIC" +
+			"		ON CWT_JOB_METRIC.METRIC_ID=CWT_PROGRAM_METRIC_MODULES.METRIC_ID" +
+			"	INNER JOIN CWT_JOB" +
+			"		ON CWT_JOB.JOB_ID = CWT_JOB_METRIC.JOB_ID" +
+			"	INNER JOIN INTAKE" +
+			"	    ON INTAKE.JOB_ID = CWT_JOB.JOB_ID" +
+			"	INNER JOIN STUDENT_HISTORY" +
+			"	    ON INTAKE.INTAKE_ID=STUDENT_HISTORY.INTAKE_ID" +
+			"	INNER JOIN CWT_DEPARTMENT" +
+			"	    ON INTAKE.DEPARTMENT_ID=CWT_DEPARTMENT.DEPARTMENT_ID" +
+			"	INNER JOIN CWT_SUPERVISOR" +
+			"		ON CWT_SUPERVISOR.DEPARTMENT_ID=CWT_DEPARTMENT.DEPARTMENT_ID" +
+			"	WHERE " +
+			"		STUDENT_HISTORY.PROGRAM_STATUS='IN PROGRAM'" +
+			"       AND CWT_MODULES.MODULE_ID=" + id;
+
+			System.out.println (query);
+			Statement Stmt = null;
+			Stmt = Conn.prepareStatement(query);
+			ResultSet rs = Stmt.executeQuery(query);
+						
+			while (rs.next()) {
+					ModuleRoster roster=new ModuleRoster();
+					roster.setIntakeId(rs.getLong(1));
+					roster.setStudentName(rs.getString(2));
+					roster.setJobTitle(rs.getString(3));
+					roster.setEntryDate(rs.getString(4));
+					roster.setDepartment(rs.getString(5));
+					roster.setSupervisor(rs.getString(6));	
+					list.add(roster);
+			}
+			
+			Stmt.close();
+			Conn.close();
+		
+		} catch (SQLException E) {
+			System.out.println (E.getMessage());
+			session.setAttribute("SYSTEM_ERROR", E.getMessage());
+		} catch (ClassNotFoundException e) {
+			session.setAttribute("SYSTEM_ERROR", e.getMessage());
+			e.printStackTrace();
+		}
+		
+		return list;
 	}
 	
 	public Validator getValid8r() {

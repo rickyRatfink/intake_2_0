@@ -83,7 +83,8 @@
 									for (int i=0;i<keys.length;i++) 
 										if (key.equals(keys[i])) { %>checked<% } %>
                                 /><%=dll.get(key)%>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                             <% } if (row%5==0) { row=0; %> <br/> <% }
+                                <% if (row==4) { row=0; %> <br/> <% }
+                              } 
                             } %>
             <br /><br />
             <input type="submit" name="action" value="Save Job" class="button"/>&nbsp;

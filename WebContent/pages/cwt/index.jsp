@@ -13,11 +13,9 @@
             <br />
             </p>
             <ul style="color: Blue">
-                <li><a href="<%=request.getContextPath()%>/cwt?action=programs">Programs</a></li>
-                <li><a href="<%=request.getContextPath()%>/cwt?action=metrics">Metrics</a></li>
-                <li><a href="<%=request.getContextPath()%>/cwt?action=modules">Modules</a></li>
-                <li><a href="">Exams</a></li>
-                <li><a href="">Students</a></li> 
+                <li><a href="<%=request.getContextPath()%>/cwt?action=programs">UBIT Job</a></li>
+                <li><a href="<%=request.getContextPath()%>/cwt?action=metrics">Job Skill Metrics</a></li>
+                <li><a href="<%=request.getContextPath()%>/cwt?action=modules">Class Modules</a></li>
             </ul>
             <ul style="color: Blue">
                 <li><a href="<%=request.getContextPath()%>/cwt?action=departments">Departments</a></li>

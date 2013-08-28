@@ -53,7 +53,7 @@
                                     if
                                     (key.equals(IntakeServlet.getIntake().getSupervisorId()))
                                     {%>selected<%}%>>
-                                  <%=supervisor.get(key)%>-<%=key %>
+                                  <%=supervisor.get(key)%>
                                 </option>
                                 <%
                               }

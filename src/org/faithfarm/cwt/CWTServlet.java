@@ -113,6 +113,7 @@ public class CWTServlet extends HttpServlet {
 							Long key = dao.insertModule(module, session);
 							if (key>0) {
 								req.setAttribute("MESSAGE", "module successfully saved");
+								dao.getModuleList(session);
 								url="pages/cwt/modules/results.jsp";
 							}
 							else
@@ -174,6 +175,11 @@ public class CWTServlet extends HttpServlet {
 						}
 						else 
 							url="pages/cwt/supervisor/create.jsp";
+					} else if ("Roster".equals(action)) {
+						Long key = new Long(req.getParameter("id"));
+						this.setModule(dao.getModule(key, session));
+						session.setAttribute("module_roster", dao.getModuleRoster(key, session));
+						url="pages/cwt/modules/roster.jsp";
 					}
 				} 
 					
@@ -257,8 +263,22 @@ public class CWTServlet extends HttpServlet {
  		 
  		 this.getModule().setModuleName(valid8r.cleanData(req.getParameter("moduleName")));
  		 this.getModule().setDescription(valid8r.cleanData(req.getParameter("description")));
- 		 this.getModule().setStatus(valid8r.cleanData(req.getParameter("status")));
- 		 this.getModule().setCreatedBy(user.getUsername());			
+ 		 
+ 		this.getModule().setMeetingTimes(valid8r.cleanData(req.getParameter("meetingTimes")));
+ 		this.getModule().setInstructorId(new Long(valid8r.cleanData(req.getParameter("supervisor_id"))));
+		
+ 		String mon=valid8r.cleanData(req.getParameter("monday"));
+ 		String tues=valid8r.cleanData(req.getParameter("tuesday"));
+ 		String wed=valid8r.cleanData(req.getParameter("wednesday"));
+ 		String thur=valid8r.cleanData(req.getParameter("thursday"));
+ 		String fri=valid8r.cleanData(req.getParameter("friday"));
+ 		String sat=valid8r.cleanData(req.getParameter("saturday"));
+ 		String sun=valid8r.cleanData(req.getParameter("sunday"));
+ 		
+ 		this.getModule().setMeetingDays(mon+tues+wed+thur+fri+sat+sun);
+ 		this.getModule().setMeetingLocation(valid8r.cleanData(req.getParameter("meetinglocation")));
+ 		this.getModule().setStatus(valid8r.cleanData(req.getParameter("status")));
+ 		this.getModule().setCreatedBy(user.getUsername());			
  		 
  		 Map<Long, String> ddl = (Map)req.getSession().getAttribute("metric_map");
  		 int count=0;

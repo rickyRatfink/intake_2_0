@@ -16,13 +16,10 @@
 
 <form method="POST" action="<%=request.getContextPath()%>/cwt">
     <h2>
-        Course Work Therapy - Programs Search Results
+        Course Work Therapy - UBIT Search Results
     </h2>
     
-            <p>
-                Now you can manage programs, metrics, modules, exams, and certifications for Faith Farm students enrolled in the CWT Program.
-                <br />
-            </p>
+             <br/>
             <% if (message!=null) { %>
             	<div class="success"><img src="<%=request.getContextPath() %>/img/success.png"/><%=message %></div>	
             <% } %>
@@ -35,7 +32,7 @@
                 <tr>
                     <td class="colHeading" width="100">Actions</td>
                     <td class="colSpacer" width="1"></td>
-                    <td class="colHeading" width="300">Program Name</td>
+                    <td class="colHeading" width="300">UBIT Name</td>
                     <td class="colSpacer" width="1"></td>
                     <td class="colHeading" width="300">Status</td>
                     <td class="colSpacer" width="1"></td>

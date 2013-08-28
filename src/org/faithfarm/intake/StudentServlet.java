@@ -8,6 +8,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.ArrayList;
+import java.util.Properties;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.MultipartConfig;
@@ -57,6 +58,8 @@ public class StudentServlet extends HttpServlet {
 			    	 
 			    	  url="pages/applications/results.jsp";
 			      } else if ("Search Students".equals(action)) {
+			    	  IntakeServlet.setIntake(new Intake());
+			    	  
 			    	  String ssn1=valid8r.cleanData(req.getParameter("ssn1"));
 			    	  String ssn2=valid8r.cleanData(req.getParameter("ssn2"));
 			    	  String ssn3=valid8r.cleanData(req.getParameter("ssn3"));
@@ -76,7 +79,7 @@ public class StudentServlet extends HttpServlet {
 			      } else if ("View/Edit".equals(action)) {
 			    	  String key=req.getParameter("key");
 			    	  Intake intake=dao.getStudent(key, session);
-			    	  intake.setStudentPhoto(dao.getStudentPhoto(intake.getIntakeId()));
+			    	  //intake.setStudentPhoto(dao.getStudentPhoto(intake.getIntakeId()));
 			    	  
 			    	  IntakeServlet.setIntake(intake);
 			    	  IntakeServlet.loadDropDownLists(session);
@@ -104,6 +107,8 @@ public class StudentServlet extends HttpServlet {
 			    	  url="pages/student/personal.jsp";
 			      }
 			      else if ("ClassList".equals(action)) {
+			    	  IntakeServlet.setIntake(new Intake());
+			    	  
 			    	  String farm = req.getParameter("farm");
 			    	  ArrayList list0 = dao.getClassList("Orientation", farm);
 			    	  session.setAttribute("classlist_0", list0);
@@ -244,7 +249,21 @@ public class StudentServlet extends HttpServlet {
 		    response.setContentType("text/html;charset=UTF-8");
 
 		    // Create path components to save the file
-		    final String path = "C:\\development\\workspace\\intake_2_0\\WebContent\\photos";
+		    
+		    
+		    String path="";
+		    Properties prop = new Properties();
+		    
+		    try {
+	               //load a properties file
+	    		//prop.load(new FileInputStream("c:\\development\\workspace\\intake_2_0\\src\\properties\\config.properties"));
+	    		prop.load(new FileInputStream("c:\\properties\\config.properties"));
+	    		path = prop.getProperty("photo_path"); 
+	    	} catch (IOException ex) {
+	    		System.out.println (ex.getMessage());
+	    		ex.printStackTrace();
+	        }
+		    //final String path = "C:\\development\\workspace\\intake_2_0\\WebContent\\photos";
 		    final Part filePart = request.getPart("file");
 		    final String fileName = getFileName(filePart);
 

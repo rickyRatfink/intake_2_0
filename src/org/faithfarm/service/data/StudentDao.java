@@ -574,11 +574,24 @@ try {
 			
 			Stmt.executeUpdate(query.toString());
 			*/
-			
+		    String path="";
+		    Properties prop = new Properties();
+		    
+		    try {
+	               //load a properties file
+	    		//prop.load(new FileInputStream("c:\\development\\workspace\\intake_2_0\\src\\properties\\config.properties"));
+	    		prop.load(new FileInputStream("c:\\properties\\config.properties"));
+	    		path = prop.getProperty("photo_path"); 
+	    	} catch (IOException ex) {
+	    		System.out.println (ex.getMessage());
+	    		ex.printStackTrace();
+	        }
 			StringBuffer query = new StringBuffer();
 			query.append("UPDATE " + this.getDatabase() + ".INTAKE SET IMAGE_HEADSHOT=? "
 					+ " WHERE INTAKE_ID=" + key + ";");  
-			FileInputStream io = new FileInputStream(new File("C:\\development\\workspace\\intake_2_0\\WebContent\\photos\\"+image));
+			//FileInputStream io = new FileInputStream(new File("C:\\development\\workspace\\intake_2_0\\WebContent\\photos\\"+image));
+			FileInputStream io = new FileInputStream(new File(path+image));
+			
 			java.sql.PreparedStatement statement = Conn.prepareStatement(query.toString());
 			statement.setBinaryStream(1, (InputStream)io,(int)image.length());
 			statement.executeUpdate();

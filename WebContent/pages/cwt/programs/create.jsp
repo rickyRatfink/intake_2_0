@@ -18,7 +18,7 @@
 
 <form method="POST" action="<%=request.getContextPath()%>/cwt">
     <h2>
-        Course Work Therapy - Create Program
+        Course Work Therapy - Create UBIT
     </h2>
     
        <br />
@@ -39,7 +39,7 @@
        <br />
             <div align="left">
             
-            Program Name<br /><input type="text" name="programName" value="<%=CWTServlet.getProgram().getProgramName()%>" size="30" maxlength="50"/><br /><br />
+            UBIT Name<br /><input type="text" name="programName" value="<%=CWTServlet.getProgram().getProgramName()%>" size="30" maxlength="50"/><br /><br />
             Description<br /><textarea name="description" cols="40" rows="5"><%=CWTServlet.getProgram().getDescription()%></textarea><br />
         	 Status<br/>
               				<%

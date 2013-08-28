@@ -28,28 +28,30 @@
             <% } %>
             
             <div align="left">
-            <table width="80%" cellpadding="0" cellspacing="0" class="searchResults">
+            <table width="90%" cellpadding="0" cellspacing="0" class="searchResults">
             <tr>
             	<td>
                 <table width="100%" cellpadding="0" cellspacing="0" border="0">
                 <tr>
                     <td class="colHeading" width="100">Actions</td>
                     <td class="colSpacer" width="1"></td>
-                    <td class="colHeading" width="300">Module Name</td>
+                    <td class="colHeading" width="150">Module Name</td>
                     <td class="colSpacer" width="1"></td>
-                    <td class="colHeading" width="300">Status</td>
+                    <td class="colHeading" width="100">Meeting Days</td>
+                    <td class="colSpacer" width="1"></td>
+                    <td class="colHeading" width="100">Meeting Times</td>
+                    <td class="colSpacer" width="1"></td>
+                    <td class="colHeading" width="100">Location</td>
+                    <td class="colSpacer" width="1"></td>
+                    <td class="colHeading" width="100">Instructor</td>
                     <td class="colSpacer" width="1"></td>
                     <td class="colHeading" width="150">Creation Date</td>
-                    <td class="colHeading"></td>
+                    <td class="colSpacer" width="1"></td>
+                    <td class="colHeading" width="100">Status</td>
+                    <td class="colHeading" width="1"></td>
+                    
                 </tr>
-                 <tr>
-                    <td colspan="2" class="colFilter"></td>
-                    <td class="colFilter" >
-                    	<input type="text" name="filter1" value="" size="15" maxlength="20" class="filterTxt"/>
-                        <input type="submit" name="action" value="Filter" class="imageButtonFilter" title="Filter By Module Name" />
-                    </td>
-                    <td colspan="5" class="colFilter"></td>
-                </tr>
+               
                 <% String rowClass="";
 				   
 				   for (int i=0;i<results.size();i++) { 
@@ -62,15 +64,23 @@
                 <tr>
                     <td class="searchRow<%=rowClass%>">
                     	 <img src="<%=request.getContextPath()%>/img/Edit.gif" width="20" height="20"/>&nbsp;
-                   		 <img src="<%=request.getContextPath()%>/img/Report.gif" width="20" height="20"/>
-                   		 <img src="<%=request.getContextPath()%>/img/enroll.png" width="20" height="20" title="Enroll Students"/></td>
+                   		 <a href="<%=request.getContextPath()%>/cwt?action=Roster&id=<%=module.getModuleId()%>"><img src="<%=request.getContextPath()%>/img/enroll.png" width="20" height="20" title="Enroll Students"/></a></td>
                     <td class="searchRowSpcr<%=rowClass%>"></td>
                     <td class="searchRow<%=rowClass%>" ><%=module.getModuleName()%></td>
                     <td class="searchRowSpcr<%=rowClass%>"></td>
-                    <td class="searchRow<%=rowClass%>" ><%=module.getStatus()%></td>
+                     <td class="searchRow<%=rowClass%>" ><%=module.getMeetingDays()%></td>
+                    <td class="searchRowSpcr<%=rowClass%>"></td>
+                     <td class="searchRow<%=rowClass%>" ><%=module.getMeetingTimes()%></td>
+                    <td class="searchRowSpcr<%=rowClass%>"></td>
+                    <td class="searchRow<%=rowClass%>" ><%=module.getMeetingLocation()%></td>
+                    <td class="searchRowSpcr<%=rowClass%>"></td> 
+                    <td class="searchRow<%=rowClass%>" ><%=module.getInstructorName()%></td>
                     <td class="searchRowSpcr<%=rowClass%>"></td>
                     <td class="searchRow<%=rowClass%>"><%=v8r.convertEpoch(new Long(module.getCreationDate()))%></td>
+                    <td class="searchRowSpcr<%=rowClass%>"></td>
+                    <td class="searchRow<%=rowClass%>"><%=module.getStatus()%></td>
                     <td class="searchRow<%=rowClass%>"></td>
+                    
                 </tr> 
                 <% } %>
                
