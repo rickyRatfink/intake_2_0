@@ -176,11 +176,11 @@ function moveOnMax(field,nextFieldID){
                 	<%  //String image = IntakeServlet.getIntake().getImageUrl(); System.out.println("image="+image);
                 		if ( IntakeServlet.getIntake().getImageHeadshot()!=null) {  %>
                 	    	
-                	 		<img src="<%=request.getContextPath()%>/image?id=<%=IntakeServlet.getIntake().getIntakeId() %>" width="200" height="150"/>
+                	 		<img src="<%=request.getContextPath()%>/image?id=<%=IntakeServlet.getIntake().getIntakeId() %>" width="200" height="133"/>
                 	 
                 	 
                 	  <% } else { %>
-                	       <img src="<%=request.getContextPath()%>/photos/person.jpg" width="200" height="150"/>
+                	       <img src="<%=request.getContextPath()%>/photos/person.jpg" width="200" height="133"/>
                 	  <% }  %>
                     </td>
                 	<td colspan="5">

@@ -18,7 +18,15 @@ if (updateFlag==null) updateFlag = request.getParameter("updateFlag");
 	</tr>
 	<tr>
     	<td >
-           	<img src="<%=request.getContextPath()%>/photos/person.jpg" width="200" height="150"/>
+           	<%  //String image = IntakeServlet.getIntake().getImageUrl(); System.out.println("image="+image);
+                		if ( IntakeServlet.getIntake().getImageHeadshot()!=null) {  %>
+                	    	
+                	 		<img src="<%=request.getContextPath()%>/image?id=<%=IntakeServlet.getIntake().getIntakeId() %>" width="200" height="133"/>
+                	 
+                	 
+                	  <% } else { %>
+                	       <img src="<%=request.getContextPath()%>/photos/person.jpg" width="200" height="133"/>
+                	  <% }  %>
            	<br/><br/>
         </td>
     </tr>
