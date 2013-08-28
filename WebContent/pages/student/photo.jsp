@@ -10,7 +10,7 @@
 if (updateFlag==null) updateFlag = request.getParameter("updateFlag");
 %>
 
-<form action="<%=request.getContextPath() %>/student?action=Upload" method="post" enctype="multipart/form-data">
+<form action="<%=request.getContextPath() %>/student?action=Upload" method="POST" enctype="multipart/form-data">
  
 <table width="750">
 	<tr>
@@ -18,14 +18,15 @@ if (updateFlag==null) updateFlag = request.getParameter("updateFlag");
 	</tr>
 	<tr>
     	<td >
-           	<img src="<%=request.getContextPath()%>/img/person.jpg" width="200" height="150"/>
+           	<img src="<%=request.getContextPath()%>/photos/person.jpg" width="200" height="150"/>
            	<br/><br/>
         </td>
     </tr>
     <tr>
 		<td valign="bottom" align="left" height="45">
-        	<input type="file" name="myFile" class="imageButtonSave"/>&nbsp;Then&nbsp;
+        	<input type="file" name="file" id="file" class="imageButtonSave"/>&nbsp;Then&nbsp;
         	<input type="submit" name="action" value="Upload" class="imageButtonSave">
+        	<input type="hidden" name="destination" value="/tmp"/>
     	</td>
 	</tr>
 

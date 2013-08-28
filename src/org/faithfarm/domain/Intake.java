@@ -1,6 +1,8 @@
 package org.faithfarm.domain;
 
+import java.awt.image.BufferedImage;
 import java.io.Serializable;
+import java.sql.Blob;
 import java.util.ArrayList;
 
 public class Intake implements Serializable {
@@ -157,8 +159,17 @@ public class Intake implements Serializable {
 	private String room="";
 	private String bed="";
 	private String archiveFlag="";
+	private String imageUrl="";
+	private Blob imageHeadshot;
 	
-	
+	public String getImageUrl() {
+		return imageUrl;
+	}
+
+	public void setImageUrl(String imageUrl) {
+		this.imageUrl = imageUrl;
+	}
+
 	private  String question[] = new String[]{ 
 						"NO","NO","NO","NO","NO","NO",
 						"NO","NO","NO","NO","NO","NO",
@@ -299,6 +310,9 @@ public class Intake implements Serializable {
 	private Long departmentId;
 	private Long jobId;
 	private Long supervisorId;
+	
+	
+	private BufferedImage studentPhoto;
 	
 	private  ArrayList history = new ArrayList();
 	
@@ -1821,6 +1835,23 @@ public class Intake implements Serializable {
 	public void setSupervisorId(Long supervisorId) {
 		this.supervisorId = supervisorId;
 	}
+
+	public BufferedImage getStudentPhoto() {
+		return studentPhoto;
+	}
+
+	public void setStudentPhoto(BufferedImage studentPhoto) {
+		this.studentPhoto = studentPhoto;
+	}
+
+	public Blob getImageHeadshot() {
+		return imageHeadshot;
+	}
+
+	public void setImageHeadshot(Blob imageHeadshot) {
+		this.imageHeadshot = imageHeadshot;
+	}
+	
 	
 	
 	

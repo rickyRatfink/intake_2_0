@@ -3,6 +3,10 @@
   <display-name>intake_2_0</display-name>
   
   <servlet>
+        <servlet-name>ImageServlet</servlet-name>
+        <servlet-class>org.faithfarm.intake.ImageServlet</servlet-class>
+  </servlet>
+  <servlet>
         <servlet-name>SecureLogin</servlet-name>
         <servlet-class>org.faithfarm.intake.SecureLogin</servlet-class>
   </servlet>
@@ -24,6 +28,10 @@
   </servlet> 
   
   <servlet-mapping>
+	    <servlet-name>ImageServlet</servlet-name>
+	    <url-pattern>/image</url-pattern>
+  </servlet-mapping>
+   <servlet-mapping>
 	    <servlet-name>GridServlet</servlet-name>
 	    <url-pattern>/grid</url-pattern>
   </servlet-mapping>

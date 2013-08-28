@@ -173,7 +173,15 @@ function moveOnMax(field,nextFieldID){
                 <tr>
                 	<td>Photo</td>
                 	<td colspan="2">
-                    	<img src="<%=request.getContextPath()%>/photos/fake.png" width="200" height="150"/>
+                	<%  //String image = IntakeServlet.getIntake().getImageUrl(); System.out.println("image="+image);
+                		if ( IntakeServlet.getIntake().getImageHeadshot()!=null) {  %>
+                	    	
+                	 		<img src="<%=request.getContextPath()%>/image?id=<%=IntakeServlet.getIntake().getIntakeId() %>" width="200" height="150"/>
+                	 
+                	 
+                	  <% } else { %>
+                	       <img src="<%=request.getContextPath()%>/photos/person.jpg" width="200" height="150"/>
+                	  <% }  %>
                     </td>
                 	<td colspan="5">
                     	You may need to refresh your browser to see the lastest photo.<br/>

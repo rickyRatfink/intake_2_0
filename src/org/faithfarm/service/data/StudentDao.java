@@ -1,15 +1,21 @@
 package org.faithfarm.service.data;
 
+import java.awt.image.BufferedImage;
+import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.InputStream;
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Properties;
 
+import javax.imageio.ImageIO;
 import javax.servlet.http.HttpSession;
 
 import org.faithfarm.domain.ClassList;
@@ -409,6 +415,8 @@ try {
 				intake.setDepartmentId(RS.getLong(162));
 				intake.setSupervisorId(RS.getLong(163));
 				intake.setJobId(RS.getLong(164));
+				intake.setImageHeadshot(RS.getBlob("IMAGE_HEADSHOT"));
+				
 			}
 			
 			
@@ -550,26 +558,74 @@ try {
 	return intake;
 	}
 	
-	public void updateImage (String image, Long key, HttpSession session) {
+	public void updateImage (String image, Long key, HttpSession session) throws FileNotFoundException {
 		
 		// Do something with the Connection
 		try {
 			Connection Conn = this.getConnection();
 			Statement Stmt = Conn.createStatement();
-
+			//InputStream inputStream = new FileInputStream(new File(image));
+	    	 
+			/* STORES IMAGE AS FILE
 			StringBuffer query = new StringBuffer();
 			query.append("UPDATE " + this.getDatabase() + ".INTAKE SET IMAGE_HEADSHOT='"
-					+ image + " WHERE INTAKE_ID=" + key + ";");
+					+ image.replace("\\","/") + "' WHERE INTAKE_ID=" + key + ";");
+			System.out.println (query);
+			
 			Stmt.executeUpdate(query.toString());
-
+			*/
+			
+			StringBuffer query = new StringBuffer();
+			query.append("UPDATE " + this.getDatabase() + ".INTAKE SET IMAGE_HEADSHOT=? "
+					+ " WHERE INTAKE_ID=" + key + ";");  
+			FileInputStream io = new FileInputStream(new File("C:\\development\\workspace\\intake_2_0\\WebContent\\photos\\"+image));
+			java.sql.PreparedStatement statement = Conn.prepareStatement(query.toString());
+			statement.setBinaryStream(1, (InputStream)io,(int)image.length());
+			statement.executeUpdate();
 			Stmt.close();
 			Conn.close();
 		} catch (SQLException E) {
+			System.out.println(E.getMessage());
 			session.setAttribute("ERROR_" + session.getId(), E.getMessage());
 		} catch (ClassNotFoundException e) {
+			System.out.println(e.getMessage());
 			session.setAttribute("ERROR_" + session.getId(), e.getMessage());
 			e.printStackTrace();
 		}
+	}
+	
+	public BufferedImage getStudentPhoto(Long key) {
+	
+		BufferedImage buffimg = null;
+		
+		// Do something with the Connection
+		try {
+			Connection Conn = this.getConnection();
+			Statement Stmt = Conn.createStatement();
+			StringBuffer query = new StringBuffer();
+			query.append("SELECT IMAGE_STATE_ID " + this.getDatabase() + " WHERE INTAKE_ID=? ");  
+			
+			PreparedStatement stmt = Conn.prepareStatement(query.toString());
+			stmt.setLong(1,key);
+			ResultSet result = stmt.executeQuery();
+			result.next();
+			InputStream img = result.getBinaryStream(1); // reading image as InputStream
+			
+			buffimg= ImageIO.read(img); // decoding the 
+			
+			Stmt.close();
+			Conn.close();
+		} catch (SQLException E) {
+			System.out.println(E.getMessage());
+			//session.setAttribute("ERROR_" + session.getId(), E.getMessage());
+		} catch (ClassNotFoundException e) {
+			System.out.println(e.getMessage());
+			//session.setAttribute("ERROR_" + session.getId(), e.getMessage());
+			e.printStackTrace();
+		} catch (Exception e1) { System.out.println(e1.getMessage()); }
+		
+		return buffimg;
+		
 	}
 
 	public String getUid() {
