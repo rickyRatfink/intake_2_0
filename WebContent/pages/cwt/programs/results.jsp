@@ -39,14 +39,7 @@
                     <td class="colHeading" width="150">Creation Date</td>
                     <td class="colHeading"></td>
                 </tr>
-                 <tr>
-                    <td colspan="2" class="colFilter"></td>
-                    <td class="colFilter" >
-                    	<input type="text" name="filter1" value="" size="15" maxlength="20" class="filterTxt"/>
-                        <input type="submit" name="action" value="Filter" class="imageButtonFilter" title="Filter By Program Name" />
-                    </td>
-                    <td colspan="5" class="colFilter"></td>
-                </tr>
+                
                 <% String rowClass="";
 				   
 				   for (int i=0;i<results.size();i++) { 

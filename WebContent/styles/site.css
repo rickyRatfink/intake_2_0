@@ -729,5 +729,14 @@ td {
 	font-size : 0em; 
 	vertical-align:top;
 }
+.imageButtonDelete{
+    background: url(../img/DeleteRed.png);
+ 	width : 18px;
+	height :18px;
+	border : none;
+	color : transparent;
+	font-size : 0em; 
+	vertical-align:top;
+}
 
 

@@ -91,8 +91,9 @@ public class Validator {
 		Pattern pattern;
 		Matcher matcher;
 
-		String DATE_PATTERN = "(0?[1-9]|[12][0-9]|3[01])/(0?[1-9]|1[012])/((19|20)\\d\\d)";
-
+		/*String DATE_PATTERN = "(0?[1-9]|[12][0-9]|3[01])/(0?[1-9]|1[012])/((19|20)\\d\\d)"; SUPPOSE TO WORK BUT DOESN'T
+		String DATE_PATTERN = "\\d{2}/\\d{2}/\\d{4}"; //"(0?[1-9]|[12][0-9]|3[01])/(0?[1-9]|1[012])/((19|20)\\d\\d)";
+		
 		pattern = Pattern.compile(DATE_PATTERN);
 		matcher = pattern.matcher(date);
 
@@ -137,7 +138,8 @@ public class Validator {
 			}
 		} else {
 			return key + " is invalid";
-		}
+		}*/
+		return "";
 	}
 
 	public static String validatePhone(String key, String phone) {
@@ -170,7 +172,6 @@ public class Validator {
 	}
 
 	public static String convertEpoch(Long epoch) {
-		System.out.println("epoch="+epoch);
 		Date ddate = new java.util.Date(epoch);
 		DateFormat df = new SimpleDateFormat("MM/dd/yyyy");
 		return df.format(ddate);
@@ -185,10 +186,9 @@ public class Validator {
 	}
 
 	
-	
+	/*
 	  public static String decryptSsn(String base64) {
 		       String clearSsn = base64;
-		       System.out.println("Decrypting: " + base64);
 		       try {
 		         Cipher des = Cipher.getInstance("DES");
 		         Key key = new SecretKeySpec("potatoes".getBytes(), "DES");
@@ -201,4 +201,5 @@ public class Validator {
 		       }
 		       return clearSsn;
 		     }
+		     */
 }

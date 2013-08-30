@@ -14,10 +14,14 @@ import org.faithfarm.domain.SystemUser;
 import org.faithfarm.service.data.CWTDao;
 import org.faithfarm.service.data.IntakeDao;
 import org.faithfarm.service.data.StudentDao;
- 
+
+import java.util.logging.Level;
+import java.util.logging.Logger;
   
 public class SecureLogin extends HttpServlet {
-     
+    
+	private final static Logger LOGGER = Logger.getLogger(SecureLogin.class.getName());
+	
 	private IntakeDao dao = new IntakeDao();
     private StudentDao sdao = new StudentDao();
     private CWTDao cdao = new CWTDao();  
@@ -26,8 +30,9 @@ public class SecureLogin extends HttpServlet {
 	 protected void doGet(HttpServletRequest req, HttpServletResponse resp)
 			   throws ServletException, IOException
 			   {  
-			      String next=""; 
-			      System.out.println ("SecureLogin");
+		 	      LOGGER.setLevel(Level.OFF);
+		 	      
+		 		  String next=""; 
 		 		  HttpSession session = req.getSession(true);		     
 			      String action=req.getParameter("action");
 			      
@@ -264,6 +269,25 @@ public class SecureLogin extends HttpServlet {
 	        	Department d= (Department)departments.get(i);
 	        	dList.add(d.getTitle());
 	        }
+	        
+	        ArrayList passHours = new ArrayList();
+	        passHours.add("");
+	        passHours.add("2");
+	        passHours.add("4");
+	        passHours.add("6");
+	        passHours.add("8");
+	        passHours.add("Overnight");
+	        passHours.add("3 Days");
+	        passHours.add("Special");
+	        
+	        ArrayList passType = new ArrayList();
+	        passType.add("");
+	        passType.add("Medical");
+	        passType.add("Probation/Court");
+	        passType.add("8 Hours");
+	        passType.add("3 Days");
+	        passType.add("Special");
+	        
 	        session.setAttribute("dllSuffix",convertToUpperCase(suffix));
 	        session.setAttribute("dllSecurityQuestion",convertToUpperCase(securityQuestion));
 	        session.setAttribute("dllLocation",convertToUpperCase(location));
@@ -284,6 +308,8 @@ public class SecureLogin extends HttpServlet {
 	        session.setAttribute("dllProgramStatus",convertToUpperCase(programStatus));
 	        session.setAttribute("dllPhase",convertToUpperCase(phase));
 	        session.setAttribute("dllDepartments",convertToUpperCase(dList));
+	        session.setAttribute("dllPassHours",convertToUpperCase(passHours));
+	        session.setAttribute("dllPassType",convertToUpperCase(passType));
 	        
 	        SystemUser user = (SystemUser)session.getAttribute("USER_" + session.getId());
 	        cdao.getDepartments(user.getFarmBase(),session);

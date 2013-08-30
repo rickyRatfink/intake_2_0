@@ -7,6 +7,8 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Properties;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -19,6 +21,9 @@ import org.faithfarm.util.Validator;
 
 
 public class GridServlet extends HttpServlet {
+	
+	private final static Logger LOGGER = Logger.getLogger(SecureLogin.class.getName());
+	
 	private static final long serialVersionUID = 1L;
 	private Validator valid8r = new Validator();
 	private static String firstName = "";
@@ -48,6 +53,8 @@ public class GridServlet extends HttpServlet {
 	private Connection getConnection() throws SQLException,
 	ClassNotFoundException {
 
+		LOGGER.setLevel(Level.SEVERE);
+		
 		Properties prop = new Properties();
 	    //Connection Conn = null;
     	try {
@@ -60,9 +67,8 @@ public class GridServlet extends HttpServlet {
     		this.setSERVER(prop.getProperty("dburl")); 
      			
     	} catch (IOException ex) { 
-    		System.out.println (ex.getMessage());
-    		ex.printStackTrace();
-        }
+    		LOGGER.log(Level.SEVERE, ex.getMessage());
+    	}
     	
 		Class.forName("com.mysql.jdbc.Driver");
         //System.out.println ("jdbc:mysql://"+this.getSERVER()+"/" + database+","+ uid+","+ pwd);
@@ -163,10 +169,12 @@ public class GridServlet extends HttpServlet {
 					selectQuery.append(" AND ENTRY_DATE BETWEEN'"+ entryDate +"' AND '"+exitDate+"'");
 				if (!"ALL".equals(farm)&&!"".equals(farm))
 					selectQuery.append(" AND FARM_BASE='"+farm +"'");
+				
 				if (status.length()>0)
 					selectQuery.append(" AND APPLICATION_STATUS='"+status +"'");
-				
-			//System.out.println(selectQuery.toString()); 
+				else
+					selectQuery.append(" AND APPLICATION_STATUS NOT IN ('PENDING','DENIED') ");
+					
 			rs = connection.createStatement().executeQuery(selectQuery.toString());
 			
 			if (rs.next())
@@ -212,10 +220,12 @@ public class GridServlet extends HttpServlet {
 					selectQuery.append(" AND FARM_BASE='"+farm +"'");
 				if (status.length()>0)
 					selectQuery.append(" AND APPLICATION_STATUS='"+status +"'");
+				else
+					selectQuery.append(" AND APPLICATION_STATUS NOT IN ('PENDING','DENIED') ");
+	
 				selectQuery.append(" order by "+sidx + " "+sord+ " limit "+limit+ " offset "+start);
 				;
 				
-				System.out.println(selectQuery.toString());
 				rs = connection.createStatement().executeQuery(selectQuery.toString());
 	
 				data = new StringBuffer();
@@ -282,7 +292,7 @@ public class GridServlet extends HttpServlet {
 		//}
 		//req.getSession().setAttribute("rows",new Integer(row));
 		} catch (Exception e) {
-			System.out.println (e.getMessage());
+			LOGGER.log(Level.SEVERE, e.getMessage());
 		} 
 		
 		return data;

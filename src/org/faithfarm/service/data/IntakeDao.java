@@ -10,6 +10,8 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Properties;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -17,14 +19,18 @@ import javax.servlet.http.HttpSession;
 import org.faithfarm.domain.Address;
 import org.faithfarm.domain.CourseRotationHistory;
 import org.faithfarm.domain.Intake;
+import org.faithfarm.domain.PassHistory;
 import org.faithfarm.domain.StudentHistory;
 import org.faithfarm.domain.SystemUser;
+import org.faithfarm.intake.SecureLogin;
 import org.faithfarm.util.Validator;
 
 //import com.mysql.jdbc.PreparedStatement;
 
 public class IntakeDao {
 
+	private final static Logger LOGGER = Logger.getLogger(SecureLogin.class.getName());
+	
 	private Validator valid8r = new Validator();
 	private String SERVER = "";
 	private String uid = "";
@@ -33,10 +39,12 @@ public class IntakeDao {
 	
 	// private String SERVER = "ffarm_staging";
 	// private String pwd="j35u59538";
-
+    
 	private Connection getConnection() throws SQLException,
 			ClassNotFoundException {
 
+		LOGGER.setLevel(Level.SEVERE);
+		
 		Properties prop = new Properties();
 	    
     	try {
@@ -49,12 +57,11 @@ public class IntakeDao {
     		this.setSERVER(prop.getProperty("dburl")); 
     	
     	} catch (IOException ex) {
-    		System.out.println (ex.getMessage());
+    		LOGGER.log(Level.SEVERE, ex.getMessage());
     		ex.printStackTrace();
         }
 		Class.forName("com.mysql.jdbc.Driver");
-        System.out.println ("jdbc:mysql://"+this.getSERVER()+"/" + this.getDatabase()+","+ uid+","+ pwd);
-		Connection Conn = DriverManager.getConnection(
+        Connection Conn = DriverManager.getConnection(
 				"jdbc:mysql://"+this.getSERVER()+"/" + database, uid, pwd);
 
 		return Conn;
@@ -85,10 +92,11 @@ public class IntakeDao {
 		} catch (SQLException E) {
 			retCode = 0;
 			session.setAttribute("SYSTEM_ERROR", E.getMessage());
-		} catch (ClassNotFoundException e) {
+			LOGGER.log(Level.SEVERE, E.getMessage());
+		} catch (ClassNotFoundException E) {
 			retCode = 0;
-			session.setAttribute("SYSTEM_ERROR", e.getMessage());
-			e.printStackTrace();
+			session.setAttribute("SYSTEM_ERROR", E.getMessage());
+			LOGGER.log(Level.SEVERE, E.getMessage());
 		}
 
 		return obj;
@@ -125,9 +133,11 @@ public class IntakeDao {
 		} catch (SQLException E) {
 			retCode = 0;
 			session.setAttribute("SYSTEM_ERROR", E.getMessage());
+			LOGGER.log(Level.SEVERE, E.getMessage());
 		} catch (ClassNotFoundException e) {
 			retCode = 0;
 			session.setAttribute("SYSTEM_ERROR", e.getMessage());
+			LOGGER.log(Level.SEVERE, e.getMessage());
 			e.printStackTrace();
 		}
 
@@ -146,16 +156,17 @@ public class IntakeDao {
 			query.append("SET CLASS='" + intake.getCurrentClass()
 					+ "' WHERE INTAKE_ID=" + intake.getIntakeId());
 			PreparedStatement Stmt = null;
-			// System.out.println(query);
+			
 			Stmt = Conn.prepareStatement(query.toString());
 			Stmt.executeUpdate(query.toString());
 
 			Stmt.close();
 			Conn.close();
 		} catch (SQLException E) {
-			System.out.println(E.getMessage());
+			LOGGER.log(Level.SEVERE, E.getMessage());
 			session.setAttribute("SYSTEM_ERROR", E.getMessage());
 		} catch (ClassNotFoundException e) {
+			LOGGER.log(Level.SEVERE, e.getMessage());
 			session.setAttribute("SYSTEM_ERROR", e.getMessage());
 			e.printStackTrace();
 		}
@@ -192,16 +203,17 @@ public class IntakeDao {
 			
 			query.append ( "'"+valid8r.getEpoch()+"',"+ m0+","+ m1+","+ m2+","+ m3+","+ m4+","+ m5+","+ h0+","+ h1+","+ h2+","+ h3+","+ h4+","+ h5+","+ h6+ ","+ grad+",'"+user+"')");
 			PreparedStatement Stmt = null;
-			System.out.println(query);
+			
 			Stmt = Conn.prepareStatement(query.toString());
 			Stmt.executeUpdate(query.toString());
 
 			Stmt.close();
 			Conn.close();
 		} catch (SQLException E) {
-			System.out.println(E.getMessage());
+			LOGGER.log(Level.SEVERE, E.getMessage());
 			session.setAttribute("SYSTEM_ERROR", E.getMessage());
 		} catch (ClassNotFoundException e) {
+			LOGGER.log(Level.SEVERE, e.getMessage());
 			session.setAttribute("SYSTEM_ERROR", e.getMessage());
 			e.printStackTrace();
 		}
@@ -252,16 +264,16 @@ public class IntakeDao {
 			Stmt.close();
 			Conn.close();
 		} catch (SQLException E) {
-			System.out.println(E.getMessage());
+			LOGGER.log(Level.SEVERE, E.getMessage());
 			session.setAttribute("SYSTEM_ERROR", E.getMessage());
 		} catch (ClassNotFoundException e) {
 			session.setAttribute("SYSTEM_ERROR", e.getMessage());
-			e.printStackTrace();
+			LOGGER.log(Level.SEVERE, e.getMessage());
 		}
 		return list;
 	}
 
-	public void updateIntake(Intake intake, StudentHistory history,
+	public void updateIntake(Intake intake, StudentHistory history, 
 			String user, HttpSession session) {
 		try {
 
@@ -512,7 +524,7 @@ public class IntakeDao {
 			query.append("			SUBMISSION_DATE='" + valid8r.getEpoch() + "',");
 			query.append("			ENTRY_DATE='" + intake.getEntryDate() + "',");
 			query.append("			INTAKE_STATUS='" + intake.getIntakeStatus() + "',");
-			query.append("			IMAGE_HEADSHOT='', ");
+			//query.append("			IMAGE_HEADSHOT='', ");
 			query.append("			IMAGE_STATE_ID='', ");
 			query.append("			IMAGE_SSN='', ");
 			query.append("			FARM_BASE='" + intake.getFarmBase() + "',");
@@ -527,7 +539,6 @@ public class IntakeDao {
 			query.append("			JOB_ID=" + intake.getJobId() );
 			
 			query.append(" WHERE INTAKE_ID = " + intake.getIntakeId());
-			System.out.println(query);
 			PreparedStatement Stmt = null;
 			Stmt = Conn.prepareStatement(query.toString());
 			Stmt.executeUpdate(query.toString());
@@ -560,7 +571,7 @@ public class IntakeDao {
 					query1.append(intake.getIntakeId() + ", ");
 					query1.append("'" + details[i] + "', ");
 					query1.append("'" + dates[i] + "' ) ");
-					System.out.println(query1);
+					
 					Stmt = Conn.prepareStatement(query1.toString(),
 							Stmt.RETURN_GENERATED_KEYS);
 					Stmt.executeUpdate(query1.toString());
@@ -589,7 +600,7 @@ public class IntakeDao {
 					query1.append(intake.getIntakeId() + " ,");
 					query1.append("'" + condition[i] + "', ");
 					query1.append((i + 1) + ") ");
-					System.out.println(query1);
+					
 					Stmt = Conn.prepareStatement(query1.toString());
 					Stmt.executeUpdate(query1.toString());
 				}
@@ -615,7 +626,7 @@ public class IntakeDao {
 							+ this.getDatabase()							+ "`.`intake_job_skill` (JOB_SKILL_ID, INTAKE_ID) VALUES ( ");
 					query1.append((i + 1) + ",");
 					query1.append(intake.getIntakeId() + ") ");
-					System.out.println(query1);
+					
 					Stmt = Conn.prepareStatement(query1.toString());
 					Stmt.executeUpdate(query1.toString());
 				}
@@ -653,15 +664,17 @@ public class IntakeDao {
 			if (updateHistory)
 				this.insertHistory(history, user, session);
 
+			
+		
 			// Clean up after ourselves
 			Stmt.close();
 			Conn.close();
 		} catch (SQLException E) {
-			System.out.println(E.getMessage());
+			LOGGER.log(Level.SEVERE, E.getMessage());
 			session.setAttribute("SYSTEM_ERROR", E.getMessage());
 		} catch (ClassNotFoundException e) {
 			session.setAttribute("SYSTEM_ERROR", e.getMessage());
-			e.printStackTrace();
+			LOGGER.log(Level.SEVERE, e.getMessage());
 		}
 	}
 
@@ -828,7 +841,7 @@ public class IntakeDao {
 			query.append("`INTAKE_STATUS`,");
 			query.append("`IMAGE_HEADSHOT`,");
 			query.append("`IMAGE_STATE_ID`,");
-			query.append("`IMAGE_SSN`,`FARM_BASE`,`SUPERVISOR`,`JOB`,`CLASS`,`AREA`,`ROOM`,`BED`,`SUPERVISOR_ID,`DEPARTMENT_ID`,`JOB_ID`) ");
+			query.append("`IMAGE_SSN`,`FARM_BASE`,`SUPERVISOR`,`JOB`,`CLASS`,`AREA`,`ROOM`,`BED`,`SUPERVISOR_ID`,`DEPARTMENT_ID`,`JOB_ID`) ");
 			query.append("VALUES");
 			query.append(" (");
 
@@ -1005,8 +1018,7 @@ public class IntakeDao {
 
 			if (generatedKeys.next())
 				key = generatedKeys.getLong(1);
-			System.out.println("key=" + key);
-
+			
 			/*
 			 * 
 			 * Questions
@@ -1080,7 +1092,7 @@ public class IntakeDao {
 					query1.append("VALUES");
 					query1.append("(");
 					query1.append((i + 1) + "," + key + ");");
-					System.out.println(query1);
+					
 					Stmt = Conn.prepareStatement(query1.toString(),
 							Stmt.RETURN_GENERATED_KEYS);
 					Stmt.executeUpdate(query1.toString());
@@ -1090,11 +1102,11 @@ public class IntakeDao {
 			Stmt.close();
 			Conn.close();
 		} catch (SQLException E) {
-			System.out.println(E.getMessage());
+			LOGGER.log(Level.SEVERE, E.getMessage());
 			session.setAttribute("SYSTEM_ERROR", E.getMessage());
 		} catch (ClassNotFoundException e) {
 			session.setAttribute("SYSTEM_ERROR", e.getMessage());
-			e.printStackTrace();
+			LOGGER.log(Level.SEVERE, e.getMessage());
 		}
 		return key;
 	}
@@ -1125,10 +1137,11 @@ public class IntakeDao {
 		} catch (SQLException E) {
 			retCode = 0;
 			session.setAttribute("SYSTEM_ERROR", E.getMessage());
+			LOGGER.log(Level.SEVERE, E.getMessage());
 		} catch (ClassNotFoundException e) {
 			retCode = 0;
 			session.setAttribute("SYSTEM_ERROR", e.getMessage());
-			e.printStackTrace();
+			LOGGER.log(Level.SEVERE, e.getMessage());
 		}
 
 		return retCode;
@@ -1160,10 +1173,11 @@ public class IntakeDao {
 		} catch (SQLException E) {
 			retCode = 0;
 			session.setAttribute("SYSTEM_ERROR", E.getMessage());
+			LOGGER.log(Level.SEVERE, E.getMessage());
 		} catch (ClassNotFoundException e) {
 			retCode = 0;
 			session.setAttribute("SYSTEM_ERROR", e.getMessage());
-			e.printStackTrace();
+			LOGGER.log(Level.SEVERE, e.getMessage());
 		}
 
 		return retCode;
@@ -1195,10 +1209,11 @@ public class IntakeDao {
 		} catch (SQLException E) {
 			retCode = 0;
 			session.setAttribute("SYSTEM_ERROR", E.getMessage());
+			LOGGER.log(Level.SEVERE, E.getMessage());
 		} catch (ClassNotFoundException e) {
 			retCode = 0;
 			session.setAttribute("SYSTEM_ERROR", e.getMessage());
-			e.printStackTrace();
+			LOGGER.log(Level.SEVERE, e.getMessage());
 		}
 
 		return retCode;
@@ -1219,9 +1234,10 @@ public class IntakeDao {
 			Conn.close();
 		} catch (SQLException E) {
 			session.setAttribute("ERROR_" + session.getId(), E.getMessage());
+			LOGGER.log(Level.SEVERE, E.getMessage());
 		} catch (ClassNotFoundException e) {
 			session.setAttribute("ERROR_" + session.getId(), e.getMessage());
-			e.printStackTrace();
+			LOGGER.log(Level.SEVERE, e.getMessage());
 		}
 		return retCode;
 	}
@@ -1264,10 +1280,11 @@ public class IntakeDao {
 		} catch (SQLException E) {
 			retCode = 0;
 			session.setAttribute("SYSTEM_ERROR", E.getMessage());
+			LOGGER.log(Level.SEVERE, E.getMessage());
 		} catch (ClassNotFoundException e) {
 			retCode = 0;
 			session.setAttribute("SYSTEM_ERROR", e.getMessage());
-			e.printStackTrace();
+			LOGGER.log(Level.SEVERE, e.getMessage());
 		}
 
 		return retCode;
@@ -1289,10 +1306,12 @@ public class IntakeDao {
 			Conn.close();
 		} catch (SQLException E) {
 			session.setAttribute("SYSTEM_ERROR", E.getMessage());
+			LOGGER.log(Level.SEVERE, E.getMessage());
 			return false;
 		} catch (ClassNotFoundException e) {
 			retCode = false;
 			session.setAttribute("SYSTEM_ERROR", e.getMessage());
+			LOGGER.log(Level.SEVERE, e.getMessage());
 			return false;
 		}
 		return true;
@@ -1330,10 +1349,11 @@ public class IntakeDao {
 		} catch (SQLException E) {
 			retCode = 0;
 			session.setAttribute("SYSTEM_ERROR", E.getMessage());
+			LOGGER.log(Level.SEVERE, E.getMessage());
 		} catch (ClassNotFoundException e) {
 			retCode = 0;
 			session.setAttribute("SYSTEM_ERROR", e.getMessage());
-			e.printStackTrace();
+			LOGGER.log(Level.SEVERE, e.getMessage());
 		}
 
 		return retCode;
@@ -1415,11 +1435,11 @@ public class IntakeDao {
 			req.setAttribute("ERRORS_" + req.getSession().getId(), errors);
 
 		} catch (SQLException E) {
-			System.out.println (E.getMessage());
+			LOGGER.log(Level.SEVERE, E.getMessage());
 			req.setAttribute("SYSTEM_ERROR", E.getMessage());
 		} catch (ClassNotFoundException e) {
 			req.setAttribute("SYSTEM_ERROR", e.getMessage());
-			e.printStackTrace();
+			LOGGER.log(Level.SEVERE, e.getMessage());
 		}
 
 		return success;
@@ -1444,9 +1464,10 @@ public class IntakeDao {
 			Conn.close();
 		} catch (SQLException E) {
 			session.setAttribute("ERROR_" + session.getId(), E.getMessage());
+			LOGGER.log(Level.SEVERE, E.getMessage());
 		} catch (ClassNotFoundException e) {
 			session.setAttribute("ERROR_" + session.getId(), e.getMessage());
-			e.printStackTrace();
+			LOGGER.log(Level.SEVERE, e.getMessage());
 		}
 
 		return retCode;
@@ -1471,9 +1492,10 @@ public class IntakeDao {
 			Conn.close();
 		} catch (SQLException E) {
 			session.setAttribute("ERROR_" + session.getId(), E.getMessage());
+			LOGGER.log(Level.SEVERE, E.getMessage());
 		} catch (ClassNotFoundException e) {
 			session.setAttribute("ERROR_" + session.getId(), e.getMessage());
-			e.printStackTrace();
+			LOGGER.log(Level.SEVERE, e.getMessage());
 		}
 
 		return retCode;
@@ -1484,11 +1506,8 @@ public class IntakeDao {
 		Long key = new Long("0");
 
 		try {
-			Class.forName("com.mysql.jdbc.Driver");
-
-			Connection Conn = DriverManager.getConnection(
-					"jdbc:mysql://localhost:3306/" + this.getDatabase() + "", "root",
-					"admin");
+			
+			Connection Conn = this.getConnection();
 
 			// Do something with the Connection
 			/*
@@ -1513,9 +1532,10 @@ public class IntakeDao {
 			 */
 		} catch (SQLException E) {
 			session.setAttribute("SYSTEM_ERROR", E.getMessage());
+			LOGGER.log(Level.SEVERE, E.getMessage());
 		} catch (ClassNotFoundException e) {
 			session.setAttribute("SYSTEM_ERROR", e.getMessage());
-			e.printStackTrace();
+			LOGGER.log(Level.SEVERE, e.getMessage());
 		}
 		return key;
 	}
@@ -1531,7 +1551,7 @@ public class IntakeDao {
 			StringBuffer query = new StringBuffer();
 			query.append("INSERT INTO "
 					+ this.getDatabase()
-					+ ".STUDENT_HISTORY (INTAKE_ID, FARM, PHASE, PROGRAM_STATUS, REASON, BEGIN_DATE, END_DATE,CREATION_DATE,CREATED_BY) VALUE(");
+					+ ".STUDENT_HISTORY (INTAKE_ID, FARM, PHASE, PROGRAM_STATUS, REASON, BEGIN_DATE, END_DATE,CREATION_DATE,CREATED_BY) VALUES (");
 			query.append("'" + h.getIntakeId() + "',");
 			query.append("'" + h.getFarm() + "',");
 			query.append("'" + h.getPhase() + "',");
@@ -1542,7 +1562,6 @@ public class IntakeDao {
 			query.append("'" + valid8r.getEpoch() + "',");
 			query.append("'" + user + "' );");
 
-			System.out.println(query);
 			PreparedStatement Stmt = null;
 			Stmt = Conn.prepareStatement(query.toString(),
 					Stmt.RETURN_GENERATED_KEYS);
@@ -1557,11 +1576,54 @@ public class IntakeDao {
 			Stmt.close();
 			Conn.close();
 		} catch (SQLException E) {
-			System.out.println(E.getMessage());
+			LOGGER.log(Level.SEVERE, E.getMessage());
 			session.setAttribute("SYSTEM_ERROR", E.getMessage());
 		} catch (ClassNotFoundException e) {
 			session.setAttribute("SYSTEM_ERROR", e.getMessage());
-			e.printStackTrace();
+			LOGGER.log(Level.SEVERE, e.getMessage());
+		}
+		return key;
+	}
+
+	
+	public Long insertPassHistory(PassHistory h, HttpSession session) {
+
+		Long key = new Long("0");
+
+		try {
+			Connection Conn = this.getConnection();
+			// Do something with the Connection
+
+			StringBuffer query = new StringBuffer();
+			query.append("INSERT INTO "
+					+ this.getDatabase()
+					+ ".STUDENT_PASS_HISTORY (INTAKE_ID, HOURS, PASS_DATE, PASS_TYPE, CREATION_DATE,CREATED_BY) VALUES (");
+			query.append( h.getIntakeId() + ",");
+			query.append("'" + h.getHours() + "',");
+			query.append("'" + h.getPassDate() + "',");
+			query.append("'" + h.getPassType() + "',");
+			query.append("'" + valid8r.getEpoch() + "',");
+			query.append("'" + h.getCreatedBy() + "' );");
+
+			PreparedStatement Stmt = null;
+			Stmt = Conn.prepareStatement(query.toString(),
+					Stmt.RETURN_GENERATED_KEYS);
+			Stmt.executeUpdate(query.toString());
+
+			ResultSet generatedKeys = Stmt.getGeneratedKeys();
+
+			if (generatedKeys.next())
+				key = generatedKeys.getLong(1);
+
+			// Clean up after ourselves
+			Stmt.close();
+			Conn.close();
+		} catch (SQLException E) {
+			LOGGER.log(Level.SEVERE, E.getMessage());
+			session.setAttribute("SYSTEM_ERROR", E.getMessage());
+		} catch (ClassNotFoundException e) {
+			session.setAttribute("SYSTEM_ERROR", e.getMessage());
+			LOGGER.log(Level.SEVERE, e.getMessage());
 		}
 		return key;
 	}
@@ -1613,9 +1675,10 @@ public class IntakeDao {
 			Conn.close();
 		} catch (SQLException E) {
 			session.setAttribute("SYSTEM_ERROR", E.getMessage());
+			LOGGER.log(Level.SEVERE, E.getMessage());
 		} catch (ClassNotFoundException e) {
 			session.setAttribute("SYSTEM_ERROR", e.getMessage());
-			e.printStackTrace();
+			LOGGER.log(Level.SEVERE, e.getMessage());
 		}
 		return key;
 	}
@@ -1655,12 +1718,112 @@ public class IntakeDao {
 			Conn.close();
 		} catch (SQLException E) { 
 			session.setAttribute("SYSTEM_ERROR", E.getMessage());
+			LOGGER.log(Level.SEVERE, E.getMessage());
 		} catch (ClassNotFoundException e) {
 			session.setAttribute("SYSTEM_ERROR", e.getMessage());
-			e.printStackTrace();
+			LOGGER.log(Level.SEVERE, e.getMessage());
 		}
 		return key;
 	}
+	
+	public ArrayList getPassHistory (Intake intake, HttpSession session) {
+		
+		Long key = new Long("0");
+		ArrayList list = new ArrayList();
+		
+		try {
+
+			Connection Conn = this.getConnection();
+
+		StringBuffer query1 = new StringBuffer("");
+		query1.append("SELECT * FROM "
+				+ this.getDatabase()
+				+ ".student_pass+history WHERE INTAKE_ID="
+				+ intake.getIntakeId()
+				+ " order by student_pass_id desc");
+
+		PreparedStatement Stmt = null;
+		Stmt = Conn.prepareStatement(query1.toString(),
+				Stmt.RETURN_GENERATED_KEYS);
+		ResultSet rs = Stmt.executeQuery(query1.toString());
+
+		boolean updateHistory = false;
+		
+		while (rs.next()) {
+			    PassHistory pass = new PassHistory();
+			    pass.setPassHistoryId(rs.getLong(1));
+				pass.setIntakeId(rs.getLong(2));
+				pass.setHours(rs.getString(3));
+				pass.setPassDate(rs.getString(4));
+				pass.setPassType(rs.getString(5));
+				pass.setCreationDate(rs.getString(6));
+				pass.setCreatedBy(rs.getString(7));
+			}
+		} catch (SQLException E) { 
+			session.setAttribute("SYSTEM_ERROR", E.getMessage());
+			LOGGER.log(Level.SEVERE, E.getMessage());
+		} catch (ClassNotFoundException e) {
+			session.setAttribute("SYSTEM_ERROR", e.getMessage());
+			LOGGER.log(Level.SEVERE, e.getMessage());
+		}
+		
+		return list;
+	}
+	
+	public boolean deleteHistory(Long id, HttpSession session) {
+
+		boolean retCode = true;
+
+		try {
+
+			Connection Conn = this.getConnection();
+
+			// Do something with the Connection
+			Statement Stmt = Conn.createStatement();
+			String query = "DELETE FROM STUDENT_HISTORY WHERE STUDENT_HISTORY_ID=" + id;
+			retCode = Stmt.execute(query);
+			Stmt.close();
+			Conn.close();
+		} catch (SQLException E) {
+			session.setAttribute("SYSTEM_ERROR", E.getMessage());
+			LOGGER.log(Level.SEVERE, E.getMessage());
+			return false;
+		} catch (ClassNotFoundException e) {
+			retCode = false;
+			session.setAttribute("SYSTEM_ERROR", e.getMessage());
+			LOGGER.log(Level.SEVERE, e.getMessage());
+			return false;
+		}
+		return true;
+	}
+	
+	public boolean deletePassHistory(Long id, HttpSession session) {
+
+		boolean retCode = true;
+
+		try {
+
+			Connection Conn = this.getConnection();
+
+			// Do something with the Connection
+			Statement Stmt = Conn.createStatement();
+			String query = "DELETE FROM STUDENT_PASS_HISTORY WHERE STUDENT_PASS_HISTORY_ID=" + id;
+			retCode = Stmt.execute(query);
+			Stmt.close();
+			Conn.close();
+		} catch (SQLException E) {
+			session.setAttribute("SYSTEM_ERROR", E.getMessage());
+			LOGGER.log(Level.SEVERE, E.getMessage());
+			return false;
+		} catch (ClassNotFoundException e) {
+			retCode = false;
+			session.setAttribute("SYSTEM_ERROR", e.getMessage());
+			LOGGER.log(Level.SEVERE, e.getMessage());
+			return false;
+		}
+		return true;
+	}
+
 
 	public String getSERVER() {
 		return SERVER;

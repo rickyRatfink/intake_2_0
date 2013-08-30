@@ -5,7 +5,7 @@ import java.io.Serializable;
 public class Module implements Serializable {
 
 	private long moduleId;
-	private Long[] metricId = new Long[4];
+	private Long[] metricId = new Long[200];
 	private String ModuleName="";
 	private String description="";
 	private String status="";

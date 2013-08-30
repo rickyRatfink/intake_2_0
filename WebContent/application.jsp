@@ -10,6 +10,9 @@
 	
    String message=(String)request.getAttribute("MESSAGE");
 
+   String farmErr=(String)request.getAttribute("farmErr");
+   if (farmErr==null) farmErr="";
+   
    String lastNameErr=(String)request.getAttribute("lastNameErr");
    if (lastNameErr==null) lastNameErr="";
    
@@ -239,17 +242,7 @@ String previousFaithFarmFlagErr = (String)request.getAttribute("previousFaithFar
    String required = "<img src='images/required.png'/>";
 %>
 
-<style type="text/css">
 
-BODY {
-font-family:Tahoma, Geneva, Helvetica; 
-	font-size:.7em; 
-	margin:0 auto; 
-	color:#3F1910; 
-	text-align:left;
-}
-
-</style>
 
 
 <tr>
@@ -283,14 +276,42 @@ function moveOnMax(field,nextFieldID){
 
 <form method="POST" action="<%=request.getContextPath()%>/intake">
 <% if (message!=null) { %>
-<h5><img src="images/success.png"/><%=message %></h5>	
+<h5><img src="img/success.png"/><%=message %></h5>	
 <% } %>
     <table>
 	<tr>
 		<td colspan="8"><h1><b>Online Student Application for Faith Farm Programs</b></h1></td>
 	</tr>
 	<tr>
-		<td colspan="8"><b>Campus: Boynton Beach </b></td>
+		<td colspan="8"><b>Campus: 
+		<%
+                        ArrayList farms = (ArrayList)session.getAttribute("dllFarm");
+                        %>
+                        <select name="farmBase" <% if (farmErr.length()>0) { %>class="ddlErr"<% } %>>
+                        <option value="">
+                        <%
+                        if (farms!=null) {
+                          for (int j=0;j<farms.size();j++) {
+                            %>
+                            <option 
+                                value="<%=farms.get(j)%>"
+                                <%
+                                if 
+                                (farms.get(j).equals(IntakeServlet.getIntake().getFarmBase()))
+                                {%>selected<%}%>>
+                              <%=farms.get(j)%>
+                            </option>
+                            <%
+                          }
+                          %>
+                          <%
+                        }
+                    %></select>
+		
+		</b></td>
+	</tr>
+	<tr>
+		<td colspan="8" class="fieldError"><%=farmErr %></td>
 	</tr>
 	<tr>
 		<td colspan="8">&nbsp;</td>
@@ -516,8 +537,8 @@ function moveOnMax(field,nextFieldID){
 		<td colspan="8">
         <table width="100%">
         <tr>
-        <td>Height&nbsp;<input type="text" name="height" value="<%=IntakeServlet.getIntake().getHeight()%>"size="5" <% if (heightErr.length()>0) { %>class="textboxErr"<% } %>></td>
-		<td>Weight&nbsp;<input type="text" name="weight"  value="<%=IntakeServlet.getIntake().getWeight()%>"size="6" <% if (weightErr.length()>0) { %>class="textboxErr"<% } %>></td>
+        <td>Height&nbsp;<input type="text" name="height" value="<%=IntakeServlet.getIntake().getHeight()%>"size="4" maxlength="5" <% if (heightErr.length()>0) { %>class="textboxErr"<% } %>></td>
+		<td>Weight&nbsp;<input type="text" name="weight"  value="<%=IntakeServlet.getIntake().getWeight()%>"size="6" maxlength="5" <% if (weightErr.length()>0) { %>class="textboxErr"<% } %>></td>
 		<td>Eyes Color&nbsp;
         					<%
                             ddl = (ArrayList)session.getAttribute("dll_eyecolor");
@@ -2354,7 +2375,7 @@ function moveOnMax(field,nextFieldID){
          </td>
     </tr>
 	<tr>
-		<td colspan="11" valign="bottom" align="center" height="45"><input type="submit" name="action" value="Save" class="imageButtonSave" title="Save Application" /></td>
+		<td colspan="11" valign="bottom" align="center" height="45"><input type="submit" name="action" value="Save"  title="Save Application" /></td>
 	</tr>
 
 	</table>

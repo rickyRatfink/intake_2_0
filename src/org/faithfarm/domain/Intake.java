@@ -315,6 +315,7 @@ public class Intake implements Serializable {
 	private BufferedImage studentPhoto;
 	
 	private  ArrayList history = new ArrayList();
+	private  ArrayList passHistory = new ArrayList();
 	
 	
 	public ArrayList getHistory() {
@@ -1850,6 +1851,14 @@ public class Intake implements Serializable {
 
 	public void setImageHeadshot(Blob imageHeadshot) {
 		this.imageHeadshot = imageHeadshot;
+	}
+
+	public ArrayList getPassHistory() {
+		return passHistory;
+	}
+
+	public void setPassHistory(ArrayList passHistory) {
+		this.passHistory = passHistory;
 	}
 	
 	

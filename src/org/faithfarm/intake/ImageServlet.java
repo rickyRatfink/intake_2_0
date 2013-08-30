@@ -11,6 +11,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Properties;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -23,6 +25,8 @@ import org.faithfarm.util.Validator;
 
 public class ImageServlet extends HttpServlet {
 
+	private final static Logger LOGGER = Logger.getLogger(SecureLogin.class.getName());
+	
 	private Validator valid8r = new Validator();
 	private String SERVER = "";
 	private String uid = "";
@@ -32,6 +36,7 @@ public class ImageServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
 
+		LOGGER.setLevel(Level.SEVERE);
 		StudentDao dao = new StudentDao();
 
 		HttpSession session = req.getSession(true);
@@ -43,7 +48,7 @@ public class ImageServlet extends HttpServlet {
 			StringBuffer query = new StringBuffer();
 			query.append("SELECT IMAGE_HEADSHOT FROM " + this.getDatabase() + ".INTAKE "
 					+ " WHERE INTAKE_ID=? ");
-System.out.println(query);
+
 			PreparedStatement stmt = Conn.prepareStatement(query.toString());
 			stmt.setLong(1, id);
 			ResultSet result = stmt.executeQuery();
@@ -59,14 +64,14 @@ System.out.println(query);
 			Stmt.close();
 			Conn.close();
 		} catch (SQLException E) {
-			System.out.println(E.getMessage());
+			LOGGER.log(Level.SEVERE, E.getMessage());
 			// session.setAttribute("ERROR_" + session.getId(), E.getMessage());
 		} catch (ClassNotFoundException e) {
-			System.out.println(e.getMessage());
+			LOGGER.log(Level.SEVERE, e.getMessage());
 			// session.setAttribute("ERROR_" + session.getId(), e.getMessage());
 			e.printStackTrace();
 		} catch (Exception e1) {
-			System.out.println(e1.getMessage());
+			LOGGER.log(Level.SEVERE, e1.getMessage());
 		}
 
 		
@@ -94,12 +99,9 @@ System.out.println(query);
 			this.setSERVER(prop.getProperty("dburl"));
 
 		} catch (IOException ex) {
-			System.out.println(ex.getMessage());
-			ex.printStackTrace();
+			LOGGER.log(Level.SEVERE, ex.getMessage());
 		}
 		Class.forName("com.mysql.jdbc.Driver");
-		System.out.println("jdbc:mysql://" + this.getDatabase() + "/"
-				+ database + "," + uid + "," + pwd);
 		Connection Conn = DriverManager.getConnection(
 				"jdbc:mysql://" + this.getSERVER() + "/" + database, uid, pwd);
 

@@ -12,6 +12,7 @@ public class Metric implements Serializable {
 	private String creationDate="";
 	private String createdBy="";
 	private Program program= new Program();
+	private Long [] programs = new Long[] { };
 	
 	public long getMetricId() {
 		return metricId;
@@ -60,6 +61,12 @@ public class Metric implements Serializable {
 	}
 	public void setProgram(Program program) {
 		this.program = program;
+	}
+	public Long[] getPrograms() {
+		return programs;
+	}
+	public void setPrograms(Long[] programs) {
+		this.programs = programs;
 	}
 	
 	

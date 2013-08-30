@@ -25,18 +25,43 @@
 <script type="text/javascript" src="scripts/tcal.js"></script>
 <script type="text/javascript" src="scripts/chart.js"></script>
 
+
+<style type="text/css">
+
+BODY {
+    background: #d5d5d5 url(img/home_back_402.jpg) no-repeat fixed;
+    background-size:cover;
+    font-family:Tahoma, Geneva, Helvetica; 
+	font-size:.7em; 
+	margin:0 auto; 
+	color:#3F1910; 
+	text-align:left;
+}
+
+</style>
+
+
 </head>
   
-<body topmargin="0" leftmargin="0" bgcolor="#b19bb0">
- 
+<body topmargin="0" leftmargin="0" >
+
 <table width="100%" cellpadding="0" cellspacing="0">
 <tr>
 <td width="25%"></td>
 <td width="880" align="center">
 		<table width="100%" cellpadding="0" cellspacing="0" border="0">
 			<tr>
-				<td align="center" border="0" bgcolor="#FFFFFF">
-						<img src="img/student_header.png"/>
+				<td align="left" border="0" bgcolor="#FFFFFF" style="padding-left:20px">
+						<table width="100%" cellpadding="0" cellspacing="0" border="0">
+						<tr>
+							<td align="left" border="0" bgcolor="#FFFFFF" >
+									<img src="img/logo_wordpress_2.png"/>
+							</td>
+							<td align="right" style="padding-right:20px;">
+									<!-- <img src="img/spiritual-counseling.png"/> -->
+							</td>
+						</tr>
+						</table>
 				</td>
 			</tr>
-          
+            

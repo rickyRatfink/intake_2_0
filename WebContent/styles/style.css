@@ -112,6 +112,15 @@ h5 {
 	font-size : 0em; 
 	vertical-align:top;
 }
+.imageButtonDelete{
+    background: url('../img/DeleteRed.png');
+ 	width : 15px;
+	height :15px;
+	border : none;
+	color : transparent;
+	font-size : 0em; 
+	vertical-align:top;
+}
 .imageButtonSaveOnly{
     background: url('../img/btn_save_only.png');
 	background-repeat:no-repeat;

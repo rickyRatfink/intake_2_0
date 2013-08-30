@@ -3,7 +3,7 @@
 <%@ page import="java.util.Map" %>
 <%@ page import="java.util.ArrayList" %>
 
-<%
+<% 
     String message=(String)request.getAttribute("MESSAGE");
 
 	String metricNameErr = (String)request.getAttribute("metricNameErr");
@@ -46,33 +46,30 @@
             <div align="left">
             
             Metric Name<br /><input type="text" name="metricName" value="<%=CWTServlet.getMetric().getMetricName() %>" size="30" maxlength="50"/><br />
-            Program<br/>
+ 			<br />
+            Description<br /><textarea name="description" cols="40" rows="5"></textarea><br />
+        	<br/>
+        	
+        	<b>UBIT</b><br/>
               				<%
                             Map<Long, String> ddl = (Map)session.getAttribute("program_map");
-                            %>
-                            <select name="programId">
-                            <option value="0"></option>
-                            <%
+                           	Long []keys = new Long[200];
+							keys=CWTServlet.getModule().getMetricId();
+							int row=0;
+							
                             if (ddl!=null) {
-                              for (Long key:ddl.keySet()) {
+                              for (Long key:ddl.keySet()) { System.out.println("row="+row);
+								row++;
                                 %>
-                                <option 
-                                    value="<%=key%>"
-                                    <%
-                                    if
-                                    (key==CWTServlet.getMetric().getProgramId())
-                                    {%>selected<%}%>>
-                                  <%=ddl.get(key)%>
-                                </option>
+                                <input type="checkbox" name="programId<%=key%>" value="<%=key%>"  
                                 <%
-                              }
-                              %>
-                              <%
-                            }
-                        %></select>
-               <br />
-            Description<br /><textarea name="description" cols="40" rows="5"></textarea><br />
-        	
+									for (int i=0;i<(keys.length);i++) 
+										if (key.equals(keys[i])) { %>checked<% } %>
+                                /><%=ddl.get(key)%>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                             <%  if (row==4) { row=0; %> <br/> <% } 
+                             }
+                            } %>
+            <br /><br/>
             Status<br/>
               				<%
                             ArrayList dll = (ArrayList)session.getAttribute("dllCWTStatus");
@@ -80,8 +77,8 @@
                             <select name="status">
                             <option value=""></option>
                             <%
-                            if (ddl!=null) {
-                              for (int i=0;i<ddl.size();i++) {
+                            if (dll!=null) {
+                              for (int i=0;i<dll.size();i++) {
 								  String opt = (String)dll.get(i);
                                 %>
                                 <option 

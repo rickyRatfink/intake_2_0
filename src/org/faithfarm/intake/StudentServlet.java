@@ -9,6 +9,8 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.Properties;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.MultipartConfig;
@@ -20,16 +22,21 @@ import javax.servlet.http.Part;
 
 import org.faithfarm.domain.CourseRotationHistory;
 import org.faithfarm.domain.Intake;
+import org.faithfarm.domain.PassHistory;
 import org.faithfarm.domain.StudentHistory;
 import org.faithfarm.domain.SystemUser;
+import org.faithfarm.service.data.CWTDao;
 import org.faithfarm.service.data.IntakeDao;
 import org.faithfarm.service.data.StudentDao;
 import org.faithfarm.util.Validator;
 @MultipartConfig
 public class StudentServlet extends HttpServlet {
 
+	private final static Logger LOGGER = Logger.getLogger(SecureLogin.class.getName());
+	
 	private StudentDao dao = new StudentDao();
 	private IntakeDao idao = new IntakeDao();
+	private CWTDao cdao = new CWTDao();
 	private static SystemUser systemUser = new SystemUser();
 	private static Validator valid8r = new Validator();
     private static String imagefile = "";
@@ -37,6 +44,8 @@ public class StudentServlet extends HttpServlet {
 	 protected void doGet(HttpServletRequest req, HttpServletResponse resp)
 			   throws ServletException, IOException
 			   {
+		 		  LOGGER.setLevel(Level.OFF);
+		 		  
 			      HttpSession session = req.getSession(true);
 			      SystemUser user = (SystemUser)session.getAttribute("USER_"+session.getId());
 			      String url="";
@@ -59,6 +68,8 @@ public class StudentServlet extends HttpServlet {
 			    	  url="pages/applications/results.jsp";
 			      } else if ("Search Students".equals(action)) {
 			    	  IntakeServlet.setIntake(new Intake());
+			    	  IntakeServlet.setPassHistory(new PassHistory());
+			    	  IntakeServlet.setHistory(new StudentHistory());
 			    	  
 			    	  String ssn1=valid8r.cleanData(req.getParameter("ssn1"));
 			    	  String ssn2=valid8r.cleanData(req.getParameter("ssn2"));
@@ -77,10 +88,13 @@ public class StudentServlet extends HttpServlet {
 			    	  //dao.searchStudents(firstName, lastName, beginDate, endDate, ssn, dob, farm, pictureFlag, archivedFlag, gedFlag, session);
 			    	  url="pages/student/results.jsp";
 			      } else if ("View/Edit".equals(action)) {
+			    	  cdao.getJobs("",session);
+					  cdao.getDepartments(user.getFarmBase(),session);
+						
 			    	  String key=req.getParameter("key");
 			    	  Intake intake=dao.getStudent(key, session);
 			    	  //intake.setStudentPhoto(dao.getStudentPhoto(intake.getIntakeId()));
-			    	  
+			    	  //intake.setPassHistory(idao.getPassHistory(intake, session));
 			    	  IntakeServlet.setIntake(intake);
 			    	  IntakeServlet.loadDropDownLists(session);
 			    	  req.setAttribute("updateFlag", "YES");
@@ -100,7 +114,6 @@ public class StudentServlet extends HttpServlet {
 			      }
 			      else if ("Upload".equals(action)) {
 			    	  String imageLocation=this.uploadImage(req, resp);
-			    	  System.out.println ("img="+imageLocation);
 			    	  InputStream inputStream = new FileInputStream(new File(imageLocation));
 			    	  //IntakeServlet.getIntake().setImageUrl(imagefile);
 			    	  dao.updateImage(imagefile, IntakeServlet.getIntake().getIntakeId(), session);
@@ -260,7 +273,7 @@ public class StudentServlet extends HttpServlet {
 	    		prop.load(new FileInputStream("c:\\properties\\config.properties"));
 	    		path = prop.getProperty("photo_path"); 
 	    	} catch (IOException ex) {
-	    		System.out.println (ex.getMessage());
+	    		LOGGER.log(Level.SEVERE, ex.getMessage());
 	    		ex.printStackTrace();
 	        }
 		    //final String path = "C:\\development\\workspace\\intake_2_0\\WebContent\\photos";
@@ -285,12 +298,7 @@ public class StudentServlet extends HttpServlet {
 		        //writer.println("New file " + fileName + " created at " + path);
 		        //LOGGER.log(Level.INFO, new Object[]{fileName, path});
 		    } catch (FileNotFoundException fne) {
-		        //writer.println("You either did not specify a file to upload or are "
-		        //        + "trying to upload a file to a protected or nonexistent "
-		        //        + "location.");
-		        //writer.println("<br/> ERROR: " + fne.getMessage());
-
-		       // LOGGER.log(Level.DEBUG, new Object[]{fne.getMessage()});
+		    	LOGGER.log(Level.SEVERE, fne.getMessage());
 		    } finally {
 		        if (out != null) {
 		            out.close();

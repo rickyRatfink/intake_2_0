@@ -34,13 +34,13 @@
                 <tr>
                     <td class="colHeading" width="100">Actions</td>
                     <td class="colSpacer" width="1"></td>
-                    <td class="colHeading" width="300">Metric Name</td>
+                    <td class="colHeading" width="500">Metric Name</td>
                     <td class="colSpacer" width="1"></td>
                     <td class="colHeading" width="300">Program Name</td>
                     <td class="colSpacer" width="1"></td>
-                    <td class="colHeading" width="300">Status</td>
+                    <td class="colHeading" width="100">Status</td>
                     <td class="colSpacer" width="1"></td>
-                    <td class="colHeading" width="150">Creation Date</td>
+                    <td class="colHeading" width="100">Creation Date</td>
                     <td class="colHeading"></td>
                 </tr>
                 <% String rowClass="";

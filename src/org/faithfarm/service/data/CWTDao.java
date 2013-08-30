@@ -12,6 +12,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import javax.servlet.http.HttpSession;
 
@@ -22,12 +24,15 @@ import org.faithfarm.domain.Module;
 import org.faithfarm.domain.ModuleRoster;
 import org.faithfarm.domain.Program;
 import org.faithfarm.domain.Supervisor;
+import org.faithfarm.intake.SecureLogin;
 import org.faithfarm.util.Validator;
 
 //import com.mysql.jdbc.PreparedStatement;
 
 public class CWTDao {
 
+	private final static Logger LOGGER = Logger.getLogger(SecureLogin.class.getName());
+	
 	private Validator valid8r = new Validator();
 	private String SERVER = "";
 	private String uid = "";
@@ -40,7 +45,8 @@ public class CWTDao {
 	private Connection getConnection() throws SQLException,
 			ClassNotFoundException {
 	Properties prop = new Properties();
-	    
+	LOGGER.setLevel(Level.INFO);
+	
     	try {
             //load a properties file
     		//prop.load(new FileInputStream("c:\\development\\workspace\\intake_2_0\\src\\properties\\config.properties"));
@@ -51,12 +57,11 @@ public class CWTDao {
     		this.setSERVER(prop.getProperty("dburl")); 
     	
     	} catch (IOException ex) {
-    		System.out.println (ex.getMessage());
+    		LOGGER.log(Level.SEVERE, ex.getMessage());
     		ex.printStackTrace();
         }
 		Class.forName("com.mysql.jdbc.Driver");
-        //System.out.println ("jdbc:mysql://"+this.getSERVER()+"/" + this.getDatabase()+","+ uid+","+ pwd);
-		Connection Conn = DriverManager.getConnection(
+        Connection Conn = DriverManager.getConnection(
 				"jdbc:mysql://"+this.getSERVER()+"/" + database, uid, pwd);
 
 		return Conn;
@@ -100,10 +105,10 @@ public class CWTDao {
 			Conn.close();
 
 		} catch (SQLException E) {
-			System.out.println (E.getMessage());
+			LOGGER.log(Level.SEVERE, E.getMessage());
 			session.setAttribute("SYSTEM_ERROR", E.getMessage());
 		} catch (ClassNotFoundException e) {
-			System.out.println (e.getMessage());
+			LOGGER.log(Level.SEVERE, e.getMessage());
 			session.setAttribute("SYSTEM_ERROR", e.getMessage());
 			e.printStackTrace();
 		}
@@ -143,11 +148,11 @@ public class CWTDao {
 			Conn.close();
 		
 		} catch (SQLException E) {
-			System.out.println (E.getMessage());
+			LOGGER.log(Level.SEVERE, E.getMessage());
 			session.setAttribute("SYSTEM_ERROR", E.getMessage());
 		} catch (ClassNotFoundException e) {
 			session.setAttribute("SYSTEM_ERROR", e.getMessage());
-			e.printStackTrace();
+			LOGGER.log(Level.SEVERE, e.getMessage());
 		}
 		
 	}
@@ -164,12 +169,14 @@ public class CWTDao {
 
 			//query.append("SELECT METRIC_ID, METRIC_NAME, DESCRIPTION, STATUS, CREATION_DATE, CREATED_BY FROM `"+this.getDatabase()+"`.`cwt_metrics` ");
 			query.append("SELECT ");
-			query.append("METRIC_ID, METRIC_NAME, CWT_PROGRAM.PROGRAM_ID, CWT_METRICS.DESCRIPTION,"); 
+			query.append("CWT_METRICS.METRIC_ID, METRIC_NAME, CWT_PROGRAM.PROGRAM_ID, CWT_METRICS.DESCRIPTION,"); 
 			query.append("CWT_METRICS.STATUS, CWT_METRICS.CREATION_DATE, CWT_METRICS.CREATED_BY ");
 			query.append("FROM ");
-			query.append("`"+this.getDatabase()+"`.`cwt_metrics` INNER JOIN `"+this.getDatabase()+"`.`cwt_program`");
-			query.append("ON CWT_METRICS.PROGRAM_ID = CWT_PROGRAM.PROGRAM_ID ");
-			
+			query.append("`"+this.getDatabase()+"`.`cwt_metrics` INNER JOIN `"+this.getDatabase()+"`.`cwt_program_metric` ");
+			query.append("ON cwt_program_metric.METRIC_ID = CWT_METRICS.METRIC_ID ");
+			query.append("INNER JOIN `"+this.getDatabase()+"`.`cwt_program` ");
+			query.append("ON CWT_PROGRAM_METRIC.PROGRAM_ID = CWT_PROGRAM.PROGRAM_ID ");
+			LOGGER.log(Level.INFO, query.toString());
 			Statement Stmt = null;
 			Stmt = Conn.prepareStatement(query.toString());
 			ResultSet RS = Stmt.executeQuery(query.toString());
@@ -198,11 +205,11 @@ public class CWTDao {
 			Conn.close();
 		
 		} catch (SQLException E) {
-			System.out.println (E.getMessage());
+			LOGGER.log(Level.SEVERE, E.getMessage());
 			session.setAttribute("SYSTEM_ERROR", E.getMessage());
 		} catch (ClassNotFoundException e) {
 			session.setAttribute("SYSTEM_ERROR", e.getMessage());
-			e.printStackTrace();
+			LOGGER.log(Level.SEVERE, e.getMessage());
 		}
 		
 	}
@@ -211,13 +218,11 @@ public class CWTDao {
 
 		
 		try {
-			Class.forName("com.mysql.jdbc.Driver");
-
 			Connection Conn = this.getConnection();
 			StringBuffer query = new StringBuffer();
 
 			query.append("SELECT PROGRAM_ID, PROGRAM_NAME FROM `"+this.getDatabase()+"`.`cwt_program` ");
-			
+			LOGGER.log(Level.INFO, query.toString());
 			PreparedStatement Stmt = null;
 			Stmt = Conn.prepareStatement(query.toString());
 			ResultSet RS = Stmt.executeQuery(query.toString());
@@ -233,11 +238,11 @@ public class CWTDao {
 			Conn.close();
 		
 		} catch (SQLException E) {
-			System.out.println (E.getMessage());
+			LOGGER.log(Level.SEVERE, E.getMessage());
 			session.setAttribute("SYSTEM_ERROR", E.getMessage());
 		} catch (ClassNotFoundException e) {
 			session.setAttribute("SYSTEM_ERROR", e.getMessage());
-			e.printStackTrace();
+			LOGGER.log(Level.SEVERE, e.getMessage());
 		}
 		
 	}
@@ -253,9 +258,8 @@ public class CWTDao {
 			query.append("SELECT DEPARTMENT_ID, TITLE FROM `"+this.getDatabase()+"`.`cwt_department` ");
 			if (farm.length()>0)
 				query.append(" WHERE FARM_BASE='"+farm+"' ");
+			LOGGER.log(Level.INFO, query.toString());
 			
-			System.out.println (query);
-		
 			PreparedStatement Stmt = null;
 			Stmt = Conn.prepareStatement(query.toString());
 			ResultSet RS = Stmt.executeQuery(query.toString());
@@ -271,11 +275,11 @@ public class CWTDao {
 			Conn.close();
 		
 		} catch (SQLException E) {
-			System.out.println (E.getMessage());
+			LOGGER.log(Level.SEVERE, E.getMessage());
 			session.setAttribute("SYSTEM_ERROR", E.getMessage());
 		} catch (ClassNotFoundException e) {
 			session.setAttribute("SYSTEM_ERROR", e.getMessage());
-			e.printStackTrace();
+			LOGGER.log(Level.SEVERE, e.getMessage());
 		}
 		
 	}
@@ -292,8 +296,7 @@ public void getSupervisors(String farm, HttpSession session) {
 			if (farm.length()>0)
 				query.append(" WHERE FARM_BASE='"+farm+"' ");
 			
-			System.out.println (query);
-		
+			
 			PreparedStatement Stmt = null;
 			Stmt = Conn.prepareStatement(query.toString());
 			ResultSet RS = Stmt.executeQuery(query.toString());
@@ -309,11 +312,11 @@ public void getSupervisors(String farm, HttpSession session) {
 			Conn.close();
 		
 		} catch (SQLException E) {
-			System.out.println (E.getMessage());
+			LOGGER.log(Level.SEVERE, E.getMessage());
 			session.setAttribute("SYSTEM_ERROR", E.getMessage());
 		} catch (ClassNotFoundException e) {
 			session.setAttribute("SYSTEM_ERROR", e.getMessage());
-			e.printStackTrace();
+			LOGGER.log(Level.SEVERE, e.getMessage());
 		}
 		
 	}
@@ -331,9 +334,8 @@ public void getSupervisors(String farm, HttpSession session) {
 			query.append("ON cwt_job.department_id=cwt_department.department_id  ");
 			if (farm.length()>0)
 				query.append(" WHERE FARM_BASE='"+farm+"' ");
+			LOGGER.log(Level.INFO, query.toString());
 			
-			System.out.println (query);
-		
 			PreparedStatement Stmt = null;
 			Stmt = Conn.prepareStatement(query.toString());
 			ResultSet RS = Stmt.executeQuery(query.toString());
@@ -349,11 +351,11 @@ public void getSupervisors(String farm, HttpSession session) {
 			Conn.close();
 		
 		} catch (SQLException E) {
-			System.out.println (E.getMessage());
+			LOGGER.log(Level.SEVERE, E.getMessage());
 			session.setAttribute("SYSTEM_ERROR", E.getMessage());
 		} catch (ClassNotFoundException e) {
 			session.setAttribute("SYSTEM_ERROR", e.getMessage());
-			e.printStackTrace();
+			LOGGER.log(Level.SEVERE, e.getMessage());
 		}
 		
 	}
@@ -372,7 +374,6 @@ public void getSupervisors(String farm, HttpSession session) {
 			query.append(" INSTRUCTOR_ID, MEETING_LOCATION, CONCAT (FIRSTNAME,' ',LASTNAME) as NAME FROM `"+this.getDatabase()+"`.`CWT_MODULES` ");
 			query.append(" INNER JOIN `"+this.getDatabase()+"`.cwt_supervisor ");
 			query.append(" ON cwt_supervisor.supervisor_id=cwt_modules.instructor_id ");
-			System.out.println(query);
 			
 			Statement Stmt = null;
 			Stmt = Conn.prepareStatement(query.toString());
@@ -400,11 +401,11 @@ public void getSupervisors(String farm, HttpSession session) {
 			Conn.close();
 		
 		} catch (SQLException E) {
-			System.out.println (E.getMessage());
+			LOGGER.log(Level.SEVERE, E.getMessage());
 			session.setAttribute("SYSTEM_ERROR", E.getMessage());
 		} catch (ClassNotFoundException e) {
 			session.setAttribute("SYSTEM_ERROR", e.getMessage());
-			e.printStackTrace();
+			LOGGER.log(Level.SEVERE, e.getMessage());
 		}
 		
 	}
@@ -439,11 +440,11 @@ public void getSupervisors(String farm, HttpSession session) {
 			Conn.close();
 		
 		} catch (SQLException E) {
-			System.out.println (E.getMessage());
+			LOGGER.log(Level.SEVERE, E.getMessage());
 			session.setAttribute("SYSTEM_ERROR", E.getMessage());
 		} catch (ClassNotFoundException e) {
 			session.setAttribute("SYSTEM_ERROR", e.getMessage());
-			e.printStackTrace();
+			LOGGER.log(Level.SEVERE, e.getMessage());
 		}
 	
 		return p;
@@ -460,7 +461,7 @@ public void getSupervisors(String farm, HttpSession session) {
 			StringBuffer query = new StringBuffer();
 
 			query.append("SELECT METRIC_ID, METRIC_NAME FROM `"+this.getDatabase()+"`.`cwt_metrics` ");
-			
+			LOGGER.log(Level.INFO,query.toString());
 			PreparedStatement Stmt = null;
 			Stmt = Conn.prepareStatement(query.toString());
 			ResultSet RS = Stmt.executeQuery(query.toString());
@@ -476,11 +477,11 @@ public void getSupervisors(String farm, HttpSession session) {
 			Conn.close();
 		
 		} catch (SQLException E) {
-			System.out.println (E.getMessage());
+			LOGGER.log(Level.SEVERE, E.getMessage());
 			session.setAttribute("SYSTEM_ERROR", E.getMessage());
 		} catch (ClassNotFoundException e) {
 			session.setAttribute("SYSTEM_ERROR", e.getMessage());
-			e.printStackTrace();
+			LOGGER.log(Level.SEVERE, e.getMessage());
 		}
 		
 	}
@@ -492,29 +493,27 @@ public void getSupervisors(String farm, HttpSession session) {
 		Long key = new Long("0");
 
 		try {
-			Class.forName("com.mysql.jdbc.Driver");
-
 			Connection Conn = this.getConnection();
 
 			StringBuffer query = new StringBuffer();
 
 			query.append("INSERT INTO `"+this.getDatabase()+"`.`cwt_metrics` ");
 			query.append("(");
-			query.append("`program_id`,");
+			//query.append("`program_id`,");
 			query.append("`metric_name`,");
 			query.append("`description`,");
 			query.append("`status`,");
 			query.append("`creation_date`,");
 			query.append("`created_by`)");
 			query.append(" VALUES (");
-			query.append(""+metric.getProgramId()+",");
+			//query.append(""+metric.getProgramId()+",");
 			query.append("'"+metric.getMetricName()+"',");
 			query.append("'"+metric.getDescription()+"',");
 			query.append("'"+metric.getStatus()+"',");
 			query.append("'"+valid8r.getEpoch()+"',");
 			query.append("'"+metric.getCreatedBy()+"'");
 			query.append(")");
-			
+			LOGGER.log(Level.INFO, query.toString());
 			
 			PreparedStatement Stmt = null;
 			Stmt = Conn.prepareStatement(query.toString(),
@@ -526,15 +525,39 @@ public void getSupervisors(String farm, HttpSession session) {
 			if (generatedKeys.next())
 				key = generatedKeys.getLong(1);
 
+			
+			
+			/* 
+			 * link metrics to newly created module
+			 */
+			query = new StringBuffer("");
+			Long[]keys = metric.getPrograms();
+			for (int i=0;i<keys.length;i++) {
+				
+				if (keys[i]!=null) {
+					query = new StringBuffer("");
+					query.append("INSERT INTO `"+this.getDatabase()+"`.`cwt_program_metric` ");
+					query.append("(");
+					query.append("`metric_id`,");
+					query.append("`program_id`)");
+					query.append(" VALUES (");
+					query.append(key+",");
+					query.append(keys[i]);
+					query.append(")");
+					LOGGER.log(Level.INFO, query.toString());
+					Stmt = Conn.prepareStatement(query.toString());
+					Stmt.executeUpdate(query.toString());
+				}
+			}
 			Stmt.close();
 			Conn.close();
 
 		} catch (SQLException E) {
-			System.out.println (E.getMessage());
+			LOGGER.log(Level.SEVERE, E.getMessage());
 			session.setAttribute("SYSTEM_ERROR", E.getMessage());
 		} catch (ClassNotFoundException e) {
 			session.setAttribute("SYSTEM_ERROR", e.getMessage());
-			e.printStackTrace();
+			LOGGER.log(Level.SEVERE, e.getMessage());
 		}
 		return key;
 	}
@@ -605,11 +628,11 @@ public void getSupervisors(String farm, HttpSession session) {
 			Conn.close();
 
 		} catch (SQLException E) {
-			System.out.println (E.getMessage());
+			LOGGER.log(Level.SEVERE, E.getMessage());
 			session.setAttribute("SYSTEM_ERROR", E.getMessage());
 		} catch (ClassNotFoundException e) {
 			session.setAttribute("SYSTEM_ERROR", e.getMessage());
-			e.printStackTrace();
+			LOGGER.log(Level.SEVERE, e.getMessage());
 		}
 		return key;
 	}
@@ -626,7 +649,6 @@ public void getSupervisors(String farm, HttpSession session) {
 
 			query.append("SELECT DEPARTMENT_ID, FARM_BASE, TITLE, CREATION_DATE, CREATED_BY FROM `"+this.getDatabase()+"`.`cwt_department` ");
 			query.append(" WHERE DEPARTMENT_ID="+key);
-			System.out.println (query);
 			
 			Statement Stmt = null;
 			Stmt = Conn.prepareStatement(query.toString());
@@ -644,11 +666,11 @@ public void getSupervisors(String farm, HttpSession session) {
 			Conn.close();
 		
 		} catch (SQLException E) {
-			System.out.println (E.getMessage());
+			LOGGER.log(Level.SEVERE, E.getMessage());
 			session.setAttribute("SYSTEM_ERROR", E.getMessage());
 		} catch (ClassNotFoundException e) {
 			session.setAttribute("SYSTEM_ERROR", e.getMessage());
-			e.printStackTrace();
+			LOGGER.log(Level.SEVERE, e.getMessage());
 		}
 		
 		return p;	
@@ -665,7 +687,6 @@ public void getSupervisors(String farm, HttpSession session) {
 			if (farm.length()>0)
 				query.append(" WHERE FARM_BASE='"+farm+"' ");
 			
-			System.out.println (query);
 			
 			Statement Stmt = null;
 			Stmt = Conn.prepareStatement(query.toString());
@@ -686,11 +707,11 @@ public void getSupervisors(String farm, HttpSession session) {
 			Conn.close();
 		
 		} catch (SQLException E) {
-			System.out.println (E.getMessage());
+			LOGGER.log(Level.SEVERE, E.getMessage());
 			session.setAttribute("SYSTEM_ERROR", E.getMessage());
 		} catch (ClassNotFoundException e) {
 			session.setAttribute("SYSTEM_ERROR", e.getMessage());
-			e.printStackTrace();
+			LOGGER.log(Level.SEVERE, e.getMessage());
 		}
 	
 	return list;	
@@ -715,7 +736,6 @@ public void getSupervisors(String farm, HttpSession session) {
 			query.append("'"+valid8r.getEpoch()+"',");
 			query.append("'"+d.getCreatedBy()+"'");
 			query.append(")");
-			System.out.println (query);
 			
 			PreparedStatement Stmt = null;
 			Stmt = Conn.prepareStatement(query.toString(),
@@ -731,12 +751,11 @@ public void getSupervisors(String farm, HttpSession session) {
 			Conn.close();
 
 		} catch (SQLException E) {
-			System.out.println (E.getMessage());
+			LOGGER.log(Level.SEVERE, E.getMessage());
 			session.setAttribute("SYSTEM_ERROR", E.getMessage());
 		} catch (ClassNotFoundException e) {
-			System.out.println (e.getMessage());
+			LOGGER.log(Level.SEVERE, e.getMessage());
 			session.setAttribute("SYSTEM_ERROR", e.getMessage());
-			e.printStackTrace();
 		}
 		return key;
 	}	
@@ -753,7 +772,6 @@ public void getSupervisors(String farm, HttpSession session) {
 
 			query.append("SELECT Job_ID, DEPARTMENT_ID, TITLE, DESCRIPTION, CREATION_DATE, CREATED_BY FROM `"+this.getDatabase()+"`.`cwt_Job` ");
 			query.append(" WHERE Job_ID="+key);
-			System.out.println (query);
 			
 			Statement Stmt = null;
 			Stmt = Conn.prepareStatement(query.toString());
@@ -770,11 +788,11 @@ public void getSupervisors(String farm, HttpSession session) {
 			Conn.close();
 		
 		} catch (SQLException E) {
-			System.out.println (E.getMessage());
+			LOGGER.log(Level.SEVERE, E.getMessage());
 			session.setAttribute("SYSTEM_ERROR", E.getMessage());
 		} catch (ClassNotFoundException e) {
 			session.setAttribute("SYSTEM_ERROR", e.getMessage());
-			e.printStackTrace();
+			LOGGER.log(Level.SEVERE, e.getMessage());
 		}
 		
 		return p;	
@@ -790,7 +808,6 @@ public void getSupervisors(String farm, HttpSession session) {
 			query.append("INNER JOIN `"+this.getDatabase()+"`.`cwt_DEPARTMENT` ON cwt_department.department_id=cwt_job.department_id ");
 			if (farm.length()>0)
 				query.append(" WHERE FARM_BASE='"+farm+"' ");
-			System.out.println (query);
 			
 			Statement Stmt = null;
 			Stmt = Conn.prepareStatement(query.toString());
@@ -815,11 +832,11 @@ public void getSupervisors(String farm, HttpSession session) {
 			Conn.close();
 		
 		} catch (SQLException E) {
-			System.out.println (E.getMessage());
+			LOGGER.log(Level.SEVERE, E.getMessage());
 			session.setAttribute("SYSTEM_ERROR", E.getMessage());
 		} catch (ClassNotFoundException e) {
 			session.setAttribute("SYSTEM_ERROR", e.getMessage());
-			e.printStackTrace();
+			LOGGER.log(Level.SEVERE, e.getMessage());
 		}
 			
 	}
@@ -846,7 +863,6 @@ public void getSupervisors(String farm, HttpSession session) {
 			query.append("'"+valid8r.getEpoch()+"',");
 			query.append("'"+d.getCreatedBy()+"'");
 			query.append(")");
-			System.out.println (query);
 			
 			PreparedStatement Stmt = null;
 			Stmt = Conn.prepareStatement(query.toString(),
@@ -874,7 +890,6 @@ public void getSupervisors(String farm, HttpSession session) {
 					query.append(" VALUES (");
 					query.append(keys[i]+",");
 					query.append(key+") ");
-					System.out.println(query);
 					Stmt = Conn.prepareStatement(query.toString());
 					Stmt.executeUpdate(query.toString());
 				}
@@ -883,12 +898,11 @@ public void getSupervisors(String farm, HttpSession session) {
 			Conn.close();
 
 		} catch (SQLException E) {
-			System.out.println (E.getMessage());
+			LOGGER.log(Level.SEVERE, E.getMessage());
 			session.setAttribute("SYSTEM_ERROR", E.getMessage());
 		} catch (ClassNotFoundException e) {
-			System.out.println (e.getMessage());
 			session.setAttribute("SYSTEM_ERROR", e.getMessage());
-			e.printStackTrace();
+			LOGGER.log(Level.SEVERE, e.getMessage());
 		}
 		return key;
 	}
@@ -910,7 +924,6 @@ public void getSupervisors(String farm, HttpSession session) {
 
 			query.append("SELECT SUPERVISOR_ID, DEPARTMENT_ID, FIRSTNAME, LASTNAME, TITLE, CREATION_DATE, CREATED_BY FROM `"+this.getDatabase()+"`.`cwt_Supervisor` ");
 			query.append(" WHERE Supervisor_ID="+key);
-			System.out.println (query);
 			
 			Statement Stmt = null;
 			Stmt = Conn.prepareStatement(query.toString());
@@ -929,11 +942,11 @@ public void getSupervisors(String farm, HttpSession session) {
 			Conn.close();
 		
 		} catch (SQLException E) {
-			System.out.println (E.getMessage());
+			LOGGER.log(Level.SEVERE, E.getMessage());
 			session.setAttribute("SYSTEM_ERROR", E.getMessage());
 		} catch (ClassNotFoundException e) {
 			session.setAttribute("SYSTEM_ERROR", e.getMessage());
-			e.printStackTrace();
+			LOGGER.log(Level.SEVERE, e.getMessage());
 		}
 		
 		return p;	
@@ -950,7 +963,6 @@ public void getSupervisors(String farm, HttpSession session) {
 			query.append(" ON cwt_supervisor.job_id=cwt_job.job_id ");
 			query.append(" INNER JOIN `"+this.getDatabase()+"`.`cwt_department` ");
 			query.append(" ON cwt_job.department_id=cwt_department.department_id ");
-			System.out.println (query); 
 			
 			Statement Stmt = null;
 			Stmt = Conn.prepareStatement(query.toString());
@@ -976,11 +988,11 @@ public void getSupervisors(String farm, HttpSession session) {
 			Conn.close();
 		
 		} catch (SQLException E) {
-			System.out.println (E.getMessage());
+			LOGGER.log(Level.SEVERE, E.getMessage());
 			session.setAttribute("SYSTEM_ERROR", E.getMessage());
 		} catch (ClassNotFoundException e) {
 			session.setAttribute("SYSTEM_ERROR", e.getMessage());
-			e.printStackTrace();
+			LOGGER.log(Level.SEVERE, e.getMessage());
 		}
 			
 	}
@@ -1009,7 +1021,6 @@ public void getSupervisors(String farm, HttpSession session) {
 			query.append("'"+valid8r.getEpoch()+"',");
 			query.append("'"+d.getCreatedBy()+"'");
 			query.append(")");
-			System.out.println (query);
 			
 			PreparedStatement Stmt = null;
 			Stmt = Conn.prepareStatement(query.toString(),
@@ -1025,12 +1036,9 @@ public void getSupervisors(String farm, HttpSession session) {
 			Conn.close();
 
 		} catch (SQLException E) {
-			System.out.println (E.getMessage());
-			//session.setAttribute("SYSTEM_ERROR", E.getMessage());
+			LOGGER.log(Level.SEVERE, E.getMessage());
 		} catch (ClassNotFoundException e) {
-			System.out.println (e.getMessage());
-			//session.setAttribute("SYSTEM_ERROR", e.getMessage());
-			e.printStackTrace();
+			LOGGER.log(Level.SEVERE, e.getMessage());
 		}
 		return key;
 	}
@@ -1047,7 +1055,6 @@ public void getSupervisors(String farm, HttpSession session) {
 			query.append(" INSTRUCTOR_ID, MEETING_LOCATION, CONCAT (FIRSTNAME,' ',LASTNAME) as NAME FROM `"+this.getDatabase()+"`.`CWT_MODULES` ");
 			query.append(" INNER JOIN `"+this.getDatabase()+"`.cwt_supervisor ");
 			query.append(" ON cwt_supervisor.supervisor_id=cwt_modules.instructor_id ");
-			System.out.println(query);
 			
 			Statement Stmt = null;
 			Stmt = Conn.prepareStatement(query.toString());
@@ -1072,11 +1079,11 @@ public void getSupervisors(String farm, HttpSession session) {
 			Conn.close();
 		
 		} catch (SQLException E) {
-			System.out.println (E.getMessage());
+			LOGGER.log(Level.SEVERE, E.getMessage());
 			session.setAttribute("SYSTEM_ERROR", E.getMessage());
 		} catch (ClassNotFoundException e) {
 			session.setAttribute("SYSTEM_ERROR", e.getMessage());
-			e.printStackTrace();
+			LOGGER.log(Level.SEVERE, e.getMessage());
 		}
 		
 	return module;	
@@ -1111,7 +1118,6 @@ public void getSupervisors(String farm, HttpSession session) {
 			"		STUDENT_HISTORY.PROGRAM_STATUS='IN PROGRAM'" +
 			"       AND CWT_MODULES.MODULE_ID=" + id;
 
-			System.out.println (query);
 			Statement Stmt = null;
 			Stmt = Conn.prepareStatement(query);
 			ResultSet rs = Stmt.executeQuery(query);
@@ -1131,11 +1137,11 @@ public void getSupervisors(String farm, HttpSession session) {
 			Conn.close();
 		
 		} catch (SQLException E) {
-			System.out.println (E.getMessage());
+			LOGGER.log(Level.SEVERE, E.getMessage());
 			session.setAttribute("SYSTEM_ERROR", E.getMessage());
 		} catch (ClassNotFoundException e) {
 			session.setAttribute("SYSTEM_ERROR", e.getMessage());
-			e.printStackTrace();
+			LOGGER.log(Level.SEVERE, e.getMessage());
 		}
 		
 		return list;

@@ -91,9 +91,12 @@
 		     String sDate = IntakeServlet.getIntake().getCreationDate();
 		    
 		     try {
-		    	Long lDate=new Long(sDate);
-		    	sDate = v8r.convertEpoch(lDate);
-		    	
+		    	Long lDate=new Long("0");
+		    	 
+		    	if (sDate.length()>0) {
+		    		lDate=new Long(sDate);
+		    		sDate = v8r.convertEpoch(lDate);
+		    	}
 		     } catch (Exception e) { 
 		    	 System.out.println(e.getMessage());
 		     }

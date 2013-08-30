@@ -1,6 +1,8 @@
 /* DEFAULTS
 ----------------------------------------------------------*/
-
+body, span, div, table, tr, tbody, tfoot, td, hr {
+    -webkit-print-color-adjust: exact;
+}
 body   
 {
     background: #ffffff;
@@ -35,7 +37,7 @@ table {
 }
 
 
-td {
+td { webkit-print-color-adjust: exact;
 }
 
 

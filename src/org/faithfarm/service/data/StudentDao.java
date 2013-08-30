@@ -14,17 +14,23 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Properties;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import javax.imageio.ImageIO;
 import javax.servlet.http.HttpSession;
 
 import org.faithfarm.domain.ClassList;
 import org.faithfarm.domain.Intake;
+import org.faithfarm.domain.PassHistory;
 import org.faithfarm.domain.StudentHistory;
+import org.faithfarm.intake.SecureLogin;
 import org.faithfarm.util.Validator;
 
 public class StudentDao {
 
+	private final static Logger LOGGER = Logger.getLogger(SecureLogin.class.getName());
+	
 	private Validator valid8r = new Validator();
 	private String SERVER = "";
 	private String uid = "";
@@ -37,7 +43,8 @@ public class StudentDao {
 			ClassNotFoundException {
 		
 		Properties prop = new Properties();
-	    
+		LOGGER.setLevel(Level.SEVERE);
+		
     	try {
                //load a properties file
     		//prop.load(new FileInputStream("c:\\development\\workspace\\intake_2_0\\src\\properties\\config.properties"));
@@ -48,12 +55,11 @@ public class StudentDao {
     		this.setSERVER(prop.getProperty("dburl")); 
     	
     	} catch (IOException ex) {
-    		System.out.println (ex.getMessage());
+    		LOGGER.log(Level.SEVERE, ex.getMessage());
     		ex.printStackTrace();
         }
 		Class.forName("com.mysql.jdbc.Driver");
-        System.out.println ("jdbc:mysql://"+this.getDatabase()+"/" + database+","+ uid+","+ pwd);
-		Connection Conn = DriverManager.getConnection(
+        Connection Conn = DriverManager.getConnection(
 				"jdbc:mysql://"+this.getSERVER()+"/" + database, uid, pwd);
 
 		return Conn;
@@ -74,7 +80,6 @@ public class StudentDao {
 			query.append(" WHERE");
 			query.append(" CLASS='"+classId+"' ");
 			query.append(" AND FARM_BASE='"+farm.replace("'", "''") +"' AND  ORDER BY ENTRY_DATE ASC");
-			System.out.println(query);
 			Statement Stmt = null;
 			Stmt = Conn.prepareStatement(query.toString());
 			ResultSet RS = Stmt.executeQuery(query.toString());
@@ -95,8 +100,9 @@ public class StudentDao {
 			
 		
 		} catch (SQLException E) {
-			System.out.println (E.getMessage());
+			LOGGER.log(Level.SEVERE, E.getMessage());
 		} catch (ClassNotFoundException e) {
+			LOGGER.log(Level.SEVERE, e.getMessage());
 		}
 
 		return list;
@@ -117,7 +123,7 @@ public ArrayList getClassList (String classId, String farm) {
 			query.append(" WHERE");
 			query.append(" CLASS='"+classId+"' ");
 			query.append(" AND FARM_BASE='"+farm.replace("'", "''") +"' ORDER BY ENTRY_DATE ASC");
-			//System.out.println(query);
+			
 			Statement Stmt = null;
 			Stmt = Conn.prepareStatement(query.toString());
 			ResultSet RS = Stmt.executeQuery(query.toString());
@@ -135,8 +141,9 @@ public ArrayList getClassList (String classId, String farm) {
 			
 		
 		} catch (SQLException E) {
-			System.out.println (E.getMessage());
+			LOGGER.log(Level.SEVERE, E.getMessage());
 		} catch (ClassNotFoundException e) {
+			LOGGER.log(Level.SEVERE, e.getMessage());
 		}
 
 		return list;
@@ -173,8 +180,9 @@ try {
 		
 	
 	} catch (SQLException E) {
-		System.out.println (E.getMessage());
+		LOGGER.log(Level.SEVERE, E.getMessage());
 	} catch (ClassNotFoundException e) {
+		LOGGER.log(Level.SEVERE, e.getMessage());
 	}
 
 	return list;
@@ -216,7 +224,7 @@ try {
 				query.append(" AND ENTRY_DATE BETWEEN'"+ entryDate +"' AND '"+exitDate+"'");
 			if (!"ALL".equals(farm)&&!"".equals(farm))
 				query.append(" AND FARM_BASE='"+farm +"'");
-			System.out.println(query);
+			
 			Statement Stmt = null;
 			Stmt = Conn.prepareStatement(query.toString());
 			ResultSet RS = Stmt.executeQuery(query.toString());
@@ -236,10 +244,10 @@ try {
 			Conn.close();
 		
 		} catch (SQLException E) {
-			System.out.println (E.getMessage());
-			
+			LOGGER.log(Level.SEVERE, E.getMessage());
 			session.setAttribute("SYSTEM_ERROR", E.getMessage());
 		} catch (ClassNotFoundException e) {
+			LOGGER.log(Level.SEVERE, e.getMessage());
 			session.setAttribute("SYSTEM_ERROR", e.getMessage());
 		}
 		
@@ -257,7 +265,6 @@ try {
 			StringBuffer query = new StringBuffer();
 
 			query.append("SELECT * FROM "+this.getDatabase()+".INTAKE WHERE INTAKE_ID="+key);
-		System.out.println (query);
 			
 			Statement Stmt = null;
 			Stmt = Conn.prepareStatement(query.toString());
@@ -528,7 +535,6 @@ try {
 			RS=Stmt.executeQuery(query1.toString());
 			
 			while (RS.next()) {
-				System.out.println(RS.getLong(1));
 				StudentHistory history = new StudentHistory();
 				history.setStudentHistoryId(RS.getLong(1));
 				history.setIntakeId(RS.getLong(2));
@@ -544,13 +550,34 @@ try {
 			}
 			intake.setHistory(list);
 			
+			
+			list = new ArrayList();
+			query1 = new StringBuffer("");
+			query1.append("SELECT * FROM `"+this.getDatabase()+"`.`student_pass_history` WHERE INTAKE_ID="+intake.getIntakeId()+" ORDER BY STUDENT_PASS_HISTORY_ID DESC ");
+			Stmt = Conn.prepareStatement(query1.toString());
+			RS=Stmt.executeQuery(query1.toString());
+			
+			while (RS.next()) {
+				PassHistory history = new PassHistory();
+				history.setPassHistoryId(RS.getLong(1));
+				history.setIntakeId(RS.getLong(2));
+				history.setHours(RS.getString(3));
+				history.setPassDate(RS.getString(4));
+				history.setPassType(RS.getString(5));
+				history.setCreationDate(RS.getString(6));
+				history.setCreatedBy(RS.getString(7));
+				list.add(history);
+			}
+			intake.setPassHistory(list);
+			
 			Stmt.close();
 			Conn.close();
 		
 		} catch (SQLException E) {
-			System.out.println (E.getMessage());
+			LOGGER.log(Level.SEVERE, E.getMessage());
 			session.setAttribute("SYSTEM_ERROR", E.getMessage());
 		} catch (ClassNotFoundException e) {
+			LOGGER.log(Level.SEVERE, e.getMessage());
 			session.setAttribute("SYSTEM_ERROR", e.getMessage());
 		}
 		
@@ -583,7 +610,7 @@ try {
 	    		prop.load(new FileInputStream("c:\\properties\\config.properties"));
 	    		path = prop.getProperty("photo_path"); 
 	    	} catch (IOException ex) {
-	    		System.out.println (ex.getMessage());
+	    		LOGGER.log(Level.SEVERE, ex.getMessage());
 	    		ex.printStackTrace();
 	        }
 			StringBuffer query = new StringBuffer();
@@ -598,10 +625,10 @@ try {
 			Stmt.close();
 			Conn.close();
 		} catch (SQLException E) {
-			System.out.println(E.getMessage());
+			LOGGER.log(Level.SEVERE, E.getMessage());
 			session.setAttribute("ERROR_" + session.getId(), E.getMessage());
 		} catch (ClassNotFoundException e) {
-			System.out.println(e.getMessage());
+			LOGGER.log(Level.SEVERE, e.getMessage());
 			session.setAttribute("ERROR_" + session.getId(), e.getMessage());
 			e.printStackTrace();
 		}
@@ -629,13 +656,13 @@ try {
 			Stmt.close();
 			Conn.close();
 		} catch (SQLException E) {
-			System.out.println(E.getMessage());
+			LOGGER.log(Level.SEVERE, E.getMessage());
 			//session.setAttribute("ERROR_" + session.getId(), E.getMessage());
 		} catch (ClassNotFoundException e) {
-			System.out.println(e.getMessage());
+			LOGGER.log(Level.SEVERE, e.getMessage());
 			//session.setAttribute("ERROR_" + session.getId(), e.getMessage());
 			e.printStackTrace();
-		} catch (Exception e1) { System.out.println(e1.getMessage()); }
+		} catch (Exception e1) { LOGGER.log(Level.SEVERE, e1.getMessage()); }
 		
 		return buffimg;
 		

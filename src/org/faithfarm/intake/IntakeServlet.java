@@ -1,10 +1,11 @@
 package org.faithfarm.intake;
 
 import java.io.FileInputStream;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Properties;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -13,25 +14,24 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.faithfarm.domain.Intake;
+import org.faithfarm.domain.PassHistory;
 import org.faithfarm.domain.StudentHistory;
 import org.faithfarm.domain.SystemUser;
 import org.faithfarm.intake.validation.IntakeValidator;
 import org.faithfarm.service.data.IntakeDao;
+import org.faithfarm.service.data.StudentDao;
 import org.faithfarm.util.Validator;
 
 public class IntakeServlet extends HttpServlet {
 
+	private final static Logger LOGGER = Logger.getLogger(SecureLogin.class.getName());
+	
 	private static IntakeDao dao = new IntakeDao();
+	private static StudentDao sdao = new StudentDao();
 	private static SystemUser systemUser = new SystemUser();
 	private static Intake intake = new Intake();
 	private static StudentHistory history = new StudentHistory();
-	public static StudentHistory getHistory() {
-		return history;
-	}
-
-	public static void setHistory(StudentHistory history) {
-		IntakeServlet.history = history;
-	}
+	private static PassHistory passHistory = new PassHistory();
 
 	private static String source = "";
 	private static int validAreaCount=0;
@@ -46,6 +46,7 @@ public class IntakeServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
 		
+		LOGGER.setLevel(Level.SEVERE);
 		HttpSession session = req.getSession(true);
 		String action = req.getParameter("action");
 		source = req.getParameter("source");
@@ -62,10 +63,18 @@ public class IntakeServlet extends HttpServlet {
 		try {
 		
 		SystemUser user = (SystemUser)session.getAttribute("USER_"+session.getId());
+		boolean appSaved=false;
 		
+		if ("init".equals(action)) {
+			req.getSession();
+			this.setIntake(new Intake());
+			
+		}
 		
-		if (user==null) {
+		if ("application".equals(source)) {
 			this.loadDropDownLists(session);
+			String farm=req.getParameter("farm");
+			this.getIntake().setFarmBase(farm);
 			url=source+".jsp";
 		} 
 		
@@ -98,19 +107,24 @@ public class IntakeServlet extends HttpServlet {
 			this.setIntake(new Intake());
 		    req.setAttribute("MESSAGE", "Applicant has been denied!");
 			
+		} else if ("Delete Pass History".equals(action)) { 
+			Long id = new Long(req.getParameter("deleteId"));
+			dao.deletePassHistory(id, session);
+		    intake.setPassHistory(dao.getPassHistory(intake, session));
+			this.setIntake(sdao.getStudent(intake.getIntakeId()+"", session));
+			req.setAttribute("updateFlag", "YES");
+	    	url="pages/student/status.jsp?upateFlag=YES";
+		} else if ("Delete History".equals(action)) { 
+			Long id = new Long(req.getParameter("deleteId"));
+			dao.deleteHistory(id, session);
+			this.setIntake(sdao.getStudent(intake.getIntakeId()+"", session));
+			req.setAttribute("updateFlag", "YES");
+	    	url="pages/student/status.jsp?upateFlag=YES";
 		} else if ("Save".equals(action)) {
 			this.setFields(source, req);
 			this.setValidAreaCount(0);
 			boolean success = validateApplication(req);
-			/*System.out.println(">"+validAreaCount);
-			System.out.println("personal>"+personal);
-			System.out.println("religious>"+religious);
-			System.out.println("substance>"+substance);
-			System.out.println("health>"+health);
-			System.out.println("legal>"+legal);
-			System.out.println("employment>"+employment);
-			System.out.println("status>"+status);
-			*/
+			
 			if (!success) { 
 				req.setAttribute("WARNING", source+" information has errors.  Please check marked fields and correct data.");
 				url=url;
@@ -127,9 +141,13 @@ public class IntakeServlet extends HttpServlet {
 					history.setIntakeId(key);
 					dao.insertHistory(history, user.getUsername(), session);
 				}
-				System.out.println("inserted app");
 				req.setAttribute("MESSAGE", "Application successfully saved!"); 
-				url=url;
+				
+				if ("application".equals(source)) {
+					appSaved=true;
+					url="http:////239logix.com//faithfarmcorporate";
+				} else
+					url=url;
 			}
 		
 		} else if ("Update".equals(action)) {
@@ -138,15 +156,25 @@ public class IntakeServlet extends HttpServlet {
 			//if (success)
 			this.setFields(source, req);
 			dao.updateIntake(intake,history,user.getUsername(),session);
+			
+			if (passHistory.getHours().length()>0&&passHistory.getPassDate().length()>0&&passHistory.getPassType().length()>0)
+				dao.insertPassHistory(passHistory, session);
+			
 		    req.setAttribute("updateFlag", "YES");
 		    url="pages/student/"+source+".jsp?upateFlag=YES";
 		    req.setAttribute("MESSAGE", source+" information successfully updated!");
 		}
-		req.getRequestDispatcher("/"+url).forward(req, resp);
+		
+		if (appSaved)
+			resp.sendRedirect(url);
+		else
+			req.getRequestDispatcher("/"+url).forward(req, resp);
 		}
 		catch (Exception e) {
 			session.setAttribute("ERROR", e.getMessage());
+			LOGGER.log(Level.SEVERE, e.getMessage());
 			req.getRequestDispatcher("/error.jsp").forward(req, resp);
+			
 		}
 	}
 
@@ -172,6 +200,9 @@ public class IntakeServlet extends HttpServlet {
 	private void setFields(String source, HttpServletRequest req) {
 		Validator valid8r = new Validator();
 
+		if ("application".equals(source)) 
+			this.getIntake().setFarmBase(valid8r.cleanData(req.getParameter("farmBase")));
+			
 		if ("application".equals(source)||"personal".equals(source)) {
 			this.getIntake().setLastName(valid8r.cleanData(req.getParameter("lastname")));
 			this.getIntake().setFirstName(valid8r.cleanData(req.getParameter("firstname")));
@@ -464,16 +495,30 @@ public class IntakeServlet extends HttpServlet {
 			this.getIntake().setEntryDate(valid8r.cleanData(req.getParameter("entryDate")));
 			this.getIntake().setArchiveFlag(valid8r.cleanData(req.getParameter("archivedFlag")));
 			
-			this.getIntake().setSupervisorId(new Long(valid8r.cleanData(req.getParameter("supervisor_id"))));
-			this.getIntake().setJobId(new Long(valid8r.cleanData(req.getParameter("job_id"))));
-			this.getIntake().setDepartmentId(new Long(valid8r.cleanData(req.getParameter("department_id"))));
-			
+				if ("status".equals(source)) {
+					this.getIntake().setSupervisorId(new Long(valid8r.cleanData(req.getParameter("supervisor_id"))));
+					this.getIntake().setJobId(new Long(valid8r.cleanData(req.getParameter("job_id"))));
+					this.getIntake().setDepartmentId(new Long(valid8r.cleanData(req.getParameter("department_id"))));
+				}
+				if ("application".equals(source)) {
+					this.getIntake().setSupervisorId(new Long("0"));
+					this.getIntake().setJobId(new Long("0"));
+					this.getIntake().setDepartmentId(new Long("0"));
+				}
+				
 			this.getHistory().setFarm(valid8r.cleanData(req.getParameter("farm")));
 			this.getHistory().setPhase(valid8r.cleanData(req.getParameter("phase")));
 			this.getHistory().setProgramStatus(valid8r.cleanData(req.getParameter("programStatus")));
 			this.getHistory().setBeginDate(valid8r.cleanData(req.getParameter("beginDate")));
 			this.getHistory().setEndDate(valid8r.cleanData(req.getParameter("endDate")));
 			this.getHistory().setReason(valid8r.cleanData(req.getParameter("reason")));
+			
+			this.getPassHistory().setHours(valid8r.cleanData(req.getParameter("hours")));
+			this.getPassHistory().setPassType(valid8r.cleanData(req.getParameter("passType")));
+			this.getPassHistory().setIntakeId(intake.getIntakeId());
+			this.getPassHistory().setPassDate(valid8r.cleanData(req.getParameter("passDate")));
+			this.getPassHistory().setCreatedBy(systemUser.getUsername());
+			
 		}
 		
 		if ("application".equals(source))
@@ -654,25 +699,29 @@ public class IntakeServlet extends HttpServlet {
 		        int retCode=dao.getQuestions(session);
 		        retCode = dao.getMedicalConditions(session);
 		        retCode = dao.getJobSkills(session);
+		        
+		        ArrayList farm = new ArrayList();
+		        farm.add("BOYNTON BEACH");
+		        farm.add("FORT LAUDERDALE");
+		        farm.add("OKEECHOBEE");
+		        farm.add("WOMEN'S HOME");
+		        farm.add("ALL");
+		        session.setAttribute("dllFarm", farm);
 	}
 	private void loadProperties() {
 	   	Properties prop = new Properties();
 	    
     	try {
                //load a properties file
-    		prop.load(new FileInputStream("c:\\development\\workspace\\intake_2_0\\src\\properties\\config.properties"));
+    		prop.load(new FileInputStream("c:\\properties\\config.properties"));
     		dao.setUid(prop.getProperty("dbuser"));
     		dao.setPwd(prop.getProperty("dbpassword"));
     		dao.setDatabase(prop.getProperty("database"));
     		dao.setSERVER(prop.getProperty("dburl"));
     		 
-    		//get the property value and print it out
-            System.out.println(prop.getProperty("database"));
-    		System.out.println(prop.getProperty("dbuser"));
-    		System.out.println(prop.getProperty("dbpassword"));
- 
+    		
     	} catch (IOException ex) {
-    		ex.printStackTrace();
+    		LOGGER.log(Level.SEVERE, ex.getMessage());
         }
 	}
 	/*
@@ -783,6 +832,21 @@ public class IntakeServlet extends HttpServlet {
 
 	public static void setStatus(boolean status) {
 		IntakeServlet.status = status;
+	}
+	public static StudentHistory getHistory() {
+		return history;
+	}
+
+	public static void setHistory(StudentHistory history) {
+		IntakeServlet.history = history;
+	}
+
+	public static PassHistory getPassHistory() {
+		return passHistory;
+	}
+
+	public static void setPassHistory(PassHistory passHistory) {
+		IntakeServlet.passHistory = passHistory;
 	}
 	
 	

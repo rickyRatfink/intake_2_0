@@ -77,6 +77,7 @@ public class CWTServlet extends HttpServlet {
 							Long key = dao.insertProgram(program, session);
 							if (key>0) {
 								req.setAttribute("MESSAGE", "program successfully saved");
+								dao.getProgramList(session);
 								url="pages/cwt/programs/results.jsp";
 							}
 							else
@@ -96,6 +97,7 @@ public class CWTServlet extends HttpServlet {
 							Long key = dao.insertMetric(metric, session);
 							if (key>0) {
 								req.setAttribute("MESSAGE", "metric successfully saved");
+								dao.getMetricList(session);
 								url="pages/cwt/metrics/results.jsp";
 							}
 							else
@@ -228,7 +230,7 @@ public class CWTServlet extends HttpServlet {
 		 
 		 boolean success=true;
 		 
-		 this.getMetric().setProgramId(new Long(req.getParameter("programId")));
+		 //this.getMetric().setProgramId(new Long(req.getParameter("programId")));
 		 this.getMetric().setMetricName(valid8r.cleanData(req.getParameter("metricName")));
 		 this.getMetric().setDescription(valid8r.cleanData(req.getParameter("description")));
 		 this.getMetric().setStatus(valid8r.cleanData(req.getParameter("status")));
@@ -240,18 +242,39 @@ public class CWTServlet extends HttpServlet {
 				success = false;
 		 }
 		
+		 /*
 		 fieldErr = valid8r.validateRequired("program", metric.getProgramId());
 		 if (fieldErr.length() > 0) {
 			 	req.setAttribute("programErr", fieldErr);
 				success = false;
 		 }
+		 */
 		 
 		 fieldErr = valid8r.validateRequired("status", metric.getStatus());
 		 if (fieldErr.length() > 0) {
 			 	req.setAttribute("statusErr", fieldErr);
 				success = false;
 		 }
-		
+		 
+		 Map<Long, String> ddl = (Map)req.getSession().getAttribute("program_map");
+ 		 int count=0;
+ 		 Long[]keys = new Long[200];
+         if (ddl!=null) {
+           for (Long key:ddl.keySet()) { System.out.println (key+"="+req.getParameter("programId"+key));
+        	   if (req.getParameter("programId"+key)!=null && req.getParameter("programId"+key).equals(key+"")) {
+        		   keys[count]=key;
+        		   count++; System.out.println(count);
+        	   }
+           }
+           this.getMetric().setPrograms(keys);
+           System.out.println(keys[0]);
+         }
+         
+		 if (count==0)
+		 if (fieldErr.length() > 0) {
+			 	req.setAttribute("programErr", "you must assign metrics to UBIT(S)");
+				success = false;
+		 }
 		 return success;
 	 }
      

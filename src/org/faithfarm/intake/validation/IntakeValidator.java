@@ -14,6 +14,14 @@ public class IntakeValidator {
 		int validAreaCount =0;
 		
 		String fieldErr = "";
+		
+		if ("application".equals(source)) {
+			fieldErr = valid8r.validateRequired("farm location",
+					intake.getFarmBase());
+			req.setAttribute("farmErr", fieldErr);
+			if (fieldErr.length() > 0)
+				success = false;
+		}
 
 		if ("application".equals(source) || "personal".equals(source)) {
 

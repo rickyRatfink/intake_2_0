@@ -1,5 +1,6 @@
 <%@ page import="org.faithfarm.intake.IntakeServlet" %>
 <%@ page import="org.faithfarm.domain.StudentHistory" %>
+<%@ page import="org.faithfarm.domain.PassHistory" %>
 <%@ page import="org.faithfarm.util.Validator" %>
 <%@ page import="java.util.ArrayList" %>
 <%@ page import="java.util.Map" %>
@@ -320,7 +321,7 @@
                         <td><%=hist.getPhase()%></td>
                         <td><%=hist.getProgramStatus()%></td>
                         <td><%=hist.getReason()%></td>
-                        <td><a href="">del</a></td>
+                        <td><input type="submit" name="action" value="Delete History" onClick="javascript:document.getElementById('deleteId').value='<%=hist.getStudentHistoryId() %>'" class="imageButtonDelete"/></td>
                      </tr>
                      <%
 					 }  
@@ -330,6 +331,99 @@
                      </tr>
                      <% } %>
                 </table>
+                
+            <br /><br />
+            <table width="700" cellpadding="0" cellspacing="0" border="0">
+            <tr>
+            	<td  style="background: silver; text-align: center;color:#000000;font-weight:bold;height=18px;">Pass History</td>
+            </tr>
+            <tr>
+            	<table width="700" cellpadding="0" cellspacing="0" >
+            		<tr>
+                    	<td style="height:20px;border: 1px solid #666;color:#000000;font-weight:bold;padding-left:5px;">Pass Date</td>
+                        <td style="height:20px;border: 1px solid #666;color:#000000;font-weight:bold;padding-left:5px;">Hours</td>
+                        <td style="height:20px;border: 1px solid #666;color:#000000;font-weight:bold;padding-left:5px;">Type</td>
+                        <td style="height:20px;border: 1px solid #666;color:#000000;font-weight:bold;padding-left:5px;">Del</td>
+                     </tr>
+                     <tr>
+                    	<td style="background: silver;height:20px;border: 1px solid #666;color:#000000;font-weight:bold;padding-left:5px;">
+                    		<input name="passDate" value="<%=IntakeServlet.getPassHistory().getPassDate() %>" size="12" class="tcal"/>
+                    	</td>
+                        <td style="background: silver;height:20px;border: 1px solid #666;color:#000000;font-weight:bold;padding-left:5px;">
+                            <%
+                            ddl = (ArrayList)session.getAttribute("dllPassHours");
+							%>
+							<select name="hours" class="select">
+							<%
+							if (ddl!=null) {
+							  for (int j=0;j<ddl.size();j++) {
+								%>
+								<option 
+									value="<%=ddl.get(j)%>"
+									<%
+									if
+									(ddl.get(j).equals(IntakeServlet.getPassHistory().getHours()))
+									{%>selected<%}%>>
+								  <%=ddl.get(j)%>
+								</option>
+								<%
+							  }
+							  %>
+							  
+							<%}%>
+							</select>
+                        </td>
+                        <td colspan="2" style="background: silver;height:20px;border: 1px solid #666;color:#000000;font-weight:bold;padding-left:5px;">
+                        <%
+                            ddl = (ArrayList)session.getAttribute("dllPassType");
+							%>
+							<select name="passType" class="select">
+							<%
+							if (ddl!=null) {
+							  for (int j=0;j<ddl.size();j++) {
+								%>
+								<option 
+									value="<%=ddl.get(j)%>"
+									<%
+									if
+									(ddl.get(j).equals(IntakeServlet.getPassHistory().getPassType()))
+									{%>selected<%}%>>
+								  <%=ddl.get(j)%>
+								</option>
+								<%
+							  }
+							  %>
+							  
+							<%}%>
+							</select>
+                        
+                        </td>
+                        
+                     </tr>
+                     <%
+					 ArrayList passHistory = (ArrayList)IntakeServlet.getIntake().getPassHistory();
+					 
+                     
+                     for (int i=0;i<passHistory.size();i++)
+					 {
+						 PassHistory pass=(PassHistory)passHistory.get(i);
+					 %> 
+                     <tr> 
+                     	<td><%=pass.getPassDate()%></td>
+                        <td><%=pass.getHours()%></td>
+                        <td><%=pass.getPassType()%></td> 
+                        <td><input type="submit" name="action" value="Delete Pass History" onClick="javascript:document.getElementById('deleteId').value='<%=pass.getPassHistoryId() %>'" class="imageButtonDelete"/></td>
+                     </tr>
+                     <%
+					 }  
+                     if (passHistory.size()==0) { %> 
+                     <tr>
+                     	<td colspan="7">No history</td> 
+                     </tr>
+                     <% } %>
+                    
+                </table>
+                
             </tr>
             </table>
         </td>
@@ -352,8 +446,9 @@
     <div class="footer">
         
     </div>
-   <input type="hidden" name="source" value="status"/>
+    <input type="hidden" name="source" value="status"/>
     <input type="hidden" name="key" value="<%=IntakeServlet.getIntake().getIntakeId()%>"/>
+    <input type="hidden" id="deleteId" name="deleteId" value=""/>
 </form>
 </body>
 </html>

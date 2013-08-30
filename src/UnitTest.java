@@ -1,6 +1,8 @@
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import org.faithfarm.service.data.IntakeDao;
 import org.faithfarm.util.Validator;
@@ -79,10 +81,16 @@ public class UnitTest {
 	            Integer freq = m.get(a);
 	            m.put(a, (freq == null) ? 1 : freq + 1);
 	        }*/
-		String ssn="595468671";
-		System.out.println(ssn.substring(0,3));
-		System.out.println(ssn.substring(3,5));
-		System.out.println(ssn.substring(5,9));
+		Pattern pattern;
+		Matcher matcher;
+
+		String DATE_PATTERN = "\\d{2}/\\d{2}/\\d{4}"; //"(0?[1-9]|[12][0-9]|3[01])/(0?[1-9]|1[012])/((19|20)\\d\\d)";
+		
+		pattern = Pattern.compile(DATE_PATTERN);
+		matcher = pattern.matcher("06/147/1973");
+		
+		System.out.println("matcher="+matcher.matches());
+		
 
 	     
 	}
